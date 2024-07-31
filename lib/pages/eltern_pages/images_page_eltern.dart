@@ -108,7 +108,6 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
             scrolledUnderElevation: 0.0,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             title: Text("Bilder",
-              style: TextStyle(color:Colors.black),
             ),
           ),
         body: SingleChildScrollView(

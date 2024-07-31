@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:socialmediaapp/database/firestore_child.dart';
 import 'package:socialmediaapp/old/change_group_page_kita.dart';
 import 'package:socialmediaapp/pages/chat_page.dart';
@@ -103,11 +105,12 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           // Speicher Button
           TextButton(
             onPressed: () {
-              firestoreDatabaseChild.addChild(textController.text, "1");
+              addChild(textController.text, "1");
               // Textfeld leeren nach Eingabe
               textController.clear();
               //Box schliessen
               Navigator.pop(context);
+
             },
             child: Text("Hinzufügen"),
           )
@@ -116,37 +119,94 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
     );
   }
 
-  void openChildBoxDelete({String? docID}) {
-    showDialog(
+  DateTime absenzBis = DateTime.now().subtract(const Duration(days:1));
+
+  void addChild(String child, String group) async {
+    DocumentReference docRef = await
+    FirebaseFirestore.instance
+        .collection("Kinder")
+        .add({
+      'child': child,
+      'group': '1',
+      'anmeldung': "Abgemeldet",
+      'absenzText': "",
+      'absenz': "nein",
+      "absenzBis": absenzBis,
+      'timeStamp': Timestamp.now(),
+      'kita': currentUser?.email,
+      'abholzeit': "",
+      'geschlecht': "keine Angabe",
+      'geburtstag': "",
+      'personen': "",
+      'alergien': "",
+      'krankheiten': "",
+      'medikamente': "",
+      'impfungen': "",
+      'kinderarzt': "",
+      'krankenkasse': "",
+      'bemerkungen': "",
+      'eltern': "",
+      'fotosSocialMedia': "nicht erlaubt",
+      'fotosApp': "nicht erlaubt",
+      'nagellack': "nicht erlaubt",
+      'schminken': "nicht erlaubt",
+      'fieber': "nicht erlaubt",
+      'sonnencreme': "nicht erlaubt",
+      'fremdkoerper': "nicht erlaubt",
+      'homoeopathie': "nicht erlaubt",
+      'shownotification': "0",
+      'registrierungen': 0,
+      'switch': true,
+
+
+    });
+
+    return showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Löschen bestätigen?",
+        title: const Text(
+          "Schlüssel",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
         ),
+        content: Row(
+          children: [
+            Text(docRef.id),
+            IconButton(
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(text: docRef.id));
+              },
+              icon: Icon(Icons.copy_all_outlined),
+            ),
+
+          ],
+        ),
         actions: [
+          // Cancel Button
           TextButton(
-            onPressed: () {
-              firestoreDatabaseChild.deleteChild(docID!);
-              Navigator.pop(context);
-            },
-            child: Text("Löschen"),
+            child: const Text("Schliessen",
+            ),
+            onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            onPressed: () {
-              Navigator.pop(context);
+            child: const Text("Versenden",
+            ),
+            onPressed: () async {
+              await Share.share('Zur Aktivierung müssen Sie folgenden Aktivierungsschlüssel in Ihrer App eingeben: ${docRef.id}',
+                  subject: 'Activationkey');
             },
-            child: Text("Abbrechen"),
-          )
+          ),
         ],
       ),
     );
   }
+
+
 
 
 
@@ -679,15 +739,40 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                     ),
                                   ],
                                 ),
-                                padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5, top: 5),
+                                padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
                                 margin: EdgeInsets.only(left: 20, right: 20, top: 10),
 
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const SizedBox(height: 5,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    Container(
+                                      width: 45,
+                                      child: Column(
+                                        children: [
+
+                                          if(shownotification == "1")
+                                            Container(
+                                              child: IconButton(
+                                                onPressed: () {
+                                                  notificationNullKind(docID);
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => ChatPage(
+                                                      receiverID: elternmail, childcode: docID,
+                                                    )),
+                                                  );
+                                                },
+                                                color: color2,
+                                                icon: const Icon(Icons.mark_unread_chat_alt_outlined,
+                                                ),
+                                              ),
+                                            ),
+
+                                        ],
+                                      ),
+                                    ),
+
+                                    Column(
                                       children: [
                                         Text(childText,
                                           style: TextStyle(
@@ -695,64 +780,29 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                               fontSize: 15,
                                               color: color2),
                                         ),
-                                        Row(
-                                          children: [
-                                            if(shownotification == "1")
-                                              Container(
-                                                width: 45,
-                                                height: 20,
-                                                child: IconButton(
-                                                  onPressed: () {
-                                                    notificationNullKind(docID);
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(builder: (context) => ChatPage(
-                                                        receiverID: elternmail, childcode: docID,
-                                                      )),
-                                                    );
-                                                  },
-                                                  color: color2,
-                                                  icon: const Icon(Icons.mark_unread_chat_alt_outlined,
-                                                  ),
-                                                ),
-                                              ),
-                                            // ändern Button
-                                            Container(
-                                              width: 45,
-                                              height: 20,
-                                              child: IconButton(
-                                                onPressed: () => openChildBoxGroup(docID: docID),
-                                                color: color2,
-                                                icon: const Icon(Icons.group_rounded,
-                                                ),
-                                              ),
-                                            ),
-                                            // Löschen button
-                                            Container(
-                                              width: 45,
-                                              height: 20,
-                                              child: IconButton(
-                                                onPressed: () => openChildBoxDelete(docID: docID),
-                                                color: color2,
-
-                                                icon: const Icon(Icons.delete,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        const SizedBox(height: 3),
+                                        Text(anmeldungText,
+                                          style: TextStyle(color: color2,
+                                            fontSize: 12,
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 5,),
-                                    Text(anmeldungText,
-                                      style: TextStyle(color: color2,
-                                        fontSize: 12,
+                                    Container(
+                                      width: 45,
+                                      child: IconButton(
+                                        onPressed: () => openChildBoxGroup(docID: docID),
+                                        color: color2,
+                                        icon: const Icon(Icons.group_rounded,
+                                        ),
                                       ),
+                                    )
+                                      ],
                                     ),
-                                  ],
+
+
                                 ),
-                              ),
-                            );
+                              );
                           },
                         );
                       }
@@ -849,28 +899,19 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   ),
                                 ],
                               ),
-                              padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5, top: 5),
+                              padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
                               margin: EdgeInsets.only(left: 20, right: 20, top: 10),
 
-                              child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 5,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(childText,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                          color: color2),
-                                    ),
-                                    Row(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 45,
+                                    child: Column(
                                       children: [
+
                                         if(shownotification == "1")
                                           Container(
-                                            width: 45,
-                                            height: 20,
                                             child: IconButton(
                                               onPressed: () {
                                                 notificationNullKind(docID);
@@ -886,41 +927,40 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                               ),
                                             ),
                                           ),
-                                        // ändern Button
-                                        Container(
-                                          width: 45,
-                                          height: 20,
-                                          child: IconButton(
-                                            onPressed: () => openChildBoxGroup(docID: docID),
-                                            color: color2,
-                                            icon: const Icon(Icons.group_rounded,
-                                            ),
-                                          ),
-                                        ),
-                                        // Löschen button
-                                        Container(
-                                          width: 45,
-                                          height: 20,
-                                          child: IconButton(
-                                            onPressed: () => openChildBoxDelete(docID: docID),
-                                            color: color2,
 
-                                            icon: const Icon(Icons.delete,
-                                            ),
-                                          ),
-                                        ),
                                       ],
                                     ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5,),
-                                Text(anmeldungText,
-                                  style: TextStyle(color: color2,
-                                    fontSize: 12,
                                   ),
-                                ),
-                              ],
-                            ),
+
+                                  Column(
+                                    children: [
+                                      Text(childText,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: color2),
+                                      ),
+                                      const SizedBox(height: 3),
+                                      Text(anmeldungText,
+                                        style: TextStyle(color: color2,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width: 45,
+                                    child: IconButton(
+                                      onPressed: () => openChildBoxGroup(docID: docID),
+                                      color: color2,
+                                      icon: const Icon(Icons.group_rounded,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+
+
                             ),
                           );
                         },
@@ -998,7 +1038,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID,)),
+                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID,
+                                )),
                               );
                             },
                             child: Container(
@@ -1018,15 +1059,40 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   ),
                                 ],
                               ),
-                              padding: const EdgeInsets.only(left: 10, bottom: 10, right: 5, top: 5),
+                              padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
                               margin: EdgeInsets.only(left: 20, right: 20, top: 10),
 
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const SizedBox(height: 5,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  Container(
+                                    width: 45,
+                                    child: Column(
+                                      children: [
+
+                                        if(shownotification == "1")
+                                          Container(
+                                            child: IconButton(
+                                              onPressed: () {
+                                                notificationNullKind(docID);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) => ChatPage(
+                                                    receiverID: elternmail, childcode: docID,
+                                                  )),
+                                                );
+                                              },
+                                              color: color2,
+                                              icon: const Icon(Icons.mark_unread_chat_alt_outlined,
+                                              ),
+                                            ),
+                                          ),
+
+                                      ],
+                                    ),
+                                  ),
+
+                                  Column(
                                     children: [
                                       Text(childText,
                                         style: TextStyle(
@@ -1034,62 +1100,27 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                             fontSize: 15,
                                             color: color2),
                                       ),
-                                      Row(
-                                        children: [
-                                          if(shownotification == "1")
-                                            Container(
-                                              width: 45,
-                                              height: 20,
-                                              child: IconButton(
-                                                onPressed: () {
-                                                  notificationNullKind(docID);
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => ChatPage(
-                                                      receiverID: elternmail, childcode: docID,
-                                                    )),
-                                                  );
-                                                },
-                                                color: color2,
-                                                icon: const Icon(Icons.mark_unread_chat_alt_outlined,
-                                                ),
-                                              ),
-                                            ),
-                                          // ändern Button
-                                          Container(
-                                            width: 45,
-                                            height: 20,
-                                            child: IconButton(
-                                              onPressed: () => openChildBoxGroup(docID: docID),
-                                              color: color2,
-                                              icon: const Icon(Icons.group_rounded,
-                                              ),
-                                            ),
-                                          ),
-                                          // Löschen button
-                                          Container(
-                                            width: 45,
-                                            height: 20,
-                                            child: IconButton(
-                                              onPressed: () => openChildBoxDelete(docID: docID),
-                                              color: color2,
-
-                                              icon: const Icon(Icons.delete,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                      const SizedBox(height: 3),
+                                      Text(anmeldungText,
+                                        style: TextStyle(color: color2,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 5,),
-                                  Text(anmeldungText,
-                                    style: TextStyle(color: color2,
-                                      fontSize: 12,
+                                  Container(
+                                    width: 45,
+                                    child: IconButton(
+                                      onPressed: () => openChildBoxGroup(docID: docID),
+                                      color: color2,
+                                      icon: const Icon(Icons.group_rounded,
+                                      ),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
+
+
                             ),
                           );
                         },

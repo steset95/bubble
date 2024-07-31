@@ -30,9 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController confirmPwController = TextEditingController();
-  final TextEditingController childcodeController = TextEditingController();
-  bool _isObscure = true;
-  bool _isObscure2 = true;
+
   File? file;
   var options = [
     'Kita',
@@ -44,6 +42,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String adress2 = "";
   String tel = "";
   String childcode = "";
+  String childcode2 = "";
   String iban = "";
   int guthaben = 0;
   String gruppe1 = "Gruppe 1";
@@ -136,6 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'adress2': adress2,
         'tel': tel,
         'childcode': "",
+        'childcode2': "",
         "kitamail": "",
         "shownotification": shownotification,
         "abo": abo,

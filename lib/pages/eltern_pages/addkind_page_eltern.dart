@@ -77,7 +77,9 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
                         .collection("Users")
                         .doc(currentUser?.email)
                         .update({
-                      "childcode2": childcode,
+                      "childcode2": childcode1,
+                      "childcode": childcode,
+
                     });
                   }
                   else

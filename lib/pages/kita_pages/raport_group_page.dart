@@ -7,9 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_child_select_switch.dart';
+import '../../old/my_child_select_switch_all_old.dart';
 import '../../components/my_image_upload_button.dart';
 import '../../components/my_image_upload_button_multiple.dart';
 import '../../components/notification_controller.dart';
+import '../../database/firestore_child.dart';
 
 
 
@@ -36,6 +38,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
   // Text Controller für Abfrage des Inhalts im Textfeld "Raport hinzufügen"
   final _raportTextController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser;
+  final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
 
   /// Notification
   Timer? timer;
@@ -140,6 +143,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                   // wenn Daten vorhanden _> gib alle Daten aus
                   if (snapshot.hasData) {
                     List childrenList = snapshot.data!.docs;
+                    childrenList.sort((a, b) => a['child'].compareTo(b['child']));
                     //als Liste wiedergeben
                     return ListView.builder(
                       padding: EdgeInsets.only(bottom:15),
@@ -191,8 +195,8 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           TextButton(
             onPressed: () => {
      _raportTextController.clear(),
-              // Raport hinzufügen
          Navigator.pop(context),
+            firestoreDatabaseChild.updateSwitchAllOn(widget.group),
             },
 
             child: Text("Abbrechen"),
@@ -207,6 +211,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
+              firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
             child: Text("Speichern"),
           ),
@@ -257,6 +262,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                   // wenn Daten vorhanden _> gib alle Daten aus
                   if (snapshot.hasData) {
                     List childrenList = snapshot.data!.docs;
+                    childrenList.sort((a, b) => a['child'].compareTo(b['child']));
                     //als Liste wiedergeben
                     return ListView.builder(
                       padding: EdgeInsets.only(bottom:15),
@@ -309,6 +315,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             onPressed: () {
               // Textfeld schliessen
               Navigator.pop(context);
+              firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
             child: Text("Abbrechen"),
           ),
@@ -320,8 +327,8 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               addRaport('Angemeldet', '');
               // Textfeld schliessen
               _raportTextController.clear();
-
               Navigator.pop(context);
+              firestoreDatabaseChild.updateSwitchAllOn(widget.group);
               //Textfeld leeren
 
             },
@@ -596,7 +603,6 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
   void showRaportDialogAbmeldung()  {
     Navigator.pop(context);
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm').format(now);
     final mediaQuery = MediaQuery.of(context);
     showDialog(
       context: context,
@@ -611,62 +617,67 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           ),
         ),
         content: SingleChildScrollView(
-          child: Container(
-            width: mediaQuery.size.width * 1,
-            height: mediaQuery.size.height * 0.65,
-            child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("Kinder")
-                    .where("kita", isEqualTo: currentUser?.email)
-                    .where("group", isEqualTo: widget.group)
-                    .where("absenz", isEqualTo: "nein")
-                    .snapshots(),
-                builder: (context, snapshot){
-                  // wenn Daten vorhanden _> gib alle Daten aus
-                  if (snapshot.hasData) {
-                    List childrenList = snapshot.data!.docs;
-                    //als Liste wiedergeben
-                    return ListView.builder(
-                      padding: EdgeInsets.only(bottom:15),
-                      itemCount: childrenList.length,
-                      itemBuilder: (context, index) {
-                        // individuelle Einträge abholen
-                        DocumentSnapshot document = childrenList[index];
-                        String docID = document.id;
+          child: Column(
+            children: [
+              Container(
+                width: mediaQuery.size.width * 1,
+                height: mediaQuery.size.height * 0.65,
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection("Kinder")
+                        .where("kita", isEqualTo: currentUser?.email)
+                        .where("group", isEqualTo: widget.group)
+                        .where("absenz", isEqualTo: "nein")
+                        .snapshots(),
+                    builder: (context, snapshot){
+                      // wenn Daten vorhanden _> gib alle Daten aus
+                      if (snapshot.hasData) {
+                        List childrenList = snapshot.data!.docs;
+                        childrenList.sort((a, b) => a['child'].compareTo(b['child']));
+                        //als Liste wiedergeben
+                        return ListView.builder(
+                          padding: EdgeInsets.only(bottom:15),
+                          itemCount: childrenList.length,
+                          itemBuilder: (context, index) {
+                            // individuelle Einträge abholen
+                            DocumentSnapshot document = childrenList[index];
+                            String docID = document.id;
 
-                        // Eintrag von jedem Dokument abholen
-                        Map<String, dynamic> data =
-                        document.data() as Map<String, dynamic>;
-                        String childText = data['child'];
-                        String anmeldungText = data['anmeldung'];
-                        bool active = data['switch'];
+                            // Eintrag von jedem Dokument abholen
+                            Map<String, dynamic> data =
+                            document.data() as Map<String, dynamic>;
+                            String childText = data['child'];
+                            String anmeldungText = data['anmeldung'];
+                            bool active = data['switch'];
 
-                        bool istAngemeldet = anmeldungText == "Abgemeldet";
+                            bool istAngemeldet = anmeldungText == "Abgemeldet";
 
-                        var color = istAngemeldet ? Colors.grey : Colors.black;
+                            var color = istAngemeldet ? Colors.grey : Colors.black;
 
-                        // als List Tile wiedergeben
-                        return Container(
-                          margin: EdgeInsets.only( right: 10, top: 10),
+                            // als List Tile wiedergeben
+                            return Container(
+                              margin: EdgeInsets.only( right: 10, top: 10),
 
-                          child:
-                          ChildSelectSwitch(
-                            sectionName: childText,
-                            color: color,
-                            childcode: docID,
-                            active: active,
-                          ),
+                              child:
+                              ChildSelectSwitch(
+                                sectionName: childText,
+                                color: color,
+                                childcode: docID,
+                                active: active,
+                              ),
 
 
+                            );
+                          },
                         );
-                      },
-                    );
-                  }
-                  else {
-                    return const Text("");
-                  }
-                }
-            ),
+                      }
+                      else {
+                        return const Text("");
+                      }
+                    }
+                ),
+              ),
+            ],
           ),
 
         ),
@@ -677,6 +688,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             onPressed: () {
               // Textfeld schliessen
               Navigator.pop(context);
+              firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
             child: Text("Abbrechen"),
           ),
@@ -691,6 +703,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               // Textfeld schliessen
               Navigator.pop(context);
               _raportTextController.clear();
+              firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
             child: Text("Abmelden"),
           ),

@@ -135,7 +135,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                 Text('$documentID'),
                 IconButton(
                   onPressed: () async {
-                    await Share.share('$documentID',
+                    await Share.share('Zur Aktivierung müssen Sie folgenden Aktivierungsschlüssel in Ihrer App eingeben: $documentID',
                     subject: 'Activationkey');
                     },
                     icon: Icon(Icons.share),
@@ -169,6 +169,65 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
   }
 
 
+  void openChildBoxDelete({String? docID}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.all(
+                Radius.circular(10.0))),
+        title: Text("Löschen bestätigen?",
+          style: TextStyle(color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              firestoreDatabaseChild.deleteChild(docID!);
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: Text("Löschen"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Abbrechen"),
+          )
+        ],
+      ),
+    );
+  }
+
+
+  /// ShowButtons
+
+  Widget showButtons () {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        /// Abholzeit
+        GestureDetector(
+            onTap: () => openChildBoxDelete(docID: widget.docID),
+            child: Row(
+              children: [
+                const SizedBox(width: 5),
+                const Icon(Icons.delete,
+                  color: Colors.black,
+                ),
+              ],
+            )
+        ),
+
+        const SizedBox(width: 20),
+      ],
+    );
+  }
+
+
 
 
   @override
@@ -187,6 +246,9 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             backgroundColor: Theme.of(context).colorScheme.secondary,
             title: Text("Übersicht",
             ),
+              actions: [
+                showButtons (),
+              ]
           ),
 
           floatingActionButton: FloatingActionButton(

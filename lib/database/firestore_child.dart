@@ -18,7 +18,7 @@ class FirestoreDatabaseChild {
   /// Kita Seite
 
 
-  void addChild(String child, String group) {
+  void addChild(String child, String group) async {
     FirebaseFirestore.instance
         .collection("Kinder")
         .add({
@@ -53,10 +53,12 @@ class FirestoreDatabaseChild {
       'shownotification': "0",
       'registrierungen': 0,
       'switch': true,
+
+
     });
+      }
 
 
-  }
 
 
   // READ: get Child-Data from Database nach Gruppe
@@ -82,7 +84,6 @@ class FirestoreDatabaseChild {
   Stream<QuerySnapshot> getChildrenStream3() {
     final postStream = FirebaseFirestore.instance
         .collection("Kinder")
-
         .where("kita", isEqualTo: currentUser?.email)
         .where("group", isEqualTo: '3' )
         .snapshots();
@@ -112,6 +113,23 @@ class FirestoreDatabaseChild {
     });
   }
 
+
+  void updateSwitchAllOn(String group) {
+    FirebaseFirestore.instance
+        .collection("Kinder")
+        .where('group', isEqualTo: group)
+        .where("kita", isEqualTo: currentUser?.email)
+        .where("absenz", isEqualTo: "nein")
+        .get()
+        .then((snapshot) {
+      snapshot.docs.forEach((doc) {
+        doc.reference
+            .update({
+          'switch': true,
+        });
+      });
+    });
+        }
 
 
 
