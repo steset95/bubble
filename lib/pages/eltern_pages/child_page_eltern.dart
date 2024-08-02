@@ -371,36 +371,30 @@ color: Theme.of(context).colorScheme.primary,
             !snapshot.hasData) {
           return const Text("");
         }
-        return Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-          child: Container(
-           height: mediaQuery.size.height * 0.075,
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: snapshot.data!.length,
-              shrinkWrap: false,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 6,
-                childAspectRatio: 1.0,
-                mainAxisSpacing: 4.0,
-                crossAxisSpacing: 4.0,
-              ),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ImagesPageEltern(
-                      childcode: childcode, date: formattedDate,
-                    )),
-                  );
-                },
-                child: CachedNetworkImage(
-                  imageUrl: snapshot.data![index],
-                  fit: BoxFit.fitHeight,
-                  placeholder: (context, url) => ProgressWithIcon(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
+        return GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: snapshot.data!.length,
+          shrinkWrap: false,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 6,
+            childAspectRatio: 1.0,
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
+          ),
+          itemBuilder: (context, index) => GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ImagesPageEltern(
+                  childcode: childcode, date: formattedDate,
+                )),
+              );
+            },
+            child: CachedNetworkImage(
+              imageUrl: snapshot.data![index],
+              fit: BoxFit.fitHeight,
+              placeholder: (context, url) => ProgressWithIcon(),
+              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
           ),
         );
@@ -595,176 +589,171 @@ color: Theme.of(context).colorScheme.primary,
               children: [
 
                 const SizedBox(height: 10),
-                Column(
-                  children: [
-
-
-                    buildGallery(childcode, currentDate1),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: mediaQuery.size.height * 0.55,
-                          width: mediaQuery.size.width * 1,
-                          child: StreamBuilder<QuerySnapshot>(
-                              stream:  FirebaseFirestore.instance
-                                  .collection("Kinder")
-                                  .doc(childcode)
-                                  .collection(formattedDate)
-                                  .orderBy('TimeStamp', descending: true)
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                List<Row> raportWidgets = [];
-                                if (snapshot.hasData) {
-                                  final raports = snapshot.data?.docs.reversed.toList();
-                                  for (var raport in raports!) {
-                                    final raportWidget = Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(3.0),
-                                          child: Container(
-                                          padding: EdgeInsets.only(top: 8, bottom: 8, left: 15,),
-                                          decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                                ),
-                                ],
-                                ),
-                                            width: mediaQuery.size.width * 0.9,
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                        raport['Uhrzeit'],
-                                                        style: TextStyle(fontWeight: FontWeight.bold,
-                                                        fontSize: 12,
-                                                          color: Theme.of(context).colorScheme.primary,
-                                                        )
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                    Text(
-                                                        raport['RaportTitle'],
-                                                      style: TextStyle(fontWeight: FontWeight.bold,
-                                                        color: Theme.of(context).colorScheme.primary,
-                                                      fontSize: 12,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 5),
-                                                Row(
-                                                  children: [
-                                                    Container(
-                                                        width: mediaQuery.size.width * 0.80,
-                                                        child: Text(
-                                                            textAlign: TextAlign.left,
-                                                            raport['RaportText'],
-                                                          style: TextStyle(
-                                                          fontSize: 10,
-                                                        ),
-                                                        )),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-
-                                        ),
-                                      ],
-                                    );
-                                    raportWidgets.add(raportWidget);
-                                   // Text(raport['RaportText']);
-                                  }
-                                }
-                                if (raportWidgets.isNotEmpty) {
-                                  return
-                                  ListView(
-                                    children: raportWidgets,
-                                  );
-                                }
-                                else {
-                                  return Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Noch keine Einträge..."
-                                      ),
-                                    ],
-                                  );
-                                }
-                              }
+                Flexible(
+                  flex: 1,
+                    child: buildGallery(childcode, currentDate1)),
+                const SizedBox(height: 10),
+                Flexible(
+                  flex: 9,
+                  child: Container(
+                   // height: mediaQuery.size.height * 0.55,
+                    width: mediaQuery.size.width * 1,
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream:  FirebaseFirestore.instance
+                            .collection("Kinder")
+                            .doc(childcode)
+                            .collection(formattedDate)
+                            .orderBy('TimeStamp', descending: true)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          List<Row> raportWidgets = [];
+                          if (snapshot.hasData) {
+                            final raports = snapshot.data?.docs.reversed.toList();
+                            for (var raport in raports!) {
+                              final raportWidget = Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Container(
+                                    padding: EdgeInsets.only(top: 8, bottom: 8, left: 15,),
+                                    decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                          BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 1,
+                          blurRadius: 3,
+                          offset: Offset(2, 4),
                           ),
-                        ),
+                          ],
+                          ),
+                                      width: mediaQuery.size.width * 0.9,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Text(
+                                                  raport['Uhrzeit'],
+                                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                                  fontSize: 12,
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                  )
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                  raport['RaportTitle'],
+                                                style: TextStyle(fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context).colorScheme.primary,
+                                                fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            children: [
+                                              Container(
+                                                  width: mediaQuery.size.width * 0.80,
+                                                  child: Text(
+                                                      textAlign: TextAlign.left,
+                                                      raport['RaportText'],
+                                                    style: TextStyle(
+                                                    fontSize: 10,
+                                                  ),
+                                                  )),
+                                            ],
+                                          ),
                                         ],
+                                      ),
+                                    ),
+
+                                  ),
+                                ],
+                              );
+                              raportWidgets.add(raportWidget);
+                             // Text(raport['RaportText']);
+                            }
+                          }
+                          if (raportWidgets.isNotEmpty) {
+                            return
+                            ListView(
+                              children: raportWidgets,
+                            );
+                          }
+                          else {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Noch keine Einträge..."
+                                ),
+                              ],
+                            );
+                          }
+                        }
                     ),
-                  ],
+                  ),
                 ),
 
-                /// Galerie
 
 
+                Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 5.0,),
+                    child: Column(
+                      children: [
 
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0,),
-                  child: Column(
-                    children: [
-
-                      const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: _incrementCounterMinus,
-                            child: Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(Icons.arrow_back_ios_rounded,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap:  ()  {
-                              showRaportDialogDatum(context, currentDate1);
-
-                            },
-                            child: Text(showDatum,
-                              textAlign: TextAlign.center,
-                              style: TextStyle( fontFamily: 'Goli',
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: _incrementCounterPlus,
-                            child: Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(Icons.arrow_forward_ios_rounded,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 20,
+                        const SizedBox(height: 10,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: _incrementCounterMinus,
+                              child: Container(
+                                width: 50,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Icon(Icons.arrow_back_ios_rounded,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 20,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            GestureDetector(
+                              onTap:  ()  {
+                                showRaportDialogDatum(context, currentDate1);
+
+                              },
+                              child: Text(showDatum,
+                                textAlign: TextAlign.center,
+                                style: TextStyle( fontFamily: 'Goli',
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: _incrementCounterPlus,
+                              child: Container(
+                                width: 50,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Icon(Icons.arrow_forward_ios_rounded,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

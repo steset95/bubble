@@ -253,42 +253,25 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                                 BezahlungPage()),
                           );
                         },
-                        child: Column(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            SizedBox(
+                              width: 5,
+                            ),
                             Text("Abonnement",
-                        style: TextStyle(color: Colors.black,
-                          fontSize: 15,
-                        ),
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                fontSize: 12,
+                              ),
                             ),
                             SizedBox(
-                              height: 10,
+                              width: 2,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                            Icon(
+                                Icons.arrow_forward,
+                                color: Theme.of(context).colorScheme.primary,
 
-                                Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                        Icons.payment_outlined,
-                                      color: Theme.of(context).colorScheme.primary,
-
-                                    ),
-                                    SizedBox(
-                                      width: 2,
-                                    ),
-                                    Icon(
-                                        Icons.arrow_forward,
-                                        color: Theme.of(context).colorScheme.primary,
-
-                                        size: 15
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                size: 10
                             ),
                           ],
                         ),

@@ -64,7 +64,7 @@ const String defaultApplePay = '''{
 const String defaultGooglePay = '''{
   "provider": "google_pay",
   "data": {
-    "environment": "TEST",
+    "environment": "PRODUCTION",
     "apiVersion": 2,
     "apiVersionMinor": 0,
     "allowedPaymentMethods": [
@@ -74,7 +74,7 @@ const String defaultGooglePay = '''{
           "type": "PAYMENT_GATEWAY",
           "parameters": {
             "gateway": "example",
-            "gatewayMerchantId": "gatewayMerchantId"
+            "gatewayMerchantId": "4826-2669-8285"
           }
         },
         "parameters": {
@@ -89,12 +89,12 @@ const String defaultGooglePay = '''{
       }
     ],
     "merchantInfo": {
-      "merchantId": "01234567890123456789",
-      "merchantName": "Example Merchant Name"
+      "merchantId": "4826-2669-8285",
+      "merchantName": "Monatsabonnement"
     },
     "transactionInfo": {
-      "countryCode": "US",
-      "currencyCode": "USD"
+      "countryCode": "CH",
+      "currencyCode": "CHF"
     }
   }
 }''';
@@ -122,7 +122,7 @@ const String basicGooglePayLoadPaymentData = '''{
     "apiVersion": 2,
     "apiVersionMinor": 0,
     "merchantInfo": {
-      "merchantName": "Example Merchant"
+      "merchantName": "Monatsabonnement 2"
     },
     "allowedPaymentMethods": [
       {
@@ -142,8 +142,8 @@ const String basicGooglePayLoadPaymentData = '''{
     ],
     "transactionInfo": {
       "totalPriceStatus": "FINAL",
-      "totalPrice": "12.34",
-      "currencyCode": "USD"
+      "totalPrice": "00.10",
+      "currencyCode": "CHF"
     }
   }
 }''';
@@ -168,7 +168,7 @@ const String invalidGooglePayLoadPaymentData = '''{
     "apiVersion": 2,
     "apiVersionMinor": 0,
     "merchantInfo": {
-      "merchantName": "Example Merchant"
+      "merchantName": "Monatsabonnement 3"
     },
     "allowedPaymentMethods": [
       {
@@ -181,15 +181,15 @@ const String invalidGooglePayLoadPaymentData = '''{
           "type": "PAYMENT_GATEWAY",
           "parameters": {
             "gateway": "example",
-            "gatewayMerchantId": "exampleGatewayMerchantId"
+            "gatewayMerchantId": "4826-2669-8285"
           }
         }
       }
     ],
     "transactionInfo": {
       "totalPriceStatus": "FINAL",
-      "totalPrice": "12.34",
-      "currencyCode": "USD"
+      "totalPrice": "00.10",
+      "currencyCode": "CHF"
     }
   }
 }''';
