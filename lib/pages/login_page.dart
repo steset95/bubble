@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialmediaapp/components/my_button.dart';
@@ -78,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
               // logo
               Image.asset("assets/images/Logo_1.png", width: 220, height:120),
               // app name
-              const SizedBox(height: 40),
+              const SizedBox(height: 60),
               const Text(
                 "Login",
                 style: TextStyle(fontSize: 20),
@@ -96,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
 
               ),
 
-              const SizedBox(height: 45),
+              const SizedBox(height: 20),
 
               // password textfield
 
@@ -140,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                   GestureDetector(
                     child: Text(
                       "Passwort vergessen? ",
-              ),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -187,4 +186,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

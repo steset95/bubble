@@ -62,7 +62,6 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                   content: SingleChildScrollView(
                     child: Container(
                       width: mediaQuery.size.width * 1,
-                      height: mediaQuery.size.height * 0.65,
                       child: StreamBuilder<QuerySnapshot>(
                           stream: FirebaseFirestore.instance
                               .collection("Kinder")
@@ -210,7 +209,6 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                 ),
               ],
             ),
-            height: 80,
             child:  Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

@@ -84,7 +84,6 @@ class _ImageUploadState extends State<ImageUpload> {
                 ),
               ],
             ),
-            height: 80,
             child:  Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

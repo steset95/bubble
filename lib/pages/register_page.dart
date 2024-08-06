@@ -191,12 +191,12 @@ class _RegisterPageState extends State<RegisterPage> {
             children: [
               const SizedBox(height: 50,),
               // logo
-              Image.asset("assets/images/Logo_1.png", width: 200, height:120),
+              Image.asset("assets/images/Logo_1.png", width: 100, height:60),
 
               // app name
               const SizedBox(height: 25),
               const Text(
-                "Registrieren",
+                "Registrierung",
                 style: TextStyle(fontSize: 20),
 
               ),

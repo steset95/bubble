@@ -467,104 +467,106 @@ class _RaportPageState extends State<RaportPage> {
           title: Text("Raport",
           ),
         ),
-          body: Column(
-            children: [
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: showRaportDialogAnmeldung,
-                        child: Container(
-                          height: 140,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          child:  Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.door_back_door_outlined,
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Anmeldung",
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.inversePrimary,),
+          body: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Flexible(
+                    flex: 2,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: showRaportDialogAnmeldung,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: Offset(2, 4),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: showRaportDialogEssen,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          height: 140,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.local_pizza_outlined,
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
+                              child:  Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Essen",
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.inversePrimary,),
+                                  Icon(Icons.door_back_door_outlined,
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Anmeldung",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.inversePrimary,),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                        const SizedBox(width: 20),
+                        Flexible(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: showRaportDialogEssen,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: Offset(2, 4),
+                                  ),
+                                ],
+                              ),
 
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.local_pizza_outlined,
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Essen",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.inversePrimary,),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    )),
+
+                const SizedBox(height: 20),
+                Flexible(
+                  flex: 2,
+                    child:
+                    Row(
+                      children: [
+                  Flexible(
                       flex: 1,
-                      child: GestureDetector(
+                      child:
+                      GestureDetector(
                         onTap: showRaportDialogSchlaf,
                         child: Container(
                           decoration: BoxDecoration(
@@ -579,7 +581,6 @@ class _RaportPageState extends State<RaportPage> {
                               ),
                             ],
                           ),
-                          height: 140,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -600,149 +601,153 @@ class _RaportPageState extends State<RaportPage> {
                           ),
                         ),
                       ),
+                  ),
+                        const SizedBox(width: 20),
+                        Flexible(
+                            flex: 1,
+                            child:
+                            GestureDetector(
+                              onTap: showRaportDialogActivity,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(2, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.sports_soccer,
+                                      color: Theme.of(context).colorScheme.inversePrimary,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Aktivitäten",
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.inversePrimary,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                        )
 
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: showRaportDialogActivity,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          height: 140,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.sports_soccer,
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Aktivitäten",
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.inversePrimary,),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: showRaportDialogDiverses,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          height: 140,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.note_add_outlined,
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Diverses",
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.inversePrimary,),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                ],)),
 
-                    ),
-                    const SizedBox(width: 20),
-                    Expanded(
-                      flex: 1,
-                      child: GestureDetector(
-                          onTap: showRaportDialogAbmeldung,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
+                const SizedBox(height: 20),
+                Flexible(
+                    flex: 2,
+                    child:
+                    Row(
+                      children: [
+                        Flexible(
+                            flex: 1,
+                            child:
+                            GestureDetector(
+                              onTap: showRaportDialogDiverses,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(2, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.note_add_outlined,
+                                      color: Theme.of(context).colorScheme.inversePrimary,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Diverses",
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.inversePrimary,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                          height: 140,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.family_restroom_outlined,
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Abholung",
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.inversePrimary,),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                            ),
                         ),
-                      ),
-                    ),
-                  ],
+                        const SizedBox(width: 20),
+                        Flexible(
+                            flex: 1,
+                            child:
+                            GestureDetector(
+                              onTap: showRaportDialogAbmeldung,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.grey,
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: Offset(2, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.family_restroom_outlined,
+                                      color: Theme.of(context).colorScheme.inversePrimary,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text("Abholung",
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.inversePrimary,),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                        ),
+                      ],
+                    )
                 ),
-              ),
-              if (kIsWeb == false)
-                Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          children: [
-              const SizedBox(height: 20),
-              ImageUpload(docID: widget.docID),
-            ],
-        ),
-      ),
-            ],
+
+                const SizedBox(height: 20),
+
+                if (kIsWeb == false)
+                  Flexible(
+                    flex: 1,
+                    child: Row(
+            children: [
+
+                ImageUpload(docID: widget.docID),
+              ],
+                    ),
+                  ),
+              ],
+            ),
           ),
       ),
     );

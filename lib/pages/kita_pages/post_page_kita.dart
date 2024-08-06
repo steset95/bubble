@@ -99,15 +99,16 @@ class _PostPageKitaState extends State<PostPageKita> {
       ),
 
         body:
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(10),
+          Padding(
+            padding: EdgeInsets.all(10),
 
-              child: Column(
+            child: Column(
 
-                children: [
-                  const SizedBox(height: 10,),
-                  TextField(
+              children: [
+                const SizedBox(height: 10,),
+                Flexible(
+                  flex: 1,
+                  child: TextField(
                     maxLength: 30,
                     //autofocus: true,
                     controller: newPostControllerTitel,
@@ -118,8 +119,11 @@ class _PostPageKitaState extends State<PostPageKita> {
 
 
                   ),
-                  const SizedBox(height: 20,),
-                  Container(
+                ),
+                const SizedBox(height: 20,),
+                Flexible(
+                  flex: 8,
+                  child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
@@ -127,7 +131,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                       boxShadow: const [
                       ],
                     ),
-                    height: mediaQuery.size.width * 1,
+
                     padding: EdgeInsets.all(10),
                     child:  TextField(
 
@@ -144,8 +148,11 @@ class _PostPageKitaState extends State<PostPageKita> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10,),
-                  Row(
+                ),
+                const SizedBox(height: 10,),
+                Flexible(
+                  flex: 1,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
@@ -182,11 +189,11 @@ class _PostPageKitaState extends State<PostPageKita> {
                       ),
                     ],
                   ),
-            
-                  // save Button
-            
-                ],
-              ),
+                ),
+
+                // save Button
+
+              ],
             ),
           ),
       ),

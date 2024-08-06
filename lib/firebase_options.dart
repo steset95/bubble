@@ -70,6 +70,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1037371543824',
     projectId: 'socialmediaapp-6db63',
     storageBucket: 'socialmediaapp-6db63.appspot.com',
-    iosBundleId: 'com.example.socialmediaapp',
+    iosBundleId: 'ch.bubble.app',
   );
 }

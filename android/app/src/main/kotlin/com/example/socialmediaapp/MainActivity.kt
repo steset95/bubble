@@ -1,4 +1,4 @@
-package com.example.socialmediaapp
+package ch.bubble.app
 
 import io.flutter.embedding.android.FlutterActivity
 
