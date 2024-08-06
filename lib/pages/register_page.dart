@@ -52,6 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String abo = "Probewochen";
   DateTime aboBis = DateTime.now().add(const Duration(days:14));
   String beschreibung = "";
+  int anzahlKinder = 0;
 
 
   bool showProgress = false;
@@ -162,6 +163,9 @@ class _RegisterPageState extends State<RegisterPage> {
         'gruppe3': gruppe3,
         "shownotification": shownotification,
         'beschreibung':  beschreibung,
+        'anzahlKinder1': anzahlKinder,
+        'anzahlKinder2': anzahlKinder,
+        'anzahlKinder3': anzahlKinder,
       });
     }
   }

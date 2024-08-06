@@ -21,12 +21,13 @@ import 'package:intl/intl.dart';
 
 class ChildOverviewPageKita extends StatefulWidget {
   final String docID;
+  final String group;
 
 
   const ChildOverviewPageKita({
     super.key,
     required this.docID,
-
+    required this.group,
   });
 
   @override
@@ -185,7 +186,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
         actions: [
           TextButton(
             onPressed: () {
-              firestoreDatabaseChild.deleteChild(docID!);
+              firestoreDatabaseChild.deleteChild(docID!, widget.group);
               Navigator.pop(context);
               Navigator.pop(context);
             },

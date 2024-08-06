@@ -136,11 +136,27 @@ class FirestoreDatabaseChild {
 
 
 // Daten löschen
-  void deleteChild(String docID) {
+  void deleteChild(String docID, String group) {
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(docID)
         .delete();
+
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) {
+      int anzahlKinder = document['anzahlKinder$group'];
+      int anzahlKinderUpdate = (anzahlKinder - 1);
+
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUser?.email)
+          .update({'anzahlKinder$group': anzahlKinderUpdate});
+    });
+
+
   }
 
   //Absenz entfernen

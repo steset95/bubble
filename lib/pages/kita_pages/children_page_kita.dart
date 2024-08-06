@@ -1,17 +1,13 @@
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:socialmediaapp/database/firestore_child.dart';
-import 'package:socialmediaapp/old/change_group_page_kita.dart';
 import 'package:socialmediaapp/pages/chat_page.dart';
 import 'package:socialmediaapp/pages/kita_pages/child_overview_page_kita.dart';
 import 'package:socialmediaapp/pages/kita_pages/raport_group_page.dart';
-import 'package:socialmediaapp/pages/kita_pages/raport_page.dart';
-import 'package:intl/intl.dart';
 import '../../components/notification_controller.dart';
 
 
@@ -53,6 +49,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
   bool showProgress = false;
   bool visible = false;
   final currentUser = FirebaseAuth.instance.currentUser;
+
 
 
   /// Notification
@@ -160,6 +157,16 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
 
     });
+    await FirebaseFirestore.instance
+    .collection("Users")
+    .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) {
+        int anzahlKinder1 = document["anzahlKinder1"];
+        usersCollection.doc(currentUser!.email).update({"anzahlKinder1": anzahlKinder1 + 1});
+      });
+
+
 
     return showDialog(
       context: context,
@@ -213,7 +220,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
   /// Gruppe ändern Altert Dialog
 
-  void openChildBoxGroup({String? docID}) {
+  void openChildBoxGroup(String? docID, String group) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -249,7 +256,6 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           value: _currentItemSelected, onChanged: (newValueSelected) {
           setState(() {
             _currentItemSelected = newValueSelected!;
-            group = newValueSelected;
           });
         },
         ),
@@ -262,15 +268,38 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           // Speicher Button
           TextButton(
             onPressed: () {
-
-              // Button wird für hinzufügen(unten) und anpassen (neben Kind) genutzt, daher wird zuerst geprüft ob
-              // es um einen bestehenden oder neuen Datensatz geht
               if (docID != null) {
-                // Child Datensatz hinzufügen
-                // Verweis auf "firestoreDatabaseChild" Widget in "firestore_child.dart" File
-                // auf die Funktion "addChild" welche dort angelegt ist
-                // TextController wurde oben definiert und fragt den Text im Textfeld ab
+
+                FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(currentUser?.email)
+                      .get()
+                      .then((DocumentSnapshot document) {
+                    int anzahlKinder = document['anzahlKinder$group'];
+                    int anzahlKinderUpdate = (anzahlKinder - 1);
+
+                    FirebaseFirestore.instance
+                    .collection("Users")
+                        .doc(currentUser?.email)
+                        .update({'anzahlKinder$group': anzahlKinderUpdate});
+                  });
+
+
+
+
+                FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(currentUser?.email)
+                    .get()
+                    .then((DocumentSnapshot document) {
+                  int anzahlKinder2 = document["anzahlKinder$_currentItemSelected"];
+
+
+                  usersCollection.doc(currentUser!.email).update({"anzahlKinder$_currentItemSelected": anzahlKinder2 + 1});
+                });
+
                 firestoreDatabaseChild.updateChild(docID, _currentItemSelected);
+
               }
               //Box schliessen
               Navigator.pop(context);
@@ -448,8 +477,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    selectedOption = optiona();
+                                   setState(()  {
+                                      selectedOption = optiona();
                                   });
                                   buttons = '1';
                                 },
@@ -457,7 +486,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                 child: optionCards(
                                   userData["gruppe1"],
                                   "assets/icons/recycle.png", context, "1",
-                                  Theme.of(context).colorScheme.primary,),
+                                  Theme.of(context).colorScheme.primary, userData["anzahlKinder1"]),
                               ),
 
                               InkWell(
@@ -469,7 +498,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   },
                                   child: optionCards(
                                     userData["gruppe2"], "assets/icons/tools.png",
-                                    context, "2", Colors.indigo.shade100,)
+                                    context, "2", Colors.indigo.shade100, userData["anzahlKinder2"]),
                               ),
                               InkWell(
                                   onTap: () {
@@ -480,7 +509,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   },
                                   child: optionCards(
                                     userData["gruppe3"], "assets/icons/file.png",
-                                    context, "3", Colors.indigo.shade100,)
+                                    context, "3", Colors.indigo.shade100, userData["anzahlKinder3"]),
                               ),
                             ],
                           ),
@@ -500,7 +529,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
                                   child: optionCards(
                                     userData["gruppe1"], "assets/icons/recycle.png",
-                                    context, "1", Colors.indigo.shade200,)
+                                    context, "1", Colors.indigo.shade200, userData["anzahlKinder1"] ),
                               ),
                               InkWell(
                                   onTap: () {
@@ -511,7 +540,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   },
                                   child: optionCards(
                                     userData["gruppe2"], "assets/icons/tools.png",
-                                    context, "2", Theme.of(context).colorScheme.primary,)
+                                    context, "2", Theme.of(context).colorScheme.primary, userData["anzahlKinder2"]),
                               ),
                               InkWell(
                                   onTap: () {
@@ -522,7 +551,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   },
                                   child: optionCards(
                                     userData["gruppe3"], "assets/icons/file.png",
-                                    context, "3", Colors.indigo.shade200,)
+                                    context, "3", Colors.indigo.shade200, userData["anzahlKinder3"]),
                               ),
                             ],
                           ),
@@ -542,7 +571,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
                                   child: optionCards(
                                     userData["gruppe1"], "assets/icons/recycle.png",
-                                    context, "1", Colors.indigo.shade200,)
+                                    context, "1", Colors.indigo.shade200, userData["anzahlKinder1"]),
                               ),
                               InkWell(
                                   onTap: () {
@@ -553,7 +582,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   },
                                   child: optionCards(
                                     userData["gruppe2"], "assets/icons/tools.png",
-                                    context, "2", Colors.indigo.shade200,)
+                                    context, "2", Colors.indigo.shade200, userData["anzahlKinder2"]),
                               ),
                               InkWell(
                                   onTap: () {
@@ -564,7 +593,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   },
                                   child: optionCards(
                                     userData["gruppe3"], "assets/icons/file.png",
-                                    context, "3", Theme.of(context).colorScheme.primary,)
+                                    context, "3", Theme.of(context).colorScheme.primary, userData["anzahlKinder3"]),
                               ),
                             ],
                           ),
@@ -590,12 +619,12 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
   /// Funktion 3 Gruppen
 
-  Widget optionCards(
-      String text, String assetImage, BuildContext context, String cardId, var color,) {
+  Widget optionCards (
+      String text, String assetImage, BuildContext context, String cardId, var color, int anzahlKinder) {
     return
       Container(
-        width: 100,
-        height: 100,
+        height: 90,
+        width: 90,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(10),
@@ -608,47 +637,54 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             ),
           ],
         ),
-        child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
+        child: Stack(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 15,
+                  width: 30,
+                  child: IconButton(
                       onPressed: () => editField('gruppe$cardId', "Name anpassen", text),
                       icon: Icon(Icons.edit,
                         color: Colors.white,
-                        size: 12.0,
+                        size: 10.0,
                       )),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 35.0),
-                        child: Icon(Icons.group,
-                          color: Colors.white,
-                        ),
-                      ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12.0),
+                      child:
                       Text(
                         text,
                         style: TextStyle(color: Colors.white,
                             fontSize: 10
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                    const SizedBox(height: 5),
+                    Text('${anzahlKinder}',
+                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
+                          fontSize: 10
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
 
 
 
-            ],
-          ),
+          ],
         ),
       );
   }
@@ -657,7 +693,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
   /// 3 Gruppen
 
 
-  Widget optiona() {
+  Widget optiona()  {
     final mediaQuery = MediaQuery.of(context);
     return
       Column(
@@ -672,18 +708,18 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                 child: StreamBuilder<QuerySnapshot>(
                   // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                     stream: firestoreDatabaseChild.getChildrenStream1(),
-                    builder: (context, snapshot){
+                    builder: (context, snapshot) {
                       // wenn Daten vorhanden _> gib alle Daten aus
-                      if (snapshot.hasData) {
-                        List childrenList = snapshot.data!.docs;
-                        childrenList.sort((a, b) => a['child'].compareTo(b['child']));
+                      if (snapshot.hasData)  {
+                        List childrenList1 = snapshot.data!.docs;
+                        childrenList1.sort((a, b) => a['child'].compareTo(b['child']));
                         //als Liste wiedergeben
-                        return ListView.builder(
+                        return ListView.builder (
                           padding: EdgeInsets.only(bottom: 30),
-                          itemCount: childrenList.length,
+                          itemCount: childrenList1.length,
                           itemBuilder: (context, index) {
                             // individuelle Einträge abholen
-                            DocumentSnapshot document = childrenList[index];
+                            DocumentSnapshot document = childrenList1[index];
                             String docID = document.id;
 
                             // Eintrag von jedem Dokument abholen
@@ -718,7 +754,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID,
+                                  MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
                                   )),
                                 );
                               },
@@ -791,7 +827,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                     Container(
                                       width: 45,
                                       child: IconButton(
-                                        onPressed: () => openChildBoxGroup(docID: docID),
+                                        onPressed: () => openChildBoxGroup(docID, "1"),
                                         color: color2,
                                         icon: const Icon(Icons.group_rounded,
                                         ),
@@ -835,15 +871,15 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                   builder: (context, snapshot){
                     // wenn Daten vorhanden _> gib alle Daten aus
                     if (snapshot.hasData) {
-                      List childrenList = snapshot.data!.docs;
-                      childrenList.sort((a, b) => a['child'].compareTo(b['child']));
+                      List childrenList2 = snapshot.data!.docs;
+                      childrenList2.sort((a, b) => a['child'].compareTo(b['child']));
                       //als Liste wiedergeben
                       return ListView.builder(
                         padding: EdgeInsets.only(bottom: 30),
-                        itemCount: childrenList.length,
+                        itemCount: childrenList2.length,
                         itemBuilder: (context, index) {
                           // individuelle Einträge abholen
-                          DocumentSnapshot document = childrenList[index];
+                          DocumentSnapshot document = childrenList2[index];
                           String docID = document.id;
 
                           // Eintrag von jedem Dokument abholen
@@ -878,7 +914,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID,
+                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
                                 )),
                               );
                             },
@@ -951,7 +987,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   Container(
                                     width: 45,
                                     child: IconButton(
-                                      onPressed: () => openChildBoxGroup(docID: docID),
+                                      onPressed: () => openChildBoxGroup(docID, "2"),
                                       color: color2,
                                       icon: const Icon(Icons.group_rounded,
                                       ),
@@ -995,15 +1031,15 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                   builder: (context, snapshot){
                     // wenn Daten vorhanden _> gib alle Daten aus
                     if (snapshot.hasData) {
-                      List childrenList = snapshot.data!.docs;
-                      childrenList.sort((a, b) => a['child'].compareTo(b['child']));
+                      List childrenList3 = snapshot.data!.docs;
+                      childrenList3.sort((a, b) => a['child'].compareTo(b['child']));
                       //als Liste wiedergeben
                       return ListView.builder(
                         padding: EdgeInsets.only(bottom: 30),
-                        itemCount: childrenList.length,
+                        itemCount: childrenList3.length,
                         itemBuilder: (context, index) {
                           // individuelle Einträge abholen
-                          DocumentSnapshot document = childrenList[index];
+                          DocumentSnapshot document = childrenList3[index];
                           String docID = document.id;
 
                           // Eintrag von jedem Dokument abholen
@@ -1014,6 +1050,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                           String elternmail = data['eltern'];
                           String shownotification = data['shownotification'];
                           String absenz = data['absenz'];
+
+
 
                           if (absenz == "ja" && data["absenzBis"].toDate().isBefore(DateTime.now()))
                           {
@@ -1038,7 +1076,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID,
+                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
                                 )),
                               );
                             },
@@ -1111,7 +1149,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   Container(
                                     width: 45,
                                     child: IconButton(
-                                      onPressed: () => openChildBoxGroup(docID: docID),
+                                      onPressed: () => openChildBoxGroup(docID, "3"),
                                       color: color2,
                                       icon: const Icon(Icons.group_rounded,
                                       ),

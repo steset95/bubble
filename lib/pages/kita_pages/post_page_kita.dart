@@ -99,16 +99,15 @@ class _PostPageKitaState extends State<PostPageKita> {
       ),
 
         body:
-          Padding(
-            padding: EdgeInsets.all(10),
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(10),
 
-            child: Column(
+              child: Column(
 
-              children: [
-                const SizedBox(height: 10,),
-                Flexible(
-                  flex: 1,
-                  child: TextField(
+                children: [
+                  const SizedBox(height: 20,),
+                  TextField(
                     maxLength: 30,
                     //autofocus: true,
                     controller: newPostControllerTitel,
@@ -119,19 +118,17 @@ class _PostPageKitaState extends State<PostPageKita> {
 
 
                   ),
-                ),
-                const SizedBox(height: 20,),
-                Flexible(
-                  flex: 8,
-                  child: Container(
+                  const SizedBox(height: 30,),
+                  Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.black),
                       boxShadow: const [
+
                       ],
                     ),
-
+                    height: mediaQuery.size.width * 1,
                     padding: EdgeInsets.all(10),
                     child:  TextField(
 
@@ -148,11 +145,8 @@ class _PostPageKitaState extends State<PostPageKita> {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10,),
-                Flexible(
-                  flex: 1,
-                  child: Row(
+                  const SizedBox(height: 10,),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
@@ -189,11 +183,11 @@ class _PostPageKitaState extends State<PostPageKita> {
                       ),
                     ],
                   ),
-                ),
 
-                // save Button
+                  // save Button
 
-              ],
+                ],
+              ),
             ),
           ),
       ),
