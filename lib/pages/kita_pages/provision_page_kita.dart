@@ -104,68 +104,66 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0.0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Provision",
-          ),
-
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text("Provision",
         ),
-        // Abfrage der entsprechenden Daten - Sammlung = Users
-        body: SingleChildScrollView(
-          child: StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(currentUser?.email)
-                .snapshots(),
-            builder: (context, snapshot)
-            {
-              // ladekreis
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+
+      ),
+      // Abfrage der entsprechenden Daten - Sammlung = Users
+      body: SingleChildScrollView(
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(currentUser?.email)
+              .snapshots(),
+          builder: (context, snapshot)
+          {
+            // ladekreis
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            // Fehlermeldung
+            else if (snapshot.hasError) {
+              return Text("Error ${snapshot.error}");
+            }
+            // Daten abfragen funktioniert
+            else if (snapshot.hasData) {
+              // Entsprechende Daten extrahieren
+              final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+              // Inhalt Daten
+
+              return
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                    ProfileData(
+                      text: userData["iban"],
+                      sectionName: "IBAN",
+                      onPressed: () => editField("iban", "IBAN", userData["iban"]),
+                    ),
+
+
+
+                    SizedBox(
+                      height: 20,
+                    ),
+
+                  ],
                 );
-              }
-              // Fehlermeldung
-              else if (snapshot.hasError) {
-                return Text("Error ${snapshot.error}");
-              }
-              // Daten abfragen funktioniert
-              else if (snapshot.hasData) {
-                // Entsprechende Daten extrahieren
-                final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-                // Inhalt Daten
-
-                return
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                      ProfileData(
-                        text: userData["iban"],
-                        sectionName: "IBAN",
-                        onPressed: () => editField("iban", "IBAN", userData["iban"]),
-                      ),
-
-
-
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                    ],
-                  );
-                // Fehlermeldung wenn nichts vorhanden ist
-              } else {
-                return const Text("Keine Daten vorhanden");
-              }
-            },
-          ),
+              // Fehlermeldung wenn nichts vorhanden ist
+            } else {
+              return const Text("Keine Daten vorhanden");
+            }
+          },
         ),
       ),
     );

@@ -504,302 +504,300 @@ color: Theme.of(context).colorScheme.primary,
     final String formattedDate = currentDate2.substring(0, 10);
     final String showDatum = DateFormat('d-MMM-yy').format(currentDate1);
     final mediaQuery = MediaQuery.of(context);
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          scrolledUnderElevation: 0.0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Tagesraport",
-          ),
-          actions: [
-            showButtons(),
-          ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text("Tagesraport",
         ),
+        actions: [
+          showButtons(),
+        ],
+      ),
 
-        body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Users")
-          .doc(currentUser?.email)
-          .snapshots(),
-              builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final userData = snapshot.data?.data() as Map<String, dynamic>;
-          final childcode = userData["childcode"];
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("Users")
+        .doc(currentUser?.email)
+        .snapshots(),
+            builder: (context, snapshot) {
+      if (snapshot.hasData) {
+        final userData = snapshot.data?.data() as Map<String, dynamic>;
+        final childcode = userData["childcode"];
 
-          /// PaymentCheck
-
-
-          if (userData["aboBis"].toDate().isBefore(DateTime.now())){
-            return
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 71),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap:  () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              BezahlungPage(),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Text("Bitte Abonnement erneuern",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(Icons.credit_card_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 60,
-                                ),
-                                Icon(
-                                    Icons.arrow_forward,
-                                    color: Theme.of(context).colorScheme.primary,
-                                    size: 30
-                                ),
-                              ],
-                            ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }
-
-          /// PaymentCheck
-
-          if (snapshot.hasData && childcode != "") {
-            getKitaEmail(userData["childcode"]);
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-
-                const SizedBox(height: 10),
-                Flexible(
-                  flex: 1,
-                    child: buildGallery(childcode, currentDate1)),
-                const SizedBox(height: 10),
-                Flexible(
-                  flex: 9,
-                  child: Container(
-                   // height: mediaQuery.size.height * 0.55,
-                    width: mediaQuery.size.width * 1,
-                    child: StreamBuilder<QuerySnapshot>(
-                        stream:  FirebaseFirestore.instance
-                            .collection("Kinder")
-                            .doc(childcode)
-                            .collection(formattedDate)
-                            .orderBy('TimeStamp', descending: true)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          List<Row> raportWidgets = [];
-                          if (snapshot.hasData) {
-                            final raports = snapshot.data?.docs.reversed.toList();
-                            for (var raport in raports!) {
-                              final raportWidget = Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                    padding: EdgeInsets.only(top: 8, bottom: 8, left: 15,),
-                                    decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.inversePrimary,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                          BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 1,
-                          blurRadius: 3,
-                          offset: Offset(2, 4),
-                          ),
-                          ],
-                          ),
-                                      width: mediaQuery.size.width * 0.9,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                  raport['Uhrzeit'],
-                                                  style: TextStyle(fontWeight: FontWeight.bold,
-                                                  fontSize: 12,
-                                                    color: Theme.of(context).colorScheme.primary,
-                                                  )
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Text(
-                                                  raport['RaportTitle'],
-                                                style: TextStyle(fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                fontSize: 12,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                  width: mediaQuery.size.width * 0.80,
-                                                  child: Text(
-                                                      textAlign: TextAlign.left,
-                                                      raport['RaportText'],
-                                                    style: TextStyle(
-                                                    fontSize: 10,
-                                                  ),
-                                                  )),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                  ),
-                                ],
-                              );
-                              raportWidgets.add(raportWidget);
-                             // Text(raport['RaportText']);
-                            }
-                          }
-                          if (raportWidgets.isNotEmpty) {
-                            return
-                            ListView(
-                              children: raportWidgets,
-                            );
-                          }
-                          else {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Noch keine Einträge..."
-                                ),
-                              ],
-                            );
-                          }
-                        }
-                    ),
-                  ),
-                ),
+        /// PaymentCheck
 
 
-
-                Flexible(
-                  flex: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0,),
-                    child: Column(
-                      children: [
-
-                        const SizedBox(height: 10,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              onTap: _incrementCounterMinus,
-                              child: Container(
-                                width: 50,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Icon(Icons.arrow_back_ios_rounded,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap:  ()  {
-                                showRaportDialogDatum(context, currentDate1);
-
-                              },
-                              child: Text(showDatum,
-                                textAlign: TextAlign.center,
-                                style: TextStyle( fontFamily: 'Goli',
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: _incrementCounterPlus,
-                              child: Container(
-                                width: 50,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Icon(Icons.arrow_forward_ios_rounded,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-        }
-        if (snapshot.connectionState != ConnectionState.waiting) {
-          return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 71),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Text("Bitte Kind hinzufügen",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(height: 20),
-                    IconButton(
-                      icon:  Icon(Icons.add_reaction_outlined,
-                        size: 60,
-                        color: Theme.of(context).colorScheme.primary,
-                      ), onPressed: () {
+        if (userData["aboBis"].toDate().isBefore(DateTime.now())){
+          return
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 71),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap:  () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>
-                            AddKindPageEltern(),
+                            BezahlungPage(),
                         ),
                       );
                     },
+                    child: Column(
+                      children: [
+                        Text("Bitte Abonnement erneuern",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Icon(Icons.credit_card_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 60,
+                              ),
+                              Icon(
+                                  Icons.arrow_forward,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 30
+                              ),
+                            ],
+                          ),
+                      ],
                     ),
-                  ],
+                  ),
+                ],
+              ),
+            ],
+          );
+        }
+
+        /// PaymentCheck
+
+        if (snapshot.hasData && childcode != "") {
+          getKitaEmail(userData["childcode"]);
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+
+              const SizedBox(height: 10),
+              Flexible(
+                flex: 1,
+                  child: buildGallery(childcode, currentDate1)),
+              const SizedBox(height: 10),
+              Flexible(
+                flex: 9,
+                child: Container(
+                 // height: mediaQuery.size.height * 0.55,
+                  width: mediaQuery.size.width * 1,
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream:  FirebaseFirestore.instance
+                          .collection("Kinder")
+                          .doc(childcode)
+                          .collection(formattedDate)
+                          .orderBy('TimeStamp', descending: true)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        List<Row> raportWidgets = [];
+                        if (snapshot.hasData) {
+                          final raports = snapshot.data?.docs.reversed.toList();
+                          for (var raport in raports!) {
+                            final raportWidget = Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                  padding: EdgeInsets.only(top: 8, bottom: 8, left: 15,),
+                                  decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                        BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 1,
+                        blurRadius: 3,
+                        offset: Offset(2, 4),
+                        ),
+                        ],
+                        ),
+                                    width: mediaQuery.size.width * 0.9,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                                raport['Uhrzeit'],
+                                                style: TextStyle(fontWeight: FontWeight.bold,
+                                                fontSize: 12,
+                                                  color: Theme.of(context).colorScheme.primary,
+                                                )
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                                raport['RaportTitle'],
+                                              style: TextStyle(fontWeight: FontWeight.bold,
+                                                color: Theme.of(context).colorScheme.primary,
+                                              fontSize: 12,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 5),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                width: mediaQuery.size.width * 0.80,
+                                                child: Text(
+                                                    textAlign: TextAlign.left,
+                                                    raport['RaportText'],
+                                                  style: TextStyle(
+                                                  fontSize: 10,
+                                                ),
+                                                )),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                ),
+                              ],
+                            );
+                            raportWidgets.add(raportWidget);
+                           // Text(raport['RaportText']);
+                          }
+                        }
+                        if (raportWidgets.isNotEmpty) {
+                          return
+                          ListView(
+                            children: raportWidgets,
+                          );
+                        }
+                        else {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Noch keine Einträge..."
+                              ),
+                            ],
+                          );
+                        }
+                      }
+                  ),
                 ),
-              ],
-            ),
-          ],
-        );
-        } else
-                return
-                Text("");
-              }
-        ),
-        ),
-    );
+              ),
+
+
+
+              Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 5.0,),
+                  child: Column(
+                    children: [
+
+                      const SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: _incrementCounterMinus,
+                            child: Container(
+                              width: 50,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Icon(Icons.arrow_back_ios_rounded,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap:  ()  {
+                              showRaportDialogDatum(context, currentDate1);
+
+                            },
+                            child: Text(showDatum,
+                              textAlign: TextAlign.center,
+                              style: TextStyle( fontFamily: 'Goli',
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: _incrementCounterPlus,
+                            child: Container(
+                              width: 50,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Icon(Icons.arrow_forward_ios_rounded,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+      }
+      if (snapshot.connectionState != ConnectionState.waiting) {
+        return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 71),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                children: [
+                  Text("Bitte Kind hinzufügen",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(height: 20),
+                  IconButton(
+                    icon:  Icon(Icons.add_reaction_outlined,
+                      size: 60,
+                      color: Theme.of(context).colorScheme.primary,
+                    ), onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>
+                          AddKindPageEltern(),
+                      ),
+                    );
+                  },
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      );
+      } else
+              return
+              Text("");
+            }
+      ),
+      );
 
                 }
             }

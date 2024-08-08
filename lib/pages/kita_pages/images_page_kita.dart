@@ -130,7 +130,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
             children: [
               Text("Bilder löschen"),
               const SizedBox(width: 10),
-              Icon(Icons.delete,
+              Icon(Icons.delete_outline,
               color: Colors.black,
               ),
               const SizedBox(width: 15),
@@ -148,35 +148,33 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text("Bilder",
-            ),
-            actions: [
-              showButtons(),
+    return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Bilder",
+          ),
+          actions: [
+            showButtons(),
+          ],
+        ),
+      body: SingleChildScrollView(
+
+        child:
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column (
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              buildGallery(widget.docID),
             ],
           ),
-        body: SingleChildScrollView(
-
-          child:
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column (
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                buildGallery(widget.docID),
-              ],
-            ),
-          )
+        )
 
 
-    )
-      )
-            );
+        )
+    );
     }
     }
 

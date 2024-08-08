@@ -88,109 +88,104 @@ class _PostPageKitaState extends State<PostPageKita> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final umgebung = widget.umgebung;
-    return SafeArea(
-      child: Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        title:
-        Text('Neuer Post $umgebung',
-        ),
+    return Scaffold(
+    appBar: AppBar(
+      scrolledUnderElevation: 0.0,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
+      title:
+      Text('Neuer Post $umgebung',
       ),
+    ),
 
-        body:
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(10),
+      body:
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20,),
+              TextField(
+                maxLength: 30,
+                //autofocus: true,
+                controller: newPostControllerTitel,
+                textAlign: TextAlign.left,
+                decoration: InputDecoration(hintText: "Titel...",
 
-              child: Column(
-
-                children: [
-                  const SizedBox(height: 20,),
-                  TextField(
-                    maxLength: 30,
-                    //autofocus: true,
-                    controller: newPostControllerTitel,
-                    textAlign: TextAlign.left,
-                    decoration: InputDecoration(hintText: "Titel...",
-
-                    ),
+                ),
 
 
-                  ),
-                  const SizedBox(height: 30,),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.black),
-                      boxShadow: const [
-
-                      ],
-                    ),
-                    height: mediaQuery.size.width * 1,
-                    padding: EdgeInsets.all(10),
-                    child:  TextField(
-
-                      keyboardType: TextInputType.multiline,
-                      minLines: 1,
-                      maxLines: 20,
-                      maxLength: 300,
-                      controller: newPostControllerInhalt,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Inhalt...",
-                        counterText: "",
-
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          // Textfeld schliessen
-                          Navigator.pop(context);
-                          //Textfeld leeren
-                          newPostControllerTitel.clear();
-                          newPostControllerInhalt.clear();
-                        },
-                        child: Text("Abbrechen"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          if (newPostControllerInhalt.text.isNotEmpty  && newPostControllerTitel.text.isNotEmpty) {
-                            if (widget.externPost) {
-                              // Raport hinzufügen
-                              postMessageExt();
-                            }
-                            else{
-                              postMessageInt();
-                              // Textfeld schliessen
-                            }
-                            Navigator.pop(context);
-                            //Textfeld leeren
-                            newPostControllerTitel.clear();
-                            newPostControllerInhalt.clear();
-                          }
-                          else {
-                            return displayMessageToUser("Bitte Titel und Inhalt eingeben", context);
-                          }
-                        },
-                        child: Text("Speichern"),
-                      ),
+              ),
+              const SizedBox(height: 20,),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.black),
+                    boxShadow: const [
                     ],
                   ),
+                  height: mediaQuery.size.width * 0.9,
+                  padding: EdgeInsets.all(10),
+                  child:  TextField(
 
-                  // save Button
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,
+                    maxLines: 20,
+                    maxLength: 300,
+                    controller: newPostControllerInhalt,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Inhalt...",
+                      counterText: "",
 
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      // Textfeld schliessen
+                      Navigator.pop(context);
+                      //Textfeld leeren
+                      newPostControllerTitel.clear();
+                      newPostControllerInhalt.clear();
+                    },
+                    child: Text("Abbrechen"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (newPostControllerInhalt.text.isNotEmpty  && newPostControllerTitel.text.isNotEmpty) {
+                        if (widget.externPost) {
+                          // Raport hinzufügen
+                          postMessageExt();
+                        }
+                        else{
+                          postMessageInt();
+                          // Textfeld schliessen
+                        }
+                        Navigator.pop(context);
+                        //Textfeld leeren
+                        newPostControllerTitel.clear();
+                        newPostControllerInhalt.clear();
+                      }
+                      else {
+                        return displayMessageToUser("Bitte Titel und Inhalt eingeben", context);
+                      }
+                    },
+                    child: Text("Speichern"),
+                  ),
                 ],
               ),
-            ),
+
+              // save Button
+
+            ],
           ),
-      ),
+        ),
     );
   }
 }

@@ -204,21 +204,20 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
-              //Save Button
               TextButton(
-                child: const Text("Speichern",
-                ),
-                onPressed: () => Navigator.of(context).pop(newValue),
+                  child: const Text("Speichern",
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    if (newValue.trim().length > 0) {
+                      // In Firestore updaten
+                      kinderCollection.doc(childcode).update({field: newValue});
+                    }
+                  }
               ),
             ],
           ),
     );
-
-
-    if (newValue.trim().length > 0) {
-
-      await kinderCollection.doc(childcode).update({field: newValue});
-    }
   }
 
   Widget showData () {
@@ -489,7 +488,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
                       ProfileDataSwitch(
                         text: userData["fremdkoerper"],
-                        sectionName: "Fremdkörper entfernen (bspw. Zecken)",
+                        sectionName: "Fremdkörper entfernen",
                         field: "fremdkoerper",
                         childcode: childcode,
                       ),
@@ -590,20 +589,18 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0.0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Infos Kind",
-          ),
-          actions: [
-            showButtons(),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text("Infos Kind",
         ),
-        body: showData(),
-      )
-            );
+        actions: [
+          showButtons(),
+        ],
+      ),
+      body: showData(),
+    );
     }
 }
 

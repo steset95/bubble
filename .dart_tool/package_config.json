@@ -117,7 +117,7 @@
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-8.0.6",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-8.0.7",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -224,6 +224,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "freezed_annotation",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/freezed_annotation-2.4.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "http",
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.2.2",
       "packageUri": "lib/",
@@ -238,6 +244,12 @@
     {
       "name": "intl",
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -374,6 +386,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "purchases_flutter",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/purchases_flutter-7.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "rxdart",
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/rxdart-0.28.0",
       "packageUri": "lib/",
@@ -501,7 +519,7 @@
     },
     {
       "name": "url_launcher_web",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_web-2.3.2",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher_web-2.3.3",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -560,7 +578,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-05T16:19:23.596887Z",
+  "generated": "2024-08-07T15:00:59.194392Z",
   "generator": "pub",
   "generatorVersion": "3.6.0-76.0.dev",
   "flutterRoot": "file:///C:/Users/Stefan/Documents/flutter",

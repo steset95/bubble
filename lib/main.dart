@@ -12,6 +12,7 @@ import 'components/notification_controller.dart';
 
 void main() async {
 
+
   /// AwesomeNotifications
   await AwesomeNotifications().initialize(null, [
     NotificationChannel(

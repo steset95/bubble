@@ -94,21 +94,20 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          //Save Button
           TextButton(
-            child: const Text("Speichern",
-            ),
-            onPressed: () => Navigator.of(context).pop(newValue),
+              child: const Text("Speichern",
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                if (newValue.trim().length > 0) {
+                  // In Firestore updaten
+                  usersCollection.doc(currentUser!.email).update({field: newValue});
+                }
+              }
           ),
         ],
       ),
     );
-
-    // prüfen ob etwas geschrieben
-    if (newValue.trim().length > 0) {
-      // In Firestore updaten
-      await usersCollection.doc(currentUser!.email).update({field: newValue});
-    }
   }
 
 
@@ -165,129 +164,127 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0.0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Profil",
-          ),
-          actions: [
-            showButtons (),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text("Profil",
         ),
+        actions: [
+          showButtons (),
+        ],
+      ),
 
-        // Abfrage der entsprechenden Daten - Sammlung = Users
-        body: SingleChildScrollView(
-          child: StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(currentUser?.email)
-                .snapshots(),
-            builder: (context, snapshot)
-            {
-              // ladekreis
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+      // Abfrage der entsprechenden Daten - Sammlung = Users
+      body: SingleChildScrollView(
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(currentUser?.email)
+              .snapshots(),
+          builder: (context, snapshot)
+          {
+            // ladekreis
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            // Fehlermeldung
+            else if (snapshot.hasError) {
+              return Text("Error ${snapshot.error}");
+            }
+            // Daten abfragen funktioniert
+            else if (snapshot.hasData) {
+              // Entsprechende Daten extrahieren
+              final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+
+              return
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    ProfileData(
+                      text: userData["username"],
+                      sectionName: "Name",
+                      onPressed: () => editField("username", "Name", userData["username"]),
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["email"],
+                      sectionName: "Email-Adresse",
+
+                    ),
+                    ProfileData(
+                      text: userData["adress"],
+                      sectionName: "Strasse und Hausnummer",
+                      onPressed: () => editField("adress", "Strasse und Hausnummer", userData["adress"]),
+                    ),
+
+                    ProfileData(
+                      text: userData["adress2"],
+                      sectionName: "PLZ und Ort",
+                      onPressed: () => editField("adress2", "PLZ und Ort", userData["adress2"]),
+                    ),
+
+                    ProfileData(
+                      text: userData["tel"],
+                      sectionName: "Telefonnummer",
+                      onPressed: () => editField("tel", "Telefonnummer", userData["tel"]),
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+
+
+                    /// Payment
+
+
+                    GestureDetector(
+                      onTap:  () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              BezahlungPage()),
+                        );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text("Abonnement",
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                              fontSize: 12,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Icon(
+                              Icons.arrow_forward,
+                              color: Theme.of(context).colorScheme.primary,
+
+                              size: 10
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+
+                  ],
                 );
-              }
-              // Fehlermeldung
-              else if (snapshot.hasError) {
-                return Text("Error ${snapshot.error}");
-              }
-              // Daten abfragen funktioniert
-              else if (snapshot.hasData) {
-                // Entsprechende Daten extrahieren
-                final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-
-                return
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ProfileData(
-                        text: userData["username"],
-                        sectionName: "Name",
-                        onPressed: () => editField("username", "Name", userData["username"]),
-                      ),
-          
-                      ProfileDataReadOnly(
-                        text: userData["email"],
-                        sectionName: "Email-Adresse",
-
-                      ),
-                      ProfileData(
-                        text: userData["adress"],
-                        sectionName: "Strasse und Hausnummer",
-                        onPressed: () => editField("adress", "Strasse und Hausnummer", userData["adress"]),
-                      ),
-          
-                      ProfileData(
-                        text: userData["adress2"],
-                        sectionName: "PLZ und Ort",
-                        onPressed: () => editField("adress2", "PLZ und Ort", userData["adress2"]),
-                      ),
-          
-                      ProfileData(
-                        text: userData["tel"],
-                        sectionName: "Telefonnummer",
-                        onPressed: () => editField("tel", "Telefonnummer", userData["tel"]),
-                      ),
-          
-                      SizedBox(
-                        height: 30,
-                      ),
-          
-          
-                      /// Payment
-
-
-                      GestureDetector(
-                        onTap:  () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                BezahlungPage()),
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text("Abonnement",
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                                fontSize: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Icon(
-                                Icons.arrow_forward,
-                                color: Theme.of(context).colorScheme.primary,
-
-                                size: 10
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-
-                    ],
-                  );
-                // Fehlermeldung wenn nichts vorhanden ist
-              } else {
-                return const Text("Keine Daten vorhanden");
-              }
-            },
-          ),
+              // Fehlermeldung wenn nichts vorhanden ist
+            } else {
+              return const Text("Keine Daten vorhanden");
+            }
+          },
         ),
       ),
     );

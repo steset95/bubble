@@ -74,117 +74,115 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text("Eltern",
-            ),
+    return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Eltern",
           ),
-        body: SingleChildScrollView(
-          child:
-            StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("Kinder")
-                  .doc(widget.docID)
-                  .snapshots(),
-              builder: (context, snapshot)
-              {
-                // ladekreis
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                // Fehlermeldung
-                else if (snapshot.hasError) {
-                  return Text("Error ${snapshot.error}");
-                }
-                // Daten abfragen funktioniert
-                else if (snapshot.hasData) {
-              // Entsprechende Daten extrahieren
-              final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-              if (userData["eltern"] == "")
-              {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Kind wurde noch nicht zugeordnet."),
-                    ],
-                  ),
-                ],
-              );
+        ),
+      body: SingleChildScrollView(
+        child:
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Kinder")
+                .doc(widget.docID)
+                .snapshots(),
+            builder: (context, snapshot)
+            {
+              // ladekreis
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
+              // Fehlermeldung
+              else if (snapshot.hasError) {
+                return Text("Error ${snapshot.error}");
+              }
+              // Daten abfragen funktioniert
+              else if (snapshot.hasData) {
+            // Entsprechende Daten extrahieren
+            final userData = snapshot.data?.data() as Map<String, dynamic>;
 
-            else {
-              final elternmail = userData["eltern"];
-
-              // Inhalt Daten
-
-              return StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("Users")
-                  .doc(elternmail)
-                  .snapshots(),
-              builder: (context, snapshot) {
-              if (snapshot.hasData) {
-              final username = snapshot.data!['username'];
-              final adress = snapshot.data!['adress'];
-              final adress2 = snapshot.data!['adress2'];
-              final tel = snapshot.data!['tel'];
-
-              return
-              SingleChildScrollView(
-              child: Column(
+            if (userData["eltern"] == "")
+            {
+            return Column(
               children: [
                 SizedBox(
-                  height: 15,
+                  height: 50,
                 ),
-              ProfileDataReadOnly(
-              text: username,
-              sectionName: "Name",
-              ),
-              ProfileDataReadOnly(
-              text: adress,
-              sectionName: "Adresse",
-              ),
-              ProfileDataReadOnly(
-              text: adress2,
-              sectionName: "Ort",
-              ),
-                MyProfileDataIcon(
-                  text: tel,
-                  sectionName: "Telefonnummer",
-                  onPressed: () => setState(() {
-                    _makePhoneCall(tel);
-                  }),
-                  icon: Icons.call_outlined,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Kind wurde noch nicht zugeordnet."),
+                  ],
                 ),
               ],
-              ),
-              );
-              };
-              return const Text("");
-              },
-              );
-              }
-                  // Fehlermeldung wenn nichts vorhanden ist
-                } else {
-                  return const Text("Keine Daten vorhanden");
-                }
-                return Text("");
-              },
-    )
-    )
-      )
             );
+            }
+
+          else {
+            final elternmail = userData["eltern"];
+
+            // Inhalt Daten
+
+            return StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(elternmail)
+                .snapshots(),
+            builder: (context, snapshot) {
+            if (snapshot.hasData) {
+            final username = snapshot.data!['username'];
+            final adress = snapshot.data!['adress'];
+            final adress2 = snapshot.data!['adress2'];
+            final tel = snapshot.data!['tel'];
+
+            return
+            SingleChildScrollView(
+            child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+            ProfileDataReadOnly(
+            text: username,
+            sectionName: "Name",
+            ),
+            ProfileDataReadOnly(
+            text: adress,
+            sectionName: "Adresse",
+            ),
+            ProfileDataReadOnly(
+            text: adress2,
+            sectionName: "Ort",
+            ),
+              MyProfileDataIcon(
+                text: tel,
+                sectionName: "Telefonnummer",
+                onPressed: () => setState(() {
+                  _makePhoneCall(tel);
+                }),
+                icon: Icons.call_outlined,
+              ),
+            ],
+            ),
+            );
+            };
+            return const Text("");
+            },
+            );
+            }
+                // Fehlermeldung wenn nichts vorhanden ist
+              } else {
+                return const Text("Keine Daten vorhanden");
+              }
+              return Text("");
+            },
+        )
+        )
+    );
     }
     }
 

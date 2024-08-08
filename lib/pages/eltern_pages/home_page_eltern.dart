@@ -27,30 +27,28 @@ class _HomePageElternState extends State<HomePageEltern> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: body[_currentIndex],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 0.0,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentIndex,
-            onTap: (int newIndex)
-            {
-              setState((){
-                _currentIndex = newIndex;
-            });
-            },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.house), label: "Kita",),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Raport"),
-            BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Kind"),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profil"),
-                      ],
-        ),
-
+    return Scaffold(
+      body: Center(
+        child: body[_currentIndex],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0.0,
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _currentIndex,
+          onTap: (int newIndex)
+          {
+            setState((){
+              _currentIndex = newIndex;
+          });
+          },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.house), label: "Kita",),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Raport"),
+          BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Kind"),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profil"),
+                    ],
+      ),
+
     );
   }
 }

@@ -90,21 +90,20 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          //Save Button
           TextButton(
-            child: const Text("Speichern",
-            ),
-            onPressed: () => Navigator.of(context).pop(newValue),
+              child: const Text("Speichern",
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                if (newValue.trim().length > 0) {
+                  // In Firestore updaten
+                  usersCollection.doc(currentUser!.email).update({field: newValue});
+                }
+              }
           ),
         ],
       ),
     );
-
-    // prüfen ob etwas geschrieben
-    if (newValue.trim().length > 0) {
-      // In Firestore updaten
-      await usersCollection.doc(currentUser!.email).update({field: newValue});
-    }
   }
 
   // Bearbeitungsfeld
@@ -144,21 +143,20 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
             ),
             onPressed: () => Navigator.pop(context),
           ),
-          //Save Button
           TextButton(
-            child: const Text("Speichern",
-            ),
-            onPressed: () => Navigator.of(context).pop(newValue),
+              child: const Text("Speichern",
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                if (newValue.trim().length > 0) {
+                  // In Firestore updaten
+                  usersCollection.doc(currentUser!.email).update({field: newValue});
+                }
+              }
           ),
         ],
       ),
     );
-
-    // prüfen ob etwas geschrieben
-    if (newValue.trim().length > 0) {
-      // In Firestore updaten
-      await usersCollection.doc(currentUser!.email).update({field: newValue});
-    }
   }
 
 
@@ -215,143 +213,242 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0.0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Profil",
-          ),
-          actions: [
-            showButtons ()
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text("Profil",
         ),
+        actions: [
+          showButtons ()
+        ],
+      ),
 
-        // Abfrage der entsprechenden Daten - Sammlung = Users
-        body: SingleChildScrollView(
-          child: StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(currentUser?.email)
-                .snapshots(),
-            builder: (context, snapshot)
-            {
-              // ladekreis
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+      // Abfrage der entsprechenden Daten - Sammlung = Users
+      body: SingleChildScrollView(
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(currentUser?.email)
+              .snapshots(),
+          builder: (context, snapshot)
+          {
+            // ladekreis
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            // Fehlermeldung
+            else if (snapshot.hasError) {
+              return Text("Error ${snapshot.error}");
+            }
+            // Daten abfragen funktioniert
+            else if (snapshot.hasData) {
+              // Entsprechende Daten extrahieren
+              final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+              // Inhalt Daten
+
+              return
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 15,
+                    ),
+                    ProfileData(
+                      text: userData["username"],
+                      sectionName: "Name",
+                      onPressed: () => editField("username", "Name", userData["username"], ),
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["email"],
+                      sectionName: "Email-Adresse",
+                    ),
+                    ProfileData(
+                      text: userData["adress"],
+                      sectionName: "Strasse und Hausnummer",
+                      onPressed: () => editField("adress", "Strasse und Hausnummer", userData["adress"],),
+                    ),
+
+                    ProfileData(
+                      text: userData["adress2"],
+                      sectionName: "PLZ und Ort",
+                      onPressed: () => editField("adress2", "PLZ und Ort", userData["adress2"],),
+                    ),
+
+                    ProfileData(
+                      text: userData["tel"],
+                      sectionName: "Telefonnummer",
+                      onPressed: () => editField("tel", "Telefonnummer", userData["tel"],),
+                    ),
+
+                    ProfileData(
+                      text: userData["beschreibung"],
+                      sectionName: "Über uns",
+                      onPressed: () => editFieldBeschreibung("beschreibung", "Über uns", userData["beschreibung"],),
+                    ),
+
+                    SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                      onTap:  () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              ProvisionPageKita()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Text("Provision",
+                          style: TextStyle(
+                            fontSize: 15,
+                          color: Theme.of(context).colorScheme.primary,),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Stack(
+                                children: [
+                                  Container(
+                                      width: 80,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                              colors: [Colors.white.withOpacity(0.2), Theme.of(context).colorScheme.primary.withOpacity(0.2),],
+                                              begin: const FractionalOffset(0.0, 0.1),
+                                              end: const FractionalOffset(0.4, 0.6),
+                                              stops: [0.1, 0.6],
+                                              tileMode: TileMode.clamp
+                                          ),
+                                        //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                              spreadRadius: 3,
+                                              blurRadius: 6,
+                                              offset: Offset(2, 4),
+                                            ),
+                                          ],
+                                          borderRadius: BorderRadius.all(Radius.circular(100))
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text (userData["guthaben"].toString(),
+                                                  style: TextStyle(color: Colors.indigo.shade900.withOpacity(0.6),
+                                                  fontSize: 15,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 21,),
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 30,),
+                                          Container(
+                                              width: 1,
+                                              height: 9,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 2,
+                                                      blurRadius: 5,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 24,),
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 26,),
+                                          Container(
+                                            width: 3,
+                                            height: 4,
+                                            decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.white,
+                                                    spreadRadius: 4,
+                                                    blurRadius: 5,
+                                                    offset: Offset(2, 4),
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.all(Radius.circular(100))
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  Column(
+                                    children: [
+                                      SizedBox(height: 27,),
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 22,),
+                                          Container(
+                                            width: 6,
+                                            height: 6,
+                                            decoration: BoxDecoration(
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    color: Colors.white,
+                                                    spreadRadius: 3,
+                                                    blurRadius: 6,
+                                                    offset: Offset(2, 4),
+                                                  ),
+                                                ],
+                                                borderRadius: BorderRadius.all(Radius.circular(100))
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+
+                    SizedBox(
+                      height: 20,
+                    ),
+
+                  ],
                 );
-              }
-              // Fehlermeldung
-              else if (snapshot.hasError) {
-                return Text("Error ${snapshot.error}");
-              }
-              // Daten abfragen funktioniert
-              else if (snapshot.hasData) {
-                // Entsprechende Daten extrahieren
-                final userData = snapshot.data?.data() as Map<String, dynamic>;
-          
-                // Inhalt Daten
-          
-                return
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ProfileData(
-                        text: userData["username"],
-                        sectionName: "Name",
-                        onPressed: () => editField("username", "Name", userData["username"], ),
-                      ),
-          
-                      ProfileDataReadOnly(
-                        text: userData["email"],
-                        sectionName: "Email-Adresse",
-                      ),
-                      ProfileData(
-                        text: userData["adress"],
-                        sectionName: "Strasse und Hausnummer",
-                        onPressed: () => editField("adress", "Strasse und Hausnummer", userData["adress"],),
-                      ),
-          
-                      ProfileData(
-                        text: userData["adress2"],
-                        sectionName: "PLZ und Ort",
-                        onPressed: () => editField("adress2", "PLZ und Ort", userData["adress2"],),
-                      ),
-          
-                      ProfileData(
-                        text: userData["tel"],
-                        sectionName: "Telefonnummer",
-                        onPressed: () => editField("tel", "Telefonnummer", userData["tel"],),
-                      ),
-
-                      ProfileData(
-                        text: userData["beschreibung"],
-                        sectionName: "Über uns",
-                        onPressed: () => editFieldBeschreibung("beschreibung", "Über uns", userData["beschreibung"],),
-                      ),
-          
-                      SizedBox(
-                        height: 30,
-                      ),
-                      GestureDetector(
-                        onTap:  () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                ProvisionPageKita()),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Text("Provision",
-                            style: TextStyle(
-                              fontSize: 15,
-                            color: Theme.of(context).colorScheme.primary,),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Theme.of(context).colorScheme.primary,
-                                    ),
-                                    borderRadius: BorderRadius.all(Radius.circular(100))
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text (userData["guthaben"].toString()),
-                                      ],
-                                    ),
-                                  ],
-                                )
-                            ),
-                          ],
-                        ),
-                      ),
-
-
-                      SizedBox(
-                        height: 20,
-                      ),
-
-                    ],
-                  );
-                // Fehlermeldung wenn nichts vorhanden ist
-              } else {
-                return const Text("Keine Daten vorhanden");
-              }
-            },
-          ),
+              // Fehlermeldung wenn nichts vorhanden ist
+            } else {
+              return const Text("Keine Daten vorhanden");
+            }
+          },
         ),
       ),
     );

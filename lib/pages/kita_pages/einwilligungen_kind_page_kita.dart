@@ -57,101 +57,98 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-
-          appBar: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text("Einwilligungen",
-            ),
+    return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Einwilligungen",
           ),
-        body: SingleChildScrollView(
-          child:
-            StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("Kinder")
-                  .doc(widget.docID)
-                  .snapshots(),
-              builder: (context, snapshot)
-              {
-                // ladekreis
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
+        ),
+      body: SingleChildScrollView(
+        child:
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Kinder")
+                .doc(widget.docID)
+                .snapshots(),
+            builder: (context, snapshot)
+            {
+              // ladekreis
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              // Fehlermeldung
+              else if (snapshot.hasError) {
+                return Text("Error ${snapshot.error}");
+              }
+              // Daten abfragen funktioniert
+              else if (snapshot.hasData) {
+                // Entsprechende Daten extrahieren
+                final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+                // Inhalt Daten
+
+                return
+                  Column(
+                    children: [
+
+                      ProfileDataReadOnly(
+                        text: userData["fotosSocialMedia"],
+                        sectionName: "Fotos für SocialMedia",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["fotosApp"],
+                        sectionName: "Fotos für App",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["nagellack"],
+                        sectionName: "Nagellack auftragen",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["schminken"],
+                        sectionName: "Schminken",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["fieber"],
+                        sectionName: "Rektales Fiebermessen",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["sonnencreme"],
+                        sectionName: "Sonnencreme auftragen",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["fremdkoerper"],
+                        sectionName: "Fremdkörper entfernen (bspw. Zecken)",
+                      ),
+
+                      ProfileDataReadOnly(
+                        text: userData["homoeopathie"],
+                        sectionName: "Homöopathie",
+                      ),
+
+                      SizedBox(
+                        height: 30,
+                      ),
+
+
+                    ],
                   );
-                }
-                // Fehlermeldung
-                else if (snapshot.hasError) {
-                  return Text("Error ${snapshot.error}");
-                }
-                // Daten abfragen funktioniert
-                else if (snapshot.hasData) {
-                  // Entsprechende Daten extrahieren
-                  final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-                  // Inhalt Daten
-
-                  return
-                    Column(
-                      children: [
-
-                        ProfileDataReadOnly(
-                          text: userData["fotosSocialMedia"],
-                          sectionName: "Fotos für SocialMedia",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["fotosApp"],
-                          sectionName: "Fotos für App",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["nagellack"],
-                          sectionName: "Nagellack auftragen",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["schminken"],
-                          sectionName: "Schminken",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["fieber"],
-                          sectionName: "Rektales Fiebermessen",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["sonnencreme"],
-                          sectionName: "Sonnencreme auftragen",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["fremdkoerper"],
-                          sectionName: "Fremdkörper entfernen (bspw. Zecken)",
-                        ),
-
-                        ProfileDataReadOnly(
-                          text: userData["homoeopathie"],
-                          sectionName: "Homöopathie",
-                        ),
-
-                        SizedBox(
-                          height: 30,
-                        ),
-
-
-                      ],
-                    );
-                  // Fehlermeldung wenn nichts vorhanden ist
-                } else {
-                  return const Text("Keine Daten vorhanden");
-                }
-              },
-    )
-    )
-      )
-            );
+                // Fehlermeldung wenn nichts vorhanden ist
+              } else {
+                return const Text("Keine Daten vorhanden");
+              }
+            },
+        )
+        )
+    );
     }
     }
 

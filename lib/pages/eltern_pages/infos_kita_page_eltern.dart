@@ -70,70 +70,68 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text("Infos Kita",
-
-            ),
-          ),
-        body: SingleChildScrollView(
-          child:
-          StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(widget.kitamail)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final username = snapshot.data!['username'];
-                final adress = snapshot.data!['adress'];
-                final adress2 = snapshot.data!['adress2'];
-                final beschreibung = snapshot.data!['beschreibung'];
-                final tel = snapshot.data!['tel'];
-
-                return
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ProfileDataReadOnly(
-                          text: username,
-                          sectionName: "Name",
-                        ),
-                        ProfileDataReadOnly(
-                          text: adress,
-                          sectionName: "Adresse",
-                        ),
-                        ProfileDataReadOnly(
-                          text: adress2,
-                          sectionName: "Ort",
-                        ),
-                        MyProfileDataIcon(
-                          text: tel,
-                          sectionName: "Telefonnummer",
-                          onPressed: () => setState(() {
-                            _makePhoneCall(tel);
-                          }),
-                          icon:  Icons.call_outlined,
-                        ),
-                        ProfileDataReadOnly(
-                          text: beschreibung,
-                          sectionName: "Über die Kita",
-                        ),
-                      ],
-                    ),
-                  );
-              };
-              return const Text("");
-            },
-
+    return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Infos Kita",
 
           ),
-    )
-      )
-            );
+        ),
+      body: SingleChildScrollView(
+        child:
+        StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(widget.kitamail)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final username = snapshot.data!['username'];
+              final adress = snapshot.data!['adress'];
+              final adress2 = snapshot.data!['adress2'];
+              final beschreibung = snapshot.data!['beschreibung'];
+              final tel = snapshot.data!['tel'];
+
+              return
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ProfileDataReadOnly(
+                        text: username,
+                        sectionName: "Name",
+                      ),
+                      ProfileDataReadOnly(
+                        text: adress,
+                        sectionName: "Adresse",
+                      ),
+                      ProfileDataReadOnly(
+                        text: adress2,
+                        sectionName: "Ort",
+                      ),
+                      MyProfileDataIcon(
+                        text: tel,
+                        sectionName: "Telefonnummer",
+                        onPressed: () => setState(() {
+                          _makePhoneCall(tel);
+                        }),
+                        icon:  Icons.call_outlined,
+                      ),
+                      ProfileDataReadOnly(
+                        text: beschreibung,
+                        sectionName: "Über die Kita",
+                      ),
+                    ],
+                  ),
+                );
+            };
+            return const Text("");
+          },
+
+
+        ),
+        )
+    );
     }
     }
 

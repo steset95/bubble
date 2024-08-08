@@ -458,298 +458,296 @@ class _RaportPageState extends State<RaportPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          scrolledUnderElevation: 0.0,
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Raport",
-          ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text("Raport",
         ),
-          body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Flexible(
-                    flex: 2,
-                    child: Row(
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          child: GestureDetector(
-                            onTap: showRaportDialogAnmeldung,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    spreadRadius: 1,
-                                    blurRadius: 3,
-                                    offset: Offset(2, 4),
-                                  ),
-                                ],
-                              ),
-                              child:  Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.door_back_door_outlined,
-                                    color: Theme.of(context).colorScheme.inversePrimary,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Anmeldung",
-                                        style: TextStyle(
-                                          color: Theme.of(context).colorScheme.inversePrimary,),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          flex: 1,
-                          child: GestureDetector(
-                            onTap: showRaportDialogEssen,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    spreadRadius: 1,
-                                    blurRadius: 3,
-                                    offset: Offset(2, 4),
-                                  ),
-                                ],
-                              ),
-
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.local_pizza_outlined,
-                                    color: Theme.of(context).colorScheme.inversePrimary,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Essen",
-                                        style: TextStyle(
-                                          color: Theme.of(context).colorScheme.inversePrimary,),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    )),
-
-                const SizedBox(height: 20),
-                Flexible(
+      ),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              Flexible(
                   flex: 2,
-                    child:
-                    Row(
-                      children: [
-                  Flexible(
-                      flex: 1,
-                      child:
-                      GestureDetector(
-                        onTap: showRaportDialogSchlaf,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.primary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.bed_outlined,
-                                color: Theme.of(context).colorScheme.inversePrimary,
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Schlaf",
-                                    style: TextStyle(
-                                      color: Theme.of(context).colorScheme.inversePrimary,),
-                                  ),
-                                ],
-                              ),
-                            ],
+                  child: Row(
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: showRaportDialogAnmeldung,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(2, 4),
+                                ),
+                              ],
+                            ),
+                            child:  Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.door_back_door_outlined,
+                                  color: Theme.of(context).colorScheme.inversePrimary,
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Anmeldung",
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.inversePrimary,),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                  ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                            flex: 1,
-                            child:
-                            GestureDetector(
-                              onTap: showRaportDialogActivity,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset: Offset(2, 4),
-                                    ),
-                                  ],
+                      const SizedBox(width: 20),
+                      Flexible(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: showRaportDialogEssen,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(2, 4),
                                 ),
-                                child: Column(
+                              ],
+                            ),
+
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.local_pizza_outlined,
+                                  color: Theme.of(context).colorScheme.inversePrimary,
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.sports_soccer,
-                                      color: Theme.of(context).colorScheme.inversePrimary,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text("Aktivitäten",
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.inversePrimary,),
-                                        ),
-                                      ],
+                                    Text("Essen",
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.inversePrimary,),
                                     ),
                                   ],
                                 ),
-                              ),
+                              ],
                             ),
-                        )
+                          ),
+                        ),
+                      ),
 
-                ],)),
+                    ],
+                  )),
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
+              Flexible(
+                flex: 2,
+                  child:
+                  Row(
+                    children: [
                 Flexible(
-                    flex: 2,
-                    child:
-                    Row(
-                      children: [
-                        Flexible(
-                            flex: 1,
-                            child:
-                            GestureDetector(
-                              onTap: showRaportDialogDiverses,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset: Offset(2, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.note_add_outlined,
-                                      color: Theme.of(context).colorScheme.inversePrimary,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text("Diverses",
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.inversePrimary,),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                            flex: 1,
-                            child:
-                            GestureDetector(
-                              onTap: showRaportDialogAbmeldung,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      spreadRadius: 1,
-                                      blurRadius: 3,
-                                      offset: Offset(2, 4),
-                                    ),
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.family_restroom_outlined,
-                                      color: Theme.of(context).colorScheme.inversePrimary,
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text("Abholung",
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.inversePrimary,),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                        ),
-                      ],
-                    )
-                ),
-
-                const SizedBox(height: 20),
-
-                if (kIsWeb == false)
-                  Flexible(
                     flex: 1,
-                    child: Row(
-            children: [
-
-                ImageUpload(docID: widget.docID),
-              ],
+                    child:
+                    GestureDetector(
+                      onTap: showRaportDialogSchlaf,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.grey,
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: Offset(2, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.bed_outlined,
+                              color: Theme.of(context).colorScheme.inversePrimary,
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Schlaf",
+                                  style: TextStyle(
+                                    color: Theme.of(context).colorScheme.inversePrimary,),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
+                ),
+                      const SizedBox(width: 20),
+                      Flexible(
+                          flex: 1,
+                          child:
+                          GestureDetector(
+                            onTap: showRaportDialogActivity,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: Offset(2, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.sports_soccer,
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Aktivitäten",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.inversePrimary,),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      )
+
+              ],)),
+
+              const SizedBox(height: 20),
+              Flexible(
+                  flex: 2,
+                  child:
+                  Row(
+                    children: [
+                      Flexible(
+                          flex: 1,
+                          child:
+                          GestureDetector(
+                            onTap: showRaportDialogDiverses,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: Offset(2, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.note_add_outlined,
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Diverses",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.inversePrimary,),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ),
+                      const SizedBox(width: 20),
+                      Flexible(
+                          flex: 1,
+                          child:
+                          GestureDetector(
+                            onTap: showRaportDialogAbmeldung,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: Offset(2, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.family_restroom_outlined,
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text("Abholung",
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.inversePrimary,),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ),
+                    ],
+                  )
+              ),
+
+              const SizedBox(height: 20),
+
+              if (kIsWeb == false)
+                Flexible(
+                  flex: 1,
+                  child: Row(
+          children: [
+
+              ImageUpload(docID: widget.docID),
+            ],
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
-      ),
+        ),
     );
   }
 }

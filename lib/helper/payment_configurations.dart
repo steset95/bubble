@@ -74,7 +74,7 @@ const String defaultGooglePay = '''{
           "type": "PAYMENT_GATEWAY",
           "parameters": {
             "gateway": "example",
-            "gatewayMerchantId": "4826-2669-8285"
+            "gatewayMerchantId": "goog_edQbTFZXsBGixBmXyGfIVawYltB"
           }
         },
         "parameters": {
@@ -89,7 +89,7 @@ const String defaultGooglePay = '''{
       }
     ],
     "merchantInfo": {
-      "merchantId": "4826-2669-8285",
+      "merchantId": "goog_edQbTFZXsBGixBmXyGfIVawYltB",
       "merchantName": "Monatsabonnement"
     },
     "transactionInfo": {
@@ -135,7 +135,7 @@ const String basicGooglePayLoadPaymentData = '''{
           "type": "PAYMENT_GATEWAY",
           "parameters": {
             "gateway": "example",
-            "gatewayMerchantId": "exampleGatewayMerchantId"
+            "gatewayMerchantId": "goog_edQbTFZXsBGixBmXyGfIVawYltB"
           }
         }
       }
@@ -181,7 +181,7 @@ const String invalidGooglePayLoadPaymentData = '''{
           "type": "PAYMENT_GATEWAY",
           "parameters": {
             "gateway": "example",
-            "gatewayMerchantId": "4826-2669-8285"
+            "gatewayMerchantId": "goog_edQbTFZXsBGixBmXyGfIVawYltB"
           }
         }
       }

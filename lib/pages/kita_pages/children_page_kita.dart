@@ -622,68 +622,111 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
   Widget optionCards (
       String text, String assetImage, BuildContext context, String cardId, var color, int anzahlKinder) {
     return
-      Container(
-        height: 90,
-        width: 90,
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(2, 4),
-            ),
-          ],
-        ),
+      Center(
         child: Stack(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  height: 15,
-                  width: 30,
-                  child: IconButton(
-                      onPressed: () => editField('gruppe$cardId', "Name anpassen", text),
-                      icon: Icon(Icons.edit,
-                        color: Colors.white,
-                        size: 10.0,
-                      )),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+            Container(
+              height: 50,
+              width: 90,
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey,
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(2, 4),
+                  ),
+                ],
+              ),
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            height: 15,
+                            width: 30,
+                            child: IconButton(
+                                onPressed: () => editField('gruppe$cardId', "Name anpassen", text),
+                                icon: Icon(Icons.edit,
+                                  color: Colors.white,
+                                  size: 10.0,
+                                )),
+                          ),
+                        ],
+                      ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 12.0),
-                      child:
-                      Text(
-                        text,
-                        style: TextStyle(color: Colors.white,
-                            fontSize: 10
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6.0),
+                            child:
+                            Container(
+                              width: 70,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  text,
+                                  style: TextStyle(color: Colors.white,
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 12
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            Column(
+              children: [
+                const SizedBox(height: 34),
+                Row(
+                  children: [
+                    const SizedBox(width: 70),
+                    Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.secondary,
+                            borderRadius: BorderRadius.all(Radius.circular(100))
                         ),
-                      ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('${anzahlKinder}',
+                                  style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
+                                      fontSize: 10
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        )
                     ),
-                    const SizedBox(height: 5),
-                    Text('${anzahlKinder}',
-                      style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
-                          fontSize: 10
-                      ),
-                    )
                   ],
                 ),
               ],
             ),
-
-
-
           ],
         ),
       );
@@ -704,7 +747,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             children: [
               Container(
                 width: mediaQuery.size.width * 1,
-                height: mediaQuery.size.height * 0.65,
+                height: mediaQuery.size.height * 0.7,
                 child: StreamBuilder<QuerySnapshot>(
                   // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                     stream: firestoreDatabaseChild.getChildrenStream1(),
@@ -864,7 +907,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           children: [
             Container(
               width: mediaQuery.size.width * 1,
-              height: mediaQuery.size.height * 0.65,
+              height: mediaQuery.size.height * 0.7,
               child: StreamBuilder<QuerySnapshot>(
                 // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                   stream: firestoreDatabaseChild.getChildrenStream2(),
@@ -914,7 +957,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
+                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "2"
                                 )),
                               );
                             },
@@ -1024,7 +1067,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           children: [
             Container(
               width: mediaQuery.size.width * 1,
-              height: mediaQuery.size.height * 0.65,
+              height: mediaQuery.size.height * 0.7,
               child: StreamBuilder<QuerySnapshot>(
                 // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                   stream: firestoreDatabaseChild.getChildrenStream3(),
@@ -1076,7 +1119,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
+                                MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "3"
                                 )),
                               );
                             },

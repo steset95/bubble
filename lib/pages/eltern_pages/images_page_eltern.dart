@@ -102,24 +102,22 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text("Bilder",
-            ),
+    return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Bilder",
           ),
-        body: SingleChildScrollView(
-          child:
-          Column(
-            children: [
-              buildGallery(widget.childcode, widget.date)
-            ],
-          ),
-    )
-      )
-            );
+        ),
+      body: SingleChildScrollView(
+        child:
+        Column(
+          children: [
+            buildGallery(widget.childcode, widget.date)
+          ],
+        ),
+        )
+    );
     }
     }
 

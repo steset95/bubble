@@ -49,8 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
   String gruppe2 = "Gruppe 2";
   String gruppe3 = "Gruppe 3";
   String shownotification = "0";
-  String abo = "Probewochen";
-  DateTime aboBis = DateTime.now().add(const Duration(days:14));
+  String abo = "Probemonate";
+  DateTime aboBis = DateTime.now().add(const Duration(days:30));
   String beschreibung = "";
   int anzahlKinder = 0;
 

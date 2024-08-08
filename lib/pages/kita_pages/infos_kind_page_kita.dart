@@ -64,139 +64,137 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            scrolledUnderElevation: 0.0,
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text("Infos Kind",
-            ),
+    return Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Infos Kind",
           ),
-        body: SingleChildScrollView(
-          child:
-            StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("Kinder")
-                  .doc(widget.docID)
-                  .snapshots(),
-              builder: (context, snapshot)
-              {
-                // ladekreis
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                // Fehlermeldung
-                else if (snapshot.hasError) {
-                  return Text("Error ${snapshot.error}");
-                }
-                // Daten abfragen funktioniert
-                else if (snapshot.hasData) {
-                  // Entsprechende Daten extrahieren
-                  final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-              if (userData["eltern"] == "")
-              {
-              return Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Kind wurde noch nicht zugeordnet."),
-                    ],
-                  ),
-                ],
-              );
+        ),
+      body: SingleChildScrollView(
+        child:
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Kinder")
+                .doc(widget.docID)
+                .snapshots(),
+            builder: (context, snapshot)
+            {
+              // ladekreis
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-
-              else {
-                // Inhalt Daten
-
-                return
-                  Column(
-                    children: [
-                      const SizedBox(height: 15,),
-                      ProfileDataReadOnly(
-                        text: userData["child"],
-                        sectionName: "Name",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["geschlecht"],
-                        sectionName: "Geschlecht",
-                      ),
-                      ProfileDataReadOnly(
-                        text: userData["geburtstag"],
-                        sectionName: "Geburtstag",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["personen"],
-                        sectionName: "Zur Abholung berechtigte Personen",
-                      ),
-
-                      const SizedBox(height: 15,),
-                      Text("Gesundheitsangaben",
-                        style: TextStyle(fontSize: 25),
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["alergien"],
-                        sectionName: "Alergien",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["krankheiten"],
-                        sectionName: "Krankheiten",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["medikamente"],
-                        sectionName: "Medikamente",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["impfungen"],
-                        sectionName: "Impfungen",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["kinderarzt"],
-                        sectionName: "Kinderarzt",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["krankenkasse"],
-                        sectionName: "Krankenkasse",
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["bemerkungen"],
-                        sectionName: "Bemerkungen",
-                      ),
-
-
-                      SizedBox(
-                        height: 30,
-                      ),
-
-
-                    ],
-                  );
+              // Fehlermeldung
+              else if (snapshot.hasError) {
+                return Text("Error ${snapshot.error}");
               }
-                  // Fehlermeldung wenn nichts vorhanden ist
-                } else {
-                  return const Text("Keine Daten vorhanden");
-                }
-              },
-    )
-    )
-      )
+              // Daten abfragen funktioniert
+              else if (snapshot.hasData) {
+                // Entsprechende Daten extrahieren
+                final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+            if (userData["eltern"] == "")
+            {
+            return Column(
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Kind wurde noch nicht zugeordnet."),
+                  ],
+                ),
+              ],
             );
+            }
+
+            else {
+              // Inhalt Daten
+
+              return
+                Column(
+                  children: [
+                    const SizedBox(height: 15,),
+                    ProfileDataReadOnly(
+                      text: userData["child"],
+                      sectionName: "Name",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["geschlecht"],
+                      sectionName: "Geschlecht",
+                    ),
+                    ProfileDataReadOnly(
+                      text: userData["geburtstag"],
+                      sectionName: "Geburtstag",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["personen"],
+                      sectionName: "Zur Abholung berechtigte Personen",
+                    ),
+
+                    const SizedBox(height: 15,),
+                    Text("Gesundheitsangaben",
+                      style: TextStyle(fontSize: 25),
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["alergien"],
+                      sectionName: "Alergien",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["krankheiten"],
+                      sectionName: "Krankheiten",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["medikamente"],
+                      sectionName: "Medikamente",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["impfungen"],
+                      sectionName: "Impfungen",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["kinderarzt"],
+                      sectionName: "Kinderarzt",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["krankenkasse"],
+                      sectionName: "Krankenkasse",
+                    ),
+
+                    ProfileDataReadOnly(
+                      text: userData["bemerkungen"],
+                      sectionName: "Bemerkungen",
+                    ),
+
+
+                    SizedBox(
+                      height: 30,
+                    ),
+
+
+                  ],
+                );
+            }
+                // Fehlermeldung wenn nichts vorhanden ist
+              } else {
+                return const Text("Keine Daten vorhanden");
+              }
+            },
+        )
+        )
+    );
     }
     }
 
