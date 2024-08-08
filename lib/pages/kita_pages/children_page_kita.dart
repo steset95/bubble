@@ -456,9 +456,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       /// Anzeige 3 Gruppen
 
       body:
-      SingleChildScrollView(
-        child: Column(
-          children: [
+      Container(
+        child:
             StreamBuilder<DocumentSnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection("Users")
@@ -468,155 +467,151 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                   if (snapshot.hasData) {
                     // Entsprechende Daten extrahieren
                     final userData = snapshot.data?.data() as Map<String, dynamic>;
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20,),
-                      child: Column(
-                        children: [
-                          if (buttons == '1')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                     setState(()  {
-                                        selectedOption = optiona();
-                                    });
-                                    buttons = '1';
-                                  },
-        
-                                  child: optionCards(
-                                    userData["gruppe1"],
-                                    "assets/icons/recycle.png", context, "1",
-                                    Theme.of(context).colorScheme.primary, userData["anzahlKinder1"]),
-                                ),
-        
-                                InkWell(
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 20,),
+                        child: Column(
+                          children: [
+                            if (buttons == '1')
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
                                     onTap: () {
-                                      setState(() {
-                                        selectedOption = optionb();
-                                      });
-                                      buttons = '2';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe2"], "assets/icons/tools.png",
-                                      context, "2", Colors.indigo.shade100, userData["anzahlKinder2"]),
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionc();
-                                      });
-                                      buttons = '3';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe3"], "assets/icons/file.png",
-                                      context, "3", Colors.indigo.shade100, userData["anzahlKinder3"]),
-                                ),
-                              ],
-                            ),
-        
-        
-                          if (buttons == '2')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optiona();
+                                       setState(()  {
+                                          selectedOption = optiona();
                                       });
                                       buttons = '1';
                                     },
-        
+
                                     child: optionCards(
-                                      userData["gruppe1"], "assets/icons/recycle.png",
-                                      context, "1", Colors.indigo.shade200, userData["anzahlKinder1"] ),
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionb();
-                                      });
-                                      buttons = '2';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe2"], "assets/icons/tools.png",
-                                      context, "2", Theme.of(context).colorScheme.primary, userData["anzahlKinder2"]),
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionc();
-                                      });
-                                      buttons = '3';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe3"], "assets/icons/file.png",
-                                      context, "3", Colors.indigo.shade200, userData["anzahlKinder3"]),
-                                ),
-                              ],
-                            ),
-        
-        
-                          if (buttons == '3')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optiona();
-                                      });
-                                      buttons = '1';
-                                    },
-        
-                                    child: optionCards(
-                                      userData["gruppe1"], "assets/icons/recycle.png",
-                                      context, "1", Colors.indigo.shade200, userData["anzahlKinder1"]),
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionb();
-                                      });
-                                      buttons = '2';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe2"], "assets/icons/tools.png",
-                                      context, "2", Colors.indigo.shade200, userData["anzahlKinder2"]),
-                                ),
-                                InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionc();
-                                      });
-                                      buttons = '3';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe3"], "assets/icons/file.png",
-                                      context, "3", Theme.of(context).colorScheme.primary, userData["anzahlKinder3"]),
-                                ),
-                              ],
-                            ),
-        
-        
-        
-                        ],
+                                      userData["gruppe1"],
+                                      "assets/icons/recycle.png", context, "1",
+                                      Theme.of(context).colorScheme.primary, userData["anzahlKinder1"]),
+                                  ),
+
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optionb();
+                                        });
+                                        buttons = '2';
+                                      },
+                                      child: optionCards(
+                                        userData["gruppe2"], "assets/icons/tools.png",
+                                        context, "2", Colors.indigo.shade100, userData["anzahlKinder2"]),
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optionc();
+                                        });
+                                        buttons = '3';
+                                      },
+                                      child: optionCards(
+                                        userData["gruppe3"], "assets/icons/file.png",
+                                        context, "3", Colors.indigo.shade100, userData["anzahlKinder3"]),
+                                  ),
+                                ],
+                              ),
+
+
+                            if (buttons == '2')
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optiona();
+                                        });
+                                        buttons = '1';
+                                      },
+
+                                      child: optionCards(
+                                        userData["gruppe1"], "assets/icons/recycle.png",
+                                        context, "1", Colors.indigo.shade200, userData["anzahlKinder1"] ),
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optionb();
+                                        });
+                                        buttons = '2';
+                                      },
+                                      child: optionCards(
+                                        userData["gruppe2"], "assets/icons/tools.png",
+                                        context, "2", Theme.of(context).colorScheme.primary, userData["anzahlKinder2"]),
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optionc();
+                                        });
+                                        buttons = '3';
+                                      },
+                                      child: optionCards(
+                                        userData["gruppe3"], "assets/icons/file.png",
+                                        context, "3", Colors.indigo.shade200, userData["anzahlKinder3"]),
+                                  ),
+                                ],
+                              ),
+
+
+                            if (buttons == '3')
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optiona();
+                                        });
+                                        buttons = '1';
+                                      },
+
+                                      child: optionCards(
+                                        userData["gruppe1"], "assets/icons/recycle.png",
+                                        context, "1", Colors.indigo.shade200, userData["anzahlKinder1"]),
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optionb();
+                                        });
+                                        buttons = '2';
+                                      },
+                                      child: optionCards(
+                                        userData["gruppe2"], "assets/icons/tools.png",
+                                        context, "2", Colors.indigo.shade200, userData["anzahlKinder2"]),
+                                  ),
+                                  InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          selectedOption = optionc();
+                                        });
+                                        buttons = '3';
+                                      },
+                                      child: optionCards(
+                                        userData["gruppe3"], "assets/icons/file.png",
+                                        context, "3", Theme.of(context).colorScheme.primary, userData["anzahlKinder3"]),
+                                  ),
+                                ],
+                              ),
+
+                            if(selectedOption != null) selectedOption!
+                            else
+                              optiona()
+
+                          ],
+                        ),
                       ),
                     );
                   }
                   return Text("");
                 }
             ),
-            //
-            // options
-            if(selectedOption != null) selectedOption!
-            else
-              optiona()
-        
-          ],
-        ),
-      ),
+                ),
 
     );
 
@@ -752,7 +747,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             children: [
               Container(
                 width: mediaQuery.size.width * 1,
-                height: mediaQuery.size.height * 1,
+                height: mediaQuery.size.height * 0.7,
                 child: StreamBuilder<QuerySnapshot>(
                   // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                     stream: firestoreDatabaseChild.getChildrenStream1(),
@@ -912,7 +907,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           children: [
             Container(
               width: mediaQuery.size.width * 1,
-              height: mediaQuery.size.height * 1,
+              height: mediaQuery.size.height * 0.7,
               child: StreamBuilder<QuerySnapshot>(
                 // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                   stream: firestoreDatabaseChild.getChildrenStream2(),
@@ -1072,7 +1067,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           children: [
             Container(
               width: mediaQuery.size.width * 1,
-              height: mediaQuery.size.height * 1,
+              height: mediaQuery.size.height * 0.7,
               child: StreamBuilder<QuerySnapshot>(
                 // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
                   stream: firestoreDatabaseChild.getChildrenStream3(),
