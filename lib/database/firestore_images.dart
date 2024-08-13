@@ -81,6 +81,18 @@ String docID,
 
   }
 
+  Future<void> deleteImage(String path) async {
+
+    String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
+    String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
+
+
+    await FirebaseStorage.instance.refFromURL(path).delete();
+
+
+  }
+
+
 
 
 

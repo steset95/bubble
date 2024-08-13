@@ -1,1 +1,0 @@
- C:\\Users\\Stefan\\AndroidStudioProjects\\Kita_8\\.dart_tool\\flutter_build\\490bc2da9e55cea4616e3737d13571db\\native_assets.yaml: 

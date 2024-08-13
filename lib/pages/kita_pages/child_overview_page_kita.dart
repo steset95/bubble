@@ -515,7 +515,10 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Chat"),
+                                    Text("Chat",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.inversePrimary,),
+                          ),
                                   ],
                                 ),
                               ],

@@ -224,6 +224,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "freezed_annotation",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/freezed_annotation-2.4.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "http",
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/http-1.2.2",
       "packageUri": "lib/",
@@ -238,6 +244,12 @@
     {
       "name": "intl",
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -372,6 +384,12 @@
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/plugin_platform_interface-2.1.8",
       "packageUri": "lib/",
       "languageVersion": "3.0"
+    },
+    {
+      "name": "purchases_flutter",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/purchases_flutter-7.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
     },
     {
       "name": "rxdart",
@@ -560,7 +578,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-08T14:47:22.286507Z",
+  "generated": "2024-08-12T16:05:26.352777Z",
   "generator": "pub",
   "generatorVersion": "3.6.0-76.0.dev",
   "flutterRoot": "file:///C:/Users/Stefan/Documents/flutter",

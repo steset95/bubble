@@ -321,7 +321,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                                       height: 80,
                                       decoration: BoxDecoration(
                                           gradient: LinearGradient(
-                                              colors: [Colors.white.withOpacity(0.2), Theme.of(context).colorScheme.primary.withOpacity(0.2),],
+                                              colors: [Colors.white.withOpacity(0.2), Colors.indigo.shade200.withOpacity(0.2),],
                                               begin: const FractionalOffset(0.0, 0.1),
                                               end: const FractionalOffset(0.4, 0.6),
                                               stops: [0.1, 0.6],
@@ -330,7 +330,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                                         //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
                                           boxShadow: [
                                             BoxShadow(
-                                              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                                              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
                                               spreadRadius: 3,
                                               blurRadius: 6,
                                               offset: Offset(2, 4),

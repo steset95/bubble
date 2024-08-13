@@ -124,7 +124,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                     boxShadow: const [
                     ],
                   ),
-                  height: mediaQuery.size.width * 0.9,
+                  //height: mediaQuery.size.width * 0.9,
                   padding: EdgeInsets.all(10),
                   child:  TextField(
 

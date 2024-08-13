@@ -55,6 +55,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
   }
 
   Widget buildGallery(String docID) {
+    final Storage storage = Storage();
     return FutureBuilder(
       future: getImagePath(docID),
       builder: (context, snapshot) {
@@ -75,12 +76,72 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
         ),
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) =>
-                CachedNetworkImage(
-              imageUrl: snapshot.data![index],
-              fit: BoxFit.fitHeight,
-              placeholder: (context, url) => ProgressWithIcon(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
+                GestureDetector(
+                  onTap:  () {
+                    showGeneralDialog(
+                      context: context,
+                      barrierColor: Colors.white, // Background color
+                      //barrierDismissible: false,
+                      transitionDuration: Duration(milliseconds: 400),
+                      pageBuilder: (context, __, ___) {
+                        return Column(
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Container(
+                                  color: Colors.white,
+                                  height: 80,
+                                )
+                              ],
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: CachedNetworkImage(
+                                  imageUrl: snapshot.data![index],
+                                  placeholder: (context, url) => ProgressWithIcon(),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                  fit: BoxFit.scaleDown,
+                                
+                              ),
+                            ),
+                            Container(
+                              color: Colors.white,
+                              height: 80,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  TextButton(
+                                    child: const Text("Zurück",
+                                    ),
+                                    onPressed: () => Navigator.pop(context),
+                                  ),
+                                  const SizedBox(width: 50),
+                                  TextButton(
+                                      child: const Text("Löschen",
+                                      ),
+                                      onPressed: () {
+                                        storage.deleteImage(snapshot.data![index]);
+                                        Navigator.pop(context);
+                                        return displayMessageToUser("Bild wird gelöscht......", context);
+                                      }
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+
+                      },
+                    );
+                  },
+                  child: CachedNetworkImage(
+                                imageUrl: snapshot.data![index],
+                                fit: BoxFit.fitHeight,
+                                placeholder: (context, url) => ProgressWithIcon(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                              ),
+                ),
           ),
         );
       },
@@ -152,7 +213,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Bilder",
+          title: Text("Bilder heute",
           ),
           actions: [
             showButtons(),

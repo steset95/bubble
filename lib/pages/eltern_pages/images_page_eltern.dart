@@ -59,6 +59,7 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
 
 
   Widget buildGallery(String childcode, String date) {
+    final mediaQuery = MediaQuery.of(context);
     return FutureBuilder(
       future: getImagePath(childcode, date),
       builder: (context, snapshot) {
@@ -83,11 +84,58 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
                 //crossAxisSpacing: 10,
               ),
               itemBuilder: (context, index) => GestureDetector(
-                child: CachedNetworkImage(
+                onTap:  () {
+                  showGeneralDialog(
+                    context: context,
+                    barrierColor: Colors.white, // Background color
+                    //barrierDismissible: false,
+                    transitionDuration: Duration(milliseconds: 400),
+                    pageBuilder: (context, __, ___) {
+                      return Column(
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Container(
+                                color: Colors.white,
+                                height: 80,
+                              )
+                            ],
+                          ),
+                          Expanded(
+                            flex: 5,
+                            child: CachedNetworkImage(
+                                imageUrl: snapshot.data![index],
+                                placeholder: (context, url) => ProgressWithIcon(),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
+                                fit: BoxFit.scaleDown
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                color: Colors.white,
+                                height: 80,
+                                child: IconButton(
+                                  onPressed:  () => Navigator.pop(context),
+                                  icon: const Icon(Icons.close,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child:
+                CachedNetworkImage(
                   imageUrl: snapshot.data![index],
                     placeholder: (context, url) => ProgressWithIcon(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.fitHeight
+                  fit: BoxFit.fitHeight,
                 ),
               ),
             ),
