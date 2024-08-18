@@ -10,7 +10,7 @@ import 'package:pay/pay.dart';
 import 'package:socialmediaapp/components/my_profile_data.dart';
 
 import '../../components/my_profile_data_read_only.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 
 

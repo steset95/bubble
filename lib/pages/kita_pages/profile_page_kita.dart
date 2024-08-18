@@ -11,7 +11,7 @@ import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
 import 'package:socialmediaapp/pages/impressum_page.dart';
 import 'package:socialmediaapp/pages/kita_pages/provision_page_kita.dart';
 
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../agb_page.dart';
 
 
@@ -309,7 +309,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                           color: Theme.of(context).colorScheme.primary,),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -317,25 +317,8 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                               Stack(
                                 children: [
                                   Container(
-                                      width: 80,
-                                      height: 80,
                                       decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                              colors: [Colors.white.withOpacity(0.2), Colors.indigo.shade200.withOpacity(0.2),],
-                                              begin: const FractionalOffset(0.0, 0.1),
-                                              end: const FractionalOffset(0.4, 0.6),
-                                              stops: [0.1, 0.6],
-                                              tileMode: TileMode.clamp
-                                          ),
-                                        //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-                                              spreadRadius: 3,
-                                              blurRadius: 6,
-                                              offset: Offset(2, 4),
-                                            ),
-                                          ],
+
                                           borderRadius: BorderRadius.all(Radius.circular(100))
                                       ),
                                       child: Row(
@@ -345,89 +328,14 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               Text (userData["guthaben"].toString(),
-                                                  style: TextStyle(color: Colors.indigo.shade900.withOpacity(0.6),
-                                                  fontSize: 15,
+                                                  style: TextStyle(
+                                                  fontSize: 30,
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ],
                                       )
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 21,),
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 30,),
-                                          Container(
-                                              width: 1,
-                                              height: 9,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 2,
-                                                      blurRadius: 5,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 24,),
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 26,),
-                                          Container(
-                                            width: 3,
-                                            height: 4,
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.white,
-                                                    spreadRadius: 4,
-                                                    blurRadius: 5,
-                                                    offset: Offset(2, 4),
-                                                  ),
-                                                ],
-                                                borderRadius: BorderRadius.all(Radius.circular(100))
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      SizedBox(height: 27,),
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 22,),
-                                          Container(
-                                            width: 6,
-                                            height: 6,
-                                            decoration: BoxDecoration(
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    color: Colors.white,
-                                                    spreadRadius: 3,
-                                                    blurRadius: 6,
-                                                    offset: Offset(2, 4),
-                                                  ),
-                                                ],
-                                                borderRadius: BorderRadius.all(Radius.circular(100))
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
                                   ),
                                 ],
                               ),

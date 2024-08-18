@@ -8,7 +8,7 @@ import 'package:socialmediaapp/database/firestore_feed.dart';
 import 'package:intl/intl.dart';
 import 'package:socialmediaapp/pages/kita_pages/post_page_kita.dart';
 
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../helper/helper_functions.dart';
 
 

@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:socialmediaapp/components/my_profile_data.dart';
 import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
 import 'package:socialmediaapp/pages/eltern_pages/bezahlung_page_eltern.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 
 import '../impressum_page.dart';
 

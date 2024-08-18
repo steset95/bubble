@@ -7,7 +7,7 @@ import 'package:socialmediaapp/components/my_list_tile_feed_kita.dart';
 import 'package:socialmediaapp/database/firestore_feed.dart';
 import 'package:intl/intl.dart';
 
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../helper/helper_functions.dart';
 
 

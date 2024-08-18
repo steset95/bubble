@@ -12,7 +12,7 @@ import 'package:socialmediaapp/pages/eltern_pages/bezahlung_page_eltern.dart';
 
 import '../../components/my_image_viewer_profile.dart';
 import '../../components/my_profile_data_switch.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 import '../../helper/helper_functions.dart';
 import 'addkind_page_eltern.dart';

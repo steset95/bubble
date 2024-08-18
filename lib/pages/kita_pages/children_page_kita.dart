@@ -8,7 +8,7 @@ import 'package:socialmediaapp/database/firestore_child.dart';
 import 'package:socialmediaapp/pages/chat_page.dart';
 import 'package:socialmediaapp/pages/kita_pages/child_overview_page_kita.dart';
 import 'package:socialmediaapp/pages/kita_pages/raport_group_page.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 
 
 class ChildrenPageKita extends StatefulWidget {

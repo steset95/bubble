@@ -10,7 +10,7 @@ import '../../components/my_child_select_switch.dart';
 import '../../old/my_child_select_switch_all_old.dart';
 import '../../components/my_image_upload_button.dart';
 import '../../components/my_image_upload_button_multiple.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 
 

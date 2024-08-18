@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:socialmediaapp/database/firestore_child.dart';
 import 'package:socialmediaapp/pages/eltern_pages/images_page_eltern.dart';
 import '../../components/my_progressindicator.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import 'package:intl/intl.dart';
 import '../../helper/helper_functions.dart';
 

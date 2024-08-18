@@ -8,7 +8,7 @@ import 'package:socialmediaapp/pages/kita_pages/raport_page.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../components/my_profile_data_icon.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 import 'einwilligungen_kind_page_kita.dart';
 import 'images_page_kita.dart';

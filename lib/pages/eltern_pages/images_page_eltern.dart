@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../components/my_progressindicator.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../database/firestore_images.dart';
 
 

@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/my_profile_data_icon.dart';
 import '../../components/my_profile_data_read_only.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 
 
 

@@ -9,7 +9,7 @@ import 'package:socialmediaapp/database/firestore_feed.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../components/my_profile_data_read_only.dart';
-import '../../components/notification_controller.dart';
+import '../../helper/notification_controller.dart';
 import '../../components/payment_controller.dart';
 import '../chat_page.dart';
 import 'addkind_page_eltern.dart';
