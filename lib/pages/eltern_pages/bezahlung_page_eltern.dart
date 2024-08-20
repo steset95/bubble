@@ -203,6 +203,9 @@ class BezahlungPageState extends State<BezahlungPage> {
                 children: [
                   Column(
                     children: [
+                      SizedBox(
+                        height: 15,
+                      ),
                       /// Payment
 
     StreamBuilder<DocumentSnapshot>(
@@ -251,7 +254,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                       TextButton(
                         onPressed: () => perfomMagic(),
                         child: Text(
-                          "✨ Change the Weather",
+                          "Abonnement aktivieren",
                         ),
                       ),
 

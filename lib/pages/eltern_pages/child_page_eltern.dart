@@ -681,15 +681,24 @@ color: Theme.of(context).colorScheme.primary,
                             children: raportWidgets,
                           );
                         }
-                        else {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        else if (snapshot.connectionState != ConnectionState.waiting)
+                        {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Noch keine Einträge..."
+                              const SizedBox(height: 50,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Noch keine Einträge..."
+                                  ),
+                                ],
                               ),
                             ],
                           );
                         }
+                        else
+                          return Container();
                       }
                   ),
                 ),
@@ -759,6 +768,7 @@ color: Theme.of(context).colorScheme.primary,
           );
         }
       }
+
       if (snapshot.connectionState != ConnectionState.waiting) {
         return Column(
         mainAxisAlignment: MainAxisAlignment.start,

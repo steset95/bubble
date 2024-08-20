@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class ImpressumPage extends StatefulWidget {
@@ -62,6 +63,37 @@ class ImpressumPageState extends State<ImpressumPage> {
                             style: TextStyle(fontSize: 12),
 
                           ),
+                          const SizedBox(height: 10),
+                          const Text(
+                            "info@bubble-app.ch",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextButton(
+                                onPressed: () async {
+                                  await launchUrl(
+                                      Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
+                                  // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                                },
+                                child: Text("Datenschutzerklärung",
+                                    style: TextStyle(fontSize: 10),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await launchUrl(
+                                      Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
+                                  // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                                },
+                                child: Text("AGBs",
+                                  style: TextStyle(fontSize: 10),
+                                ),
+                              ),
+                            ],
+                          )
                         ],
                       ),
                     ],
