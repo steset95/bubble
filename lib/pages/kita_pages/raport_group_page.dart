@@ -40,21 +40,6 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
   final currentUser = FirebaseAuth.instance.currentUser;
   final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
 
   // Raport hinzufügen bzw. Allgemeiner Firebase Connect
   void addRaport(String raportTitle, String raportText) {
@@ -62,7 +47,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
     String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
     DateTime now = DateTime.now();
     String uhrzeit = DateFormat('kk:mm').format(now);
-    // in Firestore speichern und "Raports" unter "Kinder" erstellen
+    // in Firestore Uložiť und "Raports" unter "Kinder" erstellen
     FirebaseFirestore.instance
         .collection("Kinder")
         .where('group', isEqualTo: widget.group)
@@ -199,7 +184,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             firestoreDatabaseChild.updateSwitchAllOn(widget.group),
             },
 
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -213,7 +198,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               _raportTextController.clear();
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           ),
         ],
       ),
@@ -317,7 +302,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               Navigator.pop(context);
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -382,7 +367,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               //Textfeld leeren
               _raportTextController.clear();
           },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -445,7 +430,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -509,7 +494,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -571,7 +556,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -690,7 +675,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               Navigator.pop(context);
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button

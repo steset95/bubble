@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../components/my_profile_data_read_only.dart';
 import '../../helper/notification_controller.dart';
-import '../../components/payment_controller.dart';
+import '../../components/abo_controller.dart';
 import '../chat_page.dart';
 import 'addkind_page_eltern.dart';
 import 'bezahlung_page_eltern.dart';
@@ -45,7 +45,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    timer = Timer.periodic(Duration(seconds: 3), (Timer t) => PaymentController());
+    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => aboCheck(context));
   }
 
   @override
@@ -55,94 +55,12 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   }
   /// Notification
 
-
-  void getKitaInfos() {
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) {
-      final kitamail = document["kitamail"];
-      if (document["kitamail"] != "") {
-        return showDialog(
-
-          context: context,
-          builder: (context) =>
-              AlertDialog(
-                title: const Text(
-                  "Kita Infos",
-                  textAlign: TextAlign.center,
-                ),
-                content: StreamBuilder<DocumentSnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection("Users")
-                      .doc(kitamail)
-                      .snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final username = snapshot.data!['username'];
-                      final adress = snapshot.data!['adress'];
-                      final adress2 = snapshot.data!['adress2'];
-                      final tel = snapshot.data!['tel'];
-
-                      return
-                        SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              ProfileDataReadOnly(
-                                text: username,
-                                sectionName: "Name",
-                              ),
-                              ProfileDataReadOnly(
-                                text: adress,
-                                sectionName: "Adresse",
-                              ),
-                              ProfileDataReadOnly(
-                                text: adress2,
-                                sectionName: "Ort",
-                              ),
-                              ProfileDataReadOnly(
-                                text: tel,
-                                sectionName: "Telefonnummer",
-                              ),
-                            ],
-                          ),
-                        );
-                    };
-                    return const Text("");
-                  },
-                ),
-                actions: [
-                  // Cancel Button
-                  TextButton(
-                    child: const Text("Schliessen",
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ],
-              ),
-
-        );
-      } else {
-        return Text("Noch kein Kind registriert...");
-      }
-    }).catchError((error) {
-      print('Fehler beim Abrufen des Dokuments: $error');
-    });
-  }
-
-
-
   void notificationNullEltern() {
     FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
         .update({"shownotification": "0"});
-
-
   }
-
-
 
   Widget showButtons() {
     return
@@ -178,7 +96,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  if (shownotification == "0")
+                  if (shownotification == "0" && userData["abo"] != "inaktiv")
                   IconButton(
                     onPressed: () {
                       Navigator.push(
@@ -193,7 +111,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                       color: Colors.black,
                     ),
                   ),
-                  if (shownotification == "1")
+                  if (shownotification == "1" && userData["abo"] != "inaktiv")
                     IconButton(
                       onPressed: () {
 
@@ -228,7 +146,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Kita",
+        title: Text("Škôlka",
         ),
         actions: [
           showButtons(),
@@ -255,8 +173,6 @@ class _FeedPageElternState extends State<FeedPageEltern> {
     final userData = snapshot.data?.data() as Map<String, dynamic>;
 
 
-
-
         if (userData["kitamail"] == "")
     {
 
@@ -266,6 +182,13 @@ class _FeedPageElternState extends State<FeedPageEltern> {
     else {
 
     final kitamail = userData["kitamail"];
+
+
+
+
+
+
+
 
     return
 
@@ -284,7 +207,6 @@ class _FeedPageElternState extends State<FeedPageEltern> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-
         Text(
             username,
             textAlign: TextAlign.center,
@@ -328,62 +250,57 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                                     child: CircularProgressIndicator(),
                                   );
                                 }
-
-
-                                /// PaymentCheck
-
-
-                                if (userData["aboBis"].toDate().isBefore(DateTime.now())){
-                                  return
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(height: 71),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            GestureDetector(
-                                              onTap:  () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(builder: (context) =>
-                                                      BezahlungPage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Text("Bitte Abonnement erneuern",
-                                                    style: TextStyle(fontSize: 20),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Icon(Icons.credit_card_outlined,
-                                                        color: Theme.of(context).colorScheme.primary,
-                                                        size: 60,
-                                                      ),
-                                                      Icon(
-                                                          Icons.arrow_forward,
+                                /// Payment Check
+                                if (userData["abo"] == "inaktiv")
+                                  {
+                                    return
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 71),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              GestureDetector(
+                                                onTap:  () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) =>
+                                                        BezahlungPage(isActive: false, text: "Zur Vollversion"),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  children: [
+                                                    Text("Bitte Abonnement erneuern",
+                                                      style: TextStyle(fontSize: 20),
+                                                    ),
+                                                    const SizedBox(height: 10),
+                                                    Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                        Icon(Icons.credit_card_outlined,
                                                           color: Theme.of(context).colorScheme.primary,
-                                                          size: 30
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                          size: 60,
+                                                        ),
+                                                        Icon(
+                                                            Icons.arrow_forward,
+                                                            color: Theme.of(context).colorScheme.primary,
+                                                            size: 30
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    );
-                                }
-
-                                /// PaymentCheck
-
+                                            ],
+                                          ),
+                                        ],
+                                      );
+                                  }
+                                /// Payment Check
 
                                 // get all Posts
                                 final posts = snapshot.data!.docs;
@@ -393,7 +310,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                                   return const Center(
                                     child: Padding(
                                         padding: EdgeInsets.all(25),
-                                        child: Text("Noch keine Einträge vorhanden...")
+                                        child: Text("Žiadne záznamy...")
                                     ),
                                   );
                                 }
@@ -443,7 +360,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                         children: [
                           Padding(
                               padding: EdgeInsets.all(25),
-                              child: Text("Noch keine Einträge vorhanden..."
+                              child: Text("Žiadne záznamy..."
 
                               )
                           ),

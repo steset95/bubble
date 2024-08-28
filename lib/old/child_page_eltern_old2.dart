@@ -113,7 +113,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -128,7 +128,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           ),
         ],
       ),
@@ -141,7 +141,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   void addRaportAbholzeit(String abholzeit, String childcode) {
     String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
     String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
-    // in Firestore speichern und "Raports" unter "Kinder" erstellen
+    // in Firestore Uložiť und "Raports" unter "Kinder" erstellen
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(childcode)

@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:socialmediaapp/database/firestore_child.dart';
 import 'package:socialmediaapp/pages/eltern_pages/images_page_eltern.dart';
+import '../../components/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
 import '../../helper/notification_controller.dart';
 import 'package:intl/intl.dart';
@@ -50,8 +51,8 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) =>
-        NotificationController().notificationCheck());
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => aboCheck(context));
   }
 
   @override
@@ -142,7 +143,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         borderRadius:
         BorderRadius.all(
             Radius.circular(10.0))),
-    title: Text("Absenz",
+    title: Text("Neprítomnosť",
       style: TextStyle(color: Colors.black,
         fontSize: 20,
       ),
@@ -154,7 +155,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Bis: $formattedDateAbsenz',
+            Text('Do: $formattedDateAbsenz',
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -191,7 +192,7 @@ color: Theme.of(context).colorScheme.primary,
           maxLines: 3,
           autofocus: true,
           controller: _bemerkungTextController,
-          decoration: InputDecoration(hintText: "Bemerkung",
+          decoration: InputDecoration(hintText: "Ďalšie informácie",
           ),
         ),
       ],
@@ -200,7 +201,7 @@ color: Theme.of(context).colorScheme.primary,
     actions: [
       // cancel Button
       TextButton(
-        child: Text("Abbrechen"),
+        child: Text("Zrušiť"),
         onPressed: () {
           // Textfeld schliessen
           Navigator.pop(context);
@@ -212,7 +213,7 @@ color: Theme.of(context).colorScheme.primary,
 
       // save Button
       TextButton(
-        child: Text("Speichern"),
+        child: Text("Uložiť"),
         onPressed: () {
           final value2 = _bemerkungTextController.text;
           final absenzBis24 = absenzBis.copyWith(hour:23, minute: 59);
@@ -250,7 +251,7 @@ color: Theme.of(context).colorScheme.primary,
   void addRaportAbholzeit(String abholzeit, String childcode) {
     String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
     String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
-    // in Firestore speichern und "Raports" unter "Kinder" erstellen
+    // in Firestore Uložiť und "Raports" unter "Kinder" erstellen
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(childcode)
@@ -271,7 +272,7 @@ color: Theme.of(context).colorScheme.primary,
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Abholzeit",
+        title: Text("Čas vyzdvihnutia",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -307,7 +308,7 @@ color: Theme.of(context).colorScheme.primary,
               //Textfeld leeren
               _bemerkungTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
           // Speicher Button
           TextButton(
@@ -326,7 +327,7 @@ color: Theme.of(context).colorScheme.primary,
               Navigator.pop(context);
               return displayMessageToUser("Abholzeit wurde eingetragen.", context);
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           )
         ],
       ),
@@ -363,13 +364,43 @@ color: Theme.of(context).colorScheme.primary,
   Widget buildGallery(String childcode, DateTime date) {
     String currentDate = date.toString();// Aktuelles Datum als String
     String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
-    final mediaQuery = MediaQuery.of(context);
     return FutureBuilder(
       future: getImagePath(childcode, date),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData) {
-          return const Text("");
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("");
+        }
+        if (snapshot!.data!.isEmpty) {
+          return
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300,),
+                ),
+
+                child: Stack(
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.image_outlined,
+                              color: Colors.grey.shade300,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                  ],
+                ),
+              ),
+            );
         }
         return GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
@@ -480,6 +511,7 @@ color: Theme.of(context).colorScheme.primary,
   Future<void> showRaportDialogDatum(BuildContext context, DateTime currentDate1) async {
     final DateTime? picked = await showDatePicker(
         context: context,
+        locale: const Locale("sk"),
         initialDate: currentDate1,
         firstDate: DateTime(2015, 8),
         lastDate: DateTime(2101));
@@ -529,7 +561,7 @@ color: Theme.of(context).colorScheme.primary,
         /// PaymentCheck
 
 
-        if (userData["aboBis"].toDate().isBefore(DateTime.now())){
+        if (userData["abo"] == "inaktiv"){
           return
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -543,7 +575,7 @@ color: Theme.of(context).colorScheme.primary,
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>
-                            BezahlungPage(),
+                            BezahlungPage(isActive: false, text: "Zur Vollversion"),
                         ),
                       );
                     },
@@ -594,171 +626,214 @@ color: Theme.of(context).colorScheme.primary,
               const SizedBox(height: 10),
               Flexible(
                 flex: 9,
-                child: Container(
-                 // height: mediaQuery.size.height * 0.55,
-                  width: mediaQuery.size.width * 1,
-                  child: StreamBuilder<QuerySnapshot>(
-                      stream:  FirebaseFirestore.instance
-                          .collection("Kinder")
-                          .doc(childcode)
-                          .collection(formattedDate)
-                          .orderBy('TimeStamp', descending: true)
-                          .snapshots(),
-                      builder: (context, snapshot) {
-                        List<Row> raportWidgets = [];
-                        if (snapshot.hasData) {
-                          final raports = snapshot.data?.docs.reversed.toList();
-                          for (var raport in raports!) {
-                            final raportWidget = Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(3.0),
-                                  child: Container(
-                                  padding: EdgeInsets.only(top: 8, bottom: 8, left: 15,),
-                                  decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.inversePrimary,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                        BoxShadow(
-                        color: Colors.grey,
-                        spreadRadius: 1,
-                        blurRadius: 3,
-                        offset: Offset(2, 4),
-                        ),
-                        ],
-                        ),
-                                    width: mediaQuery.size.width * 0.9,
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                                raport['Uhrzeit'],
-                                                style: TextStyle(fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                )
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Text(
-                                                raport['RaportTitle'],
-                                              style: TextStyle(fontWeight: FontWeight.bold,
-                                                color: Theme.of(context).colorScheme.primary,
-                                              fontSize: 12,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                width: mediaQuery.size.width * 0.80,
-                                                child: Text(
-                                                    textAlign: TextAlign.left,
-                                                    raport['RaportText'],
-                                                  style: TextStyle(
-                                                  fontSize: 10,
-                                                ),
-                                                )),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
-                                ),
-                              ],
-                            );
-                            raportWidgets.add(raportWidget);
-                           // Text(raport['RaportText']);
-                          }
-                        }
-                        if (raportWidgets.isNotEmpty) {
-                          return
-                          ListView(
-                            children: raportWidgets,
-                          );
-                        }
-                        else if (snapshot.connectionState != ConnectionState.waiting)
-                        {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 50,),
-                              Row(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      //color: Colors.transparent,
+                      //borderRadius: BorderRadius.circular(12),
+                      //border: Border.all(color: Colors.grey.shade300,),
+                    ),
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream:  FirebaseFirestore.instance
+                            .collection("Kinder")
+                            .doc(childcode)
+                            .collection(formattedDate)
+                            .orderBy('TimeStamp', descending: true)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          List<Row> raportWidgets = [];
+                          if (snapshot.hasData) {
+                            final raports = snapshot.data?.docs.reversed.toList();
+                            for (var raport in raports!) {
+                              final raportWidget = Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Noch keine Einträge..."
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Container(
+                                    padding: EdgeInsets.only(top: 8, bottom: 8,),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(10),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.grey,
+                                              spreadRadius: 1,
+                                              blurRadius: 2,
+                                              offset: Offset(1, 2),
+                                            ),
+                                          ]
+                                      ),
+                                      width: mediaQuery.size.width * 0.9,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                  raport['Uhrzeit'],
+                                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                  )
+                                              ),
+                                              const SizedBox(width: 10),
+                                              Text(
+                                                  raport['RaportTitle'],
+                                                style: TextStyle(fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context).colorScheme.primary,
+                                                fontSize: 13,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5),
+                                          if (raport['RaportTitle'] == "Angemeldet")
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.wb_sunny_outlined,
+                                                ),
+                                              ],
+                                            ),
+                                          if (raport['RaportTitle'] == "Abgemeldet")
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  height: 15,
+                                                  child: Icon(Icons.family_restroom_outlined,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          if (raport['RaportTitle'] != "Angemeldet")
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Flexible(
+                                                  //width: mediaQuery.size.width * 0.80,
+                                                  child: Text(
+                                                      textAlign: TextAlign.center,
+                                                      raport['RaportText'],
+                                                    style: TextStyle(
+                                                    fontSize: 11,
+                                                  ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+
                                   ),
                                 ],
-                              ),
-                            ],
-                          );
+                              );
+                              raportWidgets.add(raportWidget);
+                             // Text(raport['RaportText']);
+                            }
+                          }
+                          if (raportWidgets.isNotEmpty) {
+                            return
+                            ListView(
+                              children: raportWidgets,
+                            );
+                          }
+                          else if (snapshot.connectionState != ConnectionState.waiting)
+                          {
+                            return
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: Container(
+                          decoration: BoxDecoration(
+
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.grey.shade300,),
+                          ),
+                            child:
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 50,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Žiadne záznamy...",
+                                      style: TextStyle(color: Colors.grey.shade300,),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.bedtime_outlined ,
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                              );
+                          }
+                          else
+                            return Container();
                         }
-                        else
-                          return Container();
-                      }
+                    ),
                   ),
                 ),
               ),
 
-
-
               Flexible(
                 flex: 1,
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 5.0,),
-                  child: Column(
+                  padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-
-                      const SizedBox(height: 10,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: _incrementCounterMinus,
-                            child: Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(Icons.arrow_back_ios_rounded,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 20,
-                              ),
-                            ),
+                      GestureDetector(
+                        onTap: _incrementCounterMinus,
+                        child: Container(
+                          width: 50,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
                           ),
-                          GestureDetector(
-                            onTap:  ()  {
-                              showRaportDialogDatum(context, currentDate1);
-
-                            },
-                            child: Text(showDatum,
-                              textAlign: TextAlign.center,
-                              style: TextStyle( fontFamily: 'Goli',
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-
-                            ),
+                          child: Icon(Icons.arrow_back_ios_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20,
                           ),
-                          GestureDetector(
-                            onTap: _incrementCounterPlus,
-                            child: Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Icon(Icons.arrow_forward_ios_rounded,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 20,
-                              ),
-                            ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap:  ()  {
+                          showRaportDialogDatum(context, currentDate1);
+
+                        },
+                        child: Text(showDatum,
+                          textAlign: TextAlign.center,
+                          style: TextStyle( fontFamily: 'Goli',
+                            color: Theme.of(context).colorScheme.primary,
                           ),
-                        ],
+
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: _incrementCounterPlus,
+                        child: Container(
+                          width: 50,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Icon(Icons.arrow_forward_ios_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 20,
+                          ),
+                        ),
                       ),
                     ],
                   ),

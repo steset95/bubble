@@ -43,20 +43,6 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
       .collection("Kinder"
   );
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -74,7 +60,7 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Infos Kita",
+          title: Text("Informácie o škôlke",
 
           ),
         ),
@@ -99,19 +85,19 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                     children: [
                       ProfileDataReadOnly(
                         text: username,
-                        sectionName: "Name",
+                        sectionName: "Názov",
                       ),
                       ProfileDataReadOnly(
                         text: adress,
-                        sectionName: "Adresse",
+                        sectionName: "Adresa",
                       ),
                       ProfileDataReadOnly(
                         text: adress2,
-                        sectionName: "Ort",
+                        sectionName: "PSČ, Mesto",
                       ),
                       MyProfileDataIcon(
                         text: tel,
-                        sectionName: "Telefonnummer",
+                        sectionName: "Telefónne číslo",
                         onPressed: () => setState(() {
                           _makePhoneCall(tel);
                         }),
@@ -119,7 +105,7 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                       ),
                       ProfileDataReadOnly(
                         text: beschreibung,
-                        sectionName: "Über die Kita",
+                        sectionName: "Ďalšie informácie",
                       ),
                     ],
                   ),

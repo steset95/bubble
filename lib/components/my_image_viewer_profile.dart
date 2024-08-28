@@ -141,7 +141,7 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text("Profilbild hinzufügen",
-                                        style: TextStyle(fontSize: 9,
+                                        style: TextStyle(fontSize: 8,
                                         )
                                     ),
                                   ],

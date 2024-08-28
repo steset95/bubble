@@ -43,22 +43,6 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
       .collection("Kinder"
   );
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
-
 
 
 

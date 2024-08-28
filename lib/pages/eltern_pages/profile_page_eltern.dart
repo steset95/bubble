@@ -6,11 +6,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:socialmediaapp/components/my_profile_data.dart';
 import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
 import 'package:socialmediaapp/pages/eltern_pages/bezahlung_page_eltern.dart';
+import '../../components/abo_controller.dart';
+import '../../helper/constant.dart';
 import '../../helper/notification_controller.dart';
 
+import '../../helper/store_helper.dart';
 import '../impressum_page.dart';
 
 
@@ -29,6 +34,14 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
   /// Notification
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+
   Timer? timer;
   @override
   void initState() {
@@ -36,12 +49,10 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
+
   /// Notification
+
+
 
 
 
@@ -90,12 +101,12 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
         actions: [
           // Cancel Button
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-              child: const Text("Speichern",
+              child: const Text("Uložiť",
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -109,6 +120,108 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       ),
     );
   }
+
+
+  Future<void> _configureSDK() async {
+
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) async {
+
+      String aboID = document["aboID"].toString();
+
+      // Enable debug logs before calling `configure`.
+      await Purchases.setLogLevel(LogLevel.debug);
+
+      /*
+    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+
+    - PurchasesAreCompletedyBy is PurchasesAreCompletedByRevenueCat, so Purchases will automatically handle finishing transactions. Read more about completing purchases here: https://www.revenuecat.com/docs/migrating-to-revenuecat/sdk-or-not/finishing-transactions
+    */
+
+      PurchasesConfiguration configuration;
+      if (StoreConfig.isForAmazonAppstore()) {
+        configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
+          ..appUserID = aboID
+          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
+      } else {
+        configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
+          ..appUserID = aboID
+          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
+      }
+      await Purchases.configure(configuration);
+
+    });
+  }
+
+
+  void goToPage() async {
+    _configureSDK();
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) {
+      if (customerInfo.entitlements.all[entitlementID] != null &&
+          customerInfo.entitlements.all[entitlementID]?.isActive == true
+          && document["aboBis"].toDate().isBefore(DateTime.now())) {
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(currentUser?.email)
+            .update({"abo": "aktiv"});
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              BezahlungPage(isActive: true, text: "Abonnement aktiv")),
+        );
+      }
+      else if (customerInfo.entitlements.all[entitlementID] != null &&
+          customerInfo.entitlements.all[entitlementID]?.isActive == true
+          && document["aboBis"].toDate().isAfter(DateTime.now()))
+      {
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(currentUser?.email)
+            .update({"abo": "aktiv"});
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              BezahlungPage(isActive: true, text: "Abonnement aktiv")),
+        );
+      }
+
+      else if
+      (customerInfo.entitlements.all[entitlementID] == null && document["aboBis"].toDate().isAfter(DateTime.now()))
+      {
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              BezahlungPage(isActive: true, text: "Probemonate aktiv")),
+        );
+      }
+      else
+        {
+          FirebaseFirestore.instance
+              .collection("Users")
+              .doc(currentUser?.email)
+              .update({"abo": "inaktiv"});
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+                BezahlungPage(isActive: false, text: "Zur Vollversion")),
+          );
+
+        }
+    });
+  }
+
+
+
 
 
   Future logOut()  async {
@@ -244,13 +357,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
                     GestureDetector(
-                      onTap:  () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              BezahlungPage()),
-                        );
-                      },
+                      onTap: () => goToPage(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

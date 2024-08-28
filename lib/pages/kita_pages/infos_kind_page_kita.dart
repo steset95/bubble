@@ -45,22 +45,6 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
 
 
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
-
 
   @override
   Widget build(BuildContext context) {

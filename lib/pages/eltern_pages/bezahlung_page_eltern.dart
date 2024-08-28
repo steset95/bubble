@@ -1,40 +1,32 @@
-import 'dart:io';
+
+import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pay/pay.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:socialmediaapp/helper/helper_functions.dart';
 import 'package:socialmediaapp/pages/eltern_pages/paywall_eltern.dart';
-
+import '../../components/abo_controller.dart';
+import '../../components/my_button.dart';
 import '../../helper/appdata.dart';
 import '../../helper/constant.dart';
+import '../../helper/store_helper.dart';
 
 
 
-
-// Pay Package
-const _paymentItems = [
-  PaymentItem(
-    label: 'Total',
-    amount: '00.10',
-    status: PaymentItemStatus.final_price,
-  )
-];
-///////// Pay Package
 
 
 class BezahlungPage extends StatefulWidget {
+  bool isActive;
+  String text;
 
-
-  const BezahlungPage({
+   BezahlungPage({
     super.key,
-
-
-
-  });
+    required this.isActive,
+     required this.text,
+      });
 
 
   @override
@@ -44,34 +36,11 @@ class BezahlungPage extends StatefulWidget {
 class BezahlungPageState extends State<BezahlungPage> {
 
 
-  ///////// Pay Package
-  final Future<PaymentConfiguration> _googlePayConfigFuture =
-  PaymentConfiguration.fromAsset('google_pay_config.json');
 
-
-  final Future<PaymentConfiguration> _applePayConfigFuture =
-  PaymentConfiguration.fromAsset('apple_pay_config.json');
-
-
-  void onGooglePayResult(paymentResult) {
-    debugPrint(paymentResult.toString());
-  }
-
-  void onApplePayResult(paymentResult) {
-    debugPrint(paymentResult.toString());
-  }
-
-
-  ///////// Pay Package
 
   final currentUser = FirebaseAuth.instance.currentUser;
 
 
-  @override
-  void initState() {
-    initPlatformState();
-    super.initState();
-  }
 
   Future<void> initPlatformState() async {
     appData.appUserID = await Purchases.appUserID;
@@ -99,7 +68,7 @@ class BezahlungPageState extends State<BezahlungPage> {
 
     if (customerInfo.entitlements.all[entitlementID] != null &&
         customerInfo.entitlements.all[entitlementID]?.isActive == true) {
-      displayMessageToUser("Hat Abo", context);
+      displayMessageToUser("Abonnement bereits aktiv", context);
 
       setState(() {
         _isLoading = false;
@@ -143,42 +112,82 @@ class BezahlungPageState extends State<BezahlungPage> {
   }
 
 
-/*
-
-  void perfomMagic() async {
-
-    await Purchases.setDebugLogsEnabled(true);
-    if (Platform.isAndroid) {
-      await Purchases.configure(
-          PurchasesConfiguration('goog_edQbTFZXsBGixBmXyGfIVawYltB')
-            ..appUserID = currentUser?.email
-      );
-    } else if (Platform.isIOS) {
-      await Purchases.configure(
-          PurchasesConfiguration('goog_edQbTFZXsBGixBmXyGfIVawYltB')
-            ..appUserID = currentUser?.email
-      );
-    }
-
+  Future<void> fetchExpirationDate() async {
     try {
-      Offerings offerings = await Purchases.getOfferings();
-      if (offerings.current != null) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-              PaywallEltern(
-                offering: offerings!.current!,
-              )),
-        );
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      for (var entitlement in customerInfo.entitlements.active.values) {
+        String? expirationDate = entitlement.expirationDate;
+        String? originalpurchasedate = entitlement.originalPurchaseDate;
+        final String expirationDateOutput = expirationDate!.substring(0, 10);
+        final String originalpurchasedateOutput = originalpurchasedate!.substring(0, 10);
+        if (expirationDate != null) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.all(
+                      Radius.circular(10.0))),
+              title: Text("Abonnement",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black,
+                  fontSize: 20,
 
+                ),
+              ),
+              content: Container(
+                height: 50,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("aktiv bis: ${expirationDateOutput}"),
+                   // Text("Abo gelöst am: ${originalpurchasedateOutput}"),
+                    Text("(autom. monatliche Erneuerung)")
+                  ],
+                ),
+              ),
+
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    // Textfeld schliessen
+                    Navigator.pop(context);
+                    //Textfeld leeren
+                  },
+                  child: Text("Schliessen"),
+                ),
+              ],
+            ),
+          );
+// Hier kannst du das Ablaufdatum in deiner UI anzeigen
+        }
       }
-    } on PlatformException catch (e) {
-      displayMessageToUser("Error", context);// optional error handling
+    } catch (e) {
+      print("Error fetching customer info: $e");
     }
   }
 
 
-*/
+
+
+
+
+
+  Widget showButtons () {
+    return Row(
+      children: [
+        IconButton(
+          onPressed: fetchExpirationDate,
+          icon: const Icon(Icons.info_outline,
+            color: Colors.black,
+          ),
+        ),
+        const SizedBox(width: 20),
+      ],
+    );
+  }
+
+
 
 
   @override
@@ -194,118 +203,160 @@ class BezahlungPageState extends State<BezahlungPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Column(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // logo
-              Row(
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text('Sichere dir den Zugriff auf:',
+                    style: TextStyle(color: Colors.black,
+                      fontSize: 20,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.check,
+                        color: Colors.green,
+                      ),
+                      Text(' Tagesraport '),
+                      Icon(Icons.check,
+                        color: Colors.green,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.check,
+                        color: Colors.green,
+                      ),
+                      Text(' Chatfunktion '),
+                      Icon(Icons.check,
+                        color: Colors.green,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.check,
+                        color: Colors.green,
+                      ),
+                      Text(' Kita-Feed '),
+                      Icon(Icons.check,
+                        color: Colors.green,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  if (widget.text == "Probemonate aktiv")
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                spreadRadius: 1,
+                                blurRadius: 3,
+                                offset: Offset(2, 4),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(25),
+                          child: Center(
+                            child: Text(
+                              widget.text,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                              .collection("Users")
+                              .doc(currentUser?.email)
+                              .snapshots(),
+                          builder: (context, snapshot) {
+
+                          final userData = snapshot.data?.data() as Map<String, dynamic>;
+                          final aboBis = userData["aboBis"].toDate();
+                          String currentDate = aboBis.toString(); // Aktuelles Datum als String
+                          String formattedDate = currentDate.substring(0, 10); // Nur das Dat
+
+                          return Text('Bis: $formattedDate');
+                      }),
+                      ],
+                    ),
+                  if (widget.text == "Abonnement aktiv")
+                    Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.grey,
+                                spreadRadius: 1,
+                                blurRadius: 3,
+                                offset: Offset(2, 4),
+                              ),
+                            ],
+                          ),
+                          padding: const EdgeInsets.all(25),
+                          child: Center(
+                            child: Text(
+                              widget.text,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        IconButton(
+                          onPressed: fetchExpirationDate,
+                          icon: const Icon(Icons.info_outline,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  if (widget.isActive == false)
                   Column(
                     children: [
+                      MyButton(
+                        text: widget.text,
+                        onTap: () => perfomMagic(),
+                      ),
                       SizedBox(
-                        height: 15,
+                        height: 10,
                       ),
-                      /// Payment
-
-    StreamBuilder<DocumentSnapshot>(
-    stream: FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .snapshots(),
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        // Entsprechende Daten extrahieren
-        final userData = snapshot.data?.data() as Map<String, dynamic>;
-        final aboBis = userData["aboBis"].toDate();
-        final abo = userData["abo"];
-
-
-        String currentDate = aboBis.toString(); // Aktuelles Datum als String
-        String formattedDate = currentDate.substring(
-            0, 10); // Nur das Datum extrahieren
-
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(abo),
-            Row(
-              children: [
-                Text('Aktiv bis: '),
-                Text(formattedDate,
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold
-                  ),
-                )
-              ],
-            ),
-          ],
-        );
-      }
-      return Text("");
-    }),
-
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-
-                      TextButton(
-                        onPressed: () => perfomMagic(),
-                        child: Text(
-                          "Abonnement aktivieren",
-                        ),
-                      ),
-
-
-                      /*
-
-                      FutureBuilder<PaymentConfiguration>(
-                          future: _googlePayConfigFuture,
-                          builder: (context, snapshot) => snapshot.hasData
-                              ? GooglePayButton(
-                            paymentConfiguration: snapshot.data!,
-                            paymentItems: _paymentItems,
-                            type: GooglePayButtonType.buy,
-                            margin: const EdgeInsets.only(top: 15.0),
-                            onPaymentResult: onGooglePayResult,
-                            loadingIndicator: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                              : const SizedBox.shrink()),
-                      GooglePayButton(
-                        paymentConfiguration: PaymentConfiguration.fromJsonString(defaultGooglePay),
-                        paymentItems: _paymentItems,
-                      ),
-
-                      FutureBuilder<PaymentConfiguration>(
-                          future: _applePayConfigFuture,
-                          builder: (context, snapshot) => snapshot.hasData
-                              ? ApplePayButton(
-                            paymentConfiguration: snapshot.data!,
-                            paymentItems: _paymentItems,
-                            type: ApplePayButtonType.buy,
-                            margin: const EdgeInsets.only(top: 15.0),
-                            onPaymentResult: onApplePayResult,
-                            loadingIndicator: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                              : const SizedBox.shrink()),
-                      ApplePayButton(
-                        paymentConfiguration: PaymentConfiguration.fromJsonString(defaultApplePay),
-                        paymentItems: _paymentItems,
-                      )
-
-                      /// Payment
-*/
+                      Text('9.90 CHF / Monat'),
                     ],
                   ),
                 ],
               ),
-
             ],
           ),
         ),

@@ -54,13 +54,13 @@ class _ChangeGroupPageKitaState extends State<ChangeGroupPageKita> {
         actions: [
           // Cancel Button
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
           //Save Button
           TextButton(
-            child: const Text("Speichern",
+            child: const Text("Uložiť",
             ),
             onPressed: () => Navigator.of(context).pop(newValue),
           ),

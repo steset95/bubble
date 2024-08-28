@@ -87,7 +87,7 @@
     },
     {
       "name": "crypto",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.4",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.5",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -435,7 +435,7 @@
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common-2.5.4+1",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common-2.5.4+2",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -459,9 +459,9 @@
     },
     {
       "name": "synchronized",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.1.0+1",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.2.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.5"
     },
     {
       "name": "term_glyph",
@@ -578,7 +578,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-20T14:41:52.092299Z",
+  "generated": "2024-08-22T16:02:33.377312Z",
   "generator": "pub",
   "generatorVersion": "3.6.0-76.0.dev",
   "flutterRoot": "file:///C:/Users/Stefan/Documents/flutter",

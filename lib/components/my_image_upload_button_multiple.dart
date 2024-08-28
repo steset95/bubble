@@ -127,7 +127,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                         // Textfeld schliessen
                         Navigator.pop(context);
                       },
-                      child: Text("Abbrechen"),
+                      child: Text("Zrušiť"),
                     ),
 
                     // save Button

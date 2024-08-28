@@ -55,13 +55,13 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
 
   var optionsGeschlecht = [
-    'weiblich',
-    'männlich',
-    'keine Angabe'
+    'Žena',
+    'Muž',
+    'Nechcem uviesť'
   ];
 
-  var _currentItemSelectedGeschlecht = 'keine Angabe';
-  var fieldGeschlecht = 'keine Angabe';
+  var _currentItemSelectedGeschlecht = 'Nechcem uviesť';
+  var fieldGeschlecht = 'Nechcem uviesť';
 
 
 
@@ -99,7 +99,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Geschlecht",
+        title: Text("Pohlavie",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -108,7 +108,6 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
         content: DropdownButtonFormField<String>(
           isDense: true,
           isExpanded: false,
-
           items: optionsGeschlecht.map((String dropDownStringItem) {
             return DropdownMenuItem<String>(
               value: dropDownStringItem,
@@ -131,7 +130,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
         ),
         actions: [
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
@@ -151,7 +150,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               //Box schliessen
               Navigator.pop(context);
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           )
         ],
       ),
@@ -200,12 +199,12 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             actions: [
               // Cancel Button
               TextButton(
-                child: const Text("Abbrechen",
+                child: const Text("Zrušiť",
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
               TextButton(
-                  child: const Text("Speichern",
+                  child: const Text("Uložiť",
                   ),
                   onPressed: () {
                     Navigator.pop(context);
@@ -233,63 +232,6 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
       if (snapshot.hasData) {
         final userData = snapshot.data?.data() as Map<String, dynamic>;
         final childcode = userData["childcode"];
-
-
-        /// PaymentCheck
-
-
-        if (userData["aboBis"].toDate().isBefore(DateTime.now())){
-          return
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 71),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap:  () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              BezahlungPage(),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Text("Bitte Abonnement erneuern",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Icon(Icons.credit_card_outlined,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 60,
-                              ),
-                              Icon(
-                                  Icons.arrow_forward,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 30
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-        }
-
-        /// PaymentCheck
-
-
 
 
 
@@ -363,7 +305,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                       ),
                       ProfileData(
                         text: userData["geschlecht"],
-                        sectionName: "Geschlecht",
+                        sectionName: "Pohlavie",
                         onPressed: () =>
                         openChildBoxGeschlecht(
                         childcode: childcode,
@@ -374,63 +316,63 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
                       ProfileData(
                         text: userData["geburtstag"],
-                        sectionName: "Geburtstag",
+                        sectionName: "Dátum narodenia",
                         onPressed: () => editFieldInfos("Geburtstag", "geburtstag", childcode, userData["geburtstag"]),
                       ),
 
                       ProfileData(
                         text: userData["personen"],
-                        sectionName: "Zur Abholung berechtigte Personen",
+                        sectionName: "Osoby oprávnené vyzdvihnuť dieťa",
                         onPressed: () => editFieldInfos("Berechtigte Personen", "personen", childcode, userData["personen"]),
                       ),
 
                       SizedBox(
                         height: 30,
                       ),
-                      Text("Gesundheitsangaben",
+                      Text("Informácie o zdraví",
                         style: TextStyle(fontSize: 20),
                       ),
 
 
                       ProfileData(
                         text: userData["alergien"],
-                        sectionName: "Alergien",
+                        sectionName: "Alergie",
                         onPressed: () => editFieldInfos("Alergien", "alergien", childcode, userData["alergien"]),
                       ),
 
                       ProfileData(
                         text: userData["krankheiten"],
-                        sectionName: "Krankheiten",
+                        sectionName: "Choroby",
                         onPressed: () => editFieldInfos("Krankheiten", "krankheiten", childcode, userData["krankheiten"]),
                       ),
 
                       ProfileData(
                         text: userData["medikamente"],
-                        sectionName: "Medikamente",
+                        sectionName: "Lieky",
                         onPressed: () => editFieldInfos("Medikamente", "medikamente", childcode, userData["medikamente"]),
                       ),
 
                       ProfileData(
                         text: userData["impfungen"],
-                        sectionName: "Impfungen",
+                        sectionName: "Očkovania",
                         onPressed: () => editFieldInfos("Impfungen", "impfungen", childcode, userData["impfungen"]),
                       ),
 
                       ProfileData(
                         text: userData["kinderarzt"],
-                        sectionName: "Kinderarzt",
+                        sectionName: "Detský doktor",
                         onPressed: () => editFieldInfos("Kinderarzt", "kinderarzt", childcode, userData["kinderarzt"]),
                       ),
 
                       ProfileData(
                         text: userData["krankenkasse"],
-                        sectionName: "Krankenkasse",
+                        sectionName: "Zdravotná poisťovňa",
                         onPressed: () => editFieldInfos("Krankenkasse", "krankenkasse", childcode, userData["krankenkasse"]),
                       ),
 
                       ProfileData(
                         text: userData["bemerkungen"],
-                        sectionName: "Bemerkungen",
+                        sectionName: "Ďalšie informácie",
                         onPressed: () => editFieldInfos("Bemerkungen", "bemerkungen", childcode, userData["bemerkungen"]),
                       ),
 
@@ -574,7 +516,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
         child: Container(
           child: Row(
             children: [
-              Text("Kind wechseln"),
+              Text("Súrodenec"),
               const SizedBox(width: 10),
               Icon(Icons.child_care,
                 color: Colors.black,
@@ -593,7 +535,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Infos Kind",
+        title: Text("Dieťa",
         ),
         actions: [
           showButtons(),

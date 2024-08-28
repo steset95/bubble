@@ -29,20 +29,6 @@ class ImagesPageKita extends StatefulWidget {
 
 class _ImagesPageKitaState extends State<ImagesPageKita> {
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
   Future<List<String>> getImagePath(String docID, ) async {
     String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
@@ -121,6 +107,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                                       ),
                                       onPressed: () {
                                         storage.deleteImage(snapshot.data![index]);
+                                        setState(() {});
                                         Navigator.pop(context);
                                         return displayMessageToUser("Bild wird gelöscht......", context);
                                       }
@@ -163,6 +150,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
           TextButton(
             onPressed: () async {
               storage.deleteImages(widget.docID);
+              setState(() {});
               Navigator.pop(context);
               return displayMessageToUser("Bilder werden gelöscht......", context);
             },
@@ -172,7 +160,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           )
         ],
       ),

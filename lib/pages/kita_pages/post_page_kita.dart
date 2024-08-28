@@ -38,20 +38,6 @@ class _PostPageKitaState extends State<PostPageKita> {
   final TextEditingController newPostControllerInhalt = TextEditingController();
 
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
 
   // Methode: Nachricht Posten Extern
@@ -121,8 +107,6 @@ class _PostPageKitaState extends State<PostPageKita> {
                     color: Theme.of(context).colorScheme.inversePrimary,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: Colors.black),
-                    boxShadow: const [
-                    ],
                   ),
                   //height: mediaQuery.size.width * 0.9,
                   padding: EdgeInsets.all(10),
@@ -154,7 +138,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                       newPostControllerTitel.clear();
                       newPostControllerInhalt.clear();
                     },
-                    child: Text("Abbrechen"),
+                    child: Text("Zrušiť"),
                   ),
                   TextButton(
                     onPressed: () {
@@ -176,7 +160,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                         return displayMessageToUser("Bitte Titel und Inhalt eingeben", context);
                       }
                     },
-                    child: Text("Speichern"),
+                    child: Text("Uložiť"),
                   ),
                 ],
               ),

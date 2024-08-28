@@ -186,16 +186,7 @@ class FirestoreDatabaseChild {
     });
 
 
-    Stream<QuerySnapshot> getChildrenStreamEltern() {
-      final postStream = FirebaseFirestore.instance
-          .collection("Kinder")
-          .where("eltern", isEqualTo: currentUser?.email)
-          .snapshots();
-      return postStream;
-    }
-
-
-  }
+   }
 }
 
 

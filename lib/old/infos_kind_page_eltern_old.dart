@@ -67,14 +67,14 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             actions: [
               // Cancel Button
               TextButton(
-                child: const Text("Abbrechen",
+                child: const Text("Zrušiť",
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
               //Save Button
               TextButton(
-                child: const Text("Speichern",
+                child: const Text("Uložiť",
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () => Navigator.of(context).pop(newValue),

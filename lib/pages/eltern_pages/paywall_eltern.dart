@@ -25,20 +25,6 @@ class PaywallEltern extends StatefulWidget {
 class PaywallElternState extends State<PaywallEltern> {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -54,14 +40,14 @@ class PaywallElternState extends State<PaywallEltern> {
                     BorderRadius.vertical(top: Radius.circular(25.0))),
                 child: const Center(
                     child:
-                    Text('✨ Magic Weather Premium')),
+                    Text('Bubble-App')),
               ),
               const Padding(
                 padding:
                 EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
                 child: SizedBox(
                   child: Text(
-                    'MAGIC WEATHER PREMIUM',
+                    'Vollversion',
                   ),
                   width: double.infinity,
                 ),
@@ -71,7 +57,7 @@ class PaywallElternState extends State<PaywallEltern> {
                 itemBuilder: (BuildContext context, int index) {
                   var myProductList = widget.offering.availablePackages;
                   return Card(
-                    color: Colors.black,
+                    color: Colors.white,
                     child: ListTile(
                         onTap: () async {
                           try {

@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:socialmediaapp/components/my_button.dart';
 import 'package:socialmediaapp/components/my_textfield.dart';
-import 'package:socialmediaapp/pages/agb_page.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../helper/helper_functions.dart';
-import 'datenschutzrichtlinien_page.dart';
+
 
 
 class RegisterPage extends StatefulWidget {
@@ -50,9 +50,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String gruppe3 = "Gruppe 3";
   String shownotification = "0";
   String abo = "Probemonate";
-  DateTime aboBis = DateTime.now().add(const Duration(days:30));
+  DateTime aboBis = DateTime.now().add(const Duration(days:90));
   String beschreibung = "";
   int anzahlKinder = 0;
+  int aboID = DateTime.now().millisecondsSinceEpoch;
 
 
   bool showProgress = false;
@@ -141,6 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "shownotification": shownotification,
         "abo": abo,
         "aboBis": aboBis,
+        "aboID": aboID,
         'date': DateTime.now(),
       });
     }
@@ -319,13 +321,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 title: Row(
                   children: [
                     GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) =>
-                                AGBPage()),
-                          );
-                        },
+                        onTap: () async {
+                          await launchUrl(
+                          Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
+                          // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                          },
                       child: Text("ABGs",
                         style: TextStyle(color: Colors.lightBlue,
                           fontSize: 12,
@@ -340,12 +340,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(width: 3),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              DatenschutzrichtlinienPage()),
-                        );
+                      onTap: () async {
+                        await launchUrl(
+                            Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
+                        // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                       },
                       child: Text("Datenschutzrichtlinien",
                         style: TextStyle(color: Colors.lightBlue,

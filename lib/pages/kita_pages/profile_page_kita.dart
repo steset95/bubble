@@ -12,7 +12,7 @@ import 'package:socialmediaapp/pages/impressum_page.dart';
 import 'package:socialmediaapp/pages/kita_pages/provision_page_kita.dart';
 
 import '../../helper/notification_controller.dart';
-import '../agb_page.dart';
+
 
 
 class ProfilePageKita extends StatefulWidget {
@@ -86,12 +86,12 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
         actions: [
           // Cancel Button
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-              child: const Text("Speichern",
+              child: const Text("Uložiť",
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -139,12 +139,12 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
         actions: [
           // Cancel Button
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-              child: const Text("Speichern",
+              child: const Text("Uložiť",
               ),
               onPressed: () {
                 Navigator.pop(context);

@@ -31,20 +31,6 @@ class _RaportPageState extends State<RaportPage> {
   // Text Controller für Abfrage des Inhalts im Textfeld "Raport hinzufügen"
   final _raportTextController = TextEditingController();
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
 
   // Raport hinzufügen bzw. Allgemeiner Firebase Connect
@@ -53,7 +39,7 @@ class _RaportPageState extends State<RaportPage> {
     String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
     DateTime now = DateTime.now();
     String uhrzeit = DateFormat('kk:mm').format(now);
-    // in Firestore speichern und "Raports" unter "Kinder" erstellen
+    // in Firestore Uložiť und "Raports" unter "Kinder" erstellen
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(widget.docID)
@@ -113,7 +99,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -176,7 +162,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
           },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -189,7 +175,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
                 _raportTextController.clear();
               },
-              child: Text("Speichern"),
+              child: Text("Uložiť"),
           ),
         ],
       ),
@@ -241,7 +227,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -254,7 +240,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           ),
         ],
       ),
@@ -308,7 +294,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -321,7 +307,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           ),
         ],
       ),
@@ -373,7 +359,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -386,7 +372,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           ),
         ],
       ),
@@ -428,7 +414,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           ),
 
           // save Button
@@ -444,7 +430,7 @@ class _RaportPageState extends State<RaportPage> {
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
           ),
         ],
       ),

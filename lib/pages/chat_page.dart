@@ -183,7 +183,7 @@ Widget _buildUserInput() {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            hintText: "Nachricht...",
+            hintText: "Správa...",
           ),
         ),
     ),

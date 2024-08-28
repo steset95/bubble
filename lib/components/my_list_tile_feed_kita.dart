@@ -47,7 +47,7 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
           //Cancel Button
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text("Abbrechen"),
+            child: const Text("Zrušiť"),
           ),
           //Löschen bestätigen
           TextButton(

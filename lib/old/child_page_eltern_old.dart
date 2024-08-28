@@ -360,7 +360,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
 
                       listImages(childcode);
                     },
-                    child: Text("Speichern"),
+                    child: Text("Uložiť"),
                   ),
 
                 ],

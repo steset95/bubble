@@ -96,7 +96,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
         ),
         actions: [
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
@@ -141,7 +141,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           )
         ],
       ),
@@ -195,7 +195,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       ),
       actions: [
         TextButton(
-          child: const Text("Abbrechen",
+          child: const Text("Zrušiť",
           ),
           onPressed: () => Navigator.pop(context),
         ),
@@ -215,7 +215,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
               //Box schliessen
               Navigator.pop(context);
             },
-            child: Text("Speichern"),
+            child: Text("Uložiť"),
         )
         ],
         ),
@@ -258,13 +258,13 @@ var buttons = '1';
         actions: [
           // Cancel Button
           TextButton(
-            child: const Text("Abbrechen",
+            child: const Text("Zrušiť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
           //Save Button
           TextButton(
-            child: const Text("Speichern",
+            child: const Text("Uložiť",
             ),
             onPressed: () => Navigator.of(context).pop(newValue),
           ),

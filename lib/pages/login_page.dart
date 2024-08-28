@@ -18,8 +18,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   //text controllers
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   //Login MEhtod
   void login() async{
@@ -32,8 +32,8 @@ class _LoginPageState extends State<LoginPage> {
     );
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: email.text,
+        password: password.text,
       );
       // ladekreis anzeigen
       if (context.mounted) Navigator.pop(context);
@@ -88,38 +88,49 @@ class _LoginPageState extends State<LoginPage> {
 
               // Email textfield
 
-              MyTextField(
-                hintText: "Email",
-                obscureText: false,
-                controller: emailController,
 
+            AutofillGroup(
+              child: TextField(
+                autofillHints: [AutofillHints.email],
+                style: TextStyle(color: Colors.black),
+                controller: email,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  hintText: "Email",
+                ),
+                obscureText: false,
               ),
+            ),
 
               const SizedBox(height: 20),
 
               // password textfield
-
 
               Container(
 
                 child: Row(
                   children: [
                     Flexible(
-                      child: TextField(
-                        style: TextStyle(color: Colors.black),
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: _toggle,
-                            icon: const Icon(Icons.remove_red_eye,
+                      child: AutofillGroup(
+                        child: TextField(
+                          autofillHints: [AutofillHints.password],
+                          style: TextStyle(color: Colors.black),
+                          controller: password,
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              onPressed: _toggle,
+                              icon: const Icon(Icons.remove_red_eye,
+                              ),
                             ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            hintText: "Passwort",
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: "Passwort",
+                          obscureText: _obscureText,
                         ),
-                        obscureText: _obscureText,
                       ),
                     ),
 

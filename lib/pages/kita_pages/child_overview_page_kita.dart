@@ -38,20 +38,6 @@ class ChildOverviewPageKita extends StatefulWidget {
 class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
 
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
   final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
 
@@ -94,7 +80,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text("Abbrechen"),
+                  child: Text("Zrušiť"),
                 )
               ],
             );
@@ -196,7 +182,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text("Abbrechen"),
+            child: Text("Zrušiť"),
           )
         ],
       ),

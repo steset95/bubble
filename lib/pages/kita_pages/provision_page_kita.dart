@@ -26,23 +26,6 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
 
   final currentUser = FirebaseAuth.instance.currentUser;
 
-
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
-
   // Referenz zu "Users" Datenbank
   final usersCollection = FirebaseFirestore
       .instance
@@ -81,13 +64,13 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
             actions: [
               // Cancel Button
               TextButton(
-                child: const Text("Abbrechen",
+                child: const Text("Zrušiť",
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
               //Save Button
               TextButton(
-                child: const Text("Speichern",
+                child: const Text("Uložiť",
                 ),
                 onPressed: () => Navigator.of(context).pop(newValue),
               ),

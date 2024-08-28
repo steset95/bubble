@@ -54,7 +54,7 @@ class NotificationController {
             content: NotificationContent(
                 id: 1,
                 channelKey: "basic_channel",
-                title: '$not neue Nachrichten',
+                title: 'Neue Nachrichten',
                 body: 'Neue Nachrichten von $username'),
             //body: '$not neue Nachrichten'),
           );
