@@ -15,39 +15,18 @@ import 'package:socialmediaapp/auth/auth.dart';
 import 'package:socialmediaapp/firebase_options.dart';
 import 'package:socialmediaapp/helper/store_helper.dart';
 import 'package:socialmediaapp/theme/light_mode.dart';
-import 'components/abo_controller.dart';
+import 'helper/abo_controller.dart';
 import 'helper/constant.dart';
 import 'helper/notification_controller.dart';
 
 
-/// Purchase
+
 
 
 void main() async {
 
+    intl.Intl.defaultLocale = 'sk';
 
-  intl.Intl.defaultLocale = 'sk';
-
-  if (kIsWeb == false) {
-    if (Platform.isIOS || Platform.isMacOS) {
-      StoreConfig(
-        store: Store.appStore,
-        apiKey: appleApiKey,
-      );
-    } else if (Platform.isAndroid) {
-      // Run the app passing --dart-define=AMAZON=true
-      StoreConfig(
-        store: Store.playStore,
-        apiKey: googleApiKey,
-      );
-    }
-
-
-      WidgetsFlutterBinding.ensureInitialized();
-
-  }
-
-  /// Purchase
 
 
   /// AwesomeNotifications

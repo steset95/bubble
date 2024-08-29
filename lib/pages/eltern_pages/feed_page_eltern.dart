@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../components/my_profile_data_read_only.dart';
 import '../../helper/notification_controller.dart';
-import '../../components/abo_controller.dart';
+import '../../helper/abo_controller.dart';
 import '../chat_page.dart';
 import 'addkind_page_eltern.dart';
 import 'bezahlung_page_eltern.dart';
@@ -45,7 +45,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => aboCheck(context));
+    aboCheck(context);
   }
 
   @override

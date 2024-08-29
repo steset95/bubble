@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:socialmediaapp/helper/helper_functions.dart';
 import 'package:socialmediaapp/pages/eltern_pages/paywall_eltern.dart';
-import '../../components/abo_controller.dart';
+import '../../helper/abo_controller.dart';
 import '../../components/my_button.dart';
 import '../../helper/appdata.dart';
 import '../../helper/constant.dart';

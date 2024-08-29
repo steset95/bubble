@@ -9,7 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:socialmediaapp/database/firestore_child.dart';
 import 'package:socialmediaapp/pages/eltern_pages/images_page_eltern.dart';
-import '../../components/abo_controller.dart';
+import '../../helper/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
 import '../../helper/notification_controller.dart';
 import 'package:intl/intl.dart';
@@ -52,7 +52,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => aboCheck(context));
+    aboCheck(context);
   }
 
   @override
@@ -652,10 +652,10 @@ color: Theme.of(context).colorScheme.primary,
                                   Padding(
                                     padding: const EdgeInsets.all(3.0),
                                     child: Container(
-                                    padding: EdgeInsets.only(top: 8, bottom: 8,),
+                                    padding: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(8),
                                           boxShadow: const [
                                             BoxShadow(
                                               color: Colors.grey,
@@ -666,62 +666,91 @@ color: Theme.of(context).colorScheme.primary,
                                           ]
                                       ),
                                       width: mediaQuery.size.width * 0.9,
-                                      child: Column(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                  raport['Uhrzeit'],
-                                                  style: TextStyle(fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
-                                                    color: Theme.of(context).colorScheme.primary,
-                                                  )
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Text(
-                                                  raport['RaportTitle'],
-                                                style: TextStyle(fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context).colorScheme.primary,
-                                                fontSize: 13,
+                                          Flexible(
+                                              flex: 2,
+                                              child: Column(
+                                                children: [
+                                                  Container(child: Text(
+                                                      raport['Uhrzeit'],
+                                                      style: TextStyle(fontWeight: FontWeight.bold,
+                                                        fontSize: 13,
+                                                      )
+                                                  ),),
+                                                  const SizedBox(height: 2),
+                                                ],
+                                              )),
+                                          Flexible(
+                                            flex: 8,
+                                            child: Column(
+                                              children: [
+
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                        raport['RaportTitle'],
+                                                      style: TextStyle(fontWeight: FontWeight.bold,
+                                                      fontSize: 13,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                  ],
                                                 ),
-                                              ),
-                                            ],
+                                                const SizedBox(height: 5),
+                                                if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Flexible(
+                                                        //width: mediaQuery.size.width * 0.80,
+                                                          child: Text(
+                                                            textAlign: TextAlign.center,
+                                                            raport['RaportText'],
+                                                            style: TextStyle(
+                                                              fontSize: 11,
+                                                            ),
+                                                          )),
+                                                    ],
+                                                  ),
+
+
+                                              ],
+                                            ),
                                           ),
-                                          const SizedBox(height: 5),
-                                          if (raport['RaportTitle'] == "Angemeldet")
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Icon(Icons.wb_sunny_outlined,
-                                                ),
+                                          Flexible(
+                                              flex: 1,
+                                              child:
+                                              Column(
+                                                children: [
+                                                  if (raport['RaportTitle'] == "Angemeldet")
+                                                  Icon(Icons.wb_sunny_outlined,
+                                                  color: Colors.yellow,
+                                                  )
+                                                  else if (raport['RaportTitle'] == "Essen: ")
+                                                    Icon(Icons.local_pizza_outlined,
+                                                      color: Colors.orangeAccent,
+                                                    )
+                                                  else if (raport['RaportTitle'] == "Schlaf: ")
+                                                    Icon(Icons.bed_outlined,
+                                                      color: Colors.indigoAccent,
+                                                    )
+                                                  else if (raport['RaportTitle'] == "Aktivität: ")
+                                                    Icon(Icons.forest_outlined,
+                                                      color: Colors.green,
+                                                    )
+                                                  else if (raport['RaportTitle'] == "Diverses: ")
+                                                    Icon(Icons.note_add_outlined,
+                                                      color: Colors.blueGrey,
+                                                    )
+                                                  else if (raport['RaportTitle'] == "Abgemeldet")
+                                                    Icon(Icons.door_front_door_outlined,
+                                                      color: Colors.brown,
+                                                    ),
                                               ],
-                                            ),
-                                          if (raport['RaportTitle'] == "Abgemeldet")
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Container(
-                                                  height: 15,
-                                                  child: Icon(Icons.family_restroom_outlined,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          if (raport['RaportTitle'] != "Angemeldet")
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Flexible(
-                                                  //width: mediaQuery.size.width * 0.80,
-                                                  child: Text(
-                                                      textAlign: TextAlign.center,
-                                                      raport['RaportText'],
-                                                    style: TextStyle(
-                                                    fontSize: 11,
-                                                  ),
-                                                  )),
-                                            ],
+                                              )
                                           ),
                                         ],
                                       ),
@@ -748,7 +777,7 @@ color: Theme.of(context).colorScheme.primary,
                           child: Container(
                           decoration: BoxDecoration(
 
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(15),
                           border: Border.all(color: Colors.grey.shade300,),
                           ),
                             child:
@@ -802,23 +831,21 @@ color: Theme.of(context).colorScheme.primary,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Icon(Icons.arrow_back_ios_rounded,
+                          child: Icon(Icons.arrow_circle_left_outlined,
                             color: Theme.of(context).colorScheme.primary,
-                            size: 20,
+                            size: 25,
                           ),
                         ),
                       ),
                       GestureDetector(
                         onTap:  ()  {
                           showRaportDialogDatum(context, currentDate1);
-
                         },
                         child: Text(showDatum,
                           textAlign: TextAlign.center,
                           style: TextStyle( fontFamily: 'Goli',
                             color: Theme.of(context).colorScheme.primary,
                           ),
-
                         ),
                       ),
                       GestureDetector(
@@ -829,9 +856,9 @@ color: Theme.of(context).colorScheme.primary,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Icon(Icons.arrow_forward_ios_rounded,
+                          child: Icon(Icons.arrow_circle_right_outlined ,
                             color: Theme.of(context).colorScheme.primary,
-                            size: 20,
+                            size: 25,
                           ),
                         ),
                       ),

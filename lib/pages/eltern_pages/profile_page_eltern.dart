@@ -1,9 +1,11 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
@@ -11,7 +13,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:socialmediaapp/components/my_profile_data.dart';
 import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
 import 'package:socialmediaapp/pages/eltern_pages/bezahlung_page_eltern.dart';
-import '../../components/abo_controller.dart';
+import '../../helper/abo_controller.dart';
 import '../../helper/constant.dart';
 import '../../helper/notification_controller.dart';
 
@@ -124,6 +126,25 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
   Future<void> _configureSDK() async {
 
+    if (kIsWeb == false) {
+      if (Platform.isIOS || Platform.isMacOS) {
+        StoreConfig(
+          store: Store.appStore,
+          apiKey: appleApiKey,
+        );
+      } else if (Platform.isAndroid) {
+        // Run the app passing --dart-define=AMAZON=true
+        StoreConfig(
+          store: Store.playStore,
+          apiKey: googleApiKey,
+        );
+      }
+
+
+      WidgetsFlutterBinding.ensureInitialized();
+
+    }
+
     FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
@@ -158,7 +179,10 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
   void goToPage() async {
+
     _configureSDK();
+
+
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
     await FirebaseFirestore.instance
         .collection("Users")
@@ -167,21 +191,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
         .then((DocumentSnapshot document) {
       if (customerInfo.entitlements.all[entitlementID] != null &&
           customerInfo.entitlements.all[entitlementID]?.isActive == true
-          && document["aboBis"].toDate().isBefore(DateTime.now())) {
-        FirebaseFirestore.instance
-            .collection("Users")
-            .doc(currentUser?.email)
-            .update({"abo": "aktiv"});
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Abonnement aktiv")),
-        );
-      }
-      else if (customerInfo.entitlements.all[entitlementID] != null &&
-          customerInfo.entitlements.all[entitlementID]?.isActive == true
-          && document["aboBis"].toDate().isAfter(DateTime.now()))
-      {
+          ) {
         FirebaseFirestore.instance
             .collection("Users")
             .doc(currentUser?.email)
@@ -194,15 +204,27 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       }
 
       else if
-      (customerInfo.entitlements.all[entitlementID] == null && document["aboBis"].toDate().isAfter(DateTime.now()))
+      (customerInfo.entitlements.all[entitlementID] == null &&
+          document["aboBis"].toDate().isAfter(DateTime.now()))
       {
-
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
               BezahlungPage(isActive: true, text: "Probemonate aktiv")),
         );
       }
+      else if
+      (customerInfo.entitlements.all[entitlementID] != null &&
+          customerInfo.entitlements.all[entitlementID]?.isActive == false &&
+          document["aboBis"].toDate().isAfter(DateTime.now()))
+      {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              BezahlungPage(isActive: true, text: "Probemonate aktiv")),
+        );
+      }
+
       else
         {
           FirebaseFirestore.instance
