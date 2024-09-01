@@ -154,7 +154,7 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Bilder",
+          title: Text("Obrázky",
           ),
         ),
       body: SingleChildScrollView(

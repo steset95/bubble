@@ -147,7 +147,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                 // TextController wurde oben definiert und fragt den Text im Textfeld ab
                 firestoreDatabaseChild.updateChildEinwilligungen(childcode, datensatz!, _currentItemSelectedGeschlecht,);
               }
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Uložiť"),
@@ -258,18 +258,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                 final userData = snapshot.data?.data() as Map<String, dynamic>;
 
 
-
-
-
-
-
-
-
-
-
-
-
-                // Inhalt Daten
+               // Inhalt Daten
 
                 return
                   Column(
@@ -380,7 +369,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                       SizedBox(
                         height: 30,
                       ),
-                      Text("Einwilligungen Kind",
+                      Text("Povolenia",
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
@@ -388,56 +377,56 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                       ),
                       ProfileDataSwitch(
                         text: userData["fotosSocialMedia"],
-                        sectionName: "Fotos für SocialMedia",
+                        sectionName: "Fotky pre sociálne médiá",
                         field: "fotosSocialMedia",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["fotosApp"],
-                        sectionName: "Fotos für App",
+                        sectionName: "Fotky pre aplikáciu",
                         field: "fotosApp",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["nagellack"],
-                        sectionName: "Nagellack auftragen",
+                        sectionName: "Lakovanie nechtov",
                         field: "nagellack",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["schminken"],
-                        sectionName: "Schminken",
+                        sectionName: "Líčenie",
                         field: "schminken",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["fieber"],
-                        sectionName: "Rektales Fiebermessen",
+                        sectionName: "Rektálne meranie teploty",
                         field: "fieber",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["sonnencreme"],
-                        sectionName: "Sonnencreme auftragen",
+                        sectionName: "Nanášanie opaľovacieho krému",
                         field: "sonnencreme",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["fremdkoerper"],
-                        sectionName: "Fremdkörper entfernen",
+                        sectionName: "Odstránenie cudzieho predmetu",
                         field: "fremdkoerper",
                         childcode: childcode,
                       ),
 
                       ProfileDataSwitch(
                         text: userData["homoeopathie"],
-                        sectionName: "Homöopathie",
+                        sectionName: "Homeopatiká",
                         field: "homoeopathie",
                         childcode: childcode,
                       ),
@@ -447,7 +436,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                   );
                 // Fehlermeldung wenn nichts vorhanden ist
               } else {
-                return const Text("Keine Daten vorhanden");
+                return const Text("No Data");
               }
             },
 
@@ -466,7 +455,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             children: [
               Column(
                 children: [
-                  Text("Bitte Kind hinzufügen",
+                  Text("Prosím pridajte dieťa",
                     style: TextStyle(fontSize: 20),
                   ),
                   const SizedBox(height: 20),

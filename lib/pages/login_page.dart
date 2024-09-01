@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     on FirebaseAuthException catch (e) {
       // ladekreis anzeigen
       Navigator.pop(context);
-      displayMessageToUser("Benutzername oder Passwort falsch", context);
+      displayMessageToUser("Nesprávne používateľské meno alebo heslo", context);
 
     }
   }
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
               // app name
               const SizedBox(height: 60),
               const Text(
-                "Login",
+                "Prihlásenie",
                 style: TextStyle(fontSize: 20),
 
               ),
@@ -89,19 +89,16 @@ class _LoginPageState extends State<LoginPage> {
               // Email textfield
 
 
-            AutofillGroup(
-              child: TextField(
-                autofillHints: [AutofillHints.email],
-                style: TextStyle(color: Colors.black),
-                controller: email,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  hintText: "Email",
+            TextField(
+              style: TextStyle(color: Colors.black),
+              controller: email,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                obscureText: false,
+                hintText: "Email",
               ),
+              obscureText: false,
             ),
 
               const SizedBox(height: 20),
@@ -113,24 +110,21 @@ class _LoginPageState extends State<LoginPage> {
                 child: Row(
                   children: [
                     Flexible(
-                      child: AutofillGroup(
-                        child: TextField(
-                          autofillHints: [AutofillHints.password],
-                          style: TextStyle(color: Colors.black),
-                          controller: password,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: _toggle,
-                              icon: const Icon(Icons.remove_red_eye,
-                              ),
+                      child: TextField(
+                        style: TextStyle(color: Colors.black),
+                        controller: password,
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: _toggle,
+                            icon: const Icon(Icons.remove_red_eye,
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            hintText: "Passwort",
                           ),
-                          obscureText: _obscureText,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          hintText: "Prihlasovací kód",
                         ),
+                        obscureText: _obscureText,
                       ),
                     ),
 
@@ -149,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   GestureDetector(
                     child: Text(
-                      "Passwort vergessen? ",
+                      "Zabudli ste prihlasovací kód? ",
                     ),
                     onTap: () {
                       Navigator.push(
@@ -166,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
               //sing in button
 
               MyButton(
-                text: "Login",
+                text: "Prihlásiť",
                 onTap: login,
               ),
 
@@ -177,12 +171,12 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Noch keinen Account? ",
+                  Text("Nemáte účet? ",
                   ),
                   GestureDetector(
                     onTap: widget.onTap,
                     child: const Text(
-                      "Hier registrieren",
+                      "Zaregistrujte sa tu",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

@@ -38,7 +38,7 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("Eintrag löschen?",
+        title: const Text("Zmazať oznam?",
           style: TextStyle(color: Colors.black,
           fontSize: 20,
         ),
@@ -60,7 +60,7 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
                   .delete();
               Navigator.pop(context);
             },
-            child: const Text("Bestätigen"),
+            child: const Text("Potvrdiť"),
           ),
         ],
       ),

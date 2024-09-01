@@ -43,7 +43,7 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
         .then((DocumentSnapshot document) {
       if (document["registrierungen"] > 3) {
 
-        return displayMessageToUser("Zu viele verschiedene Mail-Adressen verwendet.", context);
+        return displayMessageToUser("Použité bolo príliš veľa rôznych e-mailových adries!", context);
       }
         else {
 
@@ -147,7 +147,7 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Kind hinzufügen",
+          title: Text("Pridať dieťa",
           ),
         ),
       body:
@@ -156,9 +156,9 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
             padding: const EdgeInsets.all(25.0),
             child: Column(
               children: [
-                Text("Bitte den Aktivierungsschlüsser von Ihrer Kita eingeben:"),
+                Text("Zadajte prosim aktivačný kód:"),
                 const SizedBox(height: 20,),
-                MyTextField(hintText: "Aktivierungsschlüssel...", obscureText: false, controller: textController),
+                MyTextField(hintText: "Aktivačný kód…", obscureText: false, controller: textController),
                 const SizedBox(height: 20,),
                 TextButton(
                   onPressed: () {
@@ -172,17 +172,17 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
                         addElternMail(textController.text);
                         // Textfeld leeren nach Eingabe
                         textController.clear();
-                        //Box schliessen
+                        //Box Zatvoriť
                         Navigator.pop(context);
 
-                        displayMessageToUser("Kind wird hinzugefügt...", context);
+                        displayMessageToUser("Dieťa sa pridáva...", context);
                       }
                       else {
-                        return displayMessageToUser("Aktivierungscode ist unglütig.", context);
+                        return displayMessageToUser("Aktivačný kód je neplatný!", context);
                       }
                     }
                     );
-                  }, child: Text("Kind Hinzufügen"),
+                  }, child: Text("Pridať dieťa"),
                 ),
 
                 const SizedBox(height: 30,),
@@ -236,7 +236,7 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
         Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-        Text("Kind 1",
+        Text("Dieťa 1",
         style: TextStyle(color: Colors.black.withOpacity(0.3),
         fontSize: 20,
         ),
@@ -355,7 +355,7 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Kind 2",
+                              Text("Dieťa 2",
                                 style: TextStyle(color: Colors.black.withOpacity(0.3),
                                   fontSize: 20,
                                 ),

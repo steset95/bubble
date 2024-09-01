@@ -96,7 +96,7 @@ class _EinwilligungenKindPageElternState extends State<EinwilligungenKindPageElt
                 // TextController wurde oben definiert und fragt den Text im Textfeld ab
                 firestoreDatabaseChild.updateChildEinwilligungen(childcode, datensatz!, _currentItemSelected,);
               }
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Ändern auf:"),

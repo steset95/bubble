@@ -18,47 +18,6 @@ class FirestoreDatabaseChild {
   /// Kita Seite
 
 
-  void addChild(String child, String group) async {
-    FirebaseFirestore.instance
-        .collection("Kinder")
-        .add({
-      'child': child,
-      'group': '1',
-      'anmeldung': "Abgemeldet",
-      'absenzText': "",
-      'absenz': "nein",
-      "absenzBis": absenzBis,
-      'timeStamp': Timestamp.now(),
-      'kita': currentUser?.email,
-      'abholzeit': "",
-      'geschlecht': "keine Angabe",
-      'geburtstag': "",
-      'personen': "",
-      'alergien': "",
-      'krankheiten': "",
-      'medikamente': "",
-      'impfungen': "",
-      'kinderarzt': "",
-      'krankenkasse': "",
-      'bemerkungen': "",
-      'eltern': "",
-      'fotosSocialMedia': "nicht erlaubt",
-      'fotosApp': "nicht erlaubt",
-      'nagellack': "nicht erlaubt",
-      'schminken': "nicht erlaubt",
-      'fieber': "nicht erlaubt",
-      'sonnencreme': "nicht erlaubt",
-      'fremdkoerper': "nicht erlaubt",
-      'homoeopathie': "nicht erlaubt",
-      'shownotification': "0",
-      'registrierungen': 0,
-      'switch': true,
-
-
-    });
-      }
-
-
 
 
   // READ: get Child-Data from Database nach Gruppe
@@ -166,7 +125,7 @@ class FirestoreDatabaseChild {
         .doc(docID)
         .update({
       'absenz': "nein",
-      'anmeldung': "Abgemeldet",
+      'anmeldung': "Neprítomná / ý",
       'absenzText': "",
       'absenzBis': DateTime.now(),
     });

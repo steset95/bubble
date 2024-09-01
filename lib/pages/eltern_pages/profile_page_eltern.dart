@@ -199,7 +199,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Abonnement aktiv")),
+              BezahlungPage(isActive: true, text: "Aktívne predplatné")),
         );
       }
 
@@ -210,7 +210,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Probemonate aktiv")),
+              BezahlungPage(isActive: true, text: "Aktívne skúšobné mesiace")),
         );
       }
       else if
@@ -221,7 +221,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Probemonate aktiv")),
+              BezahlungPage(isActive: true, text: "Aktívne skúšobné mesiace")),
         );
       }
 
@@ -235,7 +235,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) =>
-                BezahlungPage(isActive: false, text: "Zur Vollversion")),
+                BezahlungPage(isActive: false, text: "Na plnú verziu")),
           );
 
         }
@@ -255,7 +255,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        /// Abholzeit
         GestureDetector(
             onTap: () {
               Navigator.push(
@@ -266,7 +265,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
             },
             child: Row(
               children: [
-                Text("Über die App",
+                Text("O applikácii",
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 15),
@@ -343,31 +342,31 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                     ),
                     ProfileData(
                       text: userData["username"],
-                      sectionName: "Name",
-                      onPressed: () => editField("username", "Name", userData["username"]),
+                      sectionName: "Meno a Priezvisko",
+                      onPressed: () => editField("username", "Meno a Priezvisko", userData["username"]),
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["email"],
-                      sectionName: "Email-Adresse",
+                      sectionName: "Email",
 
                     ),
                     ProfileData(
                       text: userData["adress"],
-                      sectionName: "Strasse und Hausnummer",
-                      onPressed: () => editField("adress", "Strasse und Hausnummer", userData["adress"]),
+                      sectionName: "Ulica / Číslo",
+                      onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"]),
                     ),
 
                     ProfileData(
                       text: userData["adress2"],
-                      sectionName: "PLZ und Ort",
-                      onPressed: () => editField("adress2", "PLZ und Ort", userData["adress2"]),
+                      sectionName: "PSČ / Mesto",
+                      onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"]),
                     ),
 
                     ProfileData(
                       text: userData["tel"],
-                      sectionName: "Telefonnummer",
-                      onPressed: () => editField("tel", "Telefonnummer", userData["tel"]),
+                      sectionName: "Mobilné číslo",
+                      onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
                     ),
 
                     SizedBox(
@@ -386,7 +385,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                           SizedBox(
                             width: 5,
                           ),
-                          Text("Abonnement",
+                          Text("Predplatné",
                             style: TextStyle(color: Theme.of(context).colorScheme.primary,
                               fontSize: 12,
                             ),
@@ -411,7 +410,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                 );
               // Fehlermeldung wenn nichts vorhanden ist
             } else {
-              return const Text("Keine Daten vorhanden");
+              return const Text("KNo  Data");
             }
           },
         ),

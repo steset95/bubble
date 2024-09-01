@@ -62,7 +62,7 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Eltern",
+          title: Text("Rodičia",
           ),
         ),
       body: SingleChildScrollView(
@@ -99,7 +99,7 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Kind wurde noch nicht zugeordnet."),
+                    Text("Dieťa ešte nebolo pridelené."),
                   ],
                 ),
               ],
@@ -132,19 +132,19 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
               ),
             ProfileDataReadOnly(
             text: username,
-            sectionName: "Name",
+            sectionName: "Meno a Priezvisko",
             ),
             ProfileDataReadOnly(
             text: adress,
-            sectionName: "Adresse",
+            sectionName: "Ulica / Číslo",
             ),
             ProfileDataReadOnly(
             text: adress2,
-            sectionName: "Ort",
+            sectionName: "PSČ / Mesto",
             ),
               MyProfileDataIcon(
                 text: tel,
-                sectionName: "Telefonnummer",
+                sectionName: "Mobilné číslo",
                 onPressed: () => setState(() {
                   _makePhoneCall(tel);
                 }),
@@ -160,7 +160,7 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
             }
                 // Fehlermeldung wenn nichts vorhanden ist
               } else {
-                return const Text("Keine Daten vorhanden");
+                return const Text("No Data");
               }
               return Text("");
             },

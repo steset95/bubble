@@ -41,16 +41,17 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
   }
 
   Widget buildGallery(String docID) {
+
     final Storage storage = Storage();
     return FutureBuilder(
       future: getImagePath(docID),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting ||
             !snapshot.hasData) {
+
           return const CircularProgressIndicator();
         }
         return Container(
-
           child:
             GridView.builder(
             physics: NeverScrollableScrollPhysics(),
@@ -97,17 +98,18 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   TextButton(
-                                    child: const Text("Zurück",
+                                    child: const Text("Zrušiť",
                                     ),
                                     onPressed: () => Navigator.pop(context),
                                   ),
                                   const SizedBox(width: 50),
                                   TextButton(
-                                      child: const Text("Löschen",
+                                      child: const Text("Vymazať",
                                       ),
                                       onPressed: () {
                                         storage.deleteImage(snapshot.data![index]);
                                         setState(() {});
+                                        Navigator.pop(context);
                                         Navigator.pop(context);
                                         return displayMessageToUser("Bild wird gelöscht......", context);
                                       }
@@ -144,7 +146,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Löschen bestätigen?"
+        title: Text("Potvrdiť vymazanie?"
         ),
         actions: [
           TextButton(
@@ -152,9 +154,11 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
               storage.deleteImages(widget.docID);
               setState(() {});
               Navigator.pop(context);
+              Navigator.pop(context);
               return displayMessageToUser("Bilder werden gelöscht......", context);
+
             },
-            child: Text("Löschen"),
+            child: Text("Vymazať"),
           ),
           TextButton(
             onPressed: () {

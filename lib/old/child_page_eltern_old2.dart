@@ -108,7 +108,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -122,7 +122,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
               final value = _raportTextController.text;
               // Raport hinzufügen
               addRaport("anmeldung", 'Absenz bis $value', childcode);
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               return displayMessageToUser("Absenz wurde eingetragen.", context);
               //Textfeld leeren
@@ -197,7 +197,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 // TextController wurde oben definiert und fragt den Text im Textfeld ab
                 addRaport("abholzeit", _currentItemSelectedAbholzeit, childcode);
               }
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
               return displayMessageToUser("Abholzeit wurde eingetragen.", context);
             },

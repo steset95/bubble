@@ -62,7 +62,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -75,7 +75,7 @@ class _RaportPageState extends State<RaportPage> {
               onPressed: () {
                 // Raport hinzufügen
                 addRaport(_raportTextController.text, 'Essen');
-                // Textfeld schliessen
+                // Textfeld Zatvoriť
                 Navigator.pop(context);
               //Textfeld leeren
                 _raportTextController.clear();

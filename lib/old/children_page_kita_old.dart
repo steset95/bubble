@@ -106,7 +106,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                 firestoreDatabaseChild.addChild(textController.text, "1");
               // Textfeld leeren nach Eingabe
               textController.clear();
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Hinzufügen"),
@@ -212,7 +212,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                 // TextController wurde oben definiert und fragt den Text im Textfeld ab
                 firestoreDatabaseChild.updateChild(docID, _currentItemSelected);
               }
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Uložiť"),

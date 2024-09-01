@@ -46,7 +46,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
               // app name
 
               const Text(
-                "Passwort vergessen",
+                "Zabudli ste heslo?",
                 style: TextStyle(fontSize: 20),
 
               ),
@@ -55,7 +55,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
 
               // Email textfield
               const Text(
-                "Email für Widerherstellungslink eintragen:",
+                "Zadajte Email na obnovenie hesla::",
                 style: TextStyle(fontSize: 12),
 
               ),
@@ -74,7 +74,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
               //sing in button
 
               MyButton(
-                text: "Email anfordern",
+                text: "Pokračovať",
                 onTap: resetPassword,
               ),
               const SizedBox(height: 10),

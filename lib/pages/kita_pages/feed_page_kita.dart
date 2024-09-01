@@ -87,7 +87,7 @@ bool externPost = false;
             onTap: () => setState(() => externPost = !externPost),
             child: Row(
               children: [
-                Text("Feed wechseln",
+                Text("Zmeniť násťenku",
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 5),
@@ -112,7 +112,7 @@ bool externPost = false;
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Feed",
+        title: Text("Nástenka",
         ),
         actions: [
           showButtons ()
@@ -125,14 +125,14 @@ bool externPost = false;
             Navigator.push(
             context,
             MaterialPageRoute(builder: (context) =>
-                PostPageKita(externPost: externPost, umgebung: "extern")),
+                PostPageKita(externPost: externPost, umgebung: "Nový externý príspevok")),
           );
           }
           else
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>
-              PostPageKita(externPost: externPost, umgebung: "intern")),
+              PostPageKita(externPost: externPost, umgebung: "Nový interný oznam")),
             );
         },
         child: const Icon(
@@ -152,7 +152,7 @@ bool externPost = false;
                 children: [
                   const SizedBox(height: 30,),
                   Text(
-                    "Externer Feed",
+                    "Externá nástenka",
                     style: TextStyle(fontSize: 25,
                     color: Colors.black,
                         fontFamily: 'Goli',
@@ -180,7 +180,7 @@ bool externPost = false;
                           return const Center(
                             child: Padding(
                                 padding: EdgeInsets.all(25),
-                                child: Text("Noch keine Einträge vorhanden...")
+                                child: Text("Žiadne záznamy...")
                             ),
                           );
                         }
@@ -229,7 +229,7 @@ bool externPost = false;
                 children: [
                   const SizedBox(height: 30,),
                   Text(
-                    "Interner Feed",
+                    "Interná násťenka",
                     style: TextStyle(fontSize: 25,
                       color: Colors.black,
                       fontFamily: 'Goli',
@@ -260,7 +260,7 @@ bool externPost = false;
                           return const Center(
                             child: Padding(
                                 padding: EdgeInsets.all(25),
-                                child: Text("Noch keine Einträge vorhanden...")
+                                child: Text("Žiadne záznamy...")
                             ),
                           );
                         }

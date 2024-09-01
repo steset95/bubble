@@ -68,7 +68,7 @@ class BezahlungPageState extends State<BezahlungPage> {
 
     if (customerInfo.entitlements.all[entitlementID] != null &&
         customerInfo.entitlements.all[entitlementID]?.isActive == true) {
-      displayMessageToUser("Abonnement bereits aktiv", context);
+      displayMessageToUser("Error", context);
 
       setState(() {
         _isLoading = false;
@@ -128,7 +128,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                   borderRadius:
                   BorderRadius.all(
                       Radius.circular(10.0))),
-              title: Text("Abonnement",
+              title: Text("Predplatné",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black,
                   fontSize: 20,
@@ -140,9 +140,9 @@ class BezahlungPageState extends State<BezahlungPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("aktiv bis: ${expirationDateOutput}"),
+                    Text("Aktívna do: ${expirationDateOutput}"),
                    // Text("Abo gelöst am: ${originalpurchasedateOutput}"),
-                    Text("(autom. monatliche Erneuerung)")
+                    Text("(Automatické mesačné obnovenie)")
                   ],
                 ),
               ),
@@ -150,11 +150,11 @@ class BezahlungPageState extends State<BezahlungPage> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    // Textfeld schliessen
+                    // Textfeld Zatvoriť
                     Navigator.pop(context);
                     //Textfeld leeren
                   },
-                  child: Text("Schliessen"),
+                  child: Text("Zatvoriť"),
                 ),
               ],
             ),
@@ -196,7 +196,7 @@ class BezahlungPageState extends State<BezahlungPage> {
     appBar: AppBar(
       scrolledUnderElevation: 0.0,
       backgroundColor: Theme.of(context).colorScheme.secondary,
-    title: Text("Abonnement",
+    title: Text("Predplatné",
     ),
     ),
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -212,7 +212,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                   SizedBox(
                     height: 15,
                   ),
-                  Text('Sichere dir den Zugriff auf:',
+                  Text('Zabezpečte si prístup k:',
                     style: TextStyle(color: Colors.black,
                       fontSize: 20,
                     ),
@@ -225,7 +225,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                       Icon(Icons.check,
                         color: Colors.green,
                       ),
-                      Text(' Tagesraport '),
+                      Text(' Dennik '),
                       Icon(Icons.check,
                         color: Colors.green,
                       ),
@@ -236,7 +236,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                       Icon(Icons.check,
                         color: Colors.green,
                       ),
-                      Text(' Chatfunktion '),
+                      Text(' Chatovacej funkcii '),
                       Icon(Icons.check,
                         color: Colors.green,
                       ),
@@ -247,7 +247,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                       Icon(Icons.check,
                         color: Colors.green,
                       ),
-                      Text(' Kita-Feed '),
+                      Text(' Škôlka nástenka '),
                       Icon(Icons.check,
                         color: Colors.green,
                       ),
@@ -256,7 +256,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                   SizedBox(
                     height: 30,
                   ),
-                  if (widget.text == "Probemonate aktiv")
+                  if (widget.text == "Aktívne skúšobné mesiace")
                     Column(
                       children: [
                         Container(
@@ -299,11 +299,11 @@ class BezahlungPageState extends State<BezahlungPage> {
                           String currentDate = aboBis.toString(); // Aktuelles Datum als String
                           String formattedDate = currentDate.substring(0, 10); // Nur das Dat
 
-                          return Text('Bis: $formattedDate');
+                          return Text('Do: $formattedDate');
                       }),
                       ],
                     ),
-                  if (widget.text == "Abonnement aktiv")
+                  if (widget.text == "Aktívne predplatné")
                     Column(
                       children: [
                         Container(
@@ -352,7 +352,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text('9.90 CHF / Monat'),
+                      Text('9,90 EURO / mesiac'),
                     ],
                   ),
                 ],

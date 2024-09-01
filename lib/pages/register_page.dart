@@ -33,10 +33,10 @@ class _RegisterPageState extends State<RegisterPage> {
 
   File? file;
   var options = [
-    'Kita',
-    'Eltern',
+    'Škôlka',
+    'Rodič',
   ];
-  var _currentItemSelected = "Eltern";
+  var _currentItemSelected = "Rodič";
   var rool = "Eltern";
   String adress = "";
   String adress2 = "";
@@ -45,9 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String childcode2 = "";
   String iban = "";
   int guthaben = 0;
-  String gruppe1 = "Gruppe 1";
-  String gruppe2 = "Gruppe 2";
-  String gruppe3 = "Gruppe 3";
+  String gruppe1 = "Skupinu 1";
+  String gruppe2 = "Skupinu 2";
+  String gruppe3 = "Skupinu 3";
   String shownotification = "0";
   String abo = "Probemonate";
   DateTime aboBis = DateTime.now().add(const Duration(days:90));
@@ -78,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
     {
       Navigator.pop(context);
       // Fehlermeldung für Benutzer
-      displayMessageToUser("Passwörter stimmen nicht überein", context);
+      displayMessageToUser("Heslá sa nezhodujú", context);
 
 
     }
@@ -124,7 +124,7 @@ class _RegisterPageState extends State<RegisterPage> {
   //// Dokument für Firestone erstellen und mit Benutzerdaten füllen, Name = Users
 
   Future<void> createUserDocument(UserCredential? userCredential) async {
-    if (userCredential != null && userCredential.user != null && _currentItemSelected == "Eltern") // prüfen ob Felder leer & ob Eltern
+    if (userCredential != null && userCredential.user != null && _currentItemSelected == "Rodič") // prüfen ob Felder leer & ob Eltern
         {
       await FirebaseFirestore.instance //Dokument erstellen
           .collection("Users")
@@ -146,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'date': DateTime.now(),
       });
     }
-    else if (userCredential != null && userCredential.user != null && _currentItemSelected == "Kita") // prüfen ob Felder leer und ob Kita
+    else if (userCredential != null && userCredential.user != null && _currentItemSelected == "Škôlka") // prüfen ob Felder leer und ob Kita
         {
       await FirebaseFirestore.instance //Dokument erstellen
           .collection("Users")
@@ -202,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
               // app name
               const SizedBox(height: 25),
               const Text(
-                "Registrierung",
+                "Registrácia",
                 style: TextStyle(fontSize: 20),
 
               ),
@@ -212,7 +212,7 @@ class _RegisterPageState extends State<RegisterPage> {
               // Username textfield
 
               MyTextField(
-                hintText: "Name",
+                hintText: "Meno",
                 obscureText: false,
                 controller: usernameController,
               ),
@@ -249,7 +249,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          hintText: "Passwort",
+                          hintText: "Heslo",
                         ),
                         obscureText: _obscureText,
                       ),
@@ -275,7 +275,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          hintText: "Passwort bestätigen",
+                          hintText: "Zopakujte Heslo",
                         ),
                         obscureText: _obscureText,
                       ),
@@ -306,7 +306,8 @@ class _RegisterPageState extends State<RegisterPage> {
                 onChanged: (newValueSelected) {
                   setState(() {
                     _currentItemSelected = newValueSelected!;
-                    rool = newValueSelected;
+                     if (newValueSelected == "Škôlka")
+                      rool = "Kita";
                   });
                 },
                 value: _currentItemSelected,
@@ -320,41 +321,38 @@ class _RegisterPageState extends State<RegisterPage> {
               CheckboxListTile(
                 title: Row(
                   children: [
+                    Text("Akceptujem  ",
+                      style: TextStyle(
+                        fontSize: 8,
+                      ),
+                    ),
                     GestureDetector(
                         onTap: () async {
                           await launchUrl(
                           Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
                           // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                           },
-                      child: Text("ABGs",
+                      child: Text("ABG",
                         style: TextStyle(color: Colors.lightBlue,
                           fontSize: 12,
                         ),
                       ),
                         ),
-                    const SizedBox(width: 3),
-                    Text("& ",
+                    Text("  &  ",
                       style: TextStyle(
                         fontSize: 8,
                       ),
                     ),
-                    const SizedBox(width: 3),
                     GestureDetector(
                       onTap: () async {
                         await launchUrl(
                             Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
                         // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                       },
-                      child: Text("Datenschutzrichtlinien",
+                      child: Text("Ochranu Osobných",
                         style: TextStyle(color: Colors.lightBlue,
                           fontSize: 12,
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    Text("akzeptieren",
-                      style: TextStyle(
-                        fontSize: 8,
                       ),
                     ),
                   ],
@@ -369,7 +367,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               MyButton(
-                text: "Registrieren",
+                text: "Registrovať",
                 onTap: registerUser,
               ),
 
@@ -380,12 +378,12 @@ class _RegisterPageState extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Account vorhanden? ",
+                  Text("Máťe už účet? ",
                   ),
                   GestureDetector(
                     onTap: widget.onTap,
                     child: const Text(
-                      "Hier einloggen",
+                      "Tu sa prihlásite",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),

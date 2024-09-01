@@ -69,7 +69,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
           actions: [
             // Cancel Button
             TextButton(
-              child: const Text("Schliessen",
+              child: const Text("Zatvoriť",
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () => Navigator.pop(context),
@@ -147,7 +147,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 addElternMail(textController.text);
               // Textfeld leeren nach Eingabe
               textController.clear();
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Add"),

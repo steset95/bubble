@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:socialmediaapp/components/my_profile_data.dart';
 import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../helper/notification_controller.dart';
 
@@ -91,7 +92,7 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Provision",
+        title: Text("Provízia",
         ),
 
       ),
@@ -133,18 +134,47 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
                       sectionName: "IBAN",
                       onPressed: () => editField("iban", "IBAN", userData["iban"]),
                     ),
-
-
-
                     SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text("Ako vďaku za denné používanie aplikácie dostanete od Bubble podiel 30% z príjmov, ktoré sme získali z predplatného rodičov. Prosím, zadajte IBAN požadovaného účtu a získajte príslušnú províziu na konci každého štvrťroka",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                  GestureDetector(
+                    onTap: () async {
+                    await launchUrl(
+                    Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
+                    // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                    },
+                    child: Column(
+                      children: [
+                        Text("Platobné doklady",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        Icon(Icons.receipt_long,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 25,
+                        ),
+                      ],
+                    ),
+                  ),
 
                   ],
                 );
               // Fehlermeldung wenn nichts vorhanden ist
             } else {
-              return const Text("Keine Daten vorhanden");
+              return const Text("No Data");
             }
           },
         ),

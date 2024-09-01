@@ -52,7 +52,7 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Infos Kind",
+          title: Text("Informácie",
           ),
         ),
       body: SingleChildScrollView(
@@ -89,7 +89,7 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Kind wurde noch nicht zugeordnet."),
+                    Text("Dieťa ešte nebolo pridelené"),
                   ],
                 ),
               ],
@@ -105,61 +105,61 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
                     const SizedBox(height: 15,),
                     ProfileDataReadOnly(
                       text: userData["child"],
-                      sectionName: "Name",
+                      sectionName: "Meno a Priezvisko",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["geschlecht"],
-                      sectionName: "Geschlecht",
+                      sectionName: "Pohlavie",
                     ),
                     ProfileDataReadOnly(
                       text: userData["geburtstag"],
-                      sectionName: "Geburtstag",
+                      sectionName: "Dátum narodenia",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["personen"],
-                      sectionName: "Zur Abholung berechtigte Personen",
+                      sectionName: "Osoby oprávnené vyzdvihnuť dieťa",
                     ),
 
                     const SizedBox(height: 15,),
-                    Text("Gesundheitsangaben",
+                    Text("Informácie o zdraví",
                       style: TextStyle(fontSize: 25),
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["alergien"],
-                      sectionName: "Alergien",
+                      sectionName: "Alergie",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["krankheiten"],
-                      sectionName: "Krankheiten",
+                      sectionName: "Choroby",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["medikamente"],
-                      sectionName: "Medikamente",
+                      sectionName: "Lieky",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["impfungen"],
-                      sectionName: "Impfungen",
+                      sectionName: "Očkovania",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["kinderarzt"],
-                      sectionName: "Kinderarzt",
+                      sectionName: "Detský doktor",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["krankenkasse"],
-                      sectionName: "Krankenkasse",
+                      sectionName: "Zdravotná poisťovňa",
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["bemerkungen"],
-                      sectionName: "Bemerkungen",
+                      sectionName: "Ďalšie informácie",
                     ),
 
 
@@ -173,7 +173,7 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
             }
                 // Fehlermeldung wenn nichts vorhanden ist
               } else {
-                return const Text("Keine Daten vorhanden");
+                return const Text("No Data");
               }
             },
         )

@@ -3,7 +3,7 @@ const entitlementID = 'premium';
 
 //TO DO: add your subscription terms and conditions
 const footerText =
-"""subscription terms and conditions. 
+""" B 
 
 Read more about this here: https://www.revenuecat.com/blog/schedule-2-section-3-8-b""";
 

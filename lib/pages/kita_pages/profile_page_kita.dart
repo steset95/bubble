@@ -179,7 +179,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                     },
                     child: Row(
                       children: [
-                        Text("Über die App",
+                        Text("O applikácii",
                          style: TextStyle(fontFamily: 'Goli'),
                         ),
                         const SizedBox(width: 15),
@@ -258,36 +258,36 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                     ),
                     ProfileData(
                       text: userData["username"],
-                      sectionName: "Name",
-                      onPressed: () => editField("username", "Name", userData["username"], ),
+                      sectionName: "Meno",
+                      onPressed: () => editField("username", "Meno", userData["username"], ),
                     ),
 
                     ProfileDataReadOnly(
                       text: userData["email"],
-                      sectionName: "Email-Adresse",
+                      sectionName: "Email",
                     ),
                     ProfileData(
                       text: userData["adress"],
-                      sectionName: "Strasse und Hausnummer",
-                      onPressed: () => editField("adress", "Strasse und Hausnummer", userData["adress"],),
+                      sectionName: "Ulica / Číslo",
+                      onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"],),
                     ),
 
                     ProfileData(
                       text: userData["adress2"],
-                      sectionName: "PLZ und Ort",
-                      onPressed: () => editField("adress2", "PLZ und Ort", userData["adress2"],),
+                      sectionName: "PSČ / Mesto",
+                      onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"],),
                     ),
 
                     ProfileData(
                       text: userData["tel"],
-                      sectionName: "Telefonnummer",
-                      onPressed: () => editField("tel", "Telefonnummer", userData["tel"],),
+                      sectionName: "Mobilné číslo",
+                      onPressed: () => editField("tel", "Mobilné číslo", userData["tel"],),
                     ),
 
                     ProfileData(
                       text: userData["beschreibung"],
-                      sectionName: "Über uns",
-                      onPressed: () => editFieldBeschreibung("beschreibung", "Über uns", userData["beschreibung"],),
+                      sectionName: "O nás",
+                      onPressed: () => editFieldBeschreibung("beschreibung", "ÜO nás", userData["beschreibung"],),
                     ),
 
                     SizedBox(
@@ -303,10 +303,19 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                       },
                       child: Column(
                         children: [
-                          Text("Provision",
-                          style: TextStyle(
-                            fontSize: 15,
-                          color: Theme.of(context).colorScheme.primary,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Provízia",
+                              style: TextStyle(
+                                fontSize: 15,
+                              color: Theme.of(context).colorScheme.primary,),
+                              ),
+                              Icon(Icons.info_outline,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 15,
+                              ),
+                            ],
                           ),
                           SizedBox(
                             height: 10,
@@ -354,7 +363,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                 );
               // Fehlermeldung wenn nichts vorhanden ist
             } else {
-              return const Text("Keine Daten vorhanden");
+              return const Text("No Data");
             }
           },
         ),

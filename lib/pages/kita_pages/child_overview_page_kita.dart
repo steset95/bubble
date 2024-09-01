@@ -60,7 +60,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                   fontSize: 20,
                 ),
               ),
-              content: Text("Es ist eine Absenz eingetragen, wollen Sie diese entfernen?"),
+              content: Text("Je zaznamenaná neprítomnosť, chcete ju odstrániť?"),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -73,7 +73,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                     );
                     setState(()  {});
                   },
-                  child: Text("Absenz entfernen"),
+                  child: Text("Odstrániť neprítmnosť"),
 
                 ),
                 TextButton(
@@ -112,7 +112,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                 BorderRadius.all(
                     Radius.circular(10.0))),
             title: const Text(
-              "Schlüssel",
+              "Kľúč",
               style: TextStyle(color: Colors.black,
                 fontSize: 20,
               ),
@@ -122,7 +122,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                 Text('$documentID'),
                 IconButton(
                   onPressed: () async {
-                    await Share.share('Zur Aktivierung müssen Sie folgenden Aktivierungsschlüssel in Ihrer App eingeben: $documentID',
+                    await Share.share('Na aktiváciu musíte zadať nasledujúci aktivačný kľúč do svojej aplikácie: $documentID',
                     subject: 'Activationkey');
                     },
                     icon: Icon(Icons.share),
@@ -133,7 +133,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             actions: [
               // Cancel Button
               TextButton(
-                child: const Text("Schliessen",
+                child: const Text("Zatvoriť",
                 ),
                 onPressed: () => Navigator.pop(context),
               ),
@@ -141,10 +141,10 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
           ),
         );
       } else {
-        print('Das Dokument existiert nicht.');
+        print('Error');
       }
     }).catchError((error) {
-      print('Fehler beim Abrufen des Dokuments: $error');
+      print('Error: $error');
     });
   }
 
@@ -164,7 +164,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Löschen bestätigen?",
+        title: Text("Potvrdiť vymazanie?",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -176,7 +176,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
               Navigator.pop(context);
               Navigator.pop(context);
             },
-            child: Text("Löschen"),
+            child: Text("Vymazať"),
           ),
           TextButton(
             onPressed: () {
@@ -201,7 +201,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             onTap: () => openChildBoxDelete(docID: widget.docID),
             child: Row(
               children: [
-                Text("Kind löschen",
+                Text("Odstrániť dieťa",
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 5),
@@ -233,7 +233,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Übersicht",
+        title: Text("Prehľad",
         ),
           actions: [
             showButtons (),
@@ -342,7 +342,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                           children: [
                             Text(
                               textAlign: TextAlign.center,
-                              'Abholzeit: $abholzeit',
+                              'Čas vyzdvihnutia: $abholzeit',
                               style: TextStyle(color: Colors.black,
                                 fontFamily: 'Goli',
                               ),
@@ -400,7 +400,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Aktivierung",
+                              Text("Aktivácia",
                           style: TextStyle(
                           color: Theme.of(context).colorScheme.inversePrimary,),
                               ),
@@ -451,7 +451,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Bilder",
+                              Text("Fotky",
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.inversePrimary,),
                               ),
@@ -660,7 +660,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Infos",
+                            Text("Informácie",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.inversePrimary,),
                             ),
@@ -711,7 +711,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Erlaubnis",
+                              Text("Povolenia",
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.inversePrimary,),
                               ),
@@ -762,7 +762,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Eltern",
+                            Text("Rodičia",
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.inversePrimary,),
                             ),
@@ -828,10 +828,36 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                               style: TextStyle(fontWeight: FontWeight.bold)
                   ),
                   const SizedBox(width: 10),
+                  if (raport['RaportTitle'] == "Angemeldet")
                   Text(
-                      raport['RaportTitle'],
+                      "Angemeldet auf tschechisch",
                       style: TextStyle(fontWeight: FontWeight.bold)
-                      ),
+                      )
+                  else if (raport['RaportTitle'] == "Essen: ")
+                    Text(
+                        "Strava: ",
+                        style: TextStyle(fontWeight: FontWeight.bold)
+                    )
+                  else if (raport['RaportTitle'] == "Schlaf: ")
+                    Text(
+                        "Spánok: ",
+                        style: TextStyle(fontWeight: FontWeight.bold)
+                    )
+                  else if (raport['RaportTitle'] == "Aktivität: ")
+                    Text(
+                        "Aktivity: ",
+                        style: TextStyle(fontWeight: FontWeight.bold)
+                    )
+                  else if (raport['RaportTitle'] == "Diverses: ")
+                    Text(
+                        "Rôzne: ",
+                        style: TextStyle(fontWeight: FontWeight.bold)
+                    )
+                  else if (raport['RaportTitle'] == "Abgemeldet")
+                    Text(
+                        "Abgemeldet auf tschechisch",
+                        style: TextStyle(fontWeight: FontWeight.bold)
+                    ),
                 ],
               ),
             const SizedBox(height: 5),

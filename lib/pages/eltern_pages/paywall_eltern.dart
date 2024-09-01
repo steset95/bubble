@@ -47,7 +47,7 @@ class PaywallElternState extends State<PaywallEltern> {
                 EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
                 child: SizedBox(
                   child: Text(
-                    'Vollversion',
+                    'Plná verzia',
                   ),
                   width: double.infinity,
                 ),

@@ -69,7 +69,7 @@ class _RoolSwitcherState extends State<RoolSwitcher> {
                     }
 
                   } else {
-                    return Text('Error fetching user data1');
+                    return Text('Error');
                   }
                 }
 

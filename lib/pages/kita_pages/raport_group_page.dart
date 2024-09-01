@@ -145,7 +145,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                         String anmeldungText = data['anmeldung'];
                         bool active = data['switch'];
 
-                        bool istAngemeldet = anmeldungText == "Abgemeldet";
+                        bool istAngemeldet = anmeldungText == "Neprítomná / ý";
 
                         var color = istAngemeldet ? Colors.grey : Colors.black;
 
@@ -192,7 +192,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             onPressed: () {
               // Raport hinzufügen
               addRaport(fieldText, _raportTextController.text);
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -227,7 +227,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Kinder",
+        title: Text("Prihlásenie",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -264,7 +264,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                         String anmeldungText = data['anmeldung'];
                         bool active = data['switch'];
 
-                        bool istAngemeldet = anmeldungText == "Abgemeldet";
+                        bool istAngemeldet = anmeldungText == "Neprítomná / ý";
 
                         var color = istAngemeldet ? Colors.grey : Colors.black;
 
@@ -298,7 +298,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
@@ -308,9 +308,9 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // save Button
           TextButton(
             onPressed: () {
-              anmeldungChild('anmeldung', 'Anwesend (Seit: $formattedDate)');
+              anmeldungChild('anmeldung', 'Prítomná / ý (od: $formattedDate)');
               addRaport('Angemeldet', '');
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               _raportTextController.clear();
               Navigator.pop(context);
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
@@ -342,7 +342,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Essen hinzufügen",
+        title: Text("Strava pridať",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -354,7 +354,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Essen...",
+          decoration: InputDecoration(hintText: "Strava...",
               counterText: "",
           ),
         ),
@@ -362,7 +362,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -374,11 +374,11 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           TextButton(
             onPressed:  () {
     Navigator.pop(context);
-    showRaportSelect('Schlaf: ');
+    showRaportSelect('Essen: ');
 
             },
               //Textfeld leeren
-              child: Text("Weiter"),
+              child: Text("Pokračovať"),
           ),
         ],
       ),
@@ -404,7 +404,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Schlaf",
+        title: Text("Spánok",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -417,7 +417,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Schlaf...",
+          decoration: InputDecoration(hintText: "Spánok...",
             counterText: "",
           ),
         ),
@@ -425,7 +425,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -440,7 +440,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               showRaportSelect('Schlaf: ');
               //Textfeld leeren
             },
-            child: Text("Weiter"),
+            child: Text("Pokračovať"),
           ),
         ],
       ),
@@ -468,7 +468,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Aktivität hinzufügen",
+        title: Text("Aktivity pridať",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -481,7 +481,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Aktivität...",
+          decoration: InputDecoration(hintText: "Aktivity...",
             counterText: "",
           ),
         ),
@@ -489,7 +489,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -504,7 +504,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               showRaportSelect('Aktivität: ');
               //Textfeld leeren
             },
-            child: Text("Weiter"),
+            child: Text("Pokračovať"),
           ),
         ],
       ),
@@ -530,7 +530,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Diverses hinzufügen",
+        title: Text("Rôzne pridať",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -543,7 +543,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Diverses...",
+          decoration: InputDecoration(hintText: "Rôzne...",
             counterText: "",
           ),
         ),
@@ -551,7 +551,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -566,7 +566,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               showRaportSelect('Diverses: ');
               //Textfeld leeren
             },
-            child: Text("Weiter"),
+            child: Text("Pokračovať"),
           ),
         ],
       ),
@@ -635,7 +635,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                             String anmeldungText = data['anmeldung'];
                             bool active = data['switch'];
 
-                            bool istAngemeldet = anmeldungText == "Abgemeldet";
+                            bool istAngemeldet = anmeldungText == "Neprítomná / ý";
 
                             var color = istAngemeldet ? Colors.grey : Colors.black;
 
@@ -671,7 +671,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
@@ -681,11 +681,11 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           // save Button
           TextButton(
             onPressed: () {
-              anmeldungChild('anmeldung', "Abgemeldet");
+              anmeldungChild('anmeldung', "Neprítomná / ý");
               anmeldungChild('abholzeit', "");
               addRaport('Abgemeldet', '');
 
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               _raportTextController.clear();
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
@@ -711,7 +711,8 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text('Raport  $titel',
+        title: Text('Oznam  $titel',
+          style: TextStyle(fontSize: 18),
         ),
       ),
       body: Padding(
@@ -749,7 +750,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Anmeldung",
+                                  Text("Prihlásenie",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),
@@ -789,7 +790,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Essen",
+                                  Text("Strava",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),
@@ -838,7 +839,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Schlaf",
+                                  Text("Spánok",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),
@@ -878,7 +879,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Aktivitäten",
+                                  Text("Aktivity",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),
@@ -926,7 +927,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Diverses",
+                                  Text("Rôzne",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),
@@ -966,7 +967,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Abholung",
+                                  Text("Odber",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),

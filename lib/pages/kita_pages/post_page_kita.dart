@@ -79,7 +79,8 @@ class _PostPageKitaState extends State<PostPageKita> {
       scrolledUnderElevation: 0.0,
       backgroundColor: Theme.of(context).colorScheme.secondary,
       title:
-      Text('Neuer Post $umgebung',
+      Text(umgebung,
+        style: TextStyle(fontSize: 20,),
       ),
     ),
 
@@ -94,7 +95,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                 //autofocus: true,
                 controller: newPostControllerTitel,
                 textAlign: TextAlign.left,
-                decoration: InputDecoration(hintText: "Titel...",
+                decoration: InputDecoration(hintText: "Nadpis...",
 
                 ),
 
@@ -119,7 +120,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                     controller: newPostControllerInhalt,
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: "Inhalt...",
+                      hintText: "Text...",
                       counterText: "",
 
                     ),
@@ -132,7 +133,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Textfeld schliessen
+                      // Textfeld Zatvoriť
                       Navigator.pop(context);
                       //Textfeld leeren
                       newPostControllerTitel.clear();
@@ -149,7 +150,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                         }
                         else{
                           postMessageInt();
-                          // Textfeld schliessen
+                          // Textfeld Zatvoriť
                         }
                         Navigator.pop(context);
                         //Textfeld leeren
@@ -157,7 +158,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                         newPostControllerInhalt.clear();
                       }
                       else {
-                        return displayMessageToUser("Bitte Titel und Inhalt eingeben", context);
+                        return displayMessageToUser("Prosím zadajte názov a obsah", context);
                       }
                     },
                     child: Text("Uložiť"),

@@ -64,7 +64,7 @@ class _ChildrenPageState extends State<ChildrenPage> {
               // Textfeld leeren nach Eingabe
               textController.clear();
 
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Add"),

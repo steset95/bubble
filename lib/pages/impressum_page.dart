@@ -42,12 +42,12 @@ class ImpressumPageState extends State<ImpressumPage> {
                   Column(
                     children: [
                       const Text(
-                        "Kontakt",
+                        "Informácie o applikácii",
                         style: TextStyle(fontSize: 20),
                       ),
                       const SizedBox(height: 5),
                       const Text(
-                        "Tanzschule Dance More GmbH",
+                        "Vision GmbH",
                         style: TextStyle(fontSize: 12),
                       ),
                       const Text(
@@ -65,7 +65,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                         style: TextStyle(fontSize: 12),
                       ),
 
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -75,7 +75,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                                   Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
                               // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                             },
-                            child: Text("Datenschutzerklärung",
+                            child: Text("Ochrana súkromia",
                                 style: TextStyle(fontSize: 10),
                             ),
                           ),
@@ -85,7 +85,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                                   Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
                               // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                             },
-                            child: Text("AGBs",
+                            child: Text("AGB",
                               style: TextStyle(fontSize: 10),
                             ),
                           ),

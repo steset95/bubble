@@ -78,7 +78,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Kind hinzufügen",
+        title: Text("Pridajte dieťa",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -86,7 +86,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
         // Text Eingabe
         content: TextField(
           maxLength: 40,
-          decoration: InputDecoration(hintText: "Vorname, Nachname",
+          decoration: InputDecoration(hintText: "Meno a Priezvisko",
             counterText: "",
           ),
           //Abfrage Inhalt Textfeld - oben definiert
@@ -102,14 +102,14 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           // Speicher Button
           TextButton(
             onPressed: () {
-              addChild(textController.text, "1");
+              addChild(textController.text,);
               // Textfeld leeren nach Eingabe
               textController.clear();
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
 
             },
-            child: Text("Hinzufügen"),
+            child: Text("Pridať"),
           )
         ],
       ),
@@ -118,21 +118,21 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
   DateTime absenzBis = DateTime.now().subtract(const Duration(days:1));
 
-  void addChild(String child, String group) async {
+  void addChild(String child) async {
     DocumentReference docRef = await
     FirebaseFirestore.instance
         .collection("Kinder")
         .add({
       'child': child,
-      'group': '1',
-      'anmeldung': "Abgemeldet",
+      'group': buttons,
+      'anmeldung': "Neprítomná / ý",
       'absenzText': "",
       'absenz': "nein",
       "absenzBis": absenzBis,
       'timeStamp': Timestamp.now(),
       'kita': currentUser?.email,
       'abholzeit': "",
-      'geschlecht': "keine Angabe",
+      'geschlecht': "Nechcem uviesť",
       'geburtstag': "",
       'personen': "",
       'alergien': "",
@@ -162,8 +162,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
     .doc(currentUser?.email)
         .get()
         .then((DocumentSnapshot document) {
-        int anzahlKinder1 = document["anzahlKinder1"];
-        usersCollection.doc(currentUser!.email).update({"anzahlKinder1": anzahlKinder1 + 1});
+        int anzahlKinder = document["anzahlKinder$buttons"];
+        usersCollection.doc(currentUser!.email).update({"anzahlKinder$buttons": anzahlKinder + 1});
       });
 
 
@@ -176,7 +176,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             BorderRadius.all(
                 Radius.circular(10.0))),
         title: const Text(
-          "Schlüssel",
+          "Kľúč",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -196,15 +196,15 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
         actions: [
           // Cancel Button
           TextButton(
-            child: const Text("Schliessen",
+            child: const Text("Zatvoriť",
             ),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: const Text("Versenden",
+            child: const Text("Odoslať",
             ),
             onPressed: () async {
-              await Share.share('Zur Aktivierung müssen Sie folgenden Aktivierungsschlüssel in Ihrer App eingeben: ${docRef.id}',
+              await Share.share('Na aktiváciu musíte zadať nasledujúci aktivačný kľúč do svojej aplikácie: ${docRef.id}',
                   subject: 'Activationkey');
             },
           ),
@@ -228,7 +228,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Gruppe ändern",
+        title: Text("Zmeniť skupinu",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -301,7 +301,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                 firestoreDatabaseChild.updateChild(docID, _currentItemSelected);
 
               }
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
             },
             child: Text("Uložiť"),
@@ -339,7 +339,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           decoration: InputDecoration(
             hintText: text,
           ),
-          maxLength: 12,
+          maxLength: 20,
           onChanged: (value){
             newValue = value;
           },
@@ -388,7 +388,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             onTap: openChildBoxNew,
             child: Row(
               children: [
-                Text("Kind hinzufügen",
+                Text("Pridať dieťa",
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 5),
@@ -420,7 +420,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Kinder",
+        title: Text("Deti",
         ),
         actions: [
           showButtons (),
@@ -650,7 +650,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             height: 15,
                             width: 30,
                             child: IconButton(
-                                onPressed: () => editField('gruppe$cardId', "Name anpassen", text),
+                                onPressed: () => editField('gruppe$cardId', "Prispôsobiť meno", text),
                                 icon: Icon(Icons.edit,
                                   color: Colors.white,
                                   size: 10.0,
@@ -771,11 +771,11 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             .doc(document.id)
                             .update({
                           'absenz': "nein",
-                          'anmeldung': "Abgemeldet",
+                          'anmeldung': "Neprítomná / ý",
                         });
                       }
 
-                      bool istAngemeldet = anmeldungText == "Abgemeldet";
+                      bool istAngemeldet = anmeldungText == "Neprítomná / ý";
                       bool hatAbsenz = absenz == "nein";
 
                       var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
@@ -920,11 +920,11 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                           .doc(document.id)
                           .update({
                         'absenz': "nein",
-                        'anmeldung': "Abgemeldet",
+                        'anmeldung': "Neprítomná / ý",
                       });
                     }
 
-                    bool istAngemeldet = anmeldungText == "Abgemeldet";
+                    bool istAngemeldet = anmeldungText == "Neprítomná / ý";
                     bool hatAbsenz = absenz == "nein";
 
                     var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
@@ -1071,11 +1071,11 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                           .doc(document.id)
                           .update({
                         'absenz': "nein",
-                        'anmeldung': "Abgemeldet",
+                        'anmeldung': "Neprítomná / ý",
                       });
                     }
 
-                    bool istAngemeldet = anmeldungText == "Abgemeldet";
+                    bool istAngemeldet = anmeldungText == "Neprítomná / ý";
                     bool hatAbsenz = absenz == "nein";
 
                     var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;

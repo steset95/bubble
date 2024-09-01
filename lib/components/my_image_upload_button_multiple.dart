@@ -54,7 +54,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                       borderRadius:
                       BorderRadius.all(
                           Radius.circular(10.0))),
-                  title: Text("Kinder",
+                  title: Text("Obrázky",
                     style: TextStyle(color: Colors.black,
                       fontSize: 20,
                     ),
@@ -90,7 +90,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                                   String anmeldungText = data['anmeldung'];
                                   bool active = data['switch'];
 
-                                  bool istAngemeldet = anmeldungText == "Abgemeldet";
+                                  bool istAngemeldet = anmeldungText == "Neprítomná / ý";
 
                                   var color = istAngemeldet ? Colors.grey : Colors.black;
 
@@ -124,7 +124,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                     // cancel Button
                     TextButton(
                       onPressed: () {
-                        // Textfeld schliessen
+                        // Textfeld Zatvoriť
                         Navigator.pop(context);
                       },
                       child: Text("Zrušiť"),
@@ -144,7 +144,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                         if (results == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text("No Image selected")
+                                content: Text("Žiadne obrázky vybrané…")
                             ),
                           );
                           return null;
@@ -182,12 +182,12 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
 
                         }
                         Navigator.pop(context);
-                        displayMessageToUser("Bilder werden hochgeladen...", context);
+                        displayMessageToUser("Obrázky sa nahrávajú…...", context);
 
 
 
                       },
-                      child: Text("Weiter"),
+                      child: Text("Pokračovať"),
                     ),
                   ],
                 ),
@@ -220,7 +220,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Bilder",
+                    Text("Obrázky",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.inversePrimary,),
                     ),

@@ -45,7 +45,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    aboCheck(context);
+    configureSDK();
   }
 
   @override
@@ -272,7 +272,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                                                 },
                                                 child: Column(
                                                   children: [
-                                                    Text("Bitte Abonnement erneuern",
+                                                    Text("Obnovte si prosím predplatné",
                                                       style: TextStyle(fontSize: 20),
                                                     ),
                                                     const SizedBox(height: 10),
@@ -350,7 +350,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                               }
                           );
                         }
-                        else Text("Noch kein Kind registriert...");
+                        else Text("Žiadne dieťa ešte nie je zaregistrované...");
                       }
 
                       if (snapshot.connectionState != ConnectionState.waiting)

@@ -52,7 +52,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    aboCheck(context);
+    configureSDK();
   }
 
   @override
@@ -203,7 +203,7 @@ color: Theme.of(context).colorScheme.primary,
       TextButton(
         child: Text("Zrušiť"),
         onPressed: () {
-          // Textfeld schliessen
+          // Textfeld Zatvoriť
           Navigator.pop(context);
           //Textfeld leeren
           _bemerkungTextController.clear();
@@ -225,12 +225,12 @@ color: Theme.of(context).colorScheme.primary,
             addRaport("absenzText", value2, childcode);
           addRaportDate("absenzBis", absenzBis24, childcode);
             addRaport("absenz", "ja", childcode);
-            // Textfeld schliessen
+            // Textfeld Zatvoriť
             Navigator.pop(context);
           _bemerkungTextController.clear();
 
             return displayMessageToUser(
-                "Absenz wurde eingetragen.", context);
+                "Neprítomnosť bola zaznamenaná.", context);
 
         },
 
@@ -303,7 +303,7 @@ color: Theme.of(context).colorScheme.primary,
         actions: [
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _bemerkungTextController.clear();
@@ -323,9 +323,9 @@ color: Theme.of(context).colorScheme.primary,
                 // TextController wurde oben definiert und fragt den Text im Textfeld ab
                 addRaport("abholzeit", _currentItemSelectedAbholzeit, childcode);
               }
-              //Box schliessen
+              //Box Zatvoriť
               Navigator.pop(context);
-              return displayMessageToUser("Abholzeit wurde eingetragen.", context);
+              return displayMessageToUser("Čas na vyzdvihnutie bol zaznamenaný.", context);
             },
             child: Text("Uložiť"),
           )
@@ -541,7 +541,7 @@ color: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Tagesraport",
+        title: Text("Denná prehľad",
         ),
         actions: [
           showButtons(),
@@ -581,7 +581,7 @@ color: Theme.of(context).colorScheme.primary,
                     },
                     child: Column(
                       children: [
-                        Text("Bitte Abonnement erneuern",
+                        Text("Obnovte si prosím predplatné",
                           style: TextStyle(fontSize: 20),
                         ),
                         const SizedBox(height: 10),
@@ -626,192 +626,218 @@ color: Theme.of(context).colorScheme.primary,
               const SizedBox(height: 10),
               Flexible(
                 flex: 9,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      //color: Colors.transparent,
-                      //borderRadius: BorderRadius.circular(12),
-                      //border: Border.all(color: Colors.grey.shade300,),
-                    ),
-                    child: StreamBuilder<QuerySnapshot>(
-                        stream:  FirebaseFirestore.instance
-                            .collection("Kinder")
-                            .doc(childcode)
-                            .collection(formattedDate)
-                            .orderBy('TimeStamp', descending: true)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          List<Row> raportWidgets = [];
-                          if (snapshot.hasData) {
-                            final raports = snapshot.data?.docs.reversed.toList();
-                            for (var raport in raports!) {
-                              final raportWidget = Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: Container(
-                                    padding: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8),
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              color: Colors.grey,
-                                              spreadRadius: 1,
-                                              blurRadius: 2,
-                                              offset: Offset(1, 2),
-                                            ),
-                                          ]
-                                      ),
-                                      width: mediaQuery.size.width * 0.9,
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                              flex: 2,
-                                              child: Column(
-                                                children: [
-                                                  Container(child: Text(
-                                                      raport['Uhrzeit'],
+                child: StreamBuilder<QuerySnapshot>(
+                    stream:  FirebaseFirestore.instance
+                        .collection("Kinder")
+                        .doc(childcode)
+                        .collection(formattedDate)
+                        .orderBy('TimeStamp', descending: true)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      List<Row> raportWidgets = [];
+                      if (snapshot.hasData) {
+                        final raports = snapshot.data?.docs.reversed.toList();
+                        for (var raport in raports!) {
+                          final raportWidget = Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Container(
+                                padding: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          spreadRadius: 1,
+                                          blurRadius: 2,
+                                          offset: Offset(1, 2),
+                                        ),
+                                      ]
+                                  ),
+                                  width: mediaQuery.size.width * 0.9,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(
+                                          flex: 2,
+                                          child: Column(
+                                            children: [
+                                              Container(child: Text(
+                                                  raport['Uhrzeit'],
+                                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                  )
+                                              ),),
+                                              const SizedBox(height: 2),
+                                            ],
+                                          )),
+                                      Flexible(
+                                        flex: 8,
+                                        child: Column(
+                                          children: [
+
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                if (raport['RaportTitle'] == "Angemeldet")
+                                                  Text(
+                                                  "Angemeldet auf tschechisch",
+                                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                                  fontSize: 13,
+                                                  ),
+                                                  )
+                                                else if (raport['RaportTitle'] == "Essen: ")
+                                                  Text(
+                                                    "Strava: ",
+                                                    style: TextStyle(fontWeight: FontWeight.bold,
+                                                      fontSize: 13,
+                                                    ),
+                                                  )
+                                                else if (raport['RaportTitle'] == "Schlaf: ")
+                                                    Text(
+                                                      "Spánok: ",
                                                       style: TextStyle(fontWeight: FontWeight.bold,
                                                         fontSize: 13,
-                                                      )
-                                                  ),),
-                                                  const SizedBox(height: 2),
-                                                ],
-                                              )),
-                                          Flexible(
-                                            flex: 8,
-                                            child: Column(
-                                              children: [
-
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                        raport['RaportTitle'],
-                                                      style: TextStyle(fontWeight: FontWeight.bold,
-                                                      fontSize: 13,
                                                       ),
-                                                    ),
-                                                    const SizedBox(width: 10),
-                                                  ],
-                                                ),
-                                                const SizedBox(height: 5),
-                                                if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
-                                                  Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Flexible(
-                                                        //width: mediaQuery.size.width * 0.80,
-                                                          child: Text(
-                                                            textAlign: TextAlign.center,
-                                                            raport['RaportText'],
-                                                            style: TextStyle(
-                                                              fontSize: 11,
-                                                            ),
-                                                          )),
-                                                    ],
-                                                  ),
-
-
-                                              ],
-                                            ),
-                                          ),
-                                          Flexible(
-                                              flex: 1,
-                                              child:
-                                              Column(
-                                                children: [
-                                                  if (raport['RaportTitle'] == "Angemeldet")
-                                                  Icon(Icons.wb_sunny_outlined,
-                                                  color: Colors.yellow,
-                                                  )
-                                                  else if (raport['RaportTitle'] == "Essen: ")
-                                                    Icon(Icons.local_pizza_outlined,
-                                                      color: Colors.orangeAccent,
-                                                    )
-                                                  else if (raport['RaportTitle'] == "Schlaf: ")
-                                                    Icon(Icons.bed_outlined,
-                                                      color: Colors.indigoAccent,
                                                     )
                                                   else if (raport['RaportTitle'] == "Aktivität: ")
-                                                    Icon(Icons.forest_outlined,
-                                                      color: Colors.green,
-                                                    )
-                                                  else if (raport['RaportTitle'] == "Diverses: ")
-                                                    Icon(Icons.note_add_outlined,
-                                                      color: Colors.blueGrey,
-                                                    )
-                                                  else if (raport['RaportTitle'] == "Abgemeldet")
-                                                    Icon(Icons.door_front_door_outlined,
-                                                      color: Colors.brown,
-                                                    ),
+                                                      Text(
+                                                        "Aktivity: ",
+                                                        style: TextStyle(fontWeight: FontWeight.bold,
+                                                          fontSize: 13,
+                                                        ),
+                                                      )
+                                                    else if (raport['RaportTitle'] == "Diverses: ")
+                                                        Text(
+                                                          "Rôzne: ",
+                                                          style: TextStyle(fontWeight: FontWeight.bold,
+                                                            fontSize: 13,
+                                                          ),
+                                                        )
+                                                      else if (raport['RaportTitle'] == "Abgemeldet")
+                                                          Text(
+                                                            "Abgemeldet auf tschechisch",
+                                                            style: TextStyle(fontWeight: FontWeight.bold,
+                                                              fontSize: 13,
+                                                            ),
+                                                          ),
+                                                const SizedBox(width: 10),
                                               ],
-                                              )
-                                          ),
-                                        ],
+                                            ),
+                                            const SizedBox(height: 5),
+                                            if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Flexible(
+                                                    //width: mediaQuery.size.width * 0.80,
+                                                      child: Text(
+                                                        textAlign: TextAlign.center,
+                                                        raport['RaportText'],
+                                                        style: TextStyle(
+                                                          fontSize: 11,
+                                                        ),
+                                                      )),
+                                                ],
+                                              ),
+
+
+                                          ],
+                                        ),
                                       ),
-                                    ),
-
+                                      Flexible(
+                                          flex: 1,
+                                          child:
+                                          Column(
+                                            children: [
+                                              if (raport['RaportTitle'] == "Angemeldet")
+                                              Icon(Icons.wb_sunny_outlined,
+                                              color: Colors.yellow,
+                                              )
+                                              else if (raport['RaportTitle'] == "Essen: ")
+                                                Icon(Icons.local_pizza_outlined,
+                                                  color: Colors.orangeAccent,
+                                                )
+                                              else if (raport['RaportTitle'] == "Schlaf: ")
+                                                Icon(Icons.bed_outlined,
+                                                  color: Colors.indigoAccent,
+                                                )
+                                              else if (raport['RaportTitle'] == "Aktivität: ")
+                                                Icon(Icons.sports_soccer_outlined,
+                                                  color: Colors.green,
+                                                )
+                                              else if (raport['RaportTitle'] == "Diverses: ")
+                                                Icon(Icons.note_add_outlined,
+                                                  color: Colors.blueGrey,
+                                                )
+                                              else if (raport['RaportTitle'] == "Abgemeldet")
+                                                Icon(Icons.door_front_door_outlined,
+                                                  color: Colors.brown,
+                                                ),
+                                          ],
+                                          )
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              );
-                              raportWidgets.add(raportWidget);
-                             // Text(raport['RaportText']);
-                            }
-                          }
-                          if (raportWidgets.isNotEmpty) {
-                            return
-                            ListView(
-                              children: raportWidgets,
-                            );
-                          }
-                          else if (snapshot.connectionState != ConnectionState.waiting)
-                          {
-                            return
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                          child: Container(
-                          decoration: BoxDecoration(
-
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(color: Colors.grey.shade300,),
-                          ),
-                            child:
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(height: 50,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Žiadne záznamy...",
-                                      style: TextStyle(color: Colors.grey.shade300,),
-                                    ),
-                                  ],
                                 ),
-                                SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.bedtime_outlined ,
-                                      color: Colors.grey.shade300,
-                                    ),
-                                  ],
+
+                              ),
+                            ],
+                          );
+                          raportWidgets.add(raportWidget);
+                         // Text(raport['RaportText']);
+                        }
+                      }
+                      if (raportWidgets.isNotEmpty) {
+                        return
+                        ListView(
+                          children: raportWidgets,
+                        );
+                      }
+                      else if (snapshot.connectionState != ConnectionState.waiting)
+                      {
+                        return
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Container(
+                      decoration: BoxDecoration(
+
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Colors.grey.shade300,),
+                      ),
+                        child:
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 50,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Žiadne záznamy...",
+                                  style: TextStyle(color: Colors.grey.shade300,),
                                 ),
                               ],
                             ),
-                          )
-                              );
-                          }
-                          else
-                            return Container();
-                        }
-                    ),
-                  ),
+                            SizedBox(height: 20),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.bedtime_outlined ,
+                                  color: Colors.grey.shade300,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                          );
+                      }
+                      else
+                        return Container();
+                    }
                 ),
               ),
 
@@ -881,7 +907,7 @@ color: Theme.of(context).colorScheme.primary,
             children: [
               Column(
                 children: [
-                  Text("Bitte Kind hinzufügen",
+                  Text("Prosím pridajte dieťa",
                     style: TextStyle(fontSize: 20),
                   ),
                   const SizedBox(height: 20),

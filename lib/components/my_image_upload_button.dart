@@ -51,7 +51,7 @@ class _ImageUploadState extends State<ImageUpload> {
               if (results == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text("No Image selected")
+                    content: Text("Žiadne obrázky vybrané…...")
                 ),
                 );
                 return null;
@@ -67,7 +67,7 @@ class _ImageUploadState extends State<ImageUpload> {
 
               }
               Navigator.pop(context);
-              displayMessageToUser("Bilder werden hochgeladen...", context);
+              displayMessageToUser("Obrázky sa nahrávajú…...", context);
 
             },
 
@@ -94,7 +94,7 @@ class _ImageUploadState extends State<ImageUpload> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Bilder",
+                    Text("Fotky",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.inversePrimary,),
                     ),

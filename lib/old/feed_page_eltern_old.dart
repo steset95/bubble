@@ -88,7 +88,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
             actions: [
               // Cancel Button
               TextButton(
-                child: const Text("Schliessen",
+                child: const Text("Zatvoriť",
                 ),
                 onPressed: () => Navigator.pop(context),
               ),

@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:pay/pay.dart';
 import 'package:socialmediaapp/components/my_profile_data.dart';
 
+import '../../components/my_profile_data_icon_no_function.dart';
 import '../../components/my_profile_data_read_only.dart';
 import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
@@ -48,7 +49,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Einwilligungen",
+          title: Text("Povolenia",
           ),
         ),
       body: SingleChildScrollView(
@@ -81,44 +82,44 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
                   Column(
                     children: [
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["fotosSocialMedia"],
-                        sectionName: "Fotos für SocialMedia",
+                        sectionName: "Fotky pre sociálne médiá",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["fotosApp"],
-                        sectionName: "Fotos für App",
+                        sectionName: "Fotky pre aplikáciu",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["nagellack"],
-                        sectionName: "Nagellack auftragen",
+                        sectionName: "Lakovanie nechtov",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["schminken"],
-                        sectionName: "Schminken",
+                        sectionName: "Líčenie",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["fieber"],
-                        sectionName: "Rektales Fiebermessen",
+                        sectionName: "Rektálne meranie teploty",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["sonnencreme"],
-                        sectionName: "Sonnencreme auftragen",
+                        sectionName: "Nanášanie opaľovacieho krému",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["fremdkoerper"],
-                        sectionName: "Fremdkörper entfernen (bspw. Zecken)",
+                        sectionName: "Odstránenie cudzieho predmetu",
                       ),
 
-                      ProfileDataReadOnly(
+                      MyProfileDataIconNoFunction(
                         text: userData["homoeopathie"],
-                        sectionName: "Homöopathie",
+                        sectionName: "Homeopatiká",
                       ),
 
                       SizedBox(
@@ -130,7 +131,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
                   );
                 // Fehlermeldung wenn nichts vorhanden ist
               } else {
-                return const Text("Keine Daten vorhanden");
+                return const Text("No Data");
               }
             },
         )

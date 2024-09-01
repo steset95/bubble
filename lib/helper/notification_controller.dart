@@ -54,8 +54,8 @@ class NotificationController {
             content: NotificationContent(
                 id: 1,
                 channelKey: "basic_channel",
-                title: 'Neue Nachrichten',
-                body: 'Neue Nachrichten von $username'),
+                title: 'Nové správy',
+                body: 'Nové správy od $username'),
             //body: '$not neue Nachrichten'),
           );
           FirebaseFirestore.instance

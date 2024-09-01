@@ -39,8 +39,8 @@ class _HomePageKitaState extends State<HomePageKita> {
           });
           },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.house), label: "Feed"),
-          BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Kinder"),
+          BottomNavigationBarItem(icon: Icon(Icons.house), label: "Nástenka"),
+          BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Deti"),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profil",),
         ],
       ),

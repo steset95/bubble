@@ -84,7 +84,7 @@ class _RaportPageState extends State<RaportPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Kind Anmelden?",
+        title: Text("Pridať dieťa?",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -94,7 +94,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -106,14 +106,14 @@ class _RaportPageState extends State<RaportPage> {
           TextButton(
             onPressed: () {
               // Raport hinzufügen
-              anmeldungChild('anmeldung', 'Anwesend (Seit: $formattedDate)');
+              anmeldungChild('anmeldung', 'Prítomná / ý (od: $formattedDate)');
               addRaport('Angemeldet', '');
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
             },
-            child: Text("Bestätigen"),
+            child: Text("Uložiť"),
           ),
         ],
       ),
@@ -137,7 +137,7 @@ class _RaportPageState extends State<RaportPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Essen hinzufügen",
+        title: Text("Strava pridať",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -149,7 +149,7 @@ class _RaportPageState extends State<RaportPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Essen...",
+          decoration: InputDecoration(hintText: "Strava...",
               counterText: "",
           ),
         ),
@@ -157,7 +157,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -170,7 +170,7 @@ class _RaportPageState extends State<RaportPage> {
               onPressed: () {
                 // Raport hinzufügen
                 addRaport('Essen: ', _raportTextController.text);
-                // Textfeld schliessen
+                // Textfeld Zatvoriť
                 Navigator.pop(context);
               //Textfeld leeren
                 _raportTextController.clear();
@@ -201,7 +201,7 @@ class _RaportPageState extends State<RaportPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Schlaf",
+        title: Text("Spánok",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -214,7 +214,7 @@ class _RaportPageState extends State<RaportPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Schlaf...",
+          decoration: InputDecoration(hintText: "Spánok...",
             counterText: "",
           ),
         ),
@@ -222,7 +222,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -235,7 +235,7 @@ class _RaportPageState extends State<RaportPage> {
             onPressed: () {
               // Raport hinzufügen
               addRaport('Schlaf: ', _raportTextController.text);
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -268,7 +268,7 @@ class _RaportPageState extends State<RaportPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Aktivität hinzufügen",
+        title: Text("Aktivity pridať",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -281,7 +281,7 @@ class _RaportPageState extends State<RaportPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Aktivität...",
+          decoration: InputDecoration(hintText: "Aktivity...",
             counterText: "",
           ),
         ),
@@ -289,7 +289,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -302,7 +302,7 @@ class _RaportPageState extends State<RaportPage> {
             onPressed: () {
               // Raport hinzufügen
               addRaport('Aktivität: ', _raportTextController.text);
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -333,7 +333,7 @@ class _RaportPageState extends State<RaportPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Diverses hinzufügen",
+        title: Text("Rôzne pridať",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -346,7 +346,7 @@ class _RaportPageState extends State<RaportPage> {
           maxLength: 150,
           controller: _raportTextController,
           autofocus: true,
-          decoration: InputDecoration(hintText: "Diverses...",
+          decoration: InputDecoration(hintText: "Rôzne...",
             counterText: "",
           ),
         ),
@@ -354,7 +354,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -367,7 +367,7 @@ class _RaportPageState extends State<RaportPage> {
             onPressed: () {
               // Raport hinzufügen
               addRaport('Diverses: ', _raportTextController.text);
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -400,7 +400,7 @@ class _RaportPageState extends State<RaportPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Kind Abmelden?",
+        title: Text("Odhlásiť dieťa?",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -409,7 +409,7 @@ class _RaportPageState extends State<RaportPage> {
           // cancel Button
           TextButton(
             onPressed: () {
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -421,11 +421,11 @@ class _RaportPageState extends State<RaportPage> {
           TextButton(
             onPressed: () {
               // Raport hinzufügen
-              anmeldungChild('anmeldung', "Abgemeldet");
+              anmeldungChild('anmeldung', "Neprítomná / ý");
               anmeldungChild('abholzeit', "");
               addRaport('Abgemeldet', '');
 
-              // Textfeld schliessen
+              // Textfeld Zatvoriť
               Navigator.pop(context);
               //Textfeld leeren
               _raportTextController.clear();
@@ -449,7 +449,7 @@ class _RaportPageState extends State<RaportPage> {
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Raport",
+        title: Text("Oznam",
         ),
       ),
         body: Padding(
@@ -487,7 +487,7 @@ class _RaportPageState extends State<RaportPage> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Anmeldung",
+                                    Text("Prihlásenie",
                                       style: TextStyle(
                                         color: Theme.of(context).colorScheme.inversePrimary,),
                                     ),
@@ -527,7 +527,7 @@ class _RaportPageState extends State<RaportPage> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Essen",
+                                    Text("Strava",
                                       style: TextStyle(
                                         color: Theme.of(context).colorScheme.inversePrimary,),
                                     ),
@@ -576,7 +576,7 @@ class _RaportPageState extends State<RaportPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Schlaf",
+                                Text("Spánok",
                                   style: TextStyle(
                                     color: Theme.of(context).colorScheme.inversePrimary,),
                                 ),
@@ -616,7 +616,7 @@ class _RaportPageState extends State<RaportPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Aktivitäten",
+                                      Text("Aktivity",
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.inversePrimary,),
                                       ),
@@ -664,7 +664,7 @@ class _RaportPageState extends State<RaportPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Diverses",
+                                      Text("Rôzne",
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.inversePrimary,),
                                       ),
@@ -704,7 +704,7 @@ class _RaportPageState extends State<RaportPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Abholung",
+                                      Text("Odber",
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.inversePrimary,),
                                       ),
