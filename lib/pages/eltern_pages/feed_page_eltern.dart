@@ -45,6 +45,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+    timer = Timer.periodic(Duration(seconds: 20), (Timer t) => aboCheck());
     configureSDK();
   }
 

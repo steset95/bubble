@@ -24,7 +24,6 @@ final currentUser = FirebaseAuth.instance.currentUser;
           apiKey: appleApiKey,
         );
       } else if (Platform.isAndroid) {
-        // Run the app passing --dart-define=AMAZON=true
         StoreConfig(
           store: Store.playStore,
           apiKey: googleApiKey,
@@ -41,31 +40,21 @@ final currentUser = FirebaseAuth.instance.currentUser;
 
       String aboID = document["aboID"].toString();
 
-      // Enable debug logs before calling `configure`.
       await Purchases.setLogLevel(LogLevel.debug);
 
-      /*
-    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
-
-    - PurchasesAreCompletedyBy is PurchasesAreCompletedByRevenueCat, so Purchases will automatically handle finishing transactions. Read more about completing purchases here: https://www.revenuecat.com/docs/migrating-to-revenuecat/sdk-or-not/finishing-transactions
-    */
-
       PurchasesConfiguration configuration;
-      if (StoreConfig.isForAmazonAppstore()) {
+      if (StoreConfig.isForAmazonAppstore()) await {
         configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
           ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
-      } else {
+          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
+      }; else await {
         configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
           ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
-      }
+          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
+      };
       await Purchases.configure(configuration);
 
     });
-
-    await aboCheck();
-
   }
 
 

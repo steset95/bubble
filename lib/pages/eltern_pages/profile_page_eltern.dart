@@ -49,6 +49,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+    _configureSDK();
   }
 
 
@@ -156,11 +157,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       // Enable debug logs before calling `configure`.
       await Purchases.setLogLevel(LogLevel.debug);
 
-      /*
-    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
-
-    - PurchasesAreCompletedyBy is PurchasesAreCompletedByRevenueCat, so Purchases will automatically handle finishing transactions. Read more about completing purchases here: https://www.revenuecat.com/docs/migrating-to-revenuecat/sdk-or-not/finishing-transactions
-    */
 
       PurchasesConfiguration configuration;
       if (StoreConfig.isForAmazonAppstore()) {
@@ -179,10 +175,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
   void goToPage() async {
-
-    _configureSDK();
-
-
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
     await FirebaseFirestore.instance
         .collection("Users")
