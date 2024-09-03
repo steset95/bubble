@@ -222,7 +222,7 @@ color: Theme.of(context).colorScheme.primary,
 
           // Raport hinzufügen
 
-            addRaport("anmeldung", 'Absenz bis $formattedDateAbsenz', childcode);
+            addRaport("anmeldung", 'Neprítomnosť až $formattedDateAbsenz', childcode);
             addRaport("absenzText", value2, childcode);
           addRaportDate("absenzBis", absenzBis24, childcode);
             addRaport("absenz", "ja", childcode);
@@ -542,7 +542,7 @@ color: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Denná prehľad",
+        title: Text("Denný prehľad",
         ),
         actions: [
           showButtons(),
@@ -685,7 +685,7 @@ color: Theme.of(context).colorScheme.primary,
                                               children: [
                                                 if (raport['RaportTitle'] == "Angemeldet")
                                                   Text(
-                                                  "Angemeldet auf tschechisch",
+                                                  "Prihlásená/ý",
                                                   style: TextStyle(fontWeight: FontWeight.bold,
                                                   fontSize: 13,
                                                   ),
@@ -720,7 +720,7 @@ color: Theme.of(context).colorScheme.primary,
                                                         )
                                                       else if (raport['RaportTitle'] == "Abgemeldet")
                                                           Text(
-                                                            "Abgemeldet auf tschechisch",
+                                                            "Odhlásená/ý",
                                                             style: TextStyle(fontWeight: FontWeight.bold,
                                                               fontSize: 13,
                                                             ),

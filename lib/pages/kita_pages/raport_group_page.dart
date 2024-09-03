@@ -317,7 +317,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               //Textfeld leeren
 
             },
-            child: Text("Anmelden"),
+            child: Text("Prihlásiť sa"),
           ),
         ],
       ),
@@ -596,7 +596,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Kinder",
+        title: Text("Odhlásenie",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -690,7 +690,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               _raportTextController.clear();
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
-            child: Text("Abmelden"),
+            child: Text("Odhlásiť sa"),
           ),
         ],
       ),

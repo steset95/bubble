@@ -111,7 +111,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                                         setState(() {});
                                         Navigator.pop(context);
                                         Navigator.pop(context);
-                                        return displayMessageToUser("Bild wird gelöscht......", context);
+                                        return displayMessageToUser("Fotka bude vymazaná......", context);
                                       }
                                   ),
 
@@ -155,7 +155,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
               setState(() {});
               Navigator.pop(context);
               Navigator.pop(context);
-              return displayMessageToUser("Bilder werden gelöscht......", context);
+              return displayMessageToUser("Fotky budú vymazané......", context);
 
             },
             child: Text("Vymazať"),
@@ -181,7 +181,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
         child: Container(
           child: Row(
             children: [
-              Text("Bilder löschen"),
+              Text("Vymazať fotky"),
               const SizedBox(width: 10),
               Icon(Icons.delete_outline,
               color: Colors.black,
@@ -205,7 +205,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
           backgroundColor: Theme.of(context).colorScheme.secondary,
-          title: Text("Bilder heute",
+          title: Text("Fotky dnes",
           ),
           actions: [
             showButtons(),

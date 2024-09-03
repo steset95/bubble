@@ -56,7 +56,7 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                           if (results == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
-                                  content: Text("Kein Bild ausgewählt")
+                                  content: Text("Žiadna fotka nebola vybraná")
                               ),
                             );
                             return null;
@@ -68,7 +68,7 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                               .uploadFileProfile(path, fileName, widget.childcode)
                               .then((value) => print('Erledigt'));
                           return
-                            displayMessageToUser("Bild wird hochgeladen...", context);
+                            displayMessageToUser("Fotka sa nahrala...", context);
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -107,7 +107,7 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                         if (results == null) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text("Kein Bild ausgewählt")
+                                content: Text("Žiadna fotka nebola vybraná")
                             ),
                           );
                           return null;
@@ -119,7 +119,7 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                             .uploadFileProfile(path, fileName, widget.childcode)
                             .then((value) => print('Erledigt'));
                         return
-                          displayMessageToUser("Bild wird hochgeladen...", context);
+                          displayMessageToUser("Fotka sa nahrala...", context);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -140,8 +140,8 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                                       size: 14,
                                     ),
                                     const SizedBox(height: 4),
-                                    Text("Profilbild hinzufügen",
-                                        style: TextStyle(fontSize: 8,
+                                    Text("Pridať profilovú fotku",
+                                        style: TextStyle(fontSize: 7,
                                         )
                                     ),
                                   ],

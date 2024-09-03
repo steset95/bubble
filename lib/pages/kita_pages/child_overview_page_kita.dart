@@ -830,7 +830,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                   const SizedBox(width: 10),
                   if (raport['RaportTitle'] == "Angemeldet")
                   Text(
-                      "Angemeldet auf tschechisch",
+                      "Prihlásená/ý",
                       style: TextStyle(fontWeight: FontWeight.bold)
                       )
                   else if (raport['RaportTitle'] == "Essen: ")
@@ -855,7 +855,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                     )
                   else if (raport['RaportTitle'] == "Abgemeldet")
                     Text(
-                        "Abgemeldet auf tschechisch",
+                        "Odhlásená/ý",
                         style: TextStyle(fontWeight: FontWeight.bold)
                     ),
                 ],

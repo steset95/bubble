@@ -50,7 +50,7 @@ final currentUser = FirebaseAuth.instance.currentUser;
       }; else await {
         configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
           ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
+          ..purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion),
       };
       await Purchases.configure(configuration);
 

@@ -86,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
     {
       Navigator.pop(context);
       // Fehlermeldung für Benutzer
-      displayMessageToUser("ABGs wurden nicht akzeptiert.", context);
+      displayMessageToUser("ABG neboli akceptované.", context);
     }
 
     // wenn Passwörter übereinstimmen
