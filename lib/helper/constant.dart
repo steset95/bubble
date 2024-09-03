@@ -3,9 +3,9 @@ const entitlementID = 'premium';
 
 //TO DO: add your subscription terms and conditions
 const footerText =
-""" B 
-
-Read more about this here: https://www.revenuecat.com/blog/schedule-2-section-3-8-b""";
+""" Bubble-App Plný prístup: Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
+Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Predplatné môžete kedykoľvek zrušiť vo svojom účte iTunes alebo Play Store. 9,90 eur mesačne.
+Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov.""";
 
 //TO DO: add the Apple API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
 const appleApiKey = 'appl_XNCazFpDSpRBFabpAJNZYhyMJBa';
