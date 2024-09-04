@@ -11,10 +11,11 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 import 'package:purchases_flutter/models/store.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:socialmediaapp/auth/auth.dart';
-import 'package:socialmediaapp/firebase_options.dart';
-import 'package:socialmediaapp/helper/store_helper.dart';
-import 'package:socialmediaapp/theme/light_mode.dart';
+import 'package:bubble/auth/auth.dart';
+
+import 'package:bubble/helper/store_helper.dart';
+import 'package:bubble/theme/light_mode.dart';
+import 'firebase_options.dart';
 import 'helper/abo_controller.dart';
 import 'helper/constant.dart';
 import 'helper/notification_controller.dart';

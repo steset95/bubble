@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pay/pay.dart';
-import 'package:socialmediaapp/components/my_profile_data.dart';
-import 'package:socialmediaapp/pages/eltern_pages/bezahlung_page_eltern.dart';
+import 'package:bubble/components/my_profile_data.dart';
+import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 
 import '../../components/my_image_viewer_profile.dart';
 import '../../components/my_profile_data_switch.dart';
@@ -182,6 +182,19 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               //"Edit $field",
             ),
             content: TextFormField(
+              contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                // If supported, show the system context menu.
+                if (SystemContextMenu.isSupported(context)) {
+                  return SystemContextMenu.editableText(
+                    editableTextState: editableTextState,
+                  );
+                }
+                // Otherwise, show the flutter-rendered context menu for the current
+                // platform.
+                return AdaptiveTextSelectionToolbar.editableText(
+                  editableTextState: editableTextState,
+                );
+              },
               decoration: InputDecoration(
                 counterText: "",
               ),
@@ -208,10 +221,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                   ),
                   onPressed: () {
                     Navigator.pop(context);
-                    if (newValue.trim().length > 0) {
-                      // In Firestore updaten
                       kinderCollection.doc(childcode).update({field: newValue});
-                    }
                   }
               ),
             ],
@@ -306,13 +316,13 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                       ProfileData(
                         text: userData["geburtstag"],
                         sectionName: "Dátum narodenia",
-                        onPressed: () => editFieldInfos("Geburtstag", "geburtstag", childcode, userData["geburtstag"]),
+                        onPressed: () => editFieldInfos("Dátum narodenia", "geburtstag", childcode, userData["geburtstag"]),
                       ),
 
                       ProfileData(
                         text: userData["personen"],
                         sectionName: "Osoby oprávnené vyzdvihnuť dieťa",
-                        onPressed: () => editFieldInfos("Berechtigte Personen", "personen", childcode, userData["personen"]),
+                        onPressed: () => editFieldInfos("Oprávnené osoby", "personen", childcode, userData["personen"]),
                       ),
 
                       SizedBox(
@@ -326,43 +336,43 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                       ProfileData(
                         text: userData["alergien"],
                         sectionName: "Alergie",
-                        onPressed: () => editFieldInfos("Alergien", "alergien", childcode, userData["alergien"]),
+                        onPressed: () => editFieldInfos("Alergie", "alergien", childcode, userData["alergien"]),
                       ),
 
                       ProfileData(
                         text: userData["krankheiten"],
                         sectionName: "Choroby",
-                        onPressed: () => editFieldInfos("Krankheiten", "krankheiten", childcode, userData["krankheiten"]),
+                        onPressed: () => editFieldInfos("Choroby", "krankheiten", childcode, userData["krankheiten"]),
                       ),
 
                       ProfileData(
                         text: userData["medikamente"],
                         sectionName: "Lieky",
-                        onPressed: () => editFieldInfos("Medikamente", "medikamente", childcode, userData["medikamente"]),
+                        onPressed: () => editFieldInfos("Lieky", "medikamente", childcode, userData["medikamente"]),
                       ),
 
                       ProfileData(
                         text: userData["impfungen"],
                         sectionName: "Očkovania",
-                        onPressed: () => editFieldInfos("Impfungen", "impfungen", childcode, userData["impfungen"]),
+                        onPressed: () => editFieldInfos("Očkovania", "impfungen", childcode, userData["impfungen"]),
                       ),
 
                       ProfileData(
                         text: userData["kinderarzt"],
                         sectionName: "Detský doktor",
-                        onPressed: () => editFieldInfos("Kinderarzt", "kinderarzt", childcode, userData["kinderarzt"]),
+                        onPressed: () => editFieldInfos("Detský doktor", "kinderarzt", childcode, userData["kinderarzt"]),
                       ),
 
                       ProfileData(
                         text: userData["krankenkasse"],
                         sectionName: "Zdravotná poisťovňa",
-                        onPressed: () => editFieldInfos("Krankenkasse", "krankenkasse", childcode, userData["krankenkasse"]),
+                        onPressed: () => editFieldInfos("Zdravotná poisťovňa", "krankenkasse", childcode, userData["krankenkasse"]),
                       ),
 
                       ProfileData(
                         text: userData["bemerkungen"],
                         sectionName: "Ďalšie informácie",
-                        onPressed: () => editFieldInfos("Bemerkungen", "bemerkungen", childcode, userData["bemerkungen"]),
+                        onPressed: () => editFieldInfos("Ďalšie informácie", "bemerkungen", childcode, userData["bemerkungen"]),
                       ),
 
 
@@ -405,7 +415,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
                       ProfileDataSwitch(
                         text: userData["fieber"],
-                        sectionName: "Rektálne meranie teploty",
+                        sectionName: "Meranie teploty",
                         field: "fieber",
                         childcode: childcode,
                       ),

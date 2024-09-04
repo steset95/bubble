@@ -1,6 +1,6 @@
 {
-    "name": "socialmediaapp",
-    "short_name": "socialmediaapp",
+    "name": "bubble",
+    "short_name": "bubble",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

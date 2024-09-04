@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:socialmediaapp/database/firestore_feed.dart';
+import 'package:bubble/database/firestore_feed.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../components/my_profile_data_read_only.dart';
@@ -45,7 +45,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    timer = Timer.periodic(Duration(seconds: 20), (Timer t) => aboCheck());
+    aboCheck();
     configureSDK();
   }
 

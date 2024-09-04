@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:socialmediaapp/components/my_profile_data.dart';
-import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
+import 'package:bubble/components/my_profile_data.dart';
+import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../helper/notification_controller.dart';
@@ -79,10 +79,7 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
           ),
     );
     // prüfen ob etwas geschrieben
-    if (newValue.trim().length > 0) {
-      // In Firestore updaten
       await usersCollection.doc(currentUser!.email).update({field: newValue});
-    }
   }
 
 

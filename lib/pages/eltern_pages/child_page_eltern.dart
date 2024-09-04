@@ -7,8 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/database/firestore_child.dart';
-import 'package:socialmediaapp/pages/eltern_pages/images_page_eltern.dart';
+import 'package:bubble/database/firestore_child.dart';
+import 'package:bubble/pages/eltern_pages/images_page_eltern.dart';
 import '../../helper/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
 import '../../helper/notification_controller.dart';
@@ -52,7 +52,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    timer = Timer.periodic(Duration(seconds: 20), (Timer t) => aboCheck());
+    aboCheck();
     configureSDK();
   }
 

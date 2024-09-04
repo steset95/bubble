@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_button.dart';
-import 'package:socialmediaapp/components/my_textfield.dart';
+import 'package:bubble/components/my_button.dart';
+import 'package:bubble/components/my_textfield.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../helper/helper_functions.dart';
@@ -45,9 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String childcode2 = "";
   String iban = "";
   int guthaben = 0;
-  String gruppe1 = "Skupinu 1";
-  String gruppe2 = "Skupinu 2";
-  String gruppe3 = "Skupinu 3";
+  String gruppe1 = "Skupina 1";
+  String gruppe2 = "Skupina 2";
+  String gruppe3 = "Skupina 3";
   String shownotification = "0";
   String abo = "Probemonate";
   DateTime aboBis = DateTime.now().add(const Duration(days:90));
@@ -329,7 +329,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     GestureDetector(
                         onTap: () async {
                           await launchUrl(
-                          Uri.parse('https://bubble-app.ch/privacy_policy_sk')); // Add URL which you want here
+                          Uri.parse('https://bubble-app.sk/terms_and_conditions')); // Add URL which you want here
                           // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                           },
                       child: Text("ABG",
@@ -346,7 +346,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     GestureDetector(
                       onTap: () async {
                         await launchUrl(
-                            Uri.parse('https://bubble-app.ch/terms_and_conditions_sk')); // Add URL which you want here
+                            Uri.parse('https://bubble-app.sk/privacy_policy')); // Add URL which you want here
                         // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                       },
                       child: Text("Ochranu Osobných",

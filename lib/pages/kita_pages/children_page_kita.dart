@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:socialmediaapp/database/firestore_child.dart';
-import 'package:socialmediaapp/pages/chat_page.dart';
-import 'package:socialmediaapp/pages/kita_pages/child_overview_page_kita.dart';
-import 'package:socialmediaapp/pages/kita_pages/raport_group_page.dart';
+import 'package:bubble/database/firestore_child.dart';
+import 'package:bubble/pages/chat_page.dart';
+import 'package:bubble/pages/kita_pages/child_overview_page_kita.dart';
+import 'package:bubble/pages/kita_pages/raport_group_page.dart';
 import '../../helper/notification_controller.dart';
 
 
@@ -360,12 +360,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
         ],
       ),
     );
-
-    // prüfen ob etwas geschrieben
-    if (newValue.trim().length > 0) {
-      // In Firestore updaten
       await usersCollection.doc(currentUser!.email).update({field: newValue});
-    }
   }
 
 
@@ -650,7 +645,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             height: 15,
                             width: 30,
                             child: IconButton(
-                                onPressed: () => editField('gruppe$cardId', "Prispôsobiť meno", text),
+                                onPressed: () => editField('gruppe$cardId', "Zmeniť meno skupiny", text),
                                 icon: Icon(Icons.edit,
                                   color: Colors.white,
                                   size: 10.0,

@@ -690,7 +690,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               _raportTextController.clear();
               firestoreDatabaseChild.updateSwitchAllOn(widget.group);
             },
-            child: Text("Odhlásiť sa"),
+            child: Text("Odhlásiť"),
           ),
         ],
       ),
@@ -967,7 +967,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("Odber",
+                                  Text("Vyzdvihnutie",
                                     style: TextStyle(
                                       color: Theme.of(context).colorScheme.inversePrimary,),
                                   ),

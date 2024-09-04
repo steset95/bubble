@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1037371543824",
-    "project_id": "socialmediaapp-6db63",
-    "storage_bucket": "socialmediaapp-6db63.appspot.com"
+    "project_number": "881289120957",
+    "project_id": "bubble-5f5f3",
+    "storage_bucket": "bubble-5f5f3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1037371543824:android:d4c2681df299b780671595",
+        "mobilesdk_app_id": "1:881289120957:android:8298bcb12aa28b9c983bd4",
         "android_client_info": {
           "package_name": "ch.bubble.app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAY2lY_zbQsbp7glvjcOh2LfHwtl50w_rI"
+          "current_key": "AIzaSyBk-LB59ASmbY4JXtb7bgMklBxF7-KVlxs"
         }
       ],
       "services": {

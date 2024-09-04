@@ -45,7 +45,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                         "Informácie o applikácii",
                         style: TextStyle(fontSize: 20),
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 10),
                       const Text(
                         "Vision GmbH",
                         style: TextStyle(fontSize: 12),
@@ -57,7 +57,10 @@ class ImpressumPageState extends State<ImpressumPage> {
                       const Text(
                         "8500 Frauenfeld",
                         style: TextStyle(fontSize: 12),
-
+                      ),
+                      const Text(
+                        "Switzerland CH",
+                        style: TextStyle(fontSize: 12),
                       ),
                       const SizedBox(height: 10),
                       const Text(
@@ -65,14 +68,14 @@ class ImpressumPageState extends State<ImpressumPage> {
                         style: TextStyle(fontSize: 12),
                       ),
 
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
                             onPressed: () async {
                               await launchUrl(
-                                  Uri.parse('https://bubble-app.ch/privacy_policy_sk')); // Add URL which you want here
+                                  Uri.parse('https://bubble-app.sk/privacy_policy')); // Add URL which you want here
                               // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                             },
                             child: Text("Ochrana súkromia",
@@ -82,7 +85,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                           TextButton(
                             onPressed: () async {
                               await launchUrl(
-                                  Uri.parse('https://bubble-app.ch/terms_and_conditions_sk')); // Add URL which you want here
+                                  Uri.parse('https://bubble-app.sk/terms_and_conditions')); // Add URL which you want here
                               // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                             },
                             child: Text("AGB",

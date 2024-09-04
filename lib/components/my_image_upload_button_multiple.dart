@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:socialmediaapp/database/firestore_images.dart';
+import 'package:bubble/database/firestore_images.dart';
 import '../helper/helper_functions.dart';
 import 'my_child_select_switch.dart';
 
@@ -220,7 +220,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Obrázky",
+                    Text("Fotky",
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.inversePrimary,),
                     ),

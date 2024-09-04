@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_list_tile_feed_kita.dart';
-import 'package:socialmediaapp/database/firestore_feed.dart';
+import 'package:bubble/components/my_list_tile_feed_kita.dart';
+import 'package:bubble/database/firestore_feed.dart';
 import 'package:intl/intl.dart';
 
 import '../../helper/notification_controller.dart';
@@ -91,12 +91,24 @@ class _PostPageKitaState extends State<PostPageKita> {
             children: [
               const SizedBox(height: 20,),
               TextField(
+                contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                  // If supported, show the system context menu.
+                  if (SystemContextMenu.isSupported(context)) {
+                    return SystemContextMenu.editableText(
+                      editableTextState: editableTextState,
+                    );
+                  }
+                  // Otherwise, show the flutter-rendered context menu for the current
+                  // platform.
+                  return AdaptiveTextSelectionToolbar.editableText(
+                    editableTextState: editableTextState,
+                  );
+                },
                 maxLength: 30,
                 //autofocus: true,
                 controller: newPostControllerTitel,
                 textAlign: TextAlign.left,
                 decoration: InputDecoration(hintText: "Nadpis...",
-
                 ),
 
 
@@ -112,7 +124,19 @@ class _PostPageKitaState extends State<PostPageKita> {
                   //height: mediaQuery.size.width * 0.9,
                   padding: EdgeInsets.all(10),
                   child:  TextField(
-
+                    contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                      // If supported, show the system context menu.
+                      if (SystemContextMenu.isSupported(context)) {
+                        return SystemContextMenu.editableText(
+                          editableTextState: editableTextState,
+                        );
+                      }
+                      // Otherwise, show the flutter-rendered context menu for the current
+                      // platform.
+                      return AdaptiveTextSelectionToolbar.editableText(
+                        editableTextState: editableTextState,
+                      );
+                    },
                     keyboardType: TextInputType.multiline,
                     minLines: 1,
                     maxLines: 20,

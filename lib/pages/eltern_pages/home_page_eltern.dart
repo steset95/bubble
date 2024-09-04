@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/pages/eltern_pages/profile_page_eltern.dart';
+import 'package:bubble/pages/eltern_pages/profile_page_eltern.dart';
 import 'child_page_eltern.dart';
 import 'feed_page_eltern.dart';
 import 'infos_kind_page_eltern.dart';

@@ -1,9 +1,9 @@
 /* import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/databse/firestore_child.dart';
-import 'package:socialmediaapp/pages/child_overview_page_kita.dart';
-import 'package:socialmediaapp/pages/raport_page.dart';
+import 'package:bubble/databse/firestore_child.dart';
+import 'package:bubble/pages/child_overview_page_kita.dart';
+import 'package:bubble/pages/raport_page.dart';
 
 
 class ChildrenPage extends StatefulWidget {

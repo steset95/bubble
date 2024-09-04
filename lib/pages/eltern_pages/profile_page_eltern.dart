@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:socialmediaapp/components/my_profile_data.dart';
-import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
-import 'package:socialmediaapp/pages/eltern_pages/bezahlung_page_eltern.dart';
+import 'package:bubble/components/my_profile_data.dart';
+import 'package:bubble/components/my_profile_data_read_only.dart';
+import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 import '../../helper/abo_controller.dart';
 import '../../helper/constant.dart';
 import '../../helper/notification_controller.dart';
@@ -91,6 +91,19 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           //"Edit $field",
         ),
         content: TextFormField(
+          contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+            // If supported, show the system context menu.
+            if (SystemContextMenu.isSupported(context)) {
+              return SystemContextMenu.editableText(
+                editableTextState: editableTextState,
+              );
+            }
+            // Otherwise, show the flutter-rendered context menu for the current
+            // platform.
+            return AdaptiveTextSelectionToolbar.editableText(
+              editableTextState: editableTextState,
+            );
+          },
           decoration: InputDecoration(
             counterText: "",
           ),
@@ -113,10 +126,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
               ),
               onPressed: () {
                 Navigator.pop(context);
-                if (newValue.trim().length > 0) {
-                  // In Firestore updaten
                   usersCollection.doc(currentUser!.email).update({field: newValue});
-                }
               }
           ),
         ],

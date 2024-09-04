@@ -1,4 +1,4 @@
-# socialmediaapp
+# bubble
 
 A new Flutter project.
 

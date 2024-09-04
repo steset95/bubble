@@ -2,9 +2,9 @@
 /*import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/pages/home_page_eltern.dart';
-import 'package:socialmediaapp/pages/home_page_kita.dart';
-import 'package:socialmediaapp/old/register_page_backup2.dart';
+import 'package:bubble/pages/home_page_eltern.dart';
+import 'package:bubble/pages/home_page_kita.dart';
+import 'package:bubble/old/register_page_backup2.dart';
 
 
 class LoginPage extends StatefulWidget {

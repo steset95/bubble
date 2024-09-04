@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:socialmediaapp/components/my_profile_data_icon.dart';
-import 'package:socialmediaapp/components/my_textfield.dart';
+import 'package:bubble/components/my_profile_data_icon.dart';
+import 'package:bubble/components/my_textfield.dart';
 import '../../components/my_profile_data_read_only.dart';
 import '../../helper/helper_functions.dart';
 

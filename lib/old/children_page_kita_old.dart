@@ -3,12 +3,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/database/firestore_child.dart';
-import 'package:socialmediaapp/old/change_group_page_kita.dart';
-import 'package:socialmediaapp/pages/chat_page.dart';
-import 'package:socialmediaapp/pages/kita_pages/child_overview_page_kita.dart';
-import 'package:socialmediaapp/pages/kita_pages/raport_group_page.dart';
-import 'package:socialmediaapp/pages/kita_pages/raport_page.dart';
+import 'package:bubble/database/firestore_child.dart';
+import 'package:bubble/old/change_group_page_kita.dart';
+import 'package:bubble/pages/chat_page.dart';
+import 'package:bubble/pages/kita_pages/child_overview_page_kita.dart';
+import 'package:bubble/pages/kita_pages/raport_group_page.dart';
+import 'package:bubble/pages/kita_pages/raport_page.dart';
 import 'package:intl/intl.dart';
 import '../../components/notification_controller.dart';
 

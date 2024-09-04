@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_raport_button.dart';
+import 'package:bubble/components/my_raport_button.dart';
 import '../components/my_delete_button.dart';
 import 'package:intl/intl.dart';
 

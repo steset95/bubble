@@ -1,9 +1,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_button.dart';
-import 'package:socialmediaapp/components/my_textfield.dart';
-import 'package:socialmediaapp/helper/helper_functions.dart';
+import 'package:bubble/components/my_button.dart';
+import 'package:bubble/components/my_textfield.dart';
+import 'package:bubble/helper/helper_functions.dart';
 
 
 class ForgotPasswordPage extends StatefulWidget {

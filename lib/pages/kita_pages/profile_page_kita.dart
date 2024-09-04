@@ -6,10 +6,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:socialmediaapp/components/my_profile_data.dart';
-import 'package:socialmediaapp/components/my_profile_data_read_only.dart';
-import 'package:socialmediaapp/pages/impressum_page.dart';
-import 'package:socialmediaapp/pages/kita_pages/provision_page_kita.dart';
+import 'package:bubble/components/my_profile_data.dart';
+import 'package:bubble/components/my_profile_data_read_only.dart';
+import 'package:bubble/pages/impressum_page.dart';
+import 'package:bubble/pages/kita_pages/provision_page_kita.dart';
 
 import '../../helper/notification_controller.dart';
 
@@ -73,6 +73,19 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
           //"Edit $field",
         ),
         content: TextFormField(
+          contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+            // If supported, show the system context menu.
+            if (SystemContextMenu.isSupported(context)) {
+              return SystemContextMenu.editableText(
+                editableTextState: editableTextState,
+              );
+            }
+            // Otherwise, show the flutter-rendered context menu for the current
+            // platform.
+            return AdaptiveTextSelectionToolbar.editableText(
+              editableTextState: editableTextState,
+            );
+          },
           decoration: InputDecoration(
             counterText: "",
           ),
@@ -95,10 +108,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
               ),
               onPressed: () {
                 Navigator.pop(context);
-                if (newValue.trim().length > 0) {
-                  // In Firestore updaten
                   usersCollection.doc(currentUser!.email).update({field: newValue});
-                }
               }
           ),
         ],
@@ -148,10 +158,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
               ),
               onPressed: () {
                 Navigator.pop(context);
-                if (newValue.trim().length > 0) {
-                  // In Firestore updaten
                   usersCollection.doc(currentUser!.email).update({field: newValue});
-                }
               }
           ),
         ],
@@ -287,7 +294,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                     ProfileData(
                       text: userData["beschreibung"],
                       sectionName: "O nás",
-                      onPressed: () => editFieldBeschreibung("beschreibung", "ÜO nás", userData["beschreibung"],),
+                      onPressed: () => editFieldBeschreibung("beschreibung", "O nás", userData["beschreibung"],),
                     ),
 
                     SizedBox(

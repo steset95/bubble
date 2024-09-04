@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_profile_data.dart';
+import 'package:bubble/components/my_profile_data.dart';
  /*
 
 class ProfilePage extends StatelessWidget {

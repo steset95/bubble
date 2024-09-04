@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_textfield.dart';
+import 'package:bubble/components/my_textfield.dart';
 import '../components/my_chatbubble.dart';
 import '../database/firebase_chat.dart';
 import 'package:intl/intl.dart';

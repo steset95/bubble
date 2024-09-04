@@ -71,71 +71,70 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
           padding: const EdgeInsets.all(8.0),
           child: Container(
 
-            child: GridView.builder(
+            child: ListView.builder(
               scrollDirection: Axis.vertical,
               physics: const PageScrollPhysics(),
               itemCount: snapshot.data!.length,
               shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
-                //childAspectRatio: 100,
-                mainAxisExtent: 300,
-                mainAxisSpacing: 10,
-                //crossAxisSpacing: 10,
-              ),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap:  () {
-                  showGeneralDialog(
-                    context: context,
-                    barrierColor: Colors.white, // Background color
-                    //barrierDismissible: false,
-                    transitionDuration: Duration(milliseconds: 400),
-                    pageBuilder: (context, __, ___) {
-                      return Column(
-                        children: <Widget>[
-                          Row(
-                            children: [
-                              Container(
-                                color: Colors.white,
-                                height: 80,
-                              )
-                            ],
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: CachedNetworkImage(
-                                imageUrl: snapshot.data![index],
-                                placeholder: (context, url) => ProgressWithIcon(),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
-                                fit: BoxFit.scaleDown
+
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap:  () {
+                    showGeneralDialog(
+                      context: context,
+                      barrierColor: Colors.white, // Background color
+                      //barrierDismissible: false,
+                      transitionDuration: Duration(milliseconds: 400),
+                      pageBuilder: (context, __, ___) {
+                        return Column(
+                          children: <Widget>[
+                            Row(
+                              children: [
+                                Container(
+                                  color: Colors.white,
+                                  height: 80,
+                                )
+                              ],
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                color: Colors.white,
-                                height: 80,
-                                child: IconButton(
-                                  onPressed:  () => Navigator.pop(context),
-                                  icon: const Icon(Icons.close,
-                                    color: Colors.black,
-                                  ),
+                            Expanded(
+                              flex: 5,
+                              child: InteractiveViewer(
+                                child: CachedNetworkImage(
+                                    imageUrl: snapshot.data![index],
+                                    placeholder: (context, url) => ProgressWithIcon(),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    fit: BoxFit.scaleDown
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child:
-                CachedNetworkImage(
-                  imageUrl: snapshot.data![index],
-                    placeholder: (context, url) => ProgressWithIcon(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                  fit: BoxFit.fitHeight,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  color: Colors.white,
+                                  height: 80,
+                                  child: IconButton(
+                                    onPressed:  () => Navigator.pop(context),
+                                    icon: const Icon(Icons.close,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child:
+                  CachedNetworkImage(
+                    imageUrl: snapshot.data![index],
+                      placeholder: (context, url) => ProgressWithIcon(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
             ),

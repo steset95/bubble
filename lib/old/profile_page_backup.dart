@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pay/pay.dart';
-import 'package:socialmediaapp/components/my_profile_data.dart';
-import 'package:socialmediaapp/assets/payment_configurations.dart' as payment_configurations;
+import 'package:bubble/components/my_profile_data.dart';
+import 'package:bubble/assets/payment_configurations.dart' as payment_configurations;
 
 import '../assets/payment_configurations.dart';
 

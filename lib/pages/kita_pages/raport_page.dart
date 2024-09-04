@@ -704,7 +704,7 @@ class _RaportPageState extends State<RaportPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text("Odber",
+                                      Text("Vyzdvihnutie",
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.inversePrimary,),
                                       ),

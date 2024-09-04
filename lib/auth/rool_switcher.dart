@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/auth/login_or_register.dart';
+import 'package:bubble/auth/login_or_register.dart';
 
-import 'package:socialmediaapp/pages/kita_pages/home_page_kita.dart';
-import 'package:socialmediaapp/pages/kita_pages/profile_page_kita.dart';
+import 'package:bubble/pages/kita_pages/home_page_kita.dart';
+import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
 import '../pages/eltern_pages/home_page_eltern.dart';
 
 

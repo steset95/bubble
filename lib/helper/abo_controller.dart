@@ -14,33 +14,17 @@ import '../pages/eltern_pages/bezahlung_page_eltern.dart';
 
 final currentUser = FirebaseAuth.instance.currentUser;
 
-  void configureSDK() async {
+Future<void> configureSDK() async {
 
-    if (kIsWeb == false) {
+  await Purchases.setLogLevel(LogLevel.debug);
 
-      if (Platform.isIOS || Platform.isMacOS) {
-        StoreConfig(
-          store: Store.appStore,
-          apiKey: appleApiKey,
-        );
-      } else if (Platform.isAndroid) {
-        StoreConfig(
-          store: Store.playStore,
-          apiKey: googleApiKey,
-        );
-      }
-      WidgetsFlutterBinding.ensureInitialized();
-    }
-
-    FirebaseFirestore.instance
+  await FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
         .get()
         .then((DocumentSnapshot document) async {
 
-      String aboID = document["aboID"].toString();
-
-      await Purchases.setLogLevel(LogLevel.debug);
+       String aboID = await document["aboID"].toString();
 
       PurchasesConfiguration configuration;
       if (StoreConfig.isForAmazonAppstore()) await {
@@ -55,11 +39,27 @@ final currentUser = FirebaseAuth.instance.currentUser;
       await Purchases.configure(configuration);
 
     });
+
+    if (kIsWeb == false) {
+    if (Platform.isIOS || Platform.isMacOS) {
+      StoreConfig(
+        store: Store.appStore,
+        apiKey: appleApiKey,
+      );
+    } else if (Platform.isAndroid) {
+      StoreConfig(
+        store: Store.playStore,
+        apiKey: googleApiKey,
+      );
+    }
+    WidgetsFlutterBinding.ensureInitialized();
+    }
+
   }
 
 
 
-Future<void> aboCheck() async {
+void aboCheck() async {
 
   CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 

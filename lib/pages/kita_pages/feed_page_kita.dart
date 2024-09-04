@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/components/my_list_tile_feed_kita.dart';
-import 'package:socialmediaapp/database/firestore_feed.dart';
+import 'package:bubble/components/my_list_tile_feed_kita.dart';
+import 'package:bubble/database/firestore_feed.dart';
 import 'package:intl/intl.dart';
-import 'package:socialmediaapp/pages/kita_pages/post_page_kita.dart';
+import 'package:bubble/pages/kita_pages/post_page_kita.dart';
 
 import '../../helper/notification_controller.dart';
 import '../../helper/helper_functions.dart';
@@ -125,7 +125,7 @@ bool externPost = false;
             Navigator.push(
             context,
             MaterialPageRoute(builder: (context) =>
-                PostPageKita(externPost: externPost, umgebung: "Nový externý príspevok")),
+                PostPageKita(externPost: externPost, umgebung: "Nový externý oznam")),
           );
           }
           else

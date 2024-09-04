@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/pages/chat_page.dart';
-import 'package:socialmediaapp/pages/kita_pages/raport_page.dart';
+import 'package:bubble/pages/chat_page.dart';
+import 'package:bubble/pages/kita_pages/raport_page.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../components/my_profile_data_icon.dart';

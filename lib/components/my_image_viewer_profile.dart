@@ -2,7 +2,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:socialmediaapp/database/firestore_images.dart';
+import 'package:bubble/database/firestore_images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../database/firestore_images_profile.dart';
 import '../helper/helper_functions.dart';
@@ -63,12 +63,13 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                           }
                           final path = results.files.single.path!;
                           final fileName = results.files.single.name;
-
+                          setState(()  {
                           storage
                               .uploadFileProfile(path, fileName, widget.childcode)
-                              .then((value) => print('Erledigt'));
+                              .then((value) => setState(() {}));
                           return
                             displayMessageToUser("Fotka sa nahrala...", context);
+                          });
                         },
                         child: Container(
                           decoration: BoxDecoration(
@@ -117,10 +118,14 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
 
                         storage
                             .uploadFileProfile(path, fileName, widget.childcode)
-                            .then((value) => print('Erledigt'));
+
+                            .then((value) => setState(() {}));
+
                         return
                           displayMessageToUser("Fotka sa nahrala...", context);
+
                       },
+
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
