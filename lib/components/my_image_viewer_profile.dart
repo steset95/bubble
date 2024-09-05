@@ -118,7 +118,6 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
 
                         storage
                             .uploadFileProfile(path, fileName, widget.childcode)
-
                             .then((value) => setState(() {}));
 
                         return

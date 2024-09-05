@@ -406,7 +406,575 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                     ),
 
                     SizedBox(
-                      height: 15,
+                      height: 5,
+                    ),
+                    Stack(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 50,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 150,
+                                ),
+                                Stack(
+                                  children: [
+                                    Container(
+                                        width: 80,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                            gradient: RadialGradient(
+                                              colors: [Colors.white.withOpacity(0.1), Colors.indigo.shade200.withOpacity(0.3),],
+                                              stops: [0.1, 0.6],
+                                              center: Alignment.center,
+                                              radius: 0.8,
+                                            ),
+                                            //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                                spreadRadius: 3,
+                                                blurRadius: 6,
+                                                offset: Offset(2, 4),
+                                              ),
+                                            ],
+                                            borderRadius: BorderRadius.all(Radius.circular(100))
+                                        ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 21,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 30,),
+                                            Container(
+                                              width: 1,
+                                              height: 9,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 2,
+                                                      blurRadius: 5,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 24,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 26,),
+                                            Container(
+                                              width: 3,
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 4,
+                                                      blurRadius: 5,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 27,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 22,),
+                                            Container(
+                                              width: 6,
+                                              height: 6,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 3,
+                                                      blurRadius: 6,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 150,
+                                ),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      width: 48,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            colors: [Colors.white.withOpacity(0.1), Colors.red.shade100.withOpacity(0.3),],
+                                            stops: [0.1, 0.6],
+                                            center: Alignment.center,
+                                            radius: 0.8,
+                                          ),
+                                          //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.red.shade100.withOpacity(0.1),
+                                              spreadRadius: 5,
+                                              blurRadius: 7,
+                                              offset: Offset(2, 4),
+                                            ),
+                                          ],
+                                          borderRadius: BorderRadius.all(Radius.circular(100))
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 14,),
+                                            Container(
+                                              width: 2,
+                                              height: 5,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 1,
+                                                      blurRadius: 3,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 15,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 14,),
+                                            Container(
+                                              width: 2,
+                                              height: 3,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 2,
+                                                      blurRadius: 3,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 13,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 10,),
+                                            Container(
+                                              width: 3,
+                                              height: 3,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 3,
+                                                      blurRadius: 6,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      width: 35,
+                                      height: 34,
+                                      decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            colors: [Colors.white.withOpacity(0.1), Colors.orange.shade100.withOpacity(0.3),],
+                                            stops: [0.1, 0.6],
+                                            center: Alignment.center,
+                                            radius: 0.8,
+                                          ),
+                                          //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                                              spreadRadius: 3,
+                                              blurRadius: 6,
+                                              offset: Offset(2, 4),
+                                            ),
+                                          ],
+                                          borderRadius: BorderRadius.all(Radius.circular(100))
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 14,),
+                                            Container(
+                                              width: 1,
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 1,
+                                                      blurRadius: 2,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 11,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 12,),
+                                            Container(
+                                              width: 1,
+                                              height: 2,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 2,
+                                                      blurRadius: 2,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 13,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 10,),
+                                            Container(
+                                              width: 3,
+                                              height: 3,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 3,
+                                                      blurRadius: 6,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 40,
+                                ),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      width: 35,
+                                      height: 34,
+                                      decoration: BoxDecoration(
+                                          gradient: RadialGradient(
+                                            colors: [Colors.white.withOpacity(0.1), Colors.orange.shade100.withOpacity(0.3),],
+                                            stops: [0.1, 0.6],
+                                            center: Alignment.center,
+                                            radius: 0.8,
+                                          ),
+                                          //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                                              spreadRadius: 3,
+                                              blurRadius: 6,
+                                              offset: Offset(2, 4),
+                                            ),
+                                          ],
+                                          borderRadius: BorderRadius.all(Radius.circular(100))
+                                      ),
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 10,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 14,),
+                                            Container(
+                                              width: 1,
+                                              height: 4,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 1,
+                                                      blurRadius: 2,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 11,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 12,),
+                                            Container(
+                                              width: 1,
+                                              height: 2,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 2,
+                                                      blurRadius: 2,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: [
+                                        SizedBox(height: 13,),
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 10,),
+                                            Container(
+                                              width: 3,
+                                              height: 3,
+                                              decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.white,
+                                                      spreadRadius: 3,
+                                                      blurRadius: 6,
+                                                      offset: Offset(2, 4),
+                                                    ),
+                                                  ],
+                                                  borderRadius: BorderRadius.all(Radius.circular(100))
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 80,
+                            ),
+                            Stack(
+                              children: [
+                                Container(
+                                  width: 28,
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                      gradient: RadialGradient(
+                                        colors: [Colors.white.withOpacity(0.1), Colors.lightBlueAccent.shade100.withOpacity(0.3),],
+                                        stops: [0.1, 0.6],
+                                        center: Alignment.center,
+                                        radius: 0.8,
+                                      ),
+                                      //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.lightBlueAccent.shade100.withOpacity(0.1),
+                                          spreadRadius: 2,
+                                          blurRadius: 4,
+                                          offset: Offset(2, 4),
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.all(Radius.circular(100))
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 6,),
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 10,),
+                                        Container(
+                                          width: 1,
+                                          height: 3,
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  spreadRadius: 1,
+                                                  blurRadius: 1,
+                                                  offset: Offset(2, 4),
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.all(Radius.circular(100))
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 7,),
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 9,),
+                                        Container(
+                                          width: 1,
+                                          height: 1,
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  spreadRadius: 1,
+                                                  blurRadius: 1,
+                                                  offset: Offset(2, 4),
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.all(Radius.circular(100))
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: [
+                                    SizedBox(height: 13,),
+                                    Row(
+                                      children: [
+                                        SizedBox(width: 10,),
+                                        Container(
+                                          width: 3,
+                                          height: 3,
+                                          decoration: BoxDecoration(
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.white,
+                                                  spreadRadius: 3,
+                                                  blurRadius: 6,
+                                                  offset: Offset(2, 4),
+                                                ),
+                                              ],
+                                              borderRadius: BorderRadius.all(Radius.circular(100))
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
 
                   ],
