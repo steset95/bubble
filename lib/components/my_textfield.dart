@@ -18,6 +18,19 @@ class MyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+        // If supported, show the system context menu.
+        if (SystemContextMenu.isSupported(context)) {
+          return SystemContextMenu.editableText(
+            editableTextState: editableTextState,
+          );
+        }
+        // Otherwise, show the flutter-rendered context menu for the current
+        // platform.
+        return AdaptiveTextSelectionToolbar.editableText(
+          editableTextState: editableTextState,
+        );
+      },
       style: TextStyle(color: Colors.black),
       controller: controller,
       decoration: InputDecoration(

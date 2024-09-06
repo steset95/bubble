@@ -176,6 +176,19 @@ Widget _buildUserInput() {
     const SizedBox(width: 20,),
     Expanded(
         child: TextField(
+          contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+            // If supported, show the system context menu.
+            if (SystemContextMenu.isSupported(context)) {
+              return SystemContextMenu.editableText(
+                editableTextState: editableTextState,
+              );
+            }
+            // Otherwise, show the flutter-rendered context menu for the current
+            // platform.
+            return AdaptiveTextSelectionToolbar.editableText(
+              editableTextState: editableTextState,
+            );
+          },
           minLines: 1,
           maxLines: 5,
           controller: _messageController,
