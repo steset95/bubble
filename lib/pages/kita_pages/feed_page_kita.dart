@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/components/my_list_tile_feed_kita.dart';
 import 'package:bubble/database/firestore_feed.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import 'package:bubble/pages/kita_pages/post_page_kita.dart';
 
@@ -91,8 +92,9 @@ bool externPost = false;
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 5),
-                const Icon(Icons.change_circle_outlined,
-                  color: Colors.black,
+                const HugeIcon(
+                    icon: HugeIcons.strokeRoundedExchange01,
+                    color: Colors.black,
                 ),
               ],
             )
@@ -135,9 +137,9 @@ bool externPost = false;
               PostPageKita(externPost: externPost, umgebung: "Nový interný oznam")),
             );
         },
-        child: const Icon(
-            Icons.message,
-          color: Colors.white
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedPencilEdit01,
+          color: Theme.of(context).colorScheme.inversePrimary,
         ),
       ),
         body:

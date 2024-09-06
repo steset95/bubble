@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:pay/pay.dart';
 import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
@@ -517,8 +518,10 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             children: [
               Text("Súrodenec"),
               const SizedBox(width: 10),
-              Icon(Icons.child_care,
-                color: Colors.black,
+              HugeIcon(
+                  icon: HugeIcons.strokeRoundedKid,
+                  color: Colors.black,
+                  size: 22
               ),
               const SizedBox(width: 15),
             ],

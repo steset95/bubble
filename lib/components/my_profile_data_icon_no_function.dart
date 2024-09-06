@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class MyProfileDataIconNoFunction extends StatelessWidget {
   final String text;
@@ -46,11 +47,11 @@ class MyProfileDataIconNoFunction extends StatelessWidget {
                 width: 30,
                 height: 30,
                 child:
-                  Icon(
-                    Icons.check,
-                    color: Colors.green,
-                    size: 15,
-                  ),
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedCheckmarkCircle02,
+                  color: Colors.green,
+                  size: 20,
+                ),
 
               ),
               if (text == "nicht erlaubt")
@@ -61,7 +62,7 @@ class MyProfileDataIconNoFunction extends StatelessWidget {
                   Icon(
                     Icons.block,
                     color: Colors.redAccent,
-                    size: 15,
+                    size: 20,
                   ),
 
                 ),

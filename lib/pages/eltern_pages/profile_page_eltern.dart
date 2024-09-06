@@ -34,6 +34,26 @@ class ProfilePageEltern extends StatefulWidget {
 class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
+  void setProvision() async {
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) {
+      if (document.exists) {
+        if (document["kitamail"] != "") {
+
+          final String? name = currentUser!.email;
+
+          FirebaseFirestore.instance
+              .collection("Abonnements")
+              .doc(document["kitamail"])
+              .set({'$name': DateTime.now()});
+        }
+      }
+    });
+  }
+
 
   /// Notification
 
@@ -150,10 +170,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           apiKey: googleApiKey,
         );
       }
-
-
-      WidgetsFlutterBinding.ensureInitialized();
-
     }
 
     FirebaseFirestore.instance
@@ -312,679 +328,134 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       ),
 
       // Abfrage der entsprechenden Daten - Sammlung = Users
-      body: SingleChildScrollView(
-        child: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Users")
-              .doc(currentUser?.email)
-              .snapshots(),
-          builder: (context, snapshot)
-          {
-            // ladekreis
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            // Fehlermeldung
-            else if (snapshot.hasError) {
-              return Text("Error ${snapshot.error}");
-            }
-            // Daten abfragen funktioniert
-            else if (snapshot.hasData) {
-              // Entsprechende Daten extrahieren
-              final userData = snapshot.data?.data() as Map<String, dynamic>;
+      body: Stack(
+        children: [
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(currentUser?.email)
+                .snapshots(),
+            builder: (context, snapshot)
+            {
+              // ladekreis
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              // Fehlermeldung
+              else if (snapshot.hasError) {
+                return Text("Error ${snapshot.error}");
+              }
+              // Daten abfragen funktioniert
+              else if (snapshot.hasData) {
+                // Entsprechende Daten extrahieren
+                final userData = snapshot.data?.data() as Map<String, dynamic>;
 
 
-              return
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-                    ProfileData(
-                      text: userData["username"],
-                      sectionName: "Meno a Priezvisko",
-                      onPressed: () => editField("username", "Meno a Priezvisko", userData["username"]),
-                    ),
-
-                    ProfileDataReadOnly(
-                      text: userData["email"],
-                      sectionName: "Email",
-
-                    ),
-                    ProfileData(
-                      text: userData["adress"],
-                      sectionName: "Ulica / Číslo",
-                      onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"]),
-                    ),
-
-                    ProfileData(
-                      text: userData["adress2"],
-                      sectionName: "PSČ / Mesto",
-                      onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"]),
-                    ),
-
-                    ProfileData(
-                      text: userData["tel"],
-                      sectionName: "Mobilné číslo",
-                      onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
-                    ),
-
-                    SizedBox(
-                      height: 30,
-                    ),
-
-
-                    /// Payment
-
-
-                    GestureDetector(
-                      onTap: () => goToPage(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text("Predplatné",
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                              fontSize: 12,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Icon(
-                              Icons.arrow_forward,
-                              color: Theme.of(context).colorScheme.primary,
-
-                              size: 10
-                          ),
-                        ],
+                return
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 15,
                       ),
-                    ),
+                      ProfileData(
+                        text: userData["username"],
+                        sectionName: "Meno a Priezvisko",
+                        onPressed: () => editField("username", "Meno a Priezvisko", userData["username"]),
+                      ),
 
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Stack(
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 50,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 150,
-                                ),
-                                Stack(
-                                  children: [
-                                    Container(
-                                        width: 80,
-                                        height: 80,
-                                        decoration: BoxDecoration(
-                                            gradient: RadialGradient(
-                                              colors: [Colors.white.withOpacity(0.1), Colors.indigo.shade200.withOpacity(0.3),],
-                                              stops: [0.1, 0.6],
-                                              center: Alignment.center,
-                                              radius: 0.8,
-                                            ),
-                                            //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                                                spreadRadius: 3,
-                                                blurRadius: 6,
-                                                offset: Offset(2, 4),
-                                              ),
-                                            ],
-                                            borderRadius: BorderRadius.all(Radius.circular(100))
-                                        ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 21,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 30,),
-                                            Container(
-                                              width: 1,
-                                              height: 9,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 2,
-                                                      blurRadius: 5,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 24,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 26,),
-                                            Container(
-                                              width: 3,
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 4,
-                                                      blurRadius: 5,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 27,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 22,),
-                                            Container(
-                                              width: 6,
-                                              height: 6,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 3,
-                                                      blurRadius: 6,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 150,
-                                ),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      width: 48,
-                                      height: 48,
-                                      decoration: BoxDecoration(
-                                          gradient: RadialGradient(
-                                            colors: [Colors.white.withOpacity(0.1), Colors.red.shade100.withOpacity(0.3),],
-                                            stops: [0.1, 0.6],
-                                            center: Alignment.center,
-                                            radius: 0.8,
-                                          ),
-                                          //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.red.shade100.withOpacity(0.1),
-                                              spreadRadius: 5,
-                                              blurRadius: 7,
-                                              offset: Offset(2, 4),
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.all(Radius.circular(100))
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 10,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 14,),
-                                            Container(
-                                              width: 2,
-                                              height: 5,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 1,
-                                                      blurRadius: 3,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 15,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 14,),
-                                            Container(
-                                              width: 2,
-                                              height: 3,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 2,
-                                                      blurRadius: 3,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 13,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 10,),
-                                            Container(
-                                              width: 3,
-                                              height: 3,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 3,
-                                                      blurRadius: 6,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      width: 35,
-                                      height: 34,
-                                      decoration: BoxDecoration(
-                                          gradient: RadialGradient(
-                                            colors: [Colors.white.withOpacity(0.1), Colors.orange.shade100.withOpacity(0.3),],
-                                            stops: [0.1, 0.6],
-                                            center: Alignment.center,
-                                            radius: 0.8,
-                                          ),
-                                          //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                                              spreadRadius: 3,
-                                              blurRadius: 6,
-                                              offset: Offset(2, 4),
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.all(Radius.circular(100))
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 10,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 14,),
-                                            Container(
-                                              width: 1,
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 1,
-                                                      blurRadius: 2,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 11,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 12,),
-                                            Container(
-                                              width: 1,
-                                              height: 2,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 2,
-                                                      blurRadius: 2,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 13,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 10,),
-                                            Container(
-                                              width: 3,
-                                              height: 3,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 3,
-                                                      blurRadius: 6,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 40,
-                                ),
-                                Stack(
-                                  children: [
-                                    Container(
-                                      width: 35,
-                                      height: 34,
-                                      decoration: BoxDecoration(
-                                          gradient: RadialGradient(
-                                            colors: [Colors.white.withOpacity(0.1), Colors.orange.shade100.withOpacity(0.3),],
-                                            stops: [0.1, 0.6],
-                                            center: Alignment.center,
-                                            radius: 0.8,
-                                          ),
-                                          //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                                              spreadRadius: 3,
-                                              blurRadius: 6,
-                                              offset: Offset(2, 4),
-                                            ),
-                                          ],
-                                          borderRadius: BorderRadius.all(Radius.circular(100))
-                                      ),
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 10,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 14,),
-                                            Container(
-                                              width: 1,
-                                              height: 4,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 1,
-                                                      blurRadius: 2,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 11,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 12,),
-                                            Container(
-                                              width: 1,
-                                              height: 2,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 2,
-                                                      blurRadius: 2,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      children: [
-                                        SizedBox(height: 13,),
-                                        Row(
-                                          children: [
-                                            SizedBox(width: 10,),
-                                            Container(
-                                              width: 3,
-                                              height: 3,
-                                              decoration: BoxDecoration(
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.white,
-                                                      spreadRadius: 3,
-                                                      blurRadius: 6,
-                                                      offset: Offset(2, 4),
-                                                    ),
-                                                  ],
-                                                  borderRadius: BorderRadius.all(Radius.circular(100))
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Row(
+                      ProfileDataReadOnly(
+                        text: userData["email"],
+                        sectionName: "Email",
+
+                      ),
+                      ProfileData(
+                        text: userData["adress"],
+                        sectionName: "Ulica / Číslo",
+                        onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"]),
+                      ),
+
+                      ProfileData(
+                        text: userData["adress2"],
+                        sectionName: "PSČ / Mesto",
+                        onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"]),
+                      ),
+
+                      ProfileData(
+                        text: userData["tel"],
+                        sectionName: "Mobilné číslo",
+                        onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
+                      ),
+
+                      SizedBox(
+                        height: 30,
+                      ),
+
+
+                      /// Payment
+
+
+                      GestureDetector(
+                        onTap: () => goToPage(),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
-                              width: 80,
+                              width: 5,
                             ),
-                            Stack(
-                              children: [
-                                Container(
-                                  width: 28,
-                                  height: 28,
-                                  decoration: BoxDecoration(
-                                      gradient: RadialGradient(
-                                        colors: [Colors.white.withOpacity(0.1), Colors.lightBlueAccent.shade100.withOpacity(0.3),],
-                                        stops: [0.1, 0.6],
-                                        center: Alignment.center,
-                                        radius: 0.8,
-                                      ),
-                                      //color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.lightBlueAccent.shade100.withOpacity(0.1),
-                                          spreadRadius: 2,
-                                          blurRadius: 4,
-                                          offset: Offset(2, 4),
-                                        ),
-                                      ],
-                                      borderRadius: BorderRadius.all(Radius.circular(100))
-                                  ),
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(height: 6,),
-                                    Row(
-                                      children: [
-                                        SizedBox(width: 10,),
-                                        Container(
-                                          width: 1,
-                                          height: 3,
-                                          decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.white,
-                                                  spreadRadius: 1,
-                                                  blurRadius: 1,
-                                                  offset: Offset(2, 4),
-                                                ),
-                                              ],
-                                              borderRadius: BorderRadius.all(Radius.circular(100))
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(height: 7,),
-                                    Row(
-                                      children: [
-                                        SizedBox(width: 9,),
-                                        Container(
-                                          width: 1,
-                                          height: 1,
-                                          decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.white,
-                                                  spreadRadius: 1,
-                                                  blurRadius: 1,
-                                                  offset: Offset(2, 4),
-                                                ),
-                                              ],
-                                              borderRadius: BorderRadius.all(Radius.circular(100))
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    SizedBox(height: 13,),
-                                    Row(
-                                      children: [
-                                        SizedBox(width: 10,),
-                                        Container(
-                                          width: 3,
-                                          height: 3,
-                                          decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.white,
-                                                  spreadRadius: 3,
-                                                  blurRadius: 6,
-                                                  offset: Offset(2, 4),
-                                                ),
-                                              ],
-                                              borderRadius: BorderRadius.all(Radius.circular(100))
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                            Text("Predplatné",
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                fontSize: 12,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Icon(
+                                Icons.arrow_forward,
+                                color: Theme.of(context).colorScheme.primary,
+
+                                size: 10
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    /*  GestureDetector(
+                        onTap: () => PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion,),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text("Test",
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                fontSize: 12,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Icon(
+                                Icons.arrow_forward,
+                                color: Theme.of(context).colorScheme.primary,
 
-                  ],
-                );
-              // Fehlermeldung wenn nichts vorhanden ist
-            } else {
-              return const Text("KNo  Data");
-            }
-          },
-        ),
+                                size: 10
+                            ),
+                          ],
+                        ),
+                      ),*/
+
+                    ],
+                  );
+                // Fehlermeldung wenn nichts vorhanden ist
+              } else {
+                return const Text("No  Data");
+              }
+            },
+          ),
+        ],
       ),
     );
   }

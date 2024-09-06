@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../../components/my_progressindicator.dart';
 import '../../helper/notification_controller.dart';
 import '../../database/firestore_images.dart';
@@ -183,8 +184,10 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
             children: [
               Text("Vymazať fotky"),
               const SizedBox(width: 10),
-              Icon(Icons.delete_outline,
-              color: Colors.black,
+              const HugeIcon(
+                icon: HugeIcons.strokeRoundedDelete02,
+                color: Colors.black,
+                size: 20,
               ),
               const SizedBox(width: 15),
             ],

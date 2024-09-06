@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/database/firestore_child.dart';
 import 'package:bubble/pages/eltern_pages/images_page_eltern.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../../helper/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
 import '../../helper/notification_controller.dart';
@@ -52,8 +53,11 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    aboCheck();
     configureSDK();
+    Future.delayed(Duration(milliseconds: 20000), () {
+      aboCheck();
+    });
+
   }
 
   @override
@@ -163,8 +167,9 @@ class _ChildPageElternState extends State<ChildPageEltern> {
             ),
 
             IconButton(
-                icon: Icon(Icons.calendar_today,
-color: Theme.of(context).colorScheme.primary,
+                icon:  HugeIcon(
+                  icon: HugeIcons.strokeRoundedCalendar03,
+                color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () async {
                   DateTime? _newDate = await showDatePicker(
@@ -390,7 +395,8 @@ color: Theme.of(context).colorScheme.primary,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.image_outlined,
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedImage01,
                               color: Colors.grey.shade300,
                             ),
                           ],
@@ -482,7 +488,8 @@ color: Theme.of(context).colorScheme.primary,
             /// Abholzeit
             IconButton(
               onPressed: () => openChildBoxAbholzeit(childcode: childcode),
-              icon: const Icon(Icons.watch_later_outlined,
+              icon:  HugeIcon(
+                icon: HugeIcons.strokeRoundedClock01,
                 color: Colors.black,
               ),
             ),
@@ -492,7 +499,8 @@ color: Theme.of(context).colorScheme.primary,
 
             IconButton(
               onPressed: () => showRaportDialogAbsenz(childcode),
-              icon: const Icon(Icons.beach_access_outlined,
+              icon:  HugeIcon(
+                icon: HugeIcons.strokeRoundedBeach02,
                 color: Colors.black,
               ),
             ),
@@ -591,14 +599,15 @@ color: Theme.of(context).colorScheme.primary,
                               SizedBox(
                                 width: 10,
                               ),
-                              Icon(Icons.credit_card_outlined,
+                              HugeIcon(
+                                icon: HugeIcons.strokeRoundedCreditCardPos,
                                 color: Theme.of(context).colorScheme.primary,
-                                size: 60,
+                                size: 50,
                               ),
                               Icon(
                                   Icons.arrow_forward,
                                   color: Theme.of(context).colorScheme.primary,
-                                  size: 30
+                                  size: 20
                               ),
                             ],
                           ),
@@ -755,29 +764,41 @@ color: Theme.of(context).colorScheme.primary,
                                           Column(
                                             children: [
                                               if (raport['RaportTitle'] == "Angemeldet")
-                                              Icon(Icons.wb_sunny_outlined,
-                                              color: Colors.yellow,
+                                              HugeIcon(
+                                              icon: HugeIcons.strokeRoundedSun03,
+                                              color: Colors.amber,
+                                                  size: 20
                                               )
                                               else if (raport['RaportTitle'] == "Essen: ")
-                                                Icon(Icons.local_pizza_outlined,
-                                                  color: Colors.orangeAccent,
+                                                HugeIcon(
+                                                  icon: HugeIcons.strokeRoundedPizza01,
+                                                  color: Colors.orange,
+                                                    size: 20
                                                 )
                                               else if (raport['RaportTitle'] == "Schlaf: ")
-                                                Icon(Icons.bed_outlined,
-                                                  color: Colors.indigoAccent,
+                                                HugeIcon(
+                                                icon: HugeIcons.strokeRoundedSleeping,
+                                                color: Colors.teal,
+                                                    size: 20
                                                 )
                                               else if (raport['RaportTitle'] == "Aktivität: ")
-                                                Icon(Icons.sports_soccer_outlined,
-                                                  color: Colors.green,
+                                                HugeIcon(
+                                                icon: HugeIcons.strokeRoundedHockey,
+                                                color: Colors.purple.shade900,
+                                                    size: 20
                                                 )
                                               else if (raport['RaportTitle'] == "Diverses: ")
-                                                Icon(Icons.note_add_outlined,
-                                                  color: Colors.blueGrey,
-                                                )
+                                                      HugeIcon(
+                                                        icon: HugeIcons.strokeRoundedChartBubble02,
+                                                        color: Colors.lightBlueAccent,
+                                                          size: 20
+                                                      )
                                               else if (raport['RaportTitle'] == "Abgemeldet")
-                                                Icon(Icons.door_front_door_outlined,
-                                                  color: Colors.brown,
-                                                ),
+                                                        HugeIcon(
+                                                          icon: HugeIcons.strokeRoundedMoon02,
+                                                          color: Colors.blueGrey,
+                                                          size: 20
+                                                        ),
                                           ],
                                           )
                                       ),
@@ -826,7 +847,8 @@ color: Theme.of(context).colorScheme.primary,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.bedtime_outlined ,
+                                HugeIcon(
+                                  icon: HugeIcons.strokeRoundedMoon02,
                                   color: Colors.grey.shade300,
                                 ),
                               ],

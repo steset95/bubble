@@ -66,126 +66,148 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
-        reverse: true,
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
 
-            children: [
-              const SizedBox(height: 70,),
-              // logo
-              Image.asset("assets/images/Logo_1.png", width: 220, height:120),
-              // app name
-              const SizedBox(height: 60),
-              const Text(
-                "Prihlásenie",
-                style: TextStyle(fontSize: 20),
-
-              ),
-
-              const SizedBox(height: 20),
-
-              // Email textfield
-
-
-            TextField(
-              style: TextStyle(color: Colors.black),
-              controller: email,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                hintText: "Email",
-              ),
-              obscureText: false,
-            ),
-
-              const SizedBox(height: 20),
-
-              // password textfield
-
-              Container(
-
-                child: Row(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+              minHeight: MediaQuery.of(context).size.height),
+          child:  IntrinsicHeight(
+            child: Stack(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Flexible(
-                      child: TextField(
-                        style: TextStyle(color: Colors.black),
-                        controller: password,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: _toggle,
-                            icon: const Icon(Icons.remove_red_eye,
-                            ),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: "Prihlasovací kód",
-                        ),
-                        obscureText: _obscureText,
-                      ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(child: Image.asset("assets/images/bubbles_login.png", width: 300, height:300)),
+                      ],
                     ),
-
                   ],
                 ),
-              ),
-
-
-
-              const SizedBox(height: 10),
-
-              // forgot password
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-
-                  GestureDetector(
-                    child: Text(
-                      "Zabudli ste prihlasovací kód? ",
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
-                      );
-                    },
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 30),
-
-              //sing in button
-
-              MyButton(
-                text: "Prihlásiť",
-                onTap: login,
-              ),
-
-              const SizedBox(height: 10),
-
-              // Register here
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Nemáte účet? ",
-                  ),
-                  GestureDetector(
-                    onTap: widget.onTap,
-                    child: const Text(
-                      "Zaregistrujte sa tu",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.all(25.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+            
+                    children: [
+                      // logo
+                      Image.asset("assets/images/Logo_1.png", width: 220, height:120),
+                      // app name
+                      const SizedBox(height: 60),
+                      const Text(
+                        "Prihlásenie",
+                        style: TextStyle(fontSize: 20),
+            
                       ),
+            
+                      const SizedBox(height: 20),
+            
+                      // Email textfield
+            
+            
+                    TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: email,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: "Email",
+                      ),
+                      obscureText: false,
                     ),
+            
+                      const SizedBox(height: 20),
+            
+                      // password textfield
+            
+                      Container(
+            
+                        child: Row(
+                          children: [
+                            Flexible(
+                              child: TextField(
+                                style: TextStyle(color: Colors.black),
+                                controller: password,
+                                decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    onPressed: _toggle,
+                                    icon: const Icon(Icons.remove_red_eye,
+                                    ),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  hintText: "Prihlasovací kód",
+                                ),
+                                obscureText: _obscureText,
+                              ),
+                            ),
+            
+                          ],
+                        ),
+                      ),
+            
+            
+            
+                      const SizedBox(height: 10),
+            
+                      // forgot password
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+            
+                          GestureDetector(
+                            child: Text(
+                              "Zabudli ste prihlasovací kód? ",
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+            
+                      const SizedBox(height: 30),
+            
+                      //sing in button
+            
+                      MyButton(
+                        text: "Prihlásiť",
+                        onTap: login,
+                      ),
+            
+                      const SizedBox(height: 10),
+            
+                      // Register here
+            
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Nemáte účet? ",
+                          ),
+                          GestureDetector(
+                            onTap: widget.onTap,
+                            child: const Text(
+                              "Zaregistrujte sa tu",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+            
+                    ],
                   ),
-                ],
-              ),
-
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

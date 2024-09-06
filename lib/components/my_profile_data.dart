@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ProfileData extends StatelessWidget {
   final String text;
@@ -49,11 +50,12 @@ class ProfileData extends StatelessWidget {
                 //padding: const EdgeInsets.only(left: 15, bottom: 15, right: 10),
                 child: IconButton(
                   onPressed: onPressed,
-                  icon: Icon(
-                    Icons.edit_outlined,
+                  icon:
+                  HugeIcon(
+                      icon: HugeIcons.strokeRoundedPencilEdit02,
                     color: Theme.of(context).colorScheme.primary,
                     size: 15,
-                  ),
+                  )
                 ),
               ),
             ],

@@ -18,6 +18,20 @@ Future<void> configureSDK() async {
 
   await Purchases.setLogLevel(LogLevel.debug);
 
+  if (kIsWeb == false) {
+    if (Platform.isIOS || Platform.isMacOS) {
+      StoreConfig(
+        store: Store.appStore,
+        apiKey: appleApiKey,
+      );
+    } else if (Platform.isAndroid) {
+      StoreConfig(
+        store: Store.playStore,
+        apiKey: googleApiKey,
+      );
+    }
+  }
+
   await FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
@@ -34,27 +48,10 @@ Future<void> configureSDK() async {
       }; else await {
         configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
           ..appUserID = aboID
-          ..purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion),
+          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
       };
       await Purchases.configure(configuration);
-
     });
-
-    if (kIsWeb == false) {
-    if (Platform.isIOS || Platform.isMacOS) {
-      StoreConfig(
-        store: Store.appStore,
-        apiKey: appleApiKey,
-      );
-    } else if (Platform.isAndroid) {
-      StoreConfig(
-        store: Store.playStore,
-        apiKey: googleApiKey,
-      );
-    }
-    WidgetsFlutterBinding.ensureInitialized();
-    }
-
   }
 
 

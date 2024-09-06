@@ -242,6 +242,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "hugeicons",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/hugeicons-0.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "intl",
       "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.19.0",
       "packageUri": "lib/",
@@ -578,7 +584,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-09-04T12:22:58.678550Z",
+  "generated": "2024-09-06T14:16:12.971850Z",
   "generator": "pub",
   "generatorVersion": "3.6.0-76.0.dev",
   "flutterRoot": "file:///C:/Users/Stefan/Documents/flutter",

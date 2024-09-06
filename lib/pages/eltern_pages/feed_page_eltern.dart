@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:bubble/database/firestore_feed.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../components/my_profile_data_read_only.dart';
@@ -45,8 +46,10 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    aboCheck();
     configureSDK();
+    Future.delayed(Duration(milliseconds: 20000), () {
+      aboCheck();
+    });
   }
 
   @override
@@ -92,7 +95,8 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                             )),
                       );
                     },
-                    icon: const Icon(Icons.perm_contact_cal_outlined,
+                    icon: const  HugeIcon(
+                      icon: HugeIcons.strokeRoundedPassport,
                       color: Colors.black,
                     ),
                   ),
@@ -108,9 +112,10 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                             )),
                       );
                     },
-                    icon: const Icon(Icons.chat_bubble_outline,
+                    icon:  HugeIcon(
+                      icon: HugeIcons.strokeRoundedChatting01,
                       color: Colors.black,
-                    ),
+                      ),
                   ),
                   if (shownotification == "1" && userData["abo"] != "inaktiv")
                     IconButton(
@@ -282,14 +287,15 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                                                         SizedBox(
                                                           width: 10,
                                                         ),
-                                                        Icon(Icons.credit_card_outlined,
+                                                        HugeIcon(
+                                                          icon: HugeIcons.strokeRoundedCreditCardPos,
                                                           color: Theme.of(context).colorScheme.primary,
-                                                          size: 60,
+                                                          size: 50,
                                                         ),
                                                         Icon(
                                                             Icons.arrow_forward,
                                                             color: Theme.of(context).colorScheme.primary,
-                                                            size: 30
+                                                            size: 20
                                                         ),
                                                       ],
                                                     ),

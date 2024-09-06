@@ -42,8 +42,8 @@ class _HomePageElternState extends State<HomePageEltern> {
           });
           },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.house), label: "Škôlka",),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today), label: "Denník"),
+          BottomNavigationBarItem(icon: Icon(Icons.house_outlined), label: "Škôlka",),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: "Denník"),
           BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Dieťa"),
           BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profil"),
                     ],

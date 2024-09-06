@@ -10,6 +10,7 @@ import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/impressum_page.dart';
 import 'package:bubble/pages/kita_pages/provision_page_kita.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 import '../../helper/notification_controller.dart';
 
@@ -313,12 +314,13 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Provízia",
+                              Text("Provízia ",
                               style: TextStyle(
                                 fontSize: 15,
                               color: Theme.of(context).colorScheme.primary,),
                               ),
-                              Icon(Icons.info_outline,
+                              HugeIcon(
+                                icon: HugeIcons.strokeRoundedInformationCircle,
                                 color: Theme.of(context).colorScheme.primary,
                                 size: 15,
                               ),

@@ -1,23 +1,14 @@
 import 'dart:io';
-
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-import 'package:purchases_flutter/models/store.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:bubble/auth/auth.dart';
-
-import 'package:bubble/helper/store_helper.dart';
 import 'package:bubble/theme/light_mode.dart';
 import 'firebase_options.dart';
-import 'helper/abo_controller.dart';
-import 'helper/constant.dart';
 import 'helper/notification_controller.dart';
 
 
@@ -52,7 +43,7 @@ void main() async {
   }
   /// AwesomeNotifications
 
-  WidgetsFlutterBinding.ensureInitialized(); // in Firebase einbinden
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());

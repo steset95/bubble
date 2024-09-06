@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_image_upload_button.dart';
 import '../../helper/notification_controller.dart';
@@ -480,10 +481,12 @@ class _RaportPageState extends State<RaportPage> {
                             child:  Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.door_back_door_outlined,
+                                HugeIcon(
+                                  icon: HugeIcons.strokeRoundedSun01,
                                   color: Theme.of(context).colorScheme.inversePrimary,
+                                  size: 30,
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 15),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -520,10 +523,12 @@ class _RaportPageState extends State<RaportPage> {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.local_pizza_outlined,
+                                HugeIcon(
+                                  icon: HugeIcons.strokeRoundedPizza01,
                                   color: Theme.of(context).colorScheme.inversePrimary,
+                                  size: 30,
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 15),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -569,10 +574,12 @@ class _RaportPageState extends State<RaportPage> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.bed_outlined,
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedSleeping,
                               color: Theme.of(context).colorScheme.inversePrimary,
+                              size: 30,
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 15),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -609,10 +616,12 @@ class _RaportPageState extends State<RaportPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.sports_soccer,
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedBasketball01,
                                     color: Theme.of(context).colorScheme.inversePrimary,
+                                    size: 30,
                                   ),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 15),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -657,10 +666,12 @@ class _RaportPageState extends State<RaportPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.note_add_outlined,
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedNote,
                                     color: Theme.of(context).colorScheme.inversePrimary,
+                                    size: 30,
                                   ),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 15),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -699,8 +710,9 @@ class _RaportPageState extends State<RaportPage> {
                                 children: [
                                   Icon(Icons.family_restroom_outlined,
                                     color: Theme.of(context).colorScheme.inversePrimary,
+                                    size: 30,
                                   ),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 15),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [

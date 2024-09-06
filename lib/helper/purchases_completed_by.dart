@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:purchases_flutter/models/storekit_version.dart';
+import 'package:intl/intl.dart';
 
 abstract class PurchasesAreCompletedBy {
   const PurchasesAreCompletedBy();
@@ -24,6 +25,9 @@ class PurchasesAreCompletedByMyApp extends PurchasesAreCompletedBy {
 
 
   void setProvision() async {
+
+    final String month = DateFormat("MMMM").format(DateTime.now());
+
     await FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
@@ -32,12 +36,15 @@ class PurchasesAreCompletedByMyApp extends PurchasesAreCompletedBy {
       if (document.exists) {
         if (document["kitamail"] != "") {
 
+
+
           final String? name = currentUser!.email;
 
           FirebaseFirestore.instance
               .collection("Abonnements")
               .doc(document["kitamail"])
-              .set({'$name': DateTime.now()});
+              .collection(month)
+              .add({'$name': DateTime.now()});
         }
       }
     });

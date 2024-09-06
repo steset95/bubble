@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:bubble/database/firestore_child.dart';
 import 'package:bubble/pages/chat_page.dart';
@@ -443,10 +444,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
               );
 
             }),
-
-
-
-        child: const Icon(Icons.calendar_today_outlined),
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedCalendarAdd01,
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
       /// Anzeige 3 Gruppen
 
@@ -646,10 +647,11 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             width: 30,
                             child: IconButton(
                                 onPressed: () => editField('gruppe$cardId', "Zmeniť meno skupiny", text),
-                                icon: Icon(Icons.edit,
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedPencilEdit01,
                                   color: Colors.white,
-                                  size: 10.0,
-                                )),
+                                  size: 10,
+                                ),),
                           ),
                         ],
                       ),
@@ -827,7 +829,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                             );
                                           },
                                           color: color2,
-                                          icon: const Icon(Icons.mark_unread_chat_alt_outlined,
+                                          icon: const HugeIcon(
+                                            icon: HugeIcons.strokeRoundedMessage01,
+                                            color: Colors.black,
+                                            size: 20,
                                           ),
                                         ),
                                       ),
@@ -857,7 +862,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                 child: IconButton(
                                   onPressed: () => openChildBoxGroup(docID, "1"),
                                   color: color2,
-                                  icon: const Icon(Icons.group_rounded,
+                                  icon: const HugeIcon(
+                                    icon: HugeIcons.strokeRoundedUserMultiple02,
+                                    color: Colors.black,
+                                    size: 20,
                                   ),
                                 ),
                               )
@@ -976,7 +984,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                           );
                                         },
                                         color: color2,
-                                        icon: const Icon(Icons.mark_unread_chat_alt_outlined,
+                                        icon: const HugeIcon(
+                                          icon: HugeIcons.strokeRoundedMessage01,
+                                          color: Colors.black,
+                                          size: 20,
                                         ),
                                       ),
                                     ),
@@ -1006,7 +1017,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                               child: IconButton(
                                 onPressed: () => openChildBoxGroup(docID, "2"),
                                 color: color2,
-                                icon: const Icon(Icons.group_rounded,
+                                icon: const HugeIcon(
+                                  icon: HugeIcons.strokeRoundedUserMultiple02,
+                                  color: Colors.black,
+                                  size: 20,
                                 ),
                               ),
                             )
@@ -1127,7 +1141,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                           );
                                         },
                                         color: color2,
-                                        icon: const Icon(Icons.mark_unread_chat_alt_outlined,
+                                        icon: const HugeIcon(
+                                          icon: HugeIcons.strokeRoundedMessage01,
+                                          color: Colors.black,
+                                          size: 20,
                                         ),
                                       ),
                                     ),
@@ -1157,7 +1174,10 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                               child: IconButton(
                                 onPressed: () => openChildBoxGroup(docID, "3"),
                                 color: color2,
-                                icon: const Icon(Icons.group_rounded,
+                                icon: const HugeIcon(
+                                  icon: HugeIcons.strokeRoundedUserMultiple02,
+                                  color: Colors.black,
+                                  size: 20,
                                 ),
                               ),
                             )

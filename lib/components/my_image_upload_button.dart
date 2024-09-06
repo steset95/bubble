@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:bubble/database/firestore_images.dart';
+import 'package:hugeicons/hugeicons.dart';
 import '../helper/helper_functions.dart';
 
 
@@ -87,10 +88,11 @@ class _ImageUploadState extends State<ImageUpload> {
             child:  Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.photo_camera_outlined,
-                color: Theme.of(context).colorScheme.inversePrimary,
+                HugeIcon(
+                  icon: HugeIcons.strokeRoundedCamera01,
+                  color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 7),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

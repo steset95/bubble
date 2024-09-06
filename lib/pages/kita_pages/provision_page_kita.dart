@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/components/my_profile_data_read_only.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../helper/notification_controller.dart';
@@ -94,87 +95,102 @@ class _ProvisionPageKitaState extends State<ProvisionPageKita> {
 
       ),
       // Abfrage der entsprechenden Daten - Sammlung = Users
-      body: SingleChildScrollView(
-        child: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection("Users")
-              .doc(currentUser?.email)
-              .snapshots(),
-          builder: (context, snapshot)
-          {
-            // ladekreis
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            // Fehlermeldung
-            else if (snapshot.hasError) {
-              return Text("Error ${snapshot.error}");
-            }
-            // Daten abfragen funktioniert
-            else if (snapshot.hasData) {
-              // Entsprechende Daten extrahieren
-              final userData = snapshot.data?.data() as Map<String, dynamic>;
+      body: Stack(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(child: Image.asset("assets/images/bubbles.png", width: 350, height:350)),
+                ],
+              ),
+            ],
+          ),
+          StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("Users")
+                .doc(currentUser?.email)
+                .snapshots(),
+            builder: (context, snapshot)
+            {
+              // ladekreis
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              // Fehlermeldung
+              else if (snapshot.hasError) {
+                return Text("Error ${snapshot.error}");
+              }
+              // Daten abfragen funktioniert
+              else if (snapshot.hasData) {
+                // Entsprechende Daten extrahieren
+                final userData = snapshot.data?.data() as Map<String, dynamic>;
 
-              // Inhalt Daten
+                // Inhalt Daten
 
-              return
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 15,
-                    ),
-
-                    ProfileData(
-                      text: userData["iban"],
-                      sectionName: "IBAN",
-                      onPressed: () => editField("iban", "IBAN", userData["iban"]),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text("Ako vďaku za denné používanie aplikácie dostanete od Bubble podiel 30% z príjmov, ktoré sme získali z predplatného rodičov. Prosím, zadajte IBAN požadovaného účtu a získajte príslušnú províziu na konci každého štvrťroka",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 10,
-                        ),
+                return
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 15,
                       ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                  GestureDetector(
-                    onTap: () async {
-                    await launchUrl(
-                    Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
-                    // Navigator.of(context).pushNamed(SignUpScreen.routeName);
-                    },
-                    child: Column(
-                      children: [
-                        Text("Platobné doklady",
+
+                      ProfileData(
+                        text: userData["iban"],
+                        sectionName: "IBAN",
+                        onPressed: () => editField("iban", "IBAN", userData["iban"]),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text("Ako vďaku za denné používanie aplikácie dostanete od Bubble podiel 30% z príjmov, ktoré sme získali z predplatného rodičov. Prosím, zadajte IBAN požadovaného účtu a získajte príslušnú províziu na konci každého štvrťroka",
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 10,
                           ),
                         ),
-                        Icon(Icons.receipt_long,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 25,
-                        ),
-                      ],
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                    GestureDetector(
+                      onTap: () async {
+                      await launchUrl(
+                      Uri.parse('https://laurasat.myhostpoint.ch/datenschutz/')); // Add URL which you want here
+                      // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                      },
+                      child: Column(
+                        children: [
+                          Text("Platobné doklady",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedDocumentAttachment,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 25,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
 
-                  ],
-                );
-              // Fehlermeldung wenn nichts vorhanden ist
-            } else {
-              return const Text("No Data");
-            }
-          },
-        ),
+                    ],
+                  );
+                // Fehlermeldung wenn nichts vorhanden ist
+              } else {
+                return const Text("No Data");
+              }
+            },
+          ),
+        ],
       ),
     );
   }

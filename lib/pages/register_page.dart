@@ -73,6 +73,16 @@ class _RegisterPageState extends State<RegisterPage> {
         )
     );
 
+    final bool emailValid =
+    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(emailController.text);
+
+    bool hasDigits = passwordController.text.contains(new RegExp(r'[0-9]'));
+    bool hasLowercase = passwordController.text.contains(new RegExp(r'[a-z]'));
+    bool hasSpecialCharacters = passwordController.text.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+    bool hasMinLength = passwordController.text.length > 8;
+
+
     // passwort übereinstimmung prüfen
     if (passwordController.text != confirmPwController.text)
     {
@@ -86,8 +96,23 @@ class _RegisterPageState extends State<RegisterPage> {
     {
       Navigator.pop(context);
       // Fehlermeldung für Benutzer
-      displayMessageToUser("ABG neboli akceptované.", context);
+      displayMessageToUser("ABG neboli akceptované", context);
     }
+
+    else if (emailValid == false)
+    {
+      Navigator.pop(context);
+      // Fehlermeldung für Benutzer
+      displayMessageToUser("Neplatná e-mailová adresa", context);
+    }
+
+    else if (hasDigits == false ||  hasLowercase == false || hasSpecialCharacters == false ||  hasMinLength == false)
+    {
+      Navigator.pop(context);
+      // Fehlermeldung für Benutzer
+      displayMessageToUser("Heslo je príliš slabé", context);
+    }
+
 
     // wenn Passwörter übereinstimmen
     else {

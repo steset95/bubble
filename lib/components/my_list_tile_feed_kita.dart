@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'my_delete_button.dart';
 
 
@@ -126,10 +127,10 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
                     onPressed: ()  {
                       deletePost(widget.feed);
                     },
-                    icon: Icon(
-                      Icons.delete,
-                      size: 15.0,
-                      color: Theme.of(context).colorScheme.primary,
+                    icon:  HugeIcon(
+                        icon: HugeIcons.strokeRoundedDelete02,
+                        color: Theme.of(context).colorScheme.primary,
+                        size: 12
                     ),
                   ),
                   ],

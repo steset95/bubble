@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bubble/components/my_button.dart';
 import 'package:bubble/components/my_textfield.dart';
 import 'package:bubble/helper/helper_functions.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -39,12 +40,12 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
               // logo
               const SizedBox(height: 50,),
               // logo
-              Icon(
-                Icons.person,
-                size: 80,
+              HugeIcon(
+                icon: HugeIcons.strokeRoundedUserCircle02,
+                color: Colors.black,
+                size: 60.0,
               ),
-              // app name
-
+              const SizedBox(height: 10,),
               const Text(
                 "Zabudli ste heslo?",
                 style: TextStyle(fontSize: 20),

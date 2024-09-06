@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/pages/chat_page.dart';
 import 'package:bubble/pages/kita_pages/raport_page.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../components/my_profile_data_icon.dart';
@@ -205,8 +206,10 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 5),
-                const Icon(Icons.delete_outline,
+                const HugeIcon(
+                  icon: HugeIcons.strokeRoundedDelete02,
                   color: Colors.black,
+                  size: 20,
                 ),
               ],
             )
@@ -261,7 +264,10 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
            }
          });
         },
-        child: const Icon(Icons.calendar_today_outlined),
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedCalendarAdd01,
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
       ),
 
 
@@ -392,11 +398,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                           Icon(Icons.key,
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedKey01,
                             color: Theme.of(context).colorScheme.inversePrimary,
-
                           ),
-                           SizedBox(height: 5),
+                           SizedBox(height: 7),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -443,11 +449,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          Icon(Icons.camera_alt_outlined,
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedCamera01,
                             color: Theme.of(context).colorScheme.inversePrimary,
-
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 7),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -494,10 +500,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
 
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                 Icon(Icons.chat_outlined,
-                                color: Theme.of(context).colorScheme.inversePrimary,
+                                HugeIcon(
+                                  icon: HugeIcons.strokeRoundedChatting01,
+                                  color: Theme.of(context).colorScheme.inversePrimary,
                                 ),
-                                const SizedBox(height: 5),
+                                const SizedBox(height: 7),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -547,10 +554,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                               child:  Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                   Icon(Icons.chat_outlined,
-                                   color: Theme.of(context).colorScheme.inversePrimary,
-                                   ),
-                                   SizedBox(height: 5),
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedChatting01,
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                  ),
+                                   SizedBox(height: 7),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -593,8 +601,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                 child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Icon(Icons.mark_unread_chat_alt_outlined,),
-                                    const SizedBox(height: 5),
+                                    const HugeIcon(
+                                      icon: HugeIcons.strokeRoundedChatting01,
+                                      color: Colors.black
+                                    ),
+                                    const SizedBox(height: 7),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -652,11 +663,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
 
-                        Icon(Icons.library_books_outlined,
+                        HugeIcon(
+                          icon: HugeIcons.strokeRoundedPassport,
                           color: Theme.of(context).colorScheme.inversePrimary,
-
                         ),
-                        SizedBox(height: 5),
+                        SizedBox(height: 7),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -703,11 +714,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          Icon(Icons.check,
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedCheckmarkCircle02,
                             color: Theme.of(context).colorScheme.inversePrimary,
-
                           ),
-                          SizedBox(height: 5),
+                          SizedBox(height: 7),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
