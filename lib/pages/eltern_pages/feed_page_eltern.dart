@@ -130,7 +130,8 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                               )),
                         );
                       },
-                      icon:  Icon(Icons.mark_unread_chat_alt_outlined,
+                      icon:  HugeIcon(
+                        icon: HugeIcons.strokeRoundedChatting01,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),

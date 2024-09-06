@@ -829,9 +829,9 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                             );
                                           },
                                           color: color2,
-                                          icon: const HugeIcon(
+                                          icon: HugeIcon(
                                             icon: HugeIcons.strokeRoundedMessage01,
-                                            color: Colors.black,
+                                            color: color2,
                                             size: 20,
                                           ),
                                         ),
@@ -862,9 +862,9 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                 child: IconButton(
                                   onPressed: () => openChildBoxGroup(docID, "1"),
                                   color: color2,
-                                  icon: const HugeIcon(
+                                  icon: HugeIcon(
                                     icon: HugeIcons.strokeRoundedUserMultiple02,
-                                    color: Colors.black,
+                                    color: color2,
                                     size: 20,
                                   ),
                                 ),
