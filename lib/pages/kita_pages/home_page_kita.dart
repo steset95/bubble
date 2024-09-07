@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:bubble/pages/kita_pages/feed_page_kita.dart';
 import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
 import 'package:bubble/pages/kita_pages/children_page_kita.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 
 class HomePageKita extends StatefulWidget {
@@ -38,10 +39,19 @@ class _HomePageKitaState extends State<HomePageKita> {
               _currentIndex = newIndex;
           });
           },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.house_outlined), label: "Nástenka"),
-          BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Deti"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profil",),
+        items: [
+          BottomNavigationBarItem(
+              icon: HugeIcon(icon: HugeIcons.strokeRoundedHome12, color: Colors.grey),
+              activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedHome12, color: Colors.indigo.shade500),
+              label: "Nástenka"),
+          BottomNavigationBarItem(
+              icon: HugeIcon(icon: HugeIcons.strokeRoundedKid, color: Colors.grey),
+              activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedKid, color: Colors.indigo.shade500),
+              label: "Deti"),
+          BottomNavigationBarItem(
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedPassport, color: Colors.grey),
+            activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedPassport, color: Colors.indigo.shade500),
+            label: "Profil",),
         ],
       ),
     );

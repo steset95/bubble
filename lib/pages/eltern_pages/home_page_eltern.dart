@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:bubble/pages/eltern_pages/profile_page_eltern.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'child_page_eltern.dart';
 import 'feed_page_eltern.dart';
 import 'infos_kind_page_eltern.dart';
@@ -41,11 +42,23 @@ class _HomePageElternState extends State<HomePageEltern> {
               _currentIndex = newIndex;
           });
           },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.house_outlined), label: "Škôlka",),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_outlined), label: "Denník"),
-          BottomNavigationBarItem(icon: Icon(Icons.child_care), label: "Dieťa"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Profil"),
+        items: [
+          BottomNavigationBarItem(
+            icon: HugeIcon(icon: HugeIcons.strokeRoundedHome12, color: Colors.grey),
+            activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedHome12, color: Colors.indigo.shade500),
+             label: "Škôlka",),
+          BottomNavigationBarItem(
+              icon: HugeIcon(icon: HugeIcons.strokeRoundedCalendar03, color: Colors.grey),
+              activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedCalendar03, color: Colors.indigo.shade500),
+              label: "Denník"),
+          BottomNavigationBarItem(
+              icon: HugeIcon(icon: HugeIcons.strokeRoundedKid, color: Colors.grey),
+              activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedKid, color: Colors.indigo.shade500),
+              label: "Dieťa"),
+          BottomNavigationBarItem(
+              icon: HugeIcon(icon: HugeIcons.strokeRoundedPassport, color: Colors.grey),
+              activeIcon: HugeIcon(icon: HugeIcons.strokeRoundedPassport, color: Colors.indigo.shade500),
+              label: "Profil"),
                     ],
       ),
 

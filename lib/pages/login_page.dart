@@ -108,6 +108,19 @@ class _LoginPageState extends State<LoginPage> {
             
             
                     TextField(
+                      contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                        // If supported, show the system context menu.
+                        if (SystemContextMenu.isSupported(context)) {
+                          return SystemContextMenu.editableText(
+                            editableTextState: editableTextState,
+                          );
+                        }
+                        // Otherwise, show the flutter-rendered context menu for the current
+                        // platform.
+                        return AdaptiveTextSelectionToolbar.editableText(
+                          editableTextState: editableTextState,
+                        );
+                      },
                       style: TextStyle(color: Colors.black),
                       controller: email,
                       decoration: InputDecoration(
