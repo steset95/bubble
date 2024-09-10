@@ -106,6 +106,12 @@ flutter:
      - family: Goli-SemiBold
        fonts:
           - asset: fonts/Goli-SemiBold.ttf
+     - family: Goulong
+       fonts:
+         - asset: fonts/Goulong.ttf
+     - family: Goulong-Bold
+       fonts:
+         - asset: fonts/Goulong Bold.ttf
 
   #   - family: Schyler
   #     fonts:

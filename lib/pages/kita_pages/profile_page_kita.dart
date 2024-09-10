@@ -89,6 +89,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
           },
           decoration: InputDecoration(
             counterText: "",
+            hintText: titel,
           ),
           maxLength: 100,
           initialValue: text,
@@ -345,6 +346,21 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                                           Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
+                                              /*
+                                              StreamBuilder<DocumentSnapshot>(
+                                                  stream: FirebaseFirestore.instance
+                                                      .collection("Abonnements")
+                                                      .doc(currentUser?.email)
+                                                      .snapshots(),
+                                                  builder: (context, snapshot) {
+
+                                                    final userData = snapshot.data?.data() as Map<String, dynamic>;
+                                                    final aboBis = userData["aboBis"].toDate();
+                                                    String currentDate = aboBis.toString(); // Aktuelles Datum als String
+                                                    String formattedDate = currentDate.substring(0, 10); // Nur das Dat
+
+                                                    return Text('Do: $formattedDate');
+                                                  }),*/
                                               Text (userData["guthaben"].toString(),
                                                   style: TextStyle(
                                                   fontSize: 30,

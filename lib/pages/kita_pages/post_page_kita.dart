@@ -104,7 +104,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                     editableTextState: editableTextState,
                   );
                 },
-                maxLength: 30,
+                maxLength: 50,
                 //autofocus: true,
                 controller: newPostControllerTitel,
                 textAlign: TextAlign.left,
@@ -140,7 +140,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                     keyboardType: TextInputType.multiline,
                     minLines: 1,
                     maxLines: 20,
-                    maxLength: 300,
+                    maxLength: 500,
                     controller: newPostControllerInhalt,
                     decoration: InputDecoration(
                       border: InputBorder.none,

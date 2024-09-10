@@ -120,7 +120,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
   DateTime absenzBis = DateTime.now().subtract(const Duration(days:1));
 
   void addChild(String child) async {
-    DocumentReference docRef = await
+     DocumentReference docRef = await
     FirebaseFirestore.instance
         .collection("Kinder")
         .add({
@@ -204,9 +204,12 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           TextButton(
             child: const Text("Odoslať",
             ),
+
             onPressed: () async {
               await Share.share('Na aktiváciu musíte zadať nasledujúci aktivačný kľúč do svojej aplikácie: ${docRef.id}',
-                  subject: 'Activationkey');
+                  subject: 'Activationkey',
+                  sharePositionOrigin: Rect.fromLTWH(0, 0, MediaQuery.of(context).size.width, MediaQuery.of(context).size.height / 2)
+              );
             },
           ),
         ],
@@ -356,12 +359,15 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           TextButton(
             child: const Text("Uložiť",
             ),
-            onPressed: () => Navigator.of(context).pop(newValue),
+            onPressed: () {
+              Navigator.of(context).pop(newValue);
+              usersCollection.doc(currentUser!.email).update({field: newValue});
+            }
           ),
         ],
       ),
     );
-      await usersCollection.doc(currentUser!.email).update({field: newValue});
+
   }
 
 
@@ -646,7 +652,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             height: 15,
                             width: 30,
                             child: IconButton(
-                                onPressed: () => editField('gruppe$cardId', "Zmeniť meno skupiny", text),
+                                onPressed: () => editField('gruppe$cardId', "Zmeniť meno skupiny", 'Skupina$cardId'),
                                 icon: HugeIcon(
                                   icon: HugeIcons.strokeRoundedPencilEdit01,
                                   color: Colors.white,
@@ -676,7 +682,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                                   text,
                                   style: TextStyle(color: Colors.white,
                                       overflow: TextOverflow.ellipsis,
-                                      fontSize: 12
+                                      fontSize: 13,
                                   ),
                                 ),
                               ),

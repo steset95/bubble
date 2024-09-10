@@ -183,7 +183,8 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               //"Edit $field",
             ),
             content: TextFormField(
-              contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+
+                contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
                 // If supported, show the system context menu.
                 if (SystemContextMenu.isSupported(context)) {
                   return SystemContextMenu.editableText(
@@ -198,6 +199,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               },
               decoration: InputDecoration(
                 counterText: "",
+                hintText: title,
               ),
               maxLength: 150,
               initialValue: value,
@@ -205,7 +207,6 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               minLines: 1,
               maxLines: 10,
               autofocus: true,
-
               onChanged: (value) {
                 newValue = value;
               },

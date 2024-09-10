@@ -52,7 +52,7 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
     ListResult result =
     await FirebaseStorage.instance.ref('/images/$date/$childcode').listAll();
     return await Future.wait(
-      result.items.map((e) async => await e.getDownloadURL()),
+      result.items.reversed.map((e) async => await e.getDownloadURL()),
     );
   }
 

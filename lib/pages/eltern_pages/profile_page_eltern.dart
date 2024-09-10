@@ -15,10 +15,12 @@ import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 import '../../helper/abo_controller.dart';
 import '../../helper/constant.dart';
+import '../../helper/helper_functions.dart';
 import '../../helper/notification_controller.dart';
-
+import 'package:intl/intl.dart';
 import '../../helper/store_helper.dart';
 import '../impressum_page.dart';
+
 
 
 
@@ -33,26 +35,6 @@ class ProfilePageEltern extends StatefulWidget {
 
 class _ProfilePageElternState extends State<ProfilePageEltern> {
 
-
-  void setProvision() async {
-    await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) {
-      if (document.exists) {
-        if (document["kitamail"] != "") {
-
-          final String? name = currentUser!.email;
-
-          FirebaseFirestore.instance
-              .collection("Abonnements")
-              .doc(document["kitamail"])
-              .set({'$name': DateTime.now()});
-        }
-      }
-    });
-  }
 
 
   /// Notification
@@ -70,6 +52,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
     _configureSDK();
+    addSubscriptionKita();
   }
 
 
@@ -126,6 +109,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           },
           decoration: InputDecoration(
             counterText: "",
+            hintText: title,
           ),
           maxLength: 100,
           initialValue: text,
@@ -153,6 +137,64 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       ),
     );
   }
+
+
+  void addSubscriptionKita() async {
+    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+
+    final date = customerInfo.entitlements.all[entitlementID]?.latestPurchaseDate;
+    DateTime tempDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date!);
+
+    int month = tempDate.month;
+    int year = tempDate.year;
+    String yearMonth = ('${year}_${month}');
+
+    await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) {
+      if (document.exists) {
+        if (document["kitamail"] != "") {
+
+          final String? name = currentUser!.email;
+
+          FirebaseFirestore.instance
+              .collection("Abonnements")
+              .doc(document["kitamail"])
+              .collection(yearMonth)
+              .add({'$name': date});
+
+           FirebaseFirestore.instance
+              .collection("Abonnements")
+              .doc(document["kitamail"])
+              .get()
+              .then((DocumentSnapshot document) {
+            if (document.exists) {
+              var anzahl = document["anzahl"];
+              int anzahlNeu = (anzahl + 1);
+
+              FirebaseFirestore.instance
+                  .collection("Abonnements")
+                  .doc(document["kitamail"])
+                  .update({'anzahl': anzahlNeu});
+            }
+
+
+              else
+                {
+                  FirebaseFirestore.instance
+                      .collection("Abonnements")
+                      .doc(document["kitamail"])
+                      .set({'anzahl': 1});
+                }
+          });
+        }
+      }
+    });
+  }
+
+
 
 
   Future<void> _configureSDK() async {
@@ -421,32 +463,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                           ],
                         ),
                       ),
-                    /*  GestureDetector(
-                        onTap: () => PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion,),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text("Test",
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                                fontSize: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Icon(
-                                Icons.arrow_forward,
-                                color: Theme.of(context).colorScheme.primary,
-
-                                size: 10
-                            ),
-                          ],
-                        ),
-                      ),*/
-
                     ],
                   );
                 // Fehlermeldung wenn nichts vorhanden ist

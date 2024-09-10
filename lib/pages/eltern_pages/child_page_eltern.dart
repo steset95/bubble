@@ -363,7 +363,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
     ListResult result =
     await FirebaseStorage.instance.ref('/images/$formattedDate/$childcode').listAll();
     return await Future.wait(
-      result.items.map((e) async => await e.getDownloadURL()),
+      result.items.reversed.map((e) async => await e.getDownloadURL()),
     );
   }
 
@@ -378,46 +378,55 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         }
         if (snapshot!.data!.isEmpty) {
           return
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey.shade300,),
-                ),
+            Stack(
+              children: [
 
-                child: Stack(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.grey.shade300,),
+                    ),
+
+                    child: Stack(
                       children: [
-                        Row(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedImage01,
-                              color: Colors.grey.shade300,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                HugeIcon(
+                                  icon: HugeIcons.strokeRoundedImage01,
+                                  color: Colors.grey.shade300,
+                                ),
+                              ],
                             ),
                           ],
                         ),
+
                       ],
                     ),
-
-                  ],
+                  ),
                 ),
-              ),
+              ],
             );
         }
         return GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: snapshot.data!.length,
+          //physics: const NeverScrollableScrollPhysics(),
+          //reverse: true,
+          scrollDirection: Axis.horizontal,
+          physics: const PageScrollPhysics(),
+          itemCount: snapshot.data!.length < 10 ? snapshot.data!.length : 10,
           shrinkWrap: false,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 6,
+            crossAxisCount: 1,
             childAspectRatio: 1.0,
-            mainAxisSpacing: 4.0,
-            crossAxisSpacing: 4.0,
+            mainAxisSpacing: 1.0,
+            crossAxisSpacing: 1.0,
           ),
           itemBuilder: (context, index) => GestureDetector(
             onTap: () {
@@ -748,9 +757,10 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                                                         textAlign: TextAlign.center,
                                                         raport['RaportText'],
                                                         style: TextStyle(
-                                                          fontSize: 11,
+                                                          fontSize: 12,
                                                         ),
                                                       )),
+                                                  const SizedBox(width: 10),
                                                 ],
                                               ),
 

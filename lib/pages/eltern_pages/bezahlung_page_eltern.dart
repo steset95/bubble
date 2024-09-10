@@ -192,6 +192,7 @@ class BezahlungPageState extends State<BezahlungPage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return Scaffold(
     appBar: AppBar(
       scrolledUnderElevation: 0.0,
@@ -209,7 +210,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(child: Image.asset("assets/images/bubbles.png", width: 300, height:300)),
+                  Container(child: Image.asset("assets/images/bubbles.png", width: mediaQuery.size.width * 0.8,)),
                 ],
               ),
             ],
