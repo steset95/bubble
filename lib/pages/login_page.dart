@@ -63,7 +63,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
@@ -82,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(child: Image.asset("assets/images/bubbles_login.png", width: mediaQuery.size.width * 0.8,)),
+                        Container(child: Image.asset("assets/images/bubbles_login.png", width: 300, height:300)),
                       ],
                     ),
                   ],
