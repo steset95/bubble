@@ -380,8 +380,6 @@ class _ChildPageElternState extends State<ChildPageEltern> {
           return
             Stack(
               children: [
-
-
                 Padding(
                   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Container(
@@ -415,36 +413,120 @@ class _ChildPageElternState extends State<ChildPageEltern> {
               ],
             );
         }
-        return GridView.builder(
-          //physics: const NeverScrollableScrollPhysics(),
-          //reverse: true,
-          scrollDirection: Axis.horizontal,
-          physics: const PageScrollPhysics(),
-          itemCount: snapshot.data!.length < 10 ? snapshot.data!.length : 10,
-          shrinkWrap: false,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1,
-            childAspectRatio: 1.0,
-            mainAxisSpacing: 1.0,
-            crossAxisSpacing: 1.0,
-          ),
-          itemBuilder: (context, index) => GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ImagesPageEltern(
-                  childcode: childcode, date: formattedDate,
-                )),
-              );
-            },
-            child: CachedNetworkImage(
-              imageUrl: snapshot.data![index],
-              fit: BoxFit.fitHeight,
-              placeholder: (context, url) => ProgressWithIcon(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
-          ),
-        );
+        else if (snapshot.data!.length > 6)
+        {
+          final int images = snapshot.data!.length - 6;
+          return
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>
+                      ImagesPageEltern(
+                        childcode: childcode, date: formattedDate,
+                      )),
+                );
+              },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                    child: Container(
+
+                      child: GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        //reverse: true,
+                        //scrollDirection: Axis.horizontal,
+                        //physics: const PageScrollPhysics(),
+                        itemCount: snapshot.data!.length,
+                        shrinkWrap: false,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 6,
+                          childAspectRatio: 1.0,
+                          mainAxisSpacing: 4.0,
+                          crossAxisSpacing: 4.0,
+                        ),
+                        itemBuilder: (context, index) =>
+                            CachedNetworkImage(
+                              imageUrl: snapshot.data![index],
+                              fit: BoxFit.fitHeight,
+                              placeholder: (context, url) => ProgressWithIcon(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      Stack(
+                      children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(12),
+                      ),
+
+                      child: Text('+ $images',
+                        style: TextStyle(color: Colors.white,
+                                    fontSize: 15,
+                        ),
+                      ),
+                      ),
+                      ],
+                      ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+        }
+        else {
+          return
+            GridView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              //reverse: true,
+              //scrollDirection: Axis.horizontal,
+              //physics: const PageScrollPhysics(),
+              itemCount: snapshot.data!.length,
+              shrinkWrap: false,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 6,
+                childAspectRatio: 1.0,
+                mainAxisSpacing: 4.0,
+                crossAxisSpacing: 4.0,
+              ),
+              itemBuilder: (context, index) =>
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            ImagesPageEltern(
+                              childcode: childcode, date: formattedDate,
+                            )),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+                      child: CachedNetworkImage(
+                        imageUrl: snapshot.data![index],
+                        fit: BoxFit.fitHeight,
+                        placeholder: (context, url) => ProgressWithIcon(),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.error),
+                      ),
+                    ),
+                  ),
+            );
+        }
       },
     );
   }
