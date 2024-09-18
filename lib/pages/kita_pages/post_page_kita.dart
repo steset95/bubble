@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/components/my_list_tile_feed_kita.dart';
 import 'package:bubble/database/firestore_feed.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 
 import '../../helper/notification_controller.dart';
@@ -113,7 +114,22 @@ class _PostPageKitaState extends State<PostPageKita> {
 
 
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 10,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  HugeIcon(icon: HugeIcons.strokeRoundedRocket, color: Colors.deepPurpleAccent, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedToyTrain, color: Colors.orange, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedLollipop, color: Colors.red, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedFootball, color: Colors.teal, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedAirplane01, color: Colors.lightBlueAccent, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedMusicNote03, color: Colors.black, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedHotdog, color: Colors.redAccent, size: 15),
+                  HugeIcon(icon: HugeIcons.strokeRoundedTree02, color: Colors.green, size: 15),
+
+                ],
+              ),
+              const SizedBox(height: 5),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -140,7 +156,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                     keyboardType: TextInputType.multiline,
                     minLines: 1,
                     maxLines: 20,
-                    maxLength: 500,
+                    maxLength: 5000,
                     controller: newPostControllerInhalt,
                     decoration: InputDecoration(
                       border: InputBorder.none,

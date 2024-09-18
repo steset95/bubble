@@ -136,29 +136,82 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       'geschlecht': "Nechcem uviesť",
       'geburtstag': "",
       'personen': "",
-      'alergien': "",
-      'krankheiten': "",
-      'medikamente': "",
-      'impfungen': "",
-      'kinderarzt': "",
-      'krankenkasse': "",
-      'bemerkungen': "",
       'eltern': "",
-      'fotosSocialMedia': "nicht erlaubt",
-      'fotosApp': "nicht erlaubt",
-      'nagellack': "nicht erlaubt",
-      'schminken': "nicht erlaubt",
-      'fieber': "nicht erlaubt",
-      'sonnencreme': "nicht erlaubt",
-      'fremdkoerper': "nicht erlaubt",
-      'homoeopathie': "nicht erlaubt",
       'shownotification': "0",
       'registrierungen': 0,
+      'active': true,
       'switch': true,
-
-
     });
-    await FirebaseFirestore.instance
+
+     FirebaseFirestore.instance
+         .collection("Users")
+         .doc(currentUser?.email)
+         .collection("Info_Felder")
+         .get()
+         .then((snapshot) {
+       snapshot.docs.forEach((doc) {
+
+         FirebaseFirestore.instance
+             .collection("Users")
+             .doc(currentUser?.email)
+             .collection("Info_Felder")
+             .doc(doc.reference.id)
+             .get()
+             .then((DocumentSnapshot document) {
+
+           String field = document['titel'];
+
+           FirebaseFirestore.instance
+               .collection("Kinder")
+               .doc(docRef.id)
+               .collection("Info_Felder")
+               .doc(field)
+               .set({
+             'titel': field,
+             'value': "",
+           });
+
+         });
+
+       });
+       });
+
+     FirebaseFirestore.instance
+         .collection("Users")
+         .doc(currentUser?.email)
+         .collection("Einwilligungen_Felder")
+         .get()
+         .then((snapshot) {
+       snapshot.docs.forEach((doc) {
+
+         FirebaseFirestore.instance
+             .collection("Users")
+             .doc(currentUser?.email)
+             .collection("Einwilligungen_Felder")
+             .doc(doc.reference.id)
+             .get()
+             .then((DocumentSnapshot document) {
+
+           String field = document['titel'];
+
+           FirebaseFirestore.instance
+               .collection("Kinder")
+               .doc(docRef.id)
+               .collection("Einwilligungen_Felder")
+               .doc(field)
+               .set({
+             'titel': field,
+             'value': "nicht erlaubt",
+           });
+
+         });
+
+       });
+     });
+
+
+
+     await FirebaseFirestore.instance
     .collection("Users")
     .doc(currentUser?.email)
         .get()

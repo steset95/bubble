@@ -11,6 +11,7 @@ class MyListTileFeedKita extends StatefulWidget {
   final String subTitle;
   final String postId;
   final String feed;
+  final bool istNeu;
 
   const MyListTileFeedKita({
     super.key,
@@ -19,6 +20,7 @@ class MyListTileFeedKita extends StatefulWidget {
     required this.subTitle,
     required this.postId,
     required this.feed,
+    required this.istNeu,
 
 
   });
@@ -76,67 +78,130 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
       padding: const EdgeInsets.only(
           left: 10, right: 10, bottom: 10
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-            //border: Border.all(color: Colors.black),
-          boxShadow:  [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 1,
-          blurRadius: 3,
-          offset: Offset(2, 4),
-        ),
-        ],
-        ),
-        child:
-            ListTile(
-              title: Column(
-                children: [
-                  Text(
-                      style: TextStyle(fontSize: 18,),
-                      widget.title,
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+                //border: Border.all(color: Colors.black),
+              boxShadow:  [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(2, 4),
+            ),
+            ],
+            ),
+            child:
+                ListTile(
+                  title: Column(
                     children: [
-                      Container(
-                        width: mediaQuery.size.width * 0.82,
-                        child: Text(
-                          style: TextStyle(fontSize: 12,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                              child: Text(
+                                textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 18,),
+                                  widget.title,
+                              ),
+                            ),
                           ),
-                            widget.content,
-                        ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: mediaQuery.size.width * 0.82,
+                            child: Text(
+                              style: TextStyle(fontSize: 12,
+                              ),
+                                widget.content,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              subtitle: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(widget.subTitle,
-                  style: TextStyle(
-                      fontSize: 8,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  ),
-                  IconButton(
-                    onPressed: ()  {
-                      deletePost(widget.feed);
-                    },
-                    icon:  HugeIcon(
-                        icon: HugeIcons.strokeRoundedDelete02,
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(widget.subTitle,
+                      style: TextStyle(
+                          fontSize: 8,
                         color: Theme.of(context).colorScheme.primary,
-                        size: 12
+                      ),
+                      ),
+                      IconButton(
+                        onPressed: ()  {
+                          deletePost(widget.feed);
+                        },
+                        icon:  HugeIcon(
+                            icon: HugeIcons.strokeRoundedDelete02,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 12
+                        ),
+                      ),
+                      ],
+                    ),
                     ),
                   ),
+          if (widget.istNeu == true)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      width: 40,
+                      height: 40,
+                      child: Stack(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedSeal,
+                                    color: Theme.of(context).colorScheme.secondary,
+                                    size: 35,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Neu",
+                                      style: TextStyle(color: Theme.of(context).colorScheme.secondary,
+                                        fontSize: 8,
+                                      ),
+                                    ),
+                                  ]
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-                ),
-              ),
+              ],
+            )
+        ],
+      ),
     );
   }
 }

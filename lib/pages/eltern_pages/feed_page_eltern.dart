@@ -149,6 +149,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
@@ -163,225 +164,248 @@ class _FeedPageElternState extends State<FeedPageEltern> {
       body:
       Stack(
         children: [
-            Column(
-              children: [
-
-                const SizedBox(height: 30,),
-
-                ///Kitamail abholen
-
-        StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("Users")
-        .doc(currentUser?.email)
-        .snapshots(),
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-    final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-
-        if (userData["kitamail"] == "")
-    {
-
-      return Text("");
-    }
-
-    else {
-
-    final kitamail = userData["kitamail"];
+          Column(
+            children: [
 
 
 
+              ///Kitamail abholen
+
+                  StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+          .collection("Users")
+                  .doc(currentUser?.email)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+              final userData = snapshot.data?.data() as Map<String, dynamic>;
+                  if (userData["kitamail"] == "")
+              {
+                return Text("");
+              }
+
+              else {
+              final kitamail = userData["kitamail"];
+
+              return
+
+              ///Kita name ausgeben
+
+              StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(kitamail)
+                  .snapshots(),
+              builder: (context, snapshot) {
+              if (snapshot.hasData) {
+              final username = snapshot.data!['username'];
 
 
-
-
-
-    return
-
-    ///Kita name ausgeben
-
-    StreamBuilder<DocumentSnapshot>(
-    stream: FirebaseFirestore.instance
-        .collection("Users")
-        .doc(kitamail)
-        .snapshots(),
-    builder: (context, snapshot) {
-    if (snapshot.hasData) {
-    final username = snapshot.data!['username'];
-
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        Text(
-            username,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleLarge,
+              return Column(
+                children: [
+                  const SizedBox(height: 3,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      HugeIcon(icon: HugeIcons.strokeRoundedRocket, color: Colors.deepPurpleAccent, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedRollerSkate, color: Colors.redAccent, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedToyTrain, color: Colors.black, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedLollipop, color: Colors.red, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedFootball, color: Colors.teal, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedAirplane01, color: Colors.lightBlueAccent, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedMusicNote03, color: Colors.black, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedHotdog, color: Colors.redAccent, size: 14),
+                      HugeIcon(icon: HugeIcons.strokeRoundedTree02, color: Colors.green, size: 14),
+                    ],
+                  ),
+                  const SizedBox(height: 15,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+          Container(
+            width: mediaQuery.size.width * 0.6,
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                username,
+                style: TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontSize: 25,
+                ),
+              ),
             ),
-              ],
-    );
-    };
-    return const Text("");
-    },
-    );
-    }
-         }
-          return Text("");
-            }
-            ),
-                // Textfeld für Benutzereingabe
+          ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+
+                ],
+              );
+              };
+              return const Text("");
+              },
+              );
+              }
+                   }
+                    return Text("");
+          }
+          ),
+              // Textfeld für Benutzereingabe
 
 
-                const SizedBox(height: 20),
+              StreamBuilder<DocumentSnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(currentUser?.email)
+                      .snapshots(),
+                  builder: (context, snapshot)
+                  {
+                    if (snapshot.hasData) {
+                      final userData = snapshot.data?.data() as Map<String, dynamic>;
 
-                StreamBuilder<DocumentSnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection("Users")
-                        .doc(currentUser?.email)
-                        .snapshots(),
-                    builder: (context, snapshot)
-                    {
-                      if (snapshot.hasData) {
-                        final userData = snapshot.data?.data() as Map<String, dynamic>;
+                      /// Feed nach KitaMail anzeigen und prüfen ob leer
 
-                        /// Feed nach KitaMail anzeigen und prüfen ob leer
-
-                        if (userData["kitamail"] != "") {
-                          return StreamBuilder(
-                              stream: database.getPostsStreamEltern(userData["kitamail"]),
-                              builder: (context, snapshot){
-                                // Ladekreis anzeigen
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                }
-                                /// Payment Check
-                                if (userData["abo"] == "inaktiv")
-                                  {
-                                    return
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(height: 71),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              GestureDetector(
-                                                onTap:  () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) =>
-                                                        BezahlungPage(isActive: false, text: "Zur Vollversion"),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Column(
-                                                  children: [
-                                                    Text("Obnovte si prosím predplatné",
-                                                      style: TextStyle(fontSize: 20),
-                                                    ),
-                                                    const SizedBox(height: 10),
-                                                    Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                        HugeIcon(
-                                                          icon: HugeIcons.strokeRoundedCreditCardPos,
-                                                          color: Theme.of(context).colorScheme.primary,
-                                                          size: 50,
-                                                        ),
-                                                        Icon(
-                                                            Icons.arrow_forward,
-                                                            color: Theme.of(context).colorScheme.primary,
-                                                            size: 20
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      );
-                                  }
-                                /// Payment Check
-
-                                // get all Posts
-                                final posts = snapshot.data!.docs;
-
-                                // no Data?
-                                if (snapshot.data == null || posts.isEmpty){
-                                  return const Center(
-                                    child: Padding(
-                                        padding: EdgeInsets.all(25),
-                                        child: Text("Žiadne záznamy...")
-                                    ),
-                                  );
-                                }
-
-                                // Als Liste zurückgeben
-                                return Expanded(
-                                    child: ListView.builder(
-                                        itemCount: posts.length,
-                                        itemBuilder: (context, index) {
-
-                                          // Individuelle Posts abholen
-                                          final post = posts[index];
-
-                                          // Daten von jedem Post abholen
-                                          String title = post['titel'];
-                                          String content = post['inhalt'];
-                                          Timestamp timestamp = post['TimeStamp'];
-
-                                          // Liste als Tile wiedergeben
-                                          return Column(
-                                            children: [
-                                              Stack(
-                                                  children: [
-                                                    MyListTileFeedEltern(
-                                                      content: content,
-                                                      title: title,
-                                                      subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
-                                                      postId: post.id,
-                                                    ),
-                                                  ]
-                                              ),
-                                            ],
-                                          );
-                                        }
-                                    )
+                      if (userData["kitamail"] != "") {
+                        return StreamBuilder(
+                            stream: database.getPostsStreamEltern(userData["kitamail"]),
+                            builder: (context, snapshot){
+                              // Ladekreis anzeigen
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
                                 );
                               }
-                          );
-                        }
-                        else Text("Žiadne dieťa ešte nie je zaregistrované...");
+                              /// Payment Check
+                              if (userData["abo"] == "inaktiv")
+                                {
+                                  return
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 71),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            GestureDetector(
+                                              onTap:  () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(builder: (context) =>
+                                                      BezahlungPage(isActive: false, text: "Zur Vollversion"),
+                                                  ),
+                                                );
+                                              },
+                                              child: Column(
+                                                children: [
+                                                  Text("Obnovte si prosím predplatné",
+                                                    style: TextStyle(fontSize: 20),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      HugeIcon(
+                                                        icon: HugeIcons.strokeRoundedCreditCardPos,
+                                                        color: Theme.of(context).colorScheme.primary,
+                                                        size: 50,
+                                                      ),
+                                                      Icon(
+                                                          Icons.arrow_forward,
+                                                          color: Theme.of(context).colorScheme.primary,
+                                                          size: 20
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                }
+                              /// Payment Check
+
+                              // get all Posts
+                              final posts = snapshot.data!.docs;
+
+                              // no Data?
+                              if (snapshot.data == null || posts.isEmpty){
+                                return const Center(
+                                  child: Padding(
+                                      padding: EdgeInsets.all(25),
+                                      child: Text("Žiadne záznamy...")
+                                  ),
+                                );
+                              }
+
+                              // Als Liste zurückgeben
+                              return Expanded(
+                                  child: ListView.builder(
+                                      itemCount: posts.length,
+                                      itemBuilder: (context, index) {
+
+                                        // Individuelle Posts abholen
+                                        final post = posts[index];
+
+                                        // Daten von jedem Post abholen
+                                        String title = post['titel'];
+                                        String content = post['inhalt'];
+                                        Timestamp timestamp = post['TimeStamp'];
+
+                                        final timestampToDateTime = timestamp.toDate();
+                                        final timestampNeu = timestampToDateTime.add(Duration(days:2));
+
+                                        bool istNeu = timestampNeu.isBefore(DateTime.now()) == false;
+
+                                        // Liste als Tile wiedergeben
+                                        return Column(
+                                          children: [
+                                            Stack(
+                                                children: [
+                                                  MyListTileFeedEltern(
+                                                    content: content,
+                                                    title: title,
+                                                    subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
+                                                    postId: post.id,
+                                                    istNeu: istNeu,
+                                                  ),
+                                                ]
+                                            ),
+                                          ],
+                                        );
+                                      }
+                                  )
+                              );
+                            }
+                        );
                       }
-
-                      if (snapshot.connectionState != ConnectionState.waiting)
-
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.all(25),
-                              child: Text("Žiadne záznamy..."
-
-                              )
-                          ),
-                        ],
-                      );
-                      else
-                        return
-                          Text("");
+                      else Text("Žiadne dieťa ešte nie je zaregistrované...");
                     }
-                ),
 
-              ],
-            ),
+                    if (snapshot.connectionState != ConnectionState.waiting)
+
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.all(25),
+                            child: Text("Žiadne záznamy..."
+
+                            )
+                        ),
+                      ],
+                    );
+                    else
+                      return
+                        Text("");
+                  }
+              ),
+
+            ],
+          ),
         ],
       ),
     );

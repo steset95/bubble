@@ -99,7 +99,11 @@ class FirestoreDatabaseChild {
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(docID)
-        .delete();
+        .update({
+      'active': false,
+      'kita': "",
+
+    });
 
     FirebaseFirestore.instance
         .collection("Users")
@@ -134,18 +138,46 @@ class FirestoreDatabaseChild {
 
 
 
+  //Info Felder
+  Stream<QuerySnapshot> getChildrenInofs(String docID) {
+    final infoStream = FirebaseFirestore.instance
+        .collection("Kinder")
+        .doc(docID)
+        .collection("Info_Felder")
+        .snapshots();
+
+    return infoStream;
+  }
+
+  // Einwilligungen Felder
+  Stream<QuerySnapshot> getChildrenEinwilligungen(String docID) {
+    final infoStream = FirebaseFirestore.instance
+        .collection("Kinder")
+        .doc(docID)
+        .collection("Einwilligungen_Felder")
+        .snapshots();
+
+    return infoStream;
+  }
+
+
+
   /// Eltern Seite
+
+
 
   void updateChildEinwilligungen(String childcode, String field, String einwilligung) {
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(childcode)
+        .collection("Einwilligungen_Felder")
+        .doc(field)
         .update({
-      field: einwilligung,
+      "value": einwilligung,
     });
+  }
 
 
-   }
 }
 
 

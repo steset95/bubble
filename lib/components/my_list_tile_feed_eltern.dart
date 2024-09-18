@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hugeicons/hugeicons.dart';
+
+
 
 
 
@@ -9,6 +12,7 @@ class MyListTileFeedEltern extends StatefulWidget {
   final String subTitle;
   final String postId;
   final String content;
+  final bool istNeu;
 
 
   const MyListTileFeedEltern({
@@ -17,6 +21,7 @@ class MyListTileFeedEltern extends StatefulWidget {
     required this.subTitle,
     required this.postId,
     required this.content,
+    required this.istNeu,
 
 
   });
@@ -41,63 +46,127 @@ class _MyListTileFeedElternState extends State<MyListTileFeedEltern> {
       padding: const EdgeInsets.only(
           left: 10, right: 10, bottom: 10
       ),
-      child: Container(
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                //border: Border.all(color: Colors.black),
+              color: Colors.white,
 
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            //border: Border.all(color: Colors.black),
-          color: Colors.white,
-
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.grey,
-              spreadRadius: 1,
-              blurRadius: 3,
-              offset: Offset(2, 4),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.grey,
+                  spreadRadius: 1,
+                  blurRadius: 3,
+                  offset: Offset(2, 4),
+                ),
+              ],
             ),
-          ],
-        ),
-        child:
-        ListTile(
-          title: Column(
-            children: [
-              Text(
-                style: TextStyle(fontSize: 18,),
-                widget.title,
+            child:
+            ListTile(
+              title: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                          child: Text(
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18,
+
+                            ),
+                            widget.title,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: mediaQuery.size.width * 0.82,
+                        child: Text(
+                          style: TextStyle(fontSize: 12,
+                          ),
+                          widget.content,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              subtitle: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(widget.subTitle,
+                        style: TextStyle(
+                          fontSize: 8,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (widget.istNeu == true)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Column(
                 children: [
                   Container(
-                    width: mediaQuery.size.width * 0.82,
-                    child: Text(
-                      style: TextStyle(fontSize: 12,
-                      ),
-                      widget.content,
-                    ),
+                    width: 40,
+                    height: 40,
+                   child: Stack(
+                     children: [
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Column(
+                             mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               HugeIcon(
+                                 icon: HugeIcons.strokeRoundedSeal,
+                                 color: Theme.of(context).colorScheme.secondary,
+                                 size: 35,
+                               ),
+                             ],
+                           ),
+                         ],
+                       ),
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Column(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                             children: [
+                               Text("Neu",
+                            style: TextStyle(color: Theme.of(context).colorScheme.secondary,
+                            fontSize: 8,
+                            ),
+                            ),
+                            ]
+                           )
+                         ],
+                       )
+                     ],
+                   ),
                   ),
                 ],
               ),
             ],
-          ),
-          subtitle: Column(
-            children: [
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(widget.subTitle,
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

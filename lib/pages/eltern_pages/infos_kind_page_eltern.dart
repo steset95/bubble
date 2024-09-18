@@ -12,6 +12,7 @@ import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 
 import '../../components/my_image_viewer_profile.dart';
+import '../../components/my_profile_data_icon.dart';
 import '../../components/my_profile_data_switch.dart';
 import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
@@ -51,6 +52,10 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
   );
 
 
+
+
+
+
   var field = 'erlaubt';
 
 
@@ -61,8 +66,8 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
     'Nechcem uviesť'
   ];
 
-  var _currentItemSelectedGeschlecht = 'Nechcem uviesť';
-  var fieldGeschlecht = 'Nechcem uviesť';
+
+
 
 
 
@@ -86,78 +91,6 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
     super.dispose();
   }
   /// Notification
-
-
-
-
-
-
-  void openChildBoxGeschlecht({String? childcode, String? datensatz}) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius:
-            BorderRadius.all(
-                Radius.circular(10.0))),
-        title: Text("Pohlavie",
-          style: TextStyle(color: Colors.black,
-            fontSize: 20,
-          ),
-        ),
-        // Text Eingabe
-        content: DropdownButtonFormField<String>(
-          isDense: true,
-          isExpanded: false,
-          items: optionsGeschlecht.map((String dropDownStringItem) {
-            return DropdownMenuItem<String>(
-              value: dropDownStringItem,
-              child: Text(
-                dropDownStringItem,
-                style: TextStyle(
-
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            );
-          }).toList(),
-          value: _currentItemSelectedGeschlecht, onChanged: (newValueSelected) {
-          setState(() {
-            _currentItemSelectedGeschlecht = newValueSelected!;
-            field = newValueSelected;
-          });
-        },
-        ),
-        actions: [
-          TextButton(
-            child: const Text("Zrušiť",
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          // Speicher Button
-          TextButton(
-            onPressed: () {
-
-              // Button wird für hinzufügen(unten) und anpassen (neben Kind) genutzt, daher wird zuerst geprüft ob
-              // es um einen bestehenden oder neuen Datensatz geht
-              if (childcode != null) {
-                // Child Datensatz hinzufügen
-                // Verweis auf "firestoreDatabaseChild" Widget in "firestore_child.dart" File
-                // auf die Funktion "addChild" welche dort angelegt ist
-                // TextController wurde oben definiert und fragt den Text im Textfeld ab
-                firestoreDatabaseChild.updateChildEinwilligungen(childcode, datensatz!, _currentItemSelectedGeschlecht,);
-              }
-              //Box Zatvoriť
-              Navigator.pop(context);
-            },
-            child: Text("Uložiť"),
-          )
-        ],
-      ),
-    );
-  }
-
 
 
 
@@ -231,6 +164,80 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
     );
   }
 
+
+  // Bearbeitungsfeld
+  void editFieldInfos2(String title, String field, String childcode, String value ) async {
+    String newValue = "";
+    await showDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.all(
+                    Radius.circular(10.0))),
+            title: Text(
+              "$title",
+              style: TextStyle(color: Colors.black,
+                fontSize: 20,
+              ),
+              //"Edit $field",
+            ),
+            content: TextFormField(
+
+              contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                // If supported, show the system context menu.
+                if (SystemContextMenu.isSupported(context)) {
+                  return SystemContextMenu.editableText(
+                    editableTextState: editableTextState,
+                  );
+                }
+                // Otherwise, show the flutter-rendered context menu for the current
+                // platform.
+                return AdaptiveTextSelectionToolbar.editableText(
+                  editableTextState: editableTextState,
+                );
+              },
+              decoration: InputDecoration(
+                counterText: "",
+                hintText: title,
+              ),
+              maxLength: 150,
+              initialValue: value,
+              keyboardType: TextInputType.multiline,
+              minLines: 1,
+              maxLines: 10,
+              autofocus: true,
+              onChanged: (value) {
+                newValue = value;
+              },
+            ),
+            actions: [
+              // Cancel Button
+              TextButton(
+                child: const Text("Zrušiť",
+                ),
+                onPressed: () => Navigator.pop(context),
+              ),
+              TextButton(
+                  child: const Text("Uložiť",
+                  ),
+                  onPressed: () {
+                    FirebaseFirestore.instance
+                        .collection("Kinder")
+                        .doc(childcode)
+                        .collection("Info_Felder")
+                        .doc(field)
+                        .update({'value': newValue});
+                    Navigator.pop(context);
+                  }
+              ),
+            ],
+          ),
+    );
+  }
+
+
   Widget showData () {
 
       return SingleChildScrollView(
@@ -268,16 +275,14 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               else if (snapshot.hasData) {
                 // Entsprechende Daten extrahieren
                 final userData = snapshot.data?.data() as Map<String, dynamic>;
-
+                var _currentItemSelectedGeschlecht = userData["geschlecht"];
 
                // Inhalt Daten
 
                 return
                   Column(
                     children: [
-                      SizedBox(
-                        height: 15,
-                      ),
+                      const SizedBox(height: 15),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -287,160 +292,244 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                               Container(
                                   height: 100,
                                   child: ImageViewerProfile(childcode: childcode)),
-                              const SizedBox(height: 10),
-
-                              GestureDetector(
-                              onTap: () => editFieldInfos("Name", "child", childcode, userData["child"]),
-                                child: Text(userData["child"],
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                              ),
+                              const SizedBox(height: 15),
+                                if (userData["active"] == false)
+                                  Text("Pozor: Dieťa bolo zo Škôlky odhlásené!"),
                             ],
                           ),
 
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ProfileData(
-                        text: userData["geschlecht"],
-                        sectionName: "Pohlavie",
-                        onPressed: () =>
-                        openChildBoxGeschlecht(
-                        childcode: childcode,
-                        datensatz: 'geschlecht'),
+
+                      Container(
+                        color: Colors.cyan.shade100,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                              children: [
+                                HugeIcon(icon: HugeIcons.strokeRoundedNote, color: Colors.black, size: 25),
+                                const SizedBox(height: 7,),
+                                GestureDetector(
+                                  onTap: () => editFieldInfos("Name", "child", childcode, userData["child"]),
+                                  child: Text(userData["child"],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.inversePrimary,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Colors.grey,
+                                    spreadRadius: 1,
+                                    blurRadius: 3,
+                                    offset: Offset(2, 4),
+                                  ),
+                                ],
+                                //border: Border.all(color: Colors.black)
+                              ),
+                              margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.white)),
+                                  contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 15.0),
+                                ),
+
+
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    isDense: true,
+                                    isExpanded: false,
+                                    items: optionsGeschlecht.map((String dropDownStringItem) {
+                                      return DropdownMenuItem<String>(
+                                        value: dropDownStringItem,
+                                        child: Text(
+                                          dropDownStringItem,
+                                          style: TextStyle(
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (newValueSelected) {
+                                      setState(() {
+                                        _currentItemSelectedGeschlecht = newValueSelected!;
+                                      });
+                                      kinderCollection.doc(childcode).update({'geschlecht': _currentItemSelectedGeschlecht});
+                                    },
+                                    value: _currentItemSelectedGeschlecht,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            ProfileData(
+                              text: userData["geburtstag"],
+                              sectionName: "Dátum narodenia",
+                              onPressed: () => editFieldInfos("Dátum narodenia", "geburtstag", childcode, userData["geburtstag"]),
+                            ),
+
+                            ProfileData(
+                              text: userData["personen"],
+                              sectionName: "Osoby oprávnené vyzdvihnuť dieťa",
+                              onPressed: () => editFieldInfos("Oprávnené osoby", "personen", childcode, userData["personen"]),
+                            ),
+
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
                       ),
 
 
 
-                      ProfileData(
-                        text: userData["geburtstag"],
-                        sectionName: "Dátum narodenia",
-                        onPressed: () => editFieldInfos("Dátum narodenia", "geburtstag", childcode, userData["geburtstag"]),
+                      Container(
+                        color: Colors.purple.shade100,
+                        child: Column(
+                          children: [
+                            StreamBuilder(
+                                stream: firestoreDatabaseChild.getChildrenInofs(childcode),
+                                builder: (context, snapshot){
+                                  if(snapshot.connectionState == ConnectionState.waiting)
+                                  {
+                                    Text("");
+                                  }
+                                  else if (snapshot.data != null)
+                                  {
+                                    final fields = snapshot.data!.docs;
+                                    return Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Column(
+                                          children: [
+                                            HugeIcon(icon: HugeIcons.strokeRoundedStethoscope02, color: Colors.black, size: 25),
+                                            const SizedBox(height: 5,),
+                                            Text("Ďalšie informácie",
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ],
+                                        ),
+                                        ListView.builder(
+                                            physics: const NeverScrollableScrollPhysics(),
+                                            itemCount: fields.length,
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, index) {
+                                              // Individuelle Posts abholen
+                                              final post = fields[index];
+
+                                              // Daten von jedem Post abholen
+                                              String title = post['titel'];
+                                              String content = post['value'];
+
+                                              // Liste als Tile wiedergeben
+                                              return Column(
+                                                children: [
+                                                  ProfileData(
+                                                    text: content,
+                                                    sectionName: title,
+                                                    onPressed: () =>
+                                                        editFieldInfos2(
+                                                            title, title,
+                                                            childcode, content),
+                                                  ),
+                                                ],
+                                              );
+                                            }
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  return Text("");
+                                }
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        ),
                       ),
 
-                      ProfileData(
-                        text: userData["personen"],
-                        sectionName: "Osoby oprávnené vyzdvihnuť dieťa",
-                        onPressed: () => editFieldInfos("Oprávnené osoby", "personen", childcode, userData["personen"]),
-                      ),
-
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text("Informácie o zdraví",
-                        style: TextStyle(fontSize: 20),
-                      ),
 
 
-                      ProfileData(
-                        text: userData["alergien"],
-                        sectionName: "Alergie",
-                        onPressed: () => editFieldInfos("Alergie", "alergien", childcode, userData["alergien"]),
-                      ),
 
-                      ProfileData(
-                        text: userData["krankheiten"],
-                        sectionName: "Choroby",
-                        onPressed: () => editFieldInfos("Choroby", "krankheiten", childcode, userData["krankheiten"]),
-                      ),
+                      Container(
+                        color: Colors.deepOrange.shade100,
+                        child: StreamBuilder(
+                            stream: firestoreDatabaseChild.getChildrenEinwilligungen(childcode),
+                            builder: (context, snapshot){
+                              if(snapshot.connectionState == ConnectionState.waiting)
+                              {
+                                Text("");
+                              }
+                              else if (snapshot.data != null)
+                              {
+                                final fields = snapshot.data!.docs;
+                                return Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Column(
+                                      children: [
+                                        HugeIcon(icon: HugeIcons.strokeRoundedSafe, color: Colors.black, size: 25),
+                                        const SizedBox(height: 5,),
+                                        Text("Povolenia",
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    ListView.builder(
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: fields.length,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          // Individuelle Posts abholen
+                                          final post = fields[index];
 
-                      ProfileData(
-                        text: userData["medikamente"],
-                        sectionName: "Lieky",
-                        onPressed: () => editFieldInfos("Lieky", "medikamente", childcode, userData["medikamente"]),
-                      ),
+                                          // Daten von jedem Post abholen
+                                          String title = post['titel'];
+                                          String content = post['value'];
 
-                      ProfileData(
-                        text: userData["impfungen"],
-                        sectionName: "Očkovania",
-                        onPressed: () => editFieldInfos("Očkovania", "impfungen", childcode, userData["impfungen"]),
-                      ),
-
-                      ProfileData(
-                        text: userData["kinderarzt"],
-                        sectionName: "Detský doktor",
-                        onPressed: () => editFieldInfos("Detský doktor", "kinderarzt", childcode, userData["kinderarzt"]),
-                      ),
-
-                      ProfileData(
-                        text: userData["krankenkasse"],
-                        sectionName: "Zdravotná poisťovňa",
-                        onPressed: () => editFieldInfos("Zdravotná poisťovňa", "krankenkasse", childcode, userData["krankenkasse"]),
-                      ),
-
-                      ProfileData(
-                        text: userData["bemerkungen"],
-                        sectionName: "Ďalšie informácie",
-                        onPressed: () => editFieldInfos("Ďalšie informácie", "bemerkungen", childcode, userData["bemerkungen"]),
-                      ),
-
-
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text("Povolenia",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ProfileDataSwitch(
-                        text: userData["fotosSocialMedia"],
-                        sectionName: "Fotky pre sociálne médiá",
-                        field: "fotosSocialMedia",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["fotosApp"],
-                        sectionName: "Fotky pre aplikáciu",
-                        field: "fotosApp",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["nagellack"],
-                        sectionName: "Lakovanie nechtov",
-                        field: "nagellack",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["schminken"],
-                        sectionName: "Líčenie",
-                        field: "schminken",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["fieber"],
-                        sectionName: "Meranie teploty",
-                        field: "fieber",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["sonnencreme"],
-                        sectionName: "Nanášanie opaľovacieho krému",
-                        field: "sonnencreme",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["fremdkoerper"],
-                        sectionName: "Odstránenie cudzieho predmetu",
-                        field: "fremdkoerper",
-                        childcode: childcode,
-                      ),
-
-                      ProfileDataSwitch(
-                        text: userData["homoeopathie"],
-                        sectionName: "Homeopatiká",
-                        field: "homoeopathie",
-                        childcode: childcode,
+                                          // Liste als Tile wiedergeben
+                                          return Column(
+                                            children: [
+                                              ProfileDataSwitch(
+                                                text: content,
+                                                sectionName: title,
+                                                field: title,
+                                                childcode: childcode,
+                                              ),
+                                            ],
+                                          );
+                                        }
+                                    ),
+                                  ],
+                                );
+                              }
+                              return Text("");
+                            }
+                        ),
                       ),
 
 

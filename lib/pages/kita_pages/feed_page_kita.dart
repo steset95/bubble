@@ -152,13 +152,22 @@ bool externPost = false;
                 /// Externer Feed
               Column(
                 children: [
-                  const SizedBox(height: 30,),
-                  Text(
-                    "Externá nástenka",
-                    style: TextStyle(fontSize: 25,
-                    color: Colors.black,
-                        fontFamily: 'Goli',
-                    ),
+                  const SizedBox(height: 20,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+
+                      HugeIcon(icon: HugeIcons.strokeRoundedMegaphone01, color: Colors.black),
+                      const SizedBox(height: 2,),
+                      Text(
+                        "Externá nástenka",
+                        style: TextStyle(fontSize: 25,
+                        color: Colors.black,
+                            fontFamily: 'Goli',
+                        ),
+                      ),
+
+                    ],
                   ),
 
 
@@ -200,6 +209,11 @@ bool externPost = false;
                                 String content = post['inhalt'];
                                 Timestamp timestamp = post['TimeStamp'];
 
+                                final timestampToDateTime = timestamp.toDate();
+                                final timestampNeu = timestampToDateTime.add(Duration(days:2));
+
+                                bool istNeu = timestampNeu.isBefore(DateTime.now()) == false;
+
                                 // Liste als Tile wiedergeben
                                 return Column(
                                   children: [
@@ -210,7 +224,8 @@ bool externPost = false;
                                             content: content,
                                             subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
                                             postId: post.id,
-                                            feed: "Feed_Extern"
+                                            feed: "Feed_Extern",
+                                          istNeu: istNeu,
                                       ),
                                       ]
                                     ),
@@ -229,13 +244,22 @@ bool externPost = false;
               Column(
 
                 children: [
-                  const SizedBox(height: 30,),
-                  Text(
-                    "Interná násťenka",
-                    style: TextStyle(fontSize: 25,
-                      color: Colors.black,
-                      fontFamily: 'Goli',
-                    ),
+                  const SizedBox(height: 20,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      HugeIcon(icon: HugeIcons.strokeRoundedSquareLock02, color: Colors.black),
+                      const SizedBox(height: 2,),
+                      Text(
+                        "Interná násťenka",
+                        style: TextStyle(fontSize: 25,
+                          color: Colors.black,
+                          fontFamily: 'Goli',
+                        ),
+                      ),
+                      const SizedBox(width: 5,),
+
+                    ],
                   ),
 
 
@@ -280,6 +304,11 @@ bool externPost = false;
                                   String content = post['inhalt'];
                                   Timestamp timestamp = post['TimeStamp'];
 
+                                  final timestampToDateTime = timestamp.toDate();
+                                  final timestampNeu = timestampToDateTime.add(Duration(days:2));
+
+                                  bool istNeu = timestampNeu.isBefore(DateTime.now()) == false;
+
                                   // Liste als Tile wiedergeben
                                   return Column(
                                     children: [
@@ -290,7 +319,8 @@ bool externPost = false;
                                               content: content,
                                               subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
                                               postId: post.id,
-                                                feed: "Feed_Intern"
+                                              feed: "Feed_Intern",
+                                              istNeu: istNeu,
                                             ),
                                           ]
                                       ),

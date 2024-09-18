@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../components/my_profile_data_icon.dart';
 import '../../components/my_profile_data.dart';
@@ -83,6 +84,8 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SizedBox(height: 20,),
+                      HugeIcon(icon: HugeIcons.strokeRoundedHouse04, color: Theme.of(context).colorScheme.primary, size: 80),
                       ProfileDataReadOnly(
                         text: username,
                         sectionName: "Názov",
@@ -107,6 +110,7 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                         text: beschreibung,
                         sectionName: "Ďalšie informácie",
                       ),
+
                     ],
                   ),
                 );

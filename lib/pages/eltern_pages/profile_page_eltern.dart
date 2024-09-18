@@ -156,38 +156,25 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
         .then((DocumentSnapshot document) {
       if (document.exists) {
         if (document["kitamail"] != "") {
-
           final String? name = currentUser!.email;
 
           FirebaseFirestore.instance
               .collection("Abonnements")
               .doc(document["kitamail"])
               .collection(yearMonth)
-              .add({'$name': date});
-
-           FirebaseFirestore.instance
-              .collection("Abonnements")
-              .doc(document["kitamail"])
+              .doc(name)
               .get()
-              .then((DocumentSnapshot document) {
-            if (document.exists) {
-              var anzahl = document["anzahl"];
-              int anzahlNeu = (anzahl + 1);
+              .then((DocumentSnapshot document2) {
+            if (document2.exists) {}
 
+            else {
               FirebaseFirestore.instance
                   .collection("Abonnements")
                   .doc(document["kitamail"])
-                  .update({'anzahl': anzahlNeu});
+                  .collection(yearMonth)
+                  .doc(name)
+                  .set({'Gelöst am': date});
             }
-
-
-              else
-                {
-                  FirebaseFirestore.instance
-                      .collection("Abonnements")
-                      .doc(document["kitamail"])
-                      .set({'anzahl': 1});
-                }
           });
         }
       }
@@ -372,6 +359,18 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       // Abfrage der entsprechenden Daten - Sammlung = Users
       body: Stack(
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(child: Image.asset("assets/images/bubbles_login.png", width: 350, height:350)),
+                ],
+              ),
+            ],
+          ),
           StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("Users")
@@ -398,6 +397,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                 return
                   Column(
                     children: [
+
                       SizedBox(
                         height: 15,
                       ),
@@ -457,7 +457,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                             Icon(
                                 Icons.arrow_forward,
                                 color: Theme.of(context).colorScheme.primary,
-
                                 size: 10
                             ),
                           ],

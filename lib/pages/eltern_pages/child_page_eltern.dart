@@ -283,28 +283,40 @@ class _ChildPageElternState extends State<ChildPageEltern> {
             fontSize: 20,
           ),
         ),
-        content: DropdownButtonFormField<String>(
-          isDense: true,
-          isExpanded: false,
+        content: InputDecorator(
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.symmetric(
+                horizontal: 20.0, vertical: 15.0),
+            labelText: 'Čas',
+            border:
+            OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
 
-          items: optionsAbholzeit.map((String dropDownStringItem) {
-            return DropdownMenuItem<String>(
-              value: dropDownStringItem,
-              child: Text(
-                dropDownStringItem,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            );
-          }).toList(),
-          value: _currentItemSelectedAbholzeit, onChanged: (newValueSelected) {
-          setState(() {
-            _currentItemSelectedAbholzeit = newValueSelected!;
-            abholzeit = newValueSelected;
-          });
-        },
+              isDense: true,
+              isExpanded: false,
+
+              items: optionsAbholzeit.map((String dropDownStringItem) {
+                return DropdownMenuItem<String>(
+                  value: dropDownStringItem,
+                  child: Text(
+                    dropDownStringItem,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                );
+              }).toList(),
+              value: _currentItemSelectedAbholzeit, onChanged: (newValueSelected) {
+              setState(() {
+                _currentItemSelectedAbholzeit = newValueSelected!;
+                abholzeit = newValueSelected;
+              });
+            },
+            ),
+          ),
         ),
         actions: [
           TextButton(
@@ -376,7 +388,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Text("");
         }
-        if (snapshot!.data!.isEmpty) {
+        if (snapshot!.data!.isEmpty && snapshot.connectionState != ConnectionState.waiting) {
           return
             Stack(
               children: [
@@ -858,31 +870,31 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                                               if (raport['RaportTitle'] == "Angemeldet")
                                               HugeIcon(
                                               icon: HugeIcons.strokeRoundedSun03,
-                                              color: Colors.amber,
+                                              color: Colors.amber.shade600,
                                                   size: 20
                                               )
                                               else if (raport['RaportTitle'] == "Essen: ")
                                                 HugeIcon(
                                                   icon: HugeIcons.strokeRoundedPizza01,
-                                                  color: Colors.orange,
+                                                  color: Colors.orange.shade600,
                                                     size: 20
                                                 )
                                               else if (raport['RaportTitle'] == "Schlaf: ")
                                                 HugeIcon(
                                                 icon: HugeIcons.strokeRoundedSleeping,
-                                                color: Colors.teal,
+                                                color: Colors.teal.shade600,
                                                     size: 20
                                                 )
                                               else if (raport['RaportTitle'] == "Aktivität: ")
                                                 HugeIcon(
                                                 icon: HugeIcons.strokeRoundedHockey,
-                                                color: Colors.purple.shade900,
+                                                color: Colors.purple.shade600,
                                                     size: 20
                                                 )
                                               else if (raport['RaportTitle'] == "Diverses: ")
                                                       HugeIcon(
                                                         icon: HugeIcons.strokeRoundedChartBubble02,
-                                                        color: Colors.lightBlueAccent,
+                                                        color: Colors.lightBlue.shade600,
                                                           size: 20
                                                       )
                                               else if (raport['RaportTitle'] == "Abgemeldet")
@@ -911,6 +923,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                           children: raportWidgets,
                         );
                       }
+
                       else if (snapshot.connectionState != ConnectionState.waiting)
                       {
                         return

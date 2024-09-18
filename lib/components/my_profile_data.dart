@@ -20,11 +20,11 @@ class ProfileData extends StatelessWidget {
     return  Container(
       width: mediaQuery.size.width * 1,
         decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.inversePrimary,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-            color: Colors.grey,
+            color: Colors.black.withOpacity(0.5),
               spreadRadius: 1,
               blurRadius: 3,
               offset: Offset(2, 4),
@@ -40,9 +40,11 @@ class ProfileData extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(sectionName,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,),
+              Flexible(
+                child: Text(sectionName,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,),
+                ),
               ),
               Container(
                 width: 30,

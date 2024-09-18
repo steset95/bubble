@@ -91,6 +91,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
     await FirebaseAuth.instance
         .sendPasswordResetEmail(email: emailController.text.trim());
     Navigator.of(context).pop();
+    displayMessageToUser("Email na obnovenie hesla bol odoslaný…...", context);
   }
 
 

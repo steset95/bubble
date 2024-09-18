@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../helper/constant.dart';
 
 
@@ -88,12 +89,42 @@ class PaywallElternState extends State<PaywallEltern> {
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
               ),
-              const Padding(
+              Padding(
                 padding:
-                EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
+                const EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
                 child: SizedBox(
-                  child: Text(
-                    footerText,
+                  child: Column(
+                    children: [
+                      const Text(
+                        footerText,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () async {
+                              await launchUrl(
+                                  Uri.parse('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/')); // Add URL which you want here
+                              // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                            },
+                            child: const Text("EULA",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              await launchUrl(
+                                  Uri.parse('https://bubble-app.sk/terms_and_conditions')); // Add URL which you want here
+                              // Navigator.of(context).pushNamed(SignUpScreen.routeName);
+                            },
+                            child: Text("AGB",
+                              style: TextStyle(fontSize: 10),
+                            ),
+                          ),
+
+                        ],
+                      ),
+                    ],
                   ),
                   width: double.infinity,
                 ),

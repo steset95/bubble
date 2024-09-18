@@ -467,7 +467,7 @@ class _RaportPageState extends State<RaportPage> {
                           onTap: showRaportDialogAnmeldung,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Colors.amber.shade600,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: const [
                                 BoxShadow(
@@ -508,7 +508,7 @@ class _RaportPageState extends State<RaportPage> {
                           onTap: showRaportDialogEssen,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
+                              color: Colors.deepOrange.shade600,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: const [
                                 BoxShadow(
@@ -560,7 +560,7 @@ class _RaportPageState extends State<RaportPage> {
                       onTap: showRaportDialogSchlaf,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Colors.cyan.shade600,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: const [
                             BoxShadow(
@@ -602,7 +602,7 @@ class _RaportPageState extends State<RaportPage> {
                             onTap: showRaportDialogActivity,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Colors.purple.shade600,
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: const [
                                   BoxShadow(
@@ -652,7 +652,7 @@ class _RaportPageState extends State<RaportPage> {
                             onTap: showRaportDialogDiverses,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Colors.lightBlue.shade600,
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: const [
                                   BoxShadow(
@@ -694,7 +694,7 @@ class _RaportPageState extends State<RaportPage> {
                             onTap: showRaportDialogAbmeldung,
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Colors.pink.shade600,
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: const [
                                   BoxShadow(

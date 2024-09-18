@@ -78,8 +78,6 @@ class _RegisterPageState extends State<RegisterPage> {
         .hasMatch(emailController.text);
 
     bool hasDigits = passwordController.text.contains(new RegExp(r'[0-9]'));
-    bool hasLowercase = passwordController.text.contains(new RegExp(r'[a-z]'));
-    bool hasSpecialCharacters = passwordController.text.contains(new RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     bool hasMinLength = passwordController.text.length > 8;
 
 
@@ -106,7 +104,7 @@ class _RegisterPageState extends State<RegisterPage> {
       displayMessageToUser("Neplatná e-mailová adresa", context);
     }
 
-    else if (hasDigits == false ||  hasLowercase == false || hasSpecialCharacters == false ||  hasMinLength == false)
+    else if (hasDigits == false ||  hasMinLength == false)
     {
       Navigator.pop(context);
       // Fehlermeldung für Benutzer
@@ -173,6 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
     else if (userCredential != null && userCredential.user != null && _currentItemSelected == "Škôlka") // prüfen ob Felder leer und ob Kita
         {
+
       await FirebaseFirestore.instance //Dokument erstellen
           .collection("Users")
           .doc(userCredential.user!.email)
@@ -193,6 +192,33 @@ class _RegisterPageState extends State<RegisterPage> {
         'anzahlKinder1': anzahlKinder,
         'anzahlKinder2': anzahlKinder,
         'anzahlKinder3': anzahlKinder,
+      });
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .collection("Einwilligungen_Felder")
+          .doc("Fotky pre aplikáciu")
+          .set({
+        'titel': "Fotky pre aplikáciu",
+        'value': "",
+      });
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .collection("Einwilligungen_Felder")
+          .doc("Lakovanie nechtov")
+          .set({
+        'titel': "Lakovanie nechtov",
+        'value': "",
+      });
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(userCredential.user!.email)
+          .collection("Einwilligungen_Felder")
+          .doc("Nanášanie opaľovacieho krému")
+          .set({
+        'titel': "Nanášanie opaľovacieho krému",
+        'value': "",
       });
     }
   }
@@ -314,28 +340,39 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 30),
 
 
-              DropdownButton<String>(
-                isDense: true,
-                isExpanded: false,
-                items: options.map((String dropDownStringItem) {
-                  return DropdownMenuItem<String>(
-                    value: dropDownStringItem,
-                    child: Text(
-                      dropDownStringItem,
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (newValueSelected) {
-                  setState(() {
-                    _currentItemSelected = newValueSelected!;
-                     if (newValueSelected == "Škôlka")
-                      rool = "Kita";
-                  });
-                },
-                value: _currentItemSelected,
+              InputDecorator(
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 15.0),
+                  labelText: 'Rodič/Škôlka',
+                  border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    isDense: true,
+                    isExpanded: false,
+                    items: options.map((String dropDownStringItem) {
+                      return DropdownMenuItem<String>(
+                        value: dropDownStringItem,
+                        child: Text(
+                          dropDownStringItem,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (newValueSelected) {
+                      setState(() {
+                        _currentItemSelected = newValueSelected!;
+                        if (newValueSelected == "Škôlka")
+                          rool = "Kita";
+                      });
+                    },
+                    value: _currentItemSelected,
+                  ),
+                ),
               ),
 
 

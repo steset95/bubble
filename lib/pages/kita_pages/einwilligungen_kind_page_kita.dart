@@ -6,11 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:pay/pay.dart';
 import 'package:bubble/components/my_profile_data.dart';
 
-import '../../components/my_profile_data_icon_no_function.dart';
+import '../../components/my_profile_data_erlaubnis.dart';
 import '../../components/my_profile_data_read_only.dart';
+import '../../helper/helper_functions.dart';
 import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 
@@ -35,13 +37,155 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
 
   final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
   final currentUser = FirebaseAuth.instance.currentUser;
+  final TextEditingController textController = TextEditingController();
 
   final kinderCollection = FirebaseFirestore
       .instance
       .collection("Kinder"
   );
 
+  void openBoxNew() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.all(
+                Radius.circular(10.0))),
+        title: Text("Nové pole",
+          style: TextStyle(color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        // Text Eingabe
+        content: TextField(
+          maxLength: 50,
+          decoration: InputDecoration(hintText: "Názov",
+            counterText: "",
+          ),
+          //Abfrage Inhalt Textfeld - oben definiert
+          controller: textController,
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            child: const Text("Zrušiť",
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          // Speicher Button
+          TextButton(
+            onPressed: () {
+              addField(textController.text,);
+              // Textfeld leeren nach Eingabe
+              textController.clear();
+              //Box Zatvoriť
+              Navigator.pop(context);
+            },
+            child: Text("Pridať"),
+          )
+        ],
+      ),
+    );
+  }
 
+
+
+  void addField(String titel) async {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .collection("Einwilligungen_Felder")
+        .doc(titel)
+        .get()
+        .then((DocumentSnapshot document) {
+      if (document.exists)
+      {
+        displayMessageToUser("Pole už existuje", context);
+      }
+      else {
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(currentUser?.email)
+            .collection("Einwilligungen_Felder")
+            .doc(titel)
+            .set({
+          'titel': titel,
+          'value': "",
+        });
+
+        FirebaseFirestore.instance
+            .collection("Kinder")
+            .where("kita", isEqualTo: currentUser?.email)
+            .get()
+            .then((snapshot) {
+          snapshot.docs.forEach((doc) {
+            doc.reference
+                .collection("Einwilligungen_Felder")
+                .doc(titel)
+                .set({
+              'titel': titel,
+              'value': "nicht erlaubt",
+            });
+          });
+        });
+      }
+    });
+  }
+
+
+  void openDeleteField(String field) {
+    // Bestätigungsdialog
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Zmazať oznam?",
+          style: TextStyle(color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          //Cancel Button
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Zrušiť"),
+          ),
+          //Löschen bestätigen
+          TextButton(
+            onPressed: () async{
+              deleteField(field);
+              Navigator.pop(context);
+            },
+            child: const Text("Potvrdiť"),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  void deleteField(String titel) async {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .collection("Einwilligungen_Felder")
+        .doc(titel)
+        .delete();
+
+    FirebaseFirestore.instance
+        .collection("Kinder")
+        .where("kita", isEqualTo: currentUser?.email)
+        .get()
+        .then((snapshot) {
+      snapshot.docs.forEach((doc) {
+        doc.reference
+            .collection("Einwilligungen_Felder")
+            .doc(titel)
+            .delete();
+      });
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,87 +198,73 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
         ),
       body: SingleChildScrollView(
         child:
-          StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Kinder")
-                .doc(widget.docID)
-                .snapshots(),
-            builder: (context, snapshot)
-            {
-              // ladekreis
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              // Fehlermeldung
-              else if (snapshot.hasError) {
-                return Text("Error ${snapshot.error}");
-              }
-              // Daten abfragen funktioniert
-              else if (snapshot.hasData) {
-                // Entsprechende Daten extrahieren
-                final userData = snapshot.data?.data() as Map<String, dynamic>;
+          Column(
+            children: [
+              StreamBuilder(
+                  stream: firestoreDatabaseChild.getChildrenEinwilligungen(widget.docID),
+                  builder: (context, snapshot){
+                    if(snapshot.connectionState == ConnectionState.waiting)
+                    {
+                      CircularProgressIndicator();
+                    }
+                    else if (snapshot.data != null) {
+                      final fields = snapshot.data!.docs;
+                      return Column(
+                        children: [
+                          const SizedBox(height: 20,),
+                          HugeIcon(icon: HugeIcons.strokeRoundedSafe, color: Colors.black, size: 60),
+                          const SizedBox(height: 10,),
+                          ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: fields.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                // Individuelle Posts abholen
+                                final post = fields[index];
 
-                // Inhalt Daten
+                                // Daten von jedem Post abholen
+                                String title = post['titel'];
+                                String content = post['value'];
 
-                return
-                  Column(
-                    children: [
+                                // Liste als Tile wiedergeben
+                                return MyProfileDataErlaubnis(
+                                  text: content,
+                                  sectionName: title,
+                                  onPressed: () =>
+                                      setState(() {
+                                        openDeleteField(title);
+                                      }),
+                                );
+                              }
+                          ),
 
-                      MyProfileDataIconNoFunction(
-                        text: userData["fotosSocialMedia"],
-                        sectionName: "Fotky pre sociálne médiá",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["fotosApp"],
-                        sectionName: "Fotky pre aplikáciu",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["nagellack"],
-                        sectionName: "Lakovanie nechtov",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["schminken"],
-                        sectionName: "Líčenie",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["fieber"],
-                        sectionName: "Meranie teploty",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["sonnencreme"],
-                        sectionName: "Nanášanie opaľovacieho krému",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["fremdkoerper"],
-                        sectionName: "Odstránenie cudzieho predmetu",
-                      ),
-
-                      MyProfileDataIconNoFunction(
-                        text: userData["homoeopathie"],
-                        sectionName: "Homeopatiká",
-                      ),
-
-                      SizedBox(
-                        height: 30,
-                      ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          IconButton(
+                            onPressed: openBoxNew,
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedAddCircle,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 30,
+                            ),
+                          ),
+                          Text("Pridať polia",
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      );
+                    }
+                    return Text("");
+                  }
+              ),
 
 
-                    ],
-                  );
-                // Fehlermeldung wenn nichts vorhanden ist
-              } else {
-                return const Text("No Data");
-              }
-            },
-        )
+            ],
+          )
         )
     );
     }

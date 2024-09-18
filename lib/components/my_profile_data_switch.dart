@@ -42,17 +42,14 @@ bool isSwitched  = false;
 
 Future <void> updateEinwilligungen (String childcode, bool isSwitched, String field) async {
     final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
-    if (isSwitched == true) {
-      firestoreDatabaseChild.updateChildEinwilligungen(
-        childcode, field, "erlaubt",);
-
-    }
-    else  {
-      firestoreDatabaseChild.updateChildEinwilligungen(
-        childcode, field, "nicht erlaubt",);
-
-
-    }
+      if (isSwitched == true) {
+        firestoreDatabaseChild.updateChildEinwilligungen(
+          childcode, field, "erlaubt",);
+      }
+      else {
+        firestoreDatabaseChild.updateChildEinwilligungen(
+          childcode, field, "nicht erlaubt",);
+      }
   }
 
 
@@ -73,7 +70,7 @@ Future <void> updateEinwilligungen (String childcode, bool isSwitched, String fi
       borderRadius: BorderRadius.circular(5),
       boxShadow: [
       BoxShadow(
-      color: Colors.grey,
+      color: Colors.black.withOpacity(0.5),
       spreadRadius: 1,
       blurRadius: 3,
       offset: Offset(2, 4),
@@ -88,19 +85,18 @@ Future <void> updateEinwilligungen (String childcode, bool isSwitched, String fi
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.sectionName,
-                  style: TextStyle(
-                    color: Theme
-                        .of(context)
-                        .colorScheme
-                        .primary,),
+                Flexible(
+                  child: Text(widget.sectionName,
+                    style: TextStyle(
+                      color: Theme
+                          .of(context)
+                          .colorScheme
+                          .primary,),
+                  ),
                 ),
-
-
-
                 Column(
                   children: [
-                    if (widget.text == "erlaubt")
+                      if (widget.text == "erlaubt")
                     Switch (
                         value: isSwitchedtrue,
                         onChanged: (value) async {
@@ -109,7 +105,7 @@ Future <void> updateEinwilligungen (String childcode, bool isSwitched, String fi
                           isSwitched = value;
                           setState(()  {});
                         },
-                        activeColor: Theme.of(context).colorScheme.primary,
+                        activeColor: Colors.green,
                     ),
                     if (widget.text == "nicht erlaubt")
                       Switch(
@@ -120,7 +116,7 @@ Future <void> updateEinwilligungen (String childcode, bool isSwitched, String fi
                             isSwitched = value;
                             setState(()  {});
                           },
-                        activeColor: Theme.of(context).colorScheme.primary,
+                        activeColor: Colors.green,
                       ),
                   ],
                 )

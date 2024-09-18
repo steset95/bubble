@@ -74,7 +74,7 @@ class _ImageUploadState extends State<ImageUpload> {
 
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
+              color: Colors.teal.shade600,
               borderRadius: BorderRadius.circular(10),
               boxShadow: const [
                 BoxShadow(
