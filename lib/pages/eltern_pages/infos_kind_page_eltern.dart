@@ -342,39 +342,43 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                                 //border: Border.all(color: Colors.black)
                               ),
                               margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-                              child: InputDecorator(
-                                decoration: InputDecoration(
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.transparent)),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 20.0, vertical: 15.0),
-                                ),
+                              child: Column(
+                                children: [
+                                  InputDecorator(
+                                    decoration: InputDecoration(
+                                        enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(color: Colors.transparent)),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 15.0, vertical: 15.0),
+                                    ),
 
 
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    isDense: true,
-                                    isExpanded: false,
-                                    items: optionsGeschlecht.map((String dropDownStringItem) {
-                                      return DropdownMenuItem<String>(
-                                        value: dropDownStringItem,
-                                        child: Text(
-                                          dropDownStringItem,
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (newValueSelected) {
-                                      setState(() {
-                                        _currentItemSelectedGeschlecht = newValueSelected!;
-                                      });
-                                      kinderCollection.doc(childcode).update({'geschlecht': _currentItemSelectedGeschlecht});
-                                    },
-                                    value: _currentItemSelectedGeschlecht,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButton<String>(
+                                        isDense: true,
+                                        isExpanded: false,
+                                        items: optionsGeschlecht.map((String dropDownStringItem) {
+                                          return DropdownMenuItem<String>(
+                                            value: dropDownStringItem,
+                                            child: Text(
+                                              dropDownStringItem,
+                                              style: TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        onChanged: (newValueSelected) {
+                                          setState(() {
+                                            _currentItemSelectedGeschlecht = newValueSelected!;
+                                          });
+                                          kinderCollection.doc(childcode).update({'geschlecht': _currentItemSelectedGeschlecht});
+                                        },
+                                        value: _currentItemSelectedGeschlecht,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
 
