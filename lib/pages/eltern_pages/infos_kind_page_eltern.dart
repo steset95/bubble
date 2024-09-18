@@ -331,9 +331,9 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                               decoration: BoxDecoration(
                                 color: Theme.of(context).colorScheme.inversePrimary,
                                 borderRadius: BorderRadius.circular(5),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
-                                    color: Colors.grey,
+                                    color: Colors.black.withOpacity(0.5),
                                     spreadRadius: 1,
                                     blurRadius: 3,
                                     offset: Offset(2, 4),
