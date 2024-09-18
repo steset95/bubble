@@ -345,7 +345,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                               child: InputDecorator(
                                 decoration: InputDecoration(
                                     enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(color: Colors.white)),
+                                        borderSide: BorderSide(color: Colors.transparent)),
                                   contentPadding: EdgeInsets.symmetric(
                                       horizontal: 20.0, vertical: 15.0),
                                 ),
