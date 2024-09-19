@@ -38,6 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
   ];
   var _currentItemSelected = "Rodič";
   var rool = "Eltern";
+  bool checkMeldung = false;
   String adress = "";
   String adress2 = "";
   String tel = "";
@@ -166,6 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "abo": abo,
         "aboBis": aboBis,
         "aboID": aboID,
+        "checkmeldung": checkMeldung,
         'date': DateTime.now(),
       });
     }
@@ -184,6 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'tel': tel,
         'iban': iban,
         'guthaben': guthaben,
+        "checkmeldung": checkMeldung,
         'gruppe1': gruppe1,
         'gruppe2': gruppe2,
         'gruppe3': gruppe3,

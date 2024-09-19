@@ -16,7 +16,7 @@ final currentUser = FirebaseAuth.instance.currentUser;
 
 Future<void> configureSDK() async {
 
-  await Purchases.setLogLevel(LogLevel.debug);
+  Purchases.setLogLevel(LogLevel.debug);
 
   if (kIsWeb == false) {
     if (Platform.isIOS || Platform.isMacOS) {
@@ -41,11 +41,7 @@ Future<void> configureSDK() async {
        String aboID = await document["aboID"].toString();
 
       PurchasesConfiguration configuration;
-      if (StoreConfig.isForAmazonAppstore()) await {
-        configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
-          ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
-      }; else await {
+      await {
         configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
           ..appUserID = aboID
           ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()

@@ -9,6 +9,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import 'package:bubble/pages/kita_pages/post_page_kita.dart';
 
+import '../../helper/check_meldung.dart';
 import '../../helper/notification_controller.dart';
 import '../../helper/helper_functions.dart';
 
@@ -39,6 +40,7 @@ class _FeedPageKitaState extends State<FeedPageKita> {
   void initState() {
     super.initState();
     timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+    CheckMeldung(context).checkMeldung();
   }
 
   @override
