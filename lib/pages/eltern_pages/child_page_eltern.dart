@@ -687,7 +687,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) =>
-                            BezahlungPage(isActive: false, text: "Zur Vollversion"),
+                            BezahlungPage(isActive: false, text: "Na plnú verziu"),
                         ),
                       );
                     },

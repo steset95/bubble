@@ -15,8 +15,9 @@ file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_list_ti
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_list_tile_feed_kita.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_message.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data.dart
+file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data_erlaubnis.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data_icon.dart
-file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data_icon_no_function.dart
+file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data_icon_delete.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data_read_only.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_profile_data_switch.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/components/my_progressindicator.dart
@@ -29,6 +30,7 @@ file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/database/firestore_im
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/firebase_options.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/helper/abo_controller.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/helper/appdata.dart
+file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/helper/check_meldung.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/helper/constant.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/helper/helper_functions.dart
 file:///C:/Users/Stefan/AndroidStudioProjects/bubble_3/lib/helper/notification_controller.dart
