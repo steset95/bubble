@@ -371,104 +371,106 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
               ),
             ],
           ),
-          StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(currentUser?.email)
-                .snapshots(),
-            builder: (context, snapshot)
-            {
-              // ladekreis
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              // Fehlermeldung
-              else if (snapshot.hasError) {
-                return Text("Error ${snapshot.error}");
-              }
-              // Daten abfragen funktioniert
-              else if (snapshot.hasData) {
-                // Entsprechende Daten extrahieren
-                final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-
-                return
-                  Column(
-                    children: [
-
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ProfileData(
-                        text: userData["username"],
-                        sectionName: "Meno a Priezvisko",
-                        onPressed: () => editField("username", "Meno a Priezvisko", userData["username"]),
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["email"],
-                        sectionName: "Email",
-
-                      ),
-                      ProfileData(
-                        text: userData["adress"],
-                        sectionName: "Ulica / Číslo",
-                        onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"]),
-                      ),
-
-                      ProfileData(
-                        text: userData["adress2"],
-                        sectionName: "PSČ / Mesto",
-                        onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"]),
-                      ),
-
-                      ProfileData(
-                        text: userData["tel"],
-                        sectionName: "Mobilné číslo",
-                        onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
-                      ),
-
-                      SizedBox(
-                        height: 30,
-                      ),
-
-
-                      /// Payment
-
-
-                      GestureDetector(
-                        onTap: () => goToPage(),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text("Predplatné",
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                                fontSize: 12,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 2,
-                            ),
-                            Icon(
-                                Icons.arrow_forward,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 10
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+          SingleChildScrollView(
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(currentUser?.email)
+                  .snapshots(),
+              builder: (context, snapshot)
+              {
+                // ladekreis
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                // Fehlermeldung wenn nichts vorhanden ist
-              } else {
-                return const Text("No  Data");
-              }
-            },
+                }
+                // Fehlermeldung
+                else if (snapshot.hasError) {
+                  return Text("Error ${snapshot.error}");
+                }
+                // Daten abfragen funktioniert
+                else if (snapshot.hasData) {
+                  // Entsprechende Daten extrahieren
+                  final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+
+                  return
+                    Column(
+                      children: [
+
+                        SizedBox(
+                          height: 15,
+                        ),
+                        ProfileData(
+                          text: userData["username"],
+                          sectionName: "Meno a Priezvisko",
+                          onPressed: () => editField("username", "Meno a Priezvisko", userData["username"]),
+                        ),
+
+                        ProfileDataReadOnly(
+                          text: userData["email"],
+                          sectionName: "Email",
+
+                        ),
+                        ProfileData(
+                          text: userData["adress"],
+                          sectionName: "Ulica / Číslo",
+                          onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"]),
+                        ),
+
+                        ProfileData(
+                          text: userData["adress2"],
+                          sectionName: "PSČ / Mesto",
+                          onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"]),
+                        ),
+
+                        ProfileData(
+                          text: userData["tel"],
+                          sectionName: "Mobilné číslo",
+                          onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
+                        ),
+
+                        SizedBox(
+                          height: 30,
+                        ),
+
+
+                        /// Payment
+
+
+                        GestureDetector(
+                          onTap: () => goToPage(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Predplatné",
+                                style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              Icon(
+                                  Icons.arrow_forward,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 10
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  // Fehlermeldung wenn nichts vorhanden ist
+                } else {
+                  return const Text("No  Data");
+                }
+              },
+            ),
           ),
         ],
       ),

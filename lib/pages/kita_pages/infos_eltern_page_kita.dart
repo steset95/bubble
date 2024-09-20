@@ -130,7 +130,8 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
             child: Column(
             children: [
               const SizedBox(height: 30,),
-              HugeIcon(icon: HugeIcons.strokeRoundedNote, color: Colors.black, size: 25),
+              HugeIcon(icon: HugeIcons.strokeRoundedNote, color: Colors.black, size: 30),
+              const SizedBox(height: 10,),
               Container(
                 child: Text(username,
                   textAlign: TextAlign.center,

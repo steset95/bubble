@@ -159,7 +159,7 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
                 Text("Zadajte prosim aktivačný kód:"),
                 const SizedBox(height: 20,),
                 MyTextField(hintText: "Aktivačný kód…", obscureText: false, controller: textController),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 5,),
                 TextButton(
                   onPressed: () {
                     FirebaseFirestore.instance

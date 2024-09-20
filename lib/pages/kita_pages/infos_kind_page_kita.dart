@@ -232,7 +232,8 @@ else {
                       children: [
 
                         const SizedBox(height: 30,),
-                        HugeIcon(icon: HugeIcons.strokeRoundedUserAccount, color: Colors.black, size: 25),
+                        HugeIcon(icon: HugeIcons.strokeRoundedUserAccount, color: Colors.black, size: 30),
+                        const SizedBox(height: 10,),
                         Text(userData["child"],
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.titleLarge,
@@ -297,10 +298,7 @@ else {
             return MyProfileDataIconDelete(
               text: content,
               sectionName: title,
-              onPressed: () =>
-                  setState(() {
-                    openDeleteField(title);
-                  }),
+              onPressed: () => openDeleteField(title),
             );
           }
       );

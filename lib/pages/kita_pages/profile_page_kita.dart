@@ -247,137 +247,139 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
               ),
             ],
           ),
-          StreamBuilder<DocumentSnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection("Users")
-                .doc(currentUser?.email)
-                .snapshots(),
-            builder: (context, snapshot)
-            {
-              // ladekreis
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              // Fehlermeldung
-              else if (snapshot.hasError) {
-                return Text("Error ${snapshot.error}");
-              }
-              // Daten abfragen funktioniert
-              else if (snapshot.hasData) {
-                // Entsprechende Daten extrahieren
-                final userData = snapshot.data?.data() as Map<String, dynamic>;
-
-                // Inhalt Daten
-
-                return
-                  Column(
-                    children: [
-                      SizedBox(
-                        height: 15,
-                      ),
-                      ProfileData(
-                        text: userData["username"],
-                        sectionName: "Meno",
-                        onPressed: () => editField("username", "Meno", userData["username"], ),
-                      ),
-
-                      ProfileDataReadOnly(
-                        text: userData["email"],
-                        sectionName: "Email",
-                      ),
-                      ProfileData(
-                        text: userData["adress"],
-                        sectionName: "Ulica / Číslo",
-                        onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"],),
-                      ),
-
-                      ProfileData(
-                        text: userData["adress2"],
-                        sectionName: "PSČ / Mesto",
-                        onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"],),
-                      ),
-
-                      ProfileData(
-                        text: userData["tel"],
-                        sectionName: "Mobilné číslo",
-                        onPressed: () => editField("tel", "Mobilné číslo", userData["tel"],),
-                      ),
-
-                      ProfileData(
-                        text: userData["beschreibung"],
-                        sectionName: "O nás",
-                        onPressed: () => editFieldBeschreibung("beschreibung", "O nás", userData["beschreibung"],),
-                      ),
-/*
-                      SizedBox(
-                        height: 30,
-                      ),
-                      GestureDetector(
-                        onTap:  createUserDocument,
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Provízia ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                color: Theme.of(context).colorScheme.primary,),
-                                ),
-                                HugeIcon(
-                                  icon: HugeIcons.strokeRoundedInformationCircle,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Stack(
-                                  children: [
-                                    Container(
-                                        decoration: BoxDecoration(
-
-                                            borderRadius: BorderRadius.all(Radius.circular(100))
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Column(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text (userData["guthaben"].toString(),
-                                                    style: TextStyle(
-                                                    fontSize: 30,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-
-*/
-                    ],
+          SingleChildScrollView(
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(currentUser?.email)
+                  .snapshots(),
+              builder: (context, snapshot)
+              {
+                // ladekreis
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                // Fehlermeldung wenn nichts vorhanden ist
-              } else {
-                return const Text("No Data");
-              }
-            },
+                }
+                // Fehlermeldung
+                else if (snapshot.hasError) {
+                  return Text("Error ${snapshot.error}");
+                }
+                // Daten abfragen funktioniert
+                else if (snapshot.hasData) {
+                  // Entsprechende Daten extrahieren
+                  final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+                  // Inhalt Daten
+
+                  return
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 15,
+                        ),
+                        ProfileData(
+                          text: userData["username"],
+                          sectionName: "Meno",
+                          onPressed: () => editField("username", "Meno", userData["username"], ),
+                        ),
+
+                        ProfileDataReadOnly(
+                          text: userData["email"],
+                          sectionName: "Email",
+                        ),
+                        ProfileData(
+                          text: userData["adress"],
+                          sectionName: "Ulica / Číslo",
+                          onPressed: () => editField("adress", "Ulica / Číslo", userData["adress"],),
+                        ),
+
+                        ProfileData(
+                          text: userData["adress2"],
+                          sectionName: "PSČ / Mesto",
+                          onPressed: () => editField("adress2", "PSČ / Mesto", userData["adress2"],),
+                        ),
+
+                        ProfileData(
+                          text: userData["tel"],
+                          sectionName: "Mobilné číslo",
+                          onPressed: () => editField("tel", "Mobilné číslo", userData["tel"],),
+                        ),
+
+                        ProfileData(
+                          text: userData["beschreibung"],
+                          sectionName: "O nás",
+                          onPressed: () => editFieldBeschreibung("beschreibung", "O nás", userData["beschreibung"],),
+                        ),
+            /*
+                        SizedBox(
+                          height: 30,
+                        ),
+                        GestureDetector(
+                          onTap:  createUserDocument,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Provízia ",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                  color: Theme.of(context).colorScheme.primary,),
+                                  ),
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedInformationCircle,
+                                    color: Theme.of(context).colorScheme.primary,
+                                    size: 15,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Container(
+                                          decoration: BoxDecoration(
+
+                                              borderRadius: BorderRadius.all(Radius.circular(100))
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text (userData["guthaben"].toString(),
+                                                      style: TextStyle(
+                                                      fontSize: 30,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+
+            */
+                      ],
+                    );
+                  // Fehlermeldung wenn nichts vorhanden ist
+                } else {
+                  return const Text("No Data");
+                }
+              },
+            ),
           ),
         ],
       ),

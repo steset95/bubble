@@ -230,10 +230,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
                                 return MyProfileDataErlaubnis(
                                   text: content,
                                   sectionName: title,
-                                  onPressed: () =>
-                                      setState(() {
-                                        openDeleteField(title);
-                                      }),
+                                  onPressed: () => openDeleteField(title),
                                 );
                               }
                           ),

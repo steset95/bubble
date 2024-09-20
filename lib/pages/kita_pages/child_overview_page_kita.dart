@@ -295,7 +295,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                             Text(
 
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold,),
+                                style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold,),
                                 snapshot.data!['child']),
                           ],
                         );

@@ -310,8 +310,8 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                             ),
                             Column(
                               children: [
-                                HugeIcon(icon: HugeIcons.strokeRoundedNote, color: Colors.black, size: 25),
-                                const SizedBox(height: 7,),
+                                HugeIcon(icon: HugeIcons.strokeRoundedNote, color: Colors.black, size: 30),
+                                const SizedBox(height: 10,),
                                 GestureDetector(
                                   onTap: () => editFieldInfos("Name", "child", childcode, userData["child"]),
                                   child: Text(userData["child"],
