@@ -258,7 +258,7 @@ else {
                         const SizedBox(height: 30,),
                         HugeIcon(icon: HugeIcons.strokeRoundedStethoscope02, color: Colors.black, size: 25),
                         const SizedBox(height: 5,),
-                        Text("Weitere Informationen",
+                        Text("Ďalšie informácie",
                           style: TextStyle(fontSize: 20),
                         ),
                       ],

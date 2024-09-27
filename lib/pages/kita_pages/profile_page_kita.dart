@@ -136,6 +136,19 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
           //"Edit $field",
         ),
         content: TextFormField(
+          contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+            // If supported, show the system context menu.
+            if (SystemContextMenu.isSupported(context)) {
+              return SystemContextMenu.editableText(
+                editableTextState: editableTextState,
+              );
+            }
+            // Otherwise, show the flutter-rendered context menu for the current
+            // platform.
+            return AdaptiveTextSelectionToolbar.editableText(
+              editableTextState: editableTextState,
+            );
+          },
           decoration: InputDecoration(
             counterText: "",
           ),

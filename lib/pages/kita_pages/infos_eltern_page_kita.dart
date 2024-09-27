@@ -124,6 +124,7 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
             final adress = snapshot.data!['adress'];
             final adress2 = snapshot.data!['adress2'];
             final tel = snapshot.data!['tel'];
+            final email = snapshot.data!['email'];
 
             return
             SingleChildScrollView(
@@ -154,6 +155,10 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
                   _makePhoneCall(tel);
                 }),
                 icon: Icons.call_outlined,
+              ),
+              ProfileDataReadOnly(
+                text: email,
+                sectionName: "Email",
               ),
             ],
             ),

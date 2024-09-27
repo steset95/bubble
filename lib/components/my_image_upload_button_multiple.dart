@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:bubble/database/firestore_images.dart';
 import 'package:hugeicons/hugeicons.dart';
+import '../database/firestore_child.dart';
 import '../helper/helper_functions.dart';
 import 'my_child_select_switch.dart';
 
@@ -31,6 +32,7 @@ Für Upload:  ImageUpload(),
  */
 
 final currentUser = FirebaseAuth.instance.currentUser;
+final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
 
 
 class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
@@ -127,6 +129,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                       onPressed: () {
                         // Textfeld Zatvoriť
                         Navigator.pop(context);
+                        firestoreDatabaseChild.updateSwitchAllOn(widget.group);
                       },
                       child: Text("Zrušiť"),
                     ),
@@ -183,6 +186,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
 
                         }
                         Navigator.pop(context);
+                        firestoreDatabaseChild.updateSwitchAllOn(widget.group);
                         displayMessageToUser("Obrázky sa nahrávajú…...", context);
 
 

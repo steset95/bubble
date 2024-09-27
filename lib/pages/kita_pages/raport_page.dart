@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,6 @@ class _RaportPageState extends State<RaportPage> {
 
   // Text Controller für Abfrage des Inhalts im Textfeld "Raport hinzufügen"
   final _raportTextController = TextEditingController();
-
 
 
   // Raport hinzufügen bzw. Allgemeiner Firebase Connect

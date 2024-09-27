@@ -16,12 +16,14 @@ import '../../database/firestore_images.dart';
 class ImagesPageEltern extends StatefulWidget {
   final String childcode;
   final String date;
+  final String kitamail;
 
 
   ImagesPageEltern({
     super.key,
     required this.childcode,
     required this.date,
+    required this.kitamail,
   });
 
 
@@ -32,39 +34,18 @@ class ImagesPageEltern extends StatefulWidget {
 
 class _ImagesPageElternState extends State<ImagesPageEltern> {
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
 
-  Future<List<String>> getImagePath(String childcode, String date) async {
-    ListResult result =
-    await FirebaseStorage.instance.ref('/images/$date/$childcode').listAll();
-    return await Future.wait(
-      result.items.reversed.map((e) async => await e.getDownloadURL()),
-    );
-  }
+  final Storage storage = Storage();
 
+  Widget buildGallery(String childcode, String date, String kitamail) {
+    return StreamBuilder(
+      stream: storage.getImagesPath(childcode, kitamail, date),
+      builder: (context, snapshot){
 
+        final images = snapshot.data?.docs;
 
-  Widget buildGallery(String childcode, String date) {
-    final mediaQuery = MediaQuery.of(context);
-    return FutureBuilder(
-      future: getImagePath(childcode, date),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         }
         return Padding(
@@ -74,10 +55,17 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
             child: ListView.builder(
               scrollDirection: Axis.vertical,
               physics: const PageScrollPhysics(),
-              itemCount: snapshot.data!.length,
+              itemCount: images?.length,
               shrinkWrap: true,
 
-              itemBuilder: (context, index) => Padding(
+              itemBuilder: (context, index)
+                  {
+
+                    final path = images?[index];
+                    String image = path?['path'];
+
+
+                  return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap:  () {
@@ -100,11 +88,21 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
                             Expanded(
                               flex: 5,
                               child: InteractiveViewer(
-                                child: CachedNetworkImage(
-                                    imageUrl: snapshot.data![index],
-                                    placeholder: (context, url) => ProgressWithIcon(),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                    fit: BoxFit.scaleDown
+                                child: FutureBuilder(future: storage.downloadURL(image),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                      if (snapshot.data != null)
+                                        return
+                                          CachedNetworkImage(
+                                            imageUrl: snapshot.data!,
+                                            fit: BoxFit.scaleDown,
+                                            placeholder: (context, url) => ProgressWithIcon(),
+                                            errorWidget: (context, url, error) =>
+                                                Icon(Icons.error),
+                                          );
+                                      else
+                                        return Text("");
+                                    }
                                 ),
                               ),
                             ),
@@ -129,14 +127,25 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
                     );
                   },
                   child:
-                  CachedNetworkImage(
-                    imageUrl: snapshot.data![index],
-                      placeholder: (context, url) => ProgressWithIcon(),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    fit: BoxFit.fitWidth,
+                  FutureBuilder(future: storage.downloadURL(image),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.data != null)
+                          return
+                            CachedNetworkImage(
+                              imageUrl: snapshot.data!,
+                              fit: BoxFit.fitWidth,
+                              placeholder: (context, url) => ProgressWithIcon(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            );
+                        else
+                          return Text("");
+                      }
                   ),
                 ),
-              ),
+              );
+      }
             ),
           ),
         );
@@ -160,7 +169,7 @@ class _ImagesPageElternState extends State<ImagesPageEltern> {
         child:
         Column(
           children: [
-            buildGallery(widget.childcode, widget.date)
+            buildGallery(widget.childcode, widget.date, widget.kitamail)
           ],
         ),
         )

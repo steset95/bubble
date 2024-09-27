@@ -318,7 +318,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
               //Textfeld leeren
 
             },
-            child: Text("Prihlásiť sa"),
+            child: Text("Prihlásiť"),
           ),
         ],
       ),

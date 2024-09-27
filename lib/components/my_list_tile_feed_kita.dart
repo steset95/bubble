@@ -172,7 +172,7 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
                                   HugeIcon(
                                     icon: HugeIcons.strokeRoundedSeal,
                                     color: Theme.of(context).colorScheme.secondary,
-                                    size: 35,
+                                    size: 37,
                                   ),
                                 ],
                               ),
@@ -184,9 +184,9 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
                               Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text("Neu",
+                                    Text("Nové",
                                       style: TextStyle(color: Theme.of(context).colorScheme.secondary,
-                                        fontSize: 8,
+                                        fontSize: 7,
                                       ),
                                     ),
                                   ]

@@ -156,7 +156,7 @@ class _PostPageKitaState extends State<PostPageKita> {
                     keyboardType: TextInputType.multiline,
                     minLines: 1,
                     maxLines: 20,
-                    maxLength: 5000,
+                    maxLength: 50000,
                     controller: newPostControllerInhalt,
                     decoration: InputDecoration(
                       border: InputBorder.none,

@@ -36,8 +36,6 @@ class InfosKitaPageEltern extends StatefulWidget {
 class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
 
 
-  final currentUser = FirebaseAuth.instance.currentUser;
-
 
   final kinderCollection = FirebaseFirestore
       .instance
@@ -78,6 +76,7 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
               final adress = snapshot.data!['adress'];
               final adress2 = snapshot.data!['adress2'];
               final beschreibung = snapshot.data!['beschreibung'];
+              final email = snapshot.data!['email'];
               final tel = snapshot.data!['tel'];
 
               return
@@ -105,6 +104,10 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                           _makePhoneCall(tel);
                         }),
                         icon:  Icons.call_outlined,
+                      ),
+                      ProfileDataReadOnly(
+                        text: email,
+                        sectionName: "Email",
                       ),
                       ProfileDataReadOnly(
                         text: beschreibung,

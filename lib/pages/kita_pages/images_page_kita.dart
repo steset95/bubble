@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,27 +31,30 @@ class ImagesPageKita extends StatefulWidget {
 
 class _ImagesPageKitaState extends State<ImagesPageKita> {
 
+  final currentUser = FirebaseAuth.instance.currentUser;
+  final Storage storage = Storage();
 
-  Future<List<String>> getImagePath(String docID, ) async {
-    String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
-    String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
-    ListResult result =
-    await FirebaseStorage.instance.ref('/images/$formattedDate/$docID').listAll();
-    return await Future.wait(
-      result.items.map((e) async => await e.getDownloadURL()),
-    );
-  }
 
   Widget buildGallery(String docID) {
 
-    final Storage storage = Storage();
-    return FutureBuilder(
-      future: getImagePath(docID),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ||
-            !snapshot.hasData) {
+    String? kitamail = currentUser?.email;
 
+    String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
+    String formattedDate = currentDate.substring(0, 10);
+
+    return StreamBuilder(
+      stream: storage.getImagesPath(docID, kitamail!, formattedDate),
+      builder: (context, snapshot){
+
+        final images = snapshot.data?.docs;
+
+        if (snapshot.connectionState == ConnectionState.waiting)
+          {
           return const CircularProgressIndicator();
+        }
+        else if (snapshot.hasData == false && snapshot.connectionState != ConnectionState.waiting)
+        {
+          return Text("...");
         }
         return Container(
           child:
@@ -62,9 +66,13 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
         crossAxisSpacing: 5.0,
         mainAxisSpacing: 5.0,
         ),
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) =>
-                GestureDetector(
+            itemCount: images?.length,
+            itemBuilder: (context, index) {
+
+              final path = images?[index];
+              String image = path?['path'];
+
+                return GestureDetector(
                   onTap:  () {
                     showGeneralDialog(
                       context: context,
@@ -73,7 +81,8 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                       transitionDuration: Duration(milliseconds: 400),
                       pageBuilder: (context, __, ___) {
                         return Column(
-                          children: <Widget>[
+                          children:
+                          [
                             Row(
                               children: [
                                 Container(
@@ -84,12 +93,21 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                             ),
                             Expanded(
                               flex: 5,
-                              child: CachedNetworkImage(
-                                  imageUrl: snapshot.data![index],
-                                  placeholder: (context, url) => ProgressWithIcon(),
-                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                  fit: BoxFit.scaleDown,
-                                
+                              child: FutureBuilder(future: storage.downloadURL(image),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<String> snapshot) {
+                                    if (snapshot.data != null)
+                                      return
+                                        CachedNetworkImage(
+                                          imageUrl: snapshot.data!,
+                                          fit: BoxFit.scaleDown,
+                                          placeholder: (context, url) => ProgressWithIcon(),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        );
+                                    else
+                                      return Text("");
+                                  }
                               ),
                             ),
                             Container(
@@ -98,6 +116,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+
                                   TextButton(
                                     child: const Text("Zrušiť",
                                     ),
@@ -108,7 +127,7 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                                       child: const Text("Vymazať",
                                       ),
                                       onPressed: () {
-                                        storage.deleteImage(snapshot.data![index]);
+                                        storage.deleteImage(image, docID);
                                         setState(() {});
                                         Navigator.pop(context);
                                         Navigator.pop(context);
@@ -125,13 +144,24 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
                       },
                     );
                   },
-                  child: CachedNetworkImage(
-                                imageUrl: snapshot.data![index],
-                                fit: BoxFit.fitHeight,
-                                placeholder: (context, url) => ProgressWithIcon(),
-                                errorWidget: (context, url, error) => Icon(Icons.error),
-                              ),
-                ),
+                  child: FutureBuilder(future: storage.downloadURL(image),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String> snapshot) {
+                        if (snapshot.data != null)
+                          return
+                            CachedNetworkImage(
+                              imageUrl: snapshot.data!,
+                              fit: BoxFit.fitHeight,
+                              placeholder: (context, url) => ProgressWithIcon(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            );
+                        else
+                          return Text("");
+                      }
+                  ),
+                );
+      }
           ),
         );
       },

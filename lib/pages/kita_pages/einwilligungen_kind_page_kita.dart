@@ -212,7 +212,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
                       return Column(
                         children: [
                           const SizedBox(height: 20,),
-                          HugeIcon(icon: HugeIcons.strokeRoundedSafe, color: Colors.black, size: 60),
+                          HugeIcon(icon: HugeIcons.strokeRoundedSafe, color: Colors.black, size: 50),
                           const SizedBox(height: 10,),
                           ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
