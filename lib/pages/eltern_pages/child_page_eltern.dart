@@ -469,24 +469,21 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                                   final path = images?[index];
                                   String image = path?['path'];
 
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: FutureBuilder(future: storage2.downloadURL(image),
-                                        builder: (BuildContext context,
-                                            AsyncSnapshot<String> snapshot) {
-                                           if (snapshot.data != null)
-                                             return
-                                              CachedNetworkImage(
-                                                imageUrl: snapshot.data!,
-                                                fit: BoxFit.fitHeight,
-                                                placeholder: (context, url) => ProgressWithIcon(),
-                                                errorWidget: (context, url, error) =>
-                                                    Icon(Icons.error),
-                                              );
-                                          else
-                                            return Text("");
-                                        }
-                                    ),
+                                  return FutureBuilder(future: storage2.downloadURL(image),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<String> snapshot) {
+                                         if (snapshot.data != null)
+                                           return
+                                            CachedNetworkImage(
+                                              imageUrl: snapshot.data!,
+                                              fit: BoxFit.fitHeight,
+                                              placeholder: (context, url) => ProgressWithIcon(),
+                                              errorWidget: (context, url, error) =>
+                                                  Icon(Icons.error),
+                                            );
+                                        else
+                                          return Text("");
+                                      }
                                   );
 
 
@@ -558,24 +555,21 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                               )),
                         );
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FutureBuilder(future: storage2.downloadURL(image),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              if (snapshot.data != null)
-                              return
-                                CachedNetworkImage(
-                                imageUrl: snapshot.data!,
-                                  fit: BoxFit.fitHeight,
-                                  placeholder: (context, url) => ProgressWithIcon(),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                              );
-                              else
-                                return Text("");
-                            }
-                        ),
+                      child: FutureBuilder(future: storage2.downloadURL(image),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (snapshot.data != null)
+                            return
+                              CachedNetworkImage(
+                              imageUrl: snapshot.data!,
+                                fit: BoxFit.fitHeight,
+                                placeholder: (context, url) => ProgressWithIcon(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                            );
+                            else
+                              return Text("");
+                          }
                       ),
                     );
 

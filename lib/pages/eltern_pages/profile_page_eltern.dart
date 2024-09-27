@@ -141,44 +141,46 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
   void addSubscriptionKita() async {
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+if (customerInfo.entitlements.all[entitlementID] != null) {
+  final date = customerInfo.entitlements.all[entitlementID]?.latestPurchaseDate;
+  DateTime tempDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(
+      date!);
 
-    final date = customerInfo.entitlements.all[entitlementID]?.latestPurchaseDate;
-    DateTime tempDate = new DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parse(date!);
+  int month = tempDate.month;
+  int year = tempDate.year;
+  String yearMonth = ('${year}_${month}');
 
-    int month = tempDate.month;
-    int year = tempDate.year;
-    String yearMonth = ('${year}_${month}');
+   FirebaseFirestore.instance
+      .collection("Users")
+      .doc(currentUser?.email)
+      .get()
+      .then((DocumentSnapshot document) {
+    if (document.exists) {
+      if (document["kitamail"] != "") {
+        final String? name = currentUser!.email;
 
-    await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) {
-      if (document.exists) {
-        if (document["kitamail"] != "") {
-          final String? name = currentUser!.email;
+        FirebaseFirestore.instance
+            .collection("Abonnements")
+            .doc(document["kitamail"])
+            .collection(yearMonth)
+            .doc(name)
+            .get()
+            .then((DocumentSnapshot document2) {
+          if (document2.exists) {}
 
-          FirebaseFirestore.instance
-              .collection("Abonnements")
-              .doc(document["kitamail"])
-              .collection(yearMonth)
-              .doc(name)
-              .get()
-              .then((DocumentSnapshot document2) {
-            if (document2.exists) {}
-
-            else {
-              FirebaseFirestore.instance
-                  .collection("Abonnements")
-                  .doc(document["kitamail"])
-                  .collection(yearMonth)
-                  .doc(name)
-                  .set({'Gelöst am': date});
-            }
-          });
-        }
+          else {
+            FirebaseFirestore.instance
+                .collection("Abonnements")
+                .doc(document["kitamail"])
+                .collection(yearMonth)
+                .doc(name)
+                .set({'Gelöst am': date});
+          }
+        });
       }
-    });
+    }
+  });
+}
   }
 
 
