@@ -83,12 +83,16 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SizedBox(height: 20,),
-                      HugeIcon(icon: HugeIcons.strokeRoundedHouse04, color: Theme.of(context).colorScheme.primary, size: 80),
-                      ProfileDataReadOnly(
-                        text: username,
-                        sectionName: "Názov",
+                      const SizedBox(height: 30,),
+                      HugeIcon(icon: HugeIcons.strokeRoundedHouse04, color: Colors.black, size: 30),
+                      const SizedBox(height: 8,),
+                      Container(
+                        child: Text(username,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
                       ),
+                      const SizedBox(height: 10,),
                       ProfileDataReadOnly(
                         text: adress,
                         sectionName: "Adresa",
