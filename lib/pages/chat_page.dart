@@ -25,6 +25,9 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+
+
+
   // text controller
   final TextEditingController _messageController = TextEditingController();
   final currentUser = FirebaseAuth.instance.currentUser;
@@ -43,73 +46,61 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 
-void deleteNotification() {
-  FirebaseFirestore.instance
-      .collection("Users")
-      .doc(currentUser?.email)
-      .get()
-      .then((DocumentSnapshot document) {
 
-    String rool = document["rool"];
-    if (rool == "Eltern") {
+  void blockON() {
+        FirebaseFirestore.instance
+            .collection("Users")
+            .doc(currentUser?.email)
+            .collection("notifications")
+            .doc("block")
+            .set({"block": widget.receiverID});
+      }
 
-      FirebaseFirestore.instance
-          .collection("Users")
-          .doc(currentUser?.email)
-          .update({"shownotification": "0"});
+  void blockOFF() {
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .collection("notifications")
+        .doc("block")
+        .set({"block": ""});
+  }
 
 
-      FirebaseFirestore.instance
-          .collection("Users")
-          .doc(currentUser?.email)
-          .collection("notifications")
-          .doc("notification")
-          .update({"notification": 0});
-    }
-    if (rool == "Kita") {
-
-      FirebaseFirestore.instance
-          .collection("Kinder")
-          .doc(widget.childcode)
-          .update({"shownotification": "0"});
-    }
-  });
-
-}
 
   Timer? timer;
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => deleteNotification());
+    blockON();
   }
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
 
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        title: Text("Chat",
+    return WillPopScope(
+      onWillPop: () async {
+        blockOFF();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          title: Text("Chat",
+          ),
         ),
+              body: Column(
+               children: [
+                 Expanded(
+                  child: _buildMessageList(),
+                 ),
+                 const SizedBox(height: 10,),
+                 _buildUserInput(),
+               ],
+              ),
       ),
-            body: Column(
-             children: [
-               Expanded(
-                child: _buildMessageList(),
-               ),
-               const SizedBox(height: 10,),
-               _buildUserInput(),
-             ],
-            ),
     );
   }
 

@@ -46,84 +46,140 @@ Future<void> sendMessage(String receiverEmail, message, String childcode) async 
       .collection("messages")
       .add(newMessage.toMap());
 
-
-
-
   await FirebaseFirestore.instance
       .collection("Users")
       .doc(receiverEmail)
       .collection("notifications")
-      .doc("notification")
+      .doc("block")
       .get()
-      .then((DocumentSnapshot document) {
-
+      .then((DocumentSnapshot document) async {
 
     if (document.exists) {
+      String block = document["block"];
 
-      var notificationNumber = document["notification"];
-      int not = (notificationNumber + 1);
+      if (block != currentUserEmail) {
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(receiverEmail)
+            .collection("notifications")
+            .doc("notification")
+            .get()
+            .then((DocumentSnapshot document) {
+          if (document.exists) {
+            var notificationNumber = document["notification"];
+            int not = (notificationNumber + 1);
 
 
-      _firestore
-          .collection("Users")
-          .doc(receiverEmail)
-          .collection("notifications")
-          .doc("notification")
-          .update({"notification": not});
+            _firestore
+                .collection("Users")
+                .doc(receiverEmail)
+                .collection("notifications")
+                .doc("notification")
+                .update({"notification": not});
+          }
+          else {
+            _firestore
+                .collection("Users")
+                .doc(receiverEmail)
+                .collection("notifications")
+                .doc("notification")
+                .set({"notification": 1});
+          }
+        });
 
 
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(currentUserEmail)
+            .get()
+            .then((DocumentSnapshot document) {
+          String username = document["username"];
+
+
+          _firestore
+              .collection("Users")
+              .doc(receiverEmail)
+              .update({"shownotification": "1"});
+
+          _firestore
+              .collection("Users")
+              .doc(receiverEmail)
+              .collection("notifications")
+              .doc("user")
+              .set({"username": username});
+
+          if (document["rool"] == "Eltern") {
+            _firestore
+                .collection("Kinder")
+                .doc(childcode)
+                .update({"shownotification": "1"});
+          }
+        });
+      }
     }
     else {
-      _firestore
+
+      await FirebaseFirestore.instance
           .collection("Users")
           .doc(receiverEmail)
           .collection("notifications")
           .doc("notification")
-          .set({"notification": 1});
+          .get()
+          .then((DocumentSnapshot document) {
+        if (document.exists) {
+          var notificationNumber = document["notification"];
+          int not = (notificationNumber + 1);
 
 
+          _firestore
+              .collection("Users")
+              .doc(receiverEmail)
+              .collection("notifications")
+              .doc("notification")
+              .update({"notification": not});
+        }
+        else {
+          _firestore
+              .collection("Users")
+              .doc(receiverEmail)
+              .collection("notifications")
+              .doc("notification")
+              .set({"notification": 1});
+        }
+      });
 
+
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUserEmail)
+          .get()
+          .then((DocumentSnapshot document) {
+        String username = document["username"];
+
+
+        _firestore
+            .collection("Users")
+            .doc(receiverEmail)
+            .update({"shownotification": "1"});
+
+        _firestore
+            .collection("Users")
+            .doc(receiverEmail)
+            .collection("notifications")
+            .doc("user")
+            .set({"username": username});
+
+        if (document["rool"] == "Eltern") {
+          _firestore
+              .collection("Kinder")
+              .doc(childcode)
+              .update({"shownotification": "1"});
+        }
+      });
     }
   });
+  }
 
-
-
-
-  await FirebaseFirestore.instance
-      .collection("Users")
-      .doc(currentUserEmail)
-      .get()
-      .then((DocumentSnapshot document) {
-    String username = document["username"];
-
-
-    _firestore
-        .collection("Users")
-        .doc(receiverEmail)
-        .update({"shownotification": "1"});
-
-    _firestore
-        .collection("Users")
-        .doc(receiverEmail)
-        .collection("notifications")
-        .doc("user")
-        .set({"username": username});
-
-    if (document["rool"] == "Eltern") {
-      _firestore
-          .collection("Kinder")
-          .doc(childcode)
-          .update({"shownotification": "1"});
-    }
-
-
-  });
-
-
-
-
-
-}
 
   //get messages
 Stream<QuerySnapshot> getMessages(String userID, otherUserID) {
