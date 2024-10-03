@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -5,6 +7,8 @@ import 'package:bubble/pages/kita_pages/feed_page_kita.dart';
 import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
 import 'package:bubble/pages/kita_pages/children_page_kita.dart';
 import 'package:hugeicons/hugeicons.dart';
+
+import '../../helper/notification_controller.dart';
 
 
 class HomePageKita extends StatefulWidget {
@@ -15,6 +19,24 @@ class HomePageKita extends StatefulWidget {
 }
 
 class _HomePageKitaState extends State<HomePageKita> {
+
+
+
+  /// Notification
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+  /// Notification
+
 
 
   int _currentIndex = 0;

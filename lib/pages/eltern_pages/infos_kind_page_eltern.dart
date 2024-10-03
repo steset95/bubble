@@ -52,13 +52,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
   );
 
 
-
-
-
-
   var field = 'erlaubt';
-
-
 
   var optionsGeschlecht = [
     'Žena',
@@ -67,34 +61,8 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
   ];
 
 
-
-
-
-
-
   bool showProgress = false;
   bool visible = false;
-
-
-
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
-
-
-
 
 
 // Bearbeitungsfeld

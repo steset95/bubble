@@ -1,7 +1,11 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:bubble/pages/eltern_pages/profile_page_eltern.dart';
 import 'package:hugeicons/hugeicons.dart';
+import '../../helper/abo_controller.dart';
+import '../../helper/notification_controller.dart';
 import 'child_page_eltern.dart';
 import 'feed_page_eltern.dart';
 import 'infos_kind_page_eltern.dart';
@@ -16,7 +20,24 @@ class HomePageEltern extends StatefulWidget {
 
 class _HomePageElternState extends State<HomePageEltern> {
 
+  /// Notification
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+  }
+
+
+  /// Notification
 
   int _currentIndex = 0;
   List<Widget> body = [

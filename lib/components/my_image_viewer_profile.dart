@@ -6,7 +6,6 @@ import 'package:bubble/database/firestore_images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../database/firestore_images_profile.dart';
 import '../helper/helper_functions.dart';
-import '../old/my_image_upload_button_profile.dart';
 
 
 class ImageViewerProfile extends StatefulWidget {

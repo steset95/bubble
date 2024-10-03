@@ -34,21 +34,13 @@ class _FeedPageKitaState extends State<FeedPageKita> {
   final TextEditingController newPostControllerInhalt = TextEditingController();
 
 
-  /// Notification
-  Timer? timer;
+
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
     CheckMeldung(context).checkMeldung();
   }
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
 
   // Methode: Nachricht Posten Extern

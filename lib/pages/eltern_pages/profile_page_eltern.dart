@@ -37,28 +37,14 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
 
-  /// Notification
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
 
 
   Timer? timer;
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-    _configureSDK();
+    configureSDK();
   }
-
-
-  /// Notification
-
-
-
 
 
 
@@ -137,50 +123,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
     );
   }
 
-
-  Future<void> _configureSDK() async {
-
-    if (kIsWeb == false) {
-      if (Platform.isIOS || Platform.isMacOS) {
-        StoreConfig(
-          store: Store.appStore,
-          apiKey: appleApiKey,
-        );
-      } else if (Platform.isAndroid) {
-        // Run the app passing --dart-define=AMAZON=true
-        StoreConfig(
-          store: Store.playStore,
-          apiKey: googleApiKey,
-        );
-      }
-    }
-
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) async {
-
-      String aboID = document["aboID"].toString();
-
-      // Enable debug logs before calling `configure`.
-      await Purchases.setLogLevel(LogLevel.debug);
-
-
-      PurchasesConfiguration configuration;
-      if (StoreConfig.isForAmazonAppstore()) {
-        configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
-          ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
-      } else {
-        configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
-          ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
-      }
-      await Purchases.configure(configuration);
-
-    });
-  }
 
 
   void goToPage() async {

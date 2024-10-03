@@ -56,7 +56,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                   borderRadius:
                   BorderRadius.all(
                       Radius.circular(10.0))),
-              title: Text("Absenz entfernen",
+              title: Text("Odstrániť neprítmnosť",
                 style: TextStyle(color: Colors.black,
                   fontSize: 20,
                 ),
@@ -74,7 +74,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                     );
                     setState(()  {});
                   },
-                  child: Text("Odstrániť neprítmnosť"),
+                  child: Text("Odstrániť"),
 
                 ),
                 TextButton(
@@ -874,6 +874,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                 ],
               ),
             const SizedBox(height: 5),
+              if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
               Row(
                 children: [
                   Container(
@@ -886,6 +887,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             ],
                                               ),
                                             ),
+
 
                                           ),
                                         ],

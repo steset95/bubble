@@ -53,20 +53,6 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
 
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
 
 
   /// Kind hinzufügen Altert Dialog
@@ -292,6 +278,14 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
         ),
         // Text Eingabe
         content: DropdownButtonFormField<String>(
+
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20.0, vertical: 15.0),
+              labelText: '1/2/3',
+              border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+            ),
           //dropdownColor: Colors.blue[900],
           isDense: true,
           isExpanded: false,
@@ -310,7 +304,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
               ),
             );
           }).toList(),
-          value: _currentItemSelected, onChanged: (newValueSelected) {
+          value: _currentItemSelected,
+          onChanged: (newValueSelected) {
           setState(() {
             _currentItemSelected = newValueSelected!;
           });

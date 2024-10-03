@@ -39,21 +39,6 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
 
 
 // Bearbeitungsfeld

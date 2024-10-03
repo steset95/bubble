@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:bubble/components/my_textfield.dart';
 import '../components/my_chatbubble.dart';
 import '../database/firebase_chat.dart';
 import 'package:intl/intl.dart';
@@ -43,50 +42,47 @@ class _ChatPageState extends State<ChatPage> {
   }
 }
 
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 1), (Timer t) =>
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) {
 
-          String rool = document["rool"];
-          if (rool == "Eltern") {
+void deleteNotification() {
+  FirebaseFirestore.instance
+      .collection("Users")
+      .doc(currentUser?.email)
+      .get()
+      .then((DocumentSnapshot document) {
 
-        FirebaseFirestore.instance
-            .collection("Users")
-            .doc(currentUser?.email)
-            .update({"shownotification": "0"});
+    String rool = document["rool"];
+    if (rool == "Eltern") {
+
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUser?.email)
+          .update({"shownotification": "0"});
 
 
-        FirebaseFirestore.instance
-        .collection("Users")
+      FirebaseFirestore.instance
+          .collection("Users")
           .doc(currentUser?.email)
           .collection("notifications")
           .doc("notification")
           .update({"notification": 0});
+    }
+    if (rool == "Kita") {
 
+      FirebaseFirestore.instance
+          .collection("Kinder")
+          .doc(widget.childcode)
+          .update({"shownotification": "0"});
+    }
+  });
 
-      }
-          if (rool == "Kita") {
+}
 
-        FirebaseFirestore.instance
-            .collection("Kinder")
-            .doc(widget.childcode)
-            .update({"shownotification": "0"});
-
-
-      }
-
-
-    }),
-    );
-
-         }
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 2), (Timer t) => deleteNotification());
+  }
 
   @override
   void dispose() {
