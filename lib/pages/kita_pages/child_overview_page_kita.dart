@@ -9,6 +9,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../components/my_profile_data_icon.dart';
+import '../../helper/helper_functions.dart';
 import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 import 'einwilligungen_kind_page_kita.dart';
@@ -529,15 +530,24 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
 
                           final elternmail = userData["eltern"];
                           String shownotification = userData['shownotification'];
+
                           if(shownotification == "0") {
                             return GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ChatPage(
-                                  receiverID: elternmail, childcode: widget.docID,
-                                )),
-                              );
+                              if (elternmail == "")
+                                {
+                                  displayMessageToUser("Dieťa ešte nebolo pridelené.", context);
+                                }
+                              else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      ChatPage(
+                                        receiverID: elternmail,
+                                        childcode: widget.docID,
+                                      )),
+                                );
+                              }
                             },
                             child: Container(
                               decoration: BoxDecoration(
