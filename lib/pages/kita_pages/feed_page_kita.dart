@@ -35,11 +35,25 @@ class _FeedPageKitaState extends State<FeedPageKita> {
 
 
 
+  /// Notification
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+
+  Timer? timer;
   @override
   void initState() {
     super.initState();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
     CheckMeldung(context).checkMeldung();
   }
+
+
+  /// Notification
 
 
 

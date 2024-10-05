@@ -22,23 +22,6 @@ class _HomePageKitaState extends State<HomePageKita> {
 
 
 
-  /// Notification
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-  /// Notification
-
-
-
   int _currentIndex = 0;
   List<Widget> body = [
     FeedPageKita(),

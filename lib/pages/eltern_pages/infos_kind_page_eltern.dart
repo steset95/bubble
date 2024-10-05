@@ -42,6 +42,27 @@ class InfosKindPageEltern extends StatefulWidget {
 class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
 
+  /// Notification
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+  }
+
+
+  /// Notification
+
+
+
   final currentUser = FirebaseAuth.instance.currentUser;
   final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
 

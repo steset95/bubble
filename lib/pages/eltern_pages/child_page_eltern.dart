@@ -48,14 +48,26 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   final firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
   final Storage storage2 = Storage();
 
+  /// Notification
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
     configureSDK();
     Future.delayed(Duration(milliseconds: 20000), () {aboCheck();});
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
+
+  /// Notification
+
 
 
   var optionsAbholzeit = [

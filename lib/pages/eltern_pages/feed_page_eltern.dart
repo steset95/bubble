@@ -40,6 +40,16 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   final FirestoreDatabaseFeed database = FirestoreDatabaseFeed();
   final currentUser = FirebaseAuth.instance.currentUser;
 
+  /// Notification
+
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  Timer? timer;
 
   @override
   void initState() {
@@ -47,7 +57,11 @@ class _FeedPageElternState extends State<FeedPageEltern> {
     configureSDK();
     Future.delayed(Duration(milliseconds: 20000), () {aboCheck();});
     CheckMeldung(context).checkMeldung();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
+
+  /// Notification
+
 
 
   void notificationNullEltern() {

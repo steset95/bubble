@@ -20,24 +20,6 @@ class HomePageEltern extends StatefulWidget {
 
 class _HomePageElternState extends State<HomePageEltern> {
 
-  /// Notification
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-
-  /// Notification
 
   int _currentIndex = 0;
   List<Widget> body = [

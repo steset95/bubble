@@ -36,7 +36,13 @@ class ProfilePageEltern extends StatefulWidget {
 class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
+  /// Notification
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
 
   Timer? timer;
@@ -44,7 +50,11 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
   void initState() {
     super.initState();
     configureSDK();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
+
+
+  /// Notification
 
 
 

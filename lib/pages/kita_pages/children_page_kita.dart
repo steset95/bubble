@@ -22,11 +22,30 @@ class ChildrenPageKita extends StatefulWidget {
 
 class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
-  // Verweis auf FirestoreDatabaseChild
+
+
+  /// Notification
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+  }
+
+
+  /// Notification
+
+
 
   final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
-
-  // Text Controller für Abfrage des Inhalts im Textfeld
 
   final TextEditingController textController = TextEditingController();
 

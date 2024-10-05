@@ -27,6 +27,26 @@ class ProfilePageKita extends StatefulWidget {
 
 class _ProfilePageKitaState extends State<ProfilePageKita> {
 
+  /// Notification
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+
+  Timer? timer;
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
+  }
+
+
+  /// Notification
+
+
 
   final currentUser = FirebaseAuth.instance.currentUser;
 
