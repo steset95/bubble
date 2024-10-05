@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     final bool emailValid =
-    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+    RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+\.[a-zA-Z]+")
         .hasMatch(emailController.text);
 
     bool hasDigits = passwordController.text.contains(new RegExp(r'[0-9]'));
