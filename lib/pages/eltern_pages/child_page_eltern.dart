@@ -125,16 +125,17 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         .doc(childcode)
         .update({
       field: value,
-      'timestamp': Timestamp.now(),
     });
   }
 
 
   DateTime date = DateTime.now();
 
-  DateTime dateAbsenz = DateTime.now().add(Duration(days:7));
-  late var formattedDateAbsenz = DateFormat('d-MMM-yy').format(dateAbsenz);
+
+  DateTime absenzVon = DateTime.now().add(const Duration(days:1));
   DateTime absenzBis = DateTime.now().add(const Duration(days:7));
+  late var formattedDateAbsenzVon = DateFormat('d-MMM-yy').format(absenzVon);
+  late var formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis);
 
 
 
@@ -161,7 +162,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('Do: $formattedDateAbsenz',
+            Text('Od: $formattedDateAbsenzVon',
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -175,14 +176,48 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 onPressed: () async {
                   DateTime? _newDate = await showDatePicker(
                     context: context,
-                    initialDate: date,
+                    initialDate: absenzVon,
                     firstDate: DateTime(2022),
                     lastDate: DateTime(2030),
                   );
                   if (_newDate == null) {
                     return;
                   } else {
-                    formattedDateAbsenz = DateFormat('d-MMM-yy').format(_newDate);
+                    formattedDateAbsenzVon = DateFormat('d-MMM-yy').format(_newDate);
+                    absenzVon = _newDate;
+                    setState(()  {});
+                  };
+                }
+            ),
+
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Do: $formattedDateAbsenzBis',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+
+            IconButton(
+                icon:  HugeIcon(
+                  icon: HugeIcons.strokeRoundedCalendar03,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+                onPressed: () async {
+                  DateTime? _newDate = await showDatePicker(
+                    context: context,
+                    initialDate: absenzBis,
+                    firstDate: DateTime(2022),
+                    lastDate: DateTime(2030),
+                  );
+                  if (_newDate == null) {
+                    return;
+                  } else {
+                    formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(_newDate);
                     absenzBis = _newDate;
                     setState(()  {});
                   };
@@ -223,15 +258,19 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         child: Text("Uložiť"),
         onPressed: () {
           final value2 = _bemerkungTextController.text;
-          final absenzBis24 = absenzBis.copyWith(hour:23, minute: 59);
+          final absenzVon24 = absenzVon.copyWith(hour:00, minute: 01);
+          final absenzBis24 = absenzBis.copyWith(hour:21, minute: 59);
+
+
+
 
 
           // Raport hinzufügen
 
-            addRaport("anmeldung", 'Neprítomnosť až $formattedDateAbsenz', childcode);
+            //addRaport("anmeldung", 'Neprítomnosť až $formattedDateAbsenzBis', childcode);
             addRaport("absenzText", value2, childcode);
-          addRaportDate("absenzBis", absenzBis24, childcode);
-            addRaport("absenz", "ja", childcode);
+            addRaportDate("absenzVon", absenzVon24, childcode);
+            addRaportDate("absenzBis", absenzBis24, childcode);
             // Textfeld Zatvoriť
             Navigator.pop(context);
           _bemerkungTextController.clear();
@@ -284,20 +323,20 @@ class _ChildPageElternState extends State<ChildPageEltern> {
             fontSize: 20,
           ),
         ),
-        content: InputDecorator(
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: 20.0, vertical: 15.0),
-            labelText: 'Čas',
-            border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
+        content: DropdownButtonFormField<String>(
 
-              isDense: true,
-              isExpanded: false,
-
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.symmetric(
+                  horizontal: 20.0, vertical: 15.0),
+              labelText: 'Čas',
+              border:
+              OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+            ),
+            //dropdownColor: Colors.blue[900],
+            isDense: true,
+            isExpanded: false,
+            //iconEnabledColor: Colors.black,
+            //focusColor: Colors.black,
               items: optionsAbholzeit.map((String dropDownStringItem) {
                 return DropdownMenuItem<String>(
                   value: dropDownStringItem,
@@ -316,9 +355,9 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 abholzeit = newValueSelected;
               });
             },
-            ),
+
           ),
-        ),
+
         actions: [
           TextButton(
             onPressed: () {

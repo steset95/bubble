@@ -132,6 +132,7 @@ class FirestoreDatabaseChild {
       'anmeldung': "Neprítomná / ý",
       'absenzText': "",
       'absenzBis': DateTime.now(),
+      'absenzVon': DateTime.now(),
     });
   }
 

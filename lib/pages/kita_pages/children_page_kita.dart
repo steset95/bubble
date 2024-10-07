@@ -10,6 +10,7 @@ import 'package:bubble/pages/chat_page.dart';
 import 'package:bubble/pages/kita_pages/child_overview_page_kita.dart';
 import 'package:bubble/pages/kita_pages/raport_group_page.dart';
 import '../../helper/notification_controller.dart';
+import 'package:intl/intl.dart';
 
 
 class ChildrenPageKita extends StatefulWidget {
@@ -122,7 +123,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
     );
   }
 
-  DateTime absenzBis = DateTime.now().subtract(const Duration(days:1));
+  DateTime absenzVonAddChild = DateTime.now().subtract(const Duration(days:2));
+  DateTime absenzBisAddChild = DateTime.now().subtract(const Duration(days:1));
 
   void addChild(String child) async {
      DocumentReference docRef = await
@@ -134,7 +136,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       'anmeldung': "Neprítomná / ý",
       'absenzText': "",
       'absenz': "nein",
-      "absenzBis": absenzBis,
+      "absenzVon": absenzVonAddChild,
+      "absenzBis": absenzBisAddChild,
       'timeStamp': Timestamp.now(),
       'kita': currentUser?.email,
       'abholzeit': "",
@@ -834,16 +837,34 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                       String shownotification = data['shownotification'];
                       String absenz = data['absenz'];
 
-                      if (absenz == "ja" && data["absenzBis"].toDate().isBefore(DateTime.now()))
+                      DateTime dateAbsenzVon = data["absenzVon"].toDate();
+                      DateTime dateAbsenzBis = data["absenzBis"].toDate();
+
+
+
+                      DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
+                      String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
+
+                      if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
                       {
                         FirebaseFirestore.instance
                             .collection("Kinder")
                             .doc(document.id)
                             .update({
-                          'absenz': "nein",
-                          'anmeldung': "Neprítomná / ý",
+                          'absenz': "ja",
+                          'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
                         });
                       }
+                      else
+                        {
+                          FirebaseFirestore.instance
+                              .collection("Kinder")
+                              .doc(document.id)
+                              .update({
+                            'absenz': "nein",
+                            'anmeldung': "Neprítomná / ý",
+                          });
+                        }
 
                       bool istAngemeldet = anmeldungText == "Neprítomná / ý";
                       bool hatAbsenz = absenz == "nein";
