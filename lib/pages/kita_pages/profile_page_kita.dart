@@ -329,6 +329,9 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                           sectionName: "O nás",
                           onPressed: () => editFieldBeschreibung("beschreibung", "O nás", userData["beschreibung"],),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
             /*
                         SizedBox(
                           height: 30,

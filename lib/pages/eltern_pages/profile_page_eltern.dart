@@ -369,6 +369,9 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                       ],
                     );
                   // Fehlermeldung wenn nichts vorhanden ist

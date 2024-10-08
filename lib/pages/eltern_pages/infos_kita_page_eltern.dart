@@ -117,7 +117,9 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                         text: beschreibung,
                         sectionName: "Ďalšie informácie",
                       ),
-
+                      SizedBox(
+                        height: 30,
+                      ),
                     ],
                   ),
                 );

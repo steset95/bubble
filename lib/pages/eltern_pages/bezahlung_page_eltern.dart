@@ -137,12 +137,17 @@ class BezahlungPageState extends State<BezahlungPage> {
               ),
               content: Container(
                 height: 50,
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Aktívna do: ${expirationDateOutput}"),
-                   // Text("Abo gelöst am: ${originalpurchasedateOutput}"),
-                    Text("(Automatické mesačné obnovenie)")
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Aktívna do: ${expirationDateOutput}"),
+                       // Text("Abo gelöst am: ${originalpurchasedateOutput}"),
+                        Text("(Automatické mesačné obnovenie)")
+                      ],
+                    ),
                   ],
                 ),
               ),
