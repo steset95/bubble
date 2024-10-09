@@ -177,7 +177,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                   DateTime? _newDate = await showDatePicker(
                     context: context,
                     initialDate: absenzVon,
-                    firstDate: DateTime(2022),
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2030),
                   );
                   if (_newDate == null) {
@@ -211,7 +211,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                   DateTime? _newDate = await showDatePicker(
                     context: context,
                     initialDate: absenzBis,
-                    firstDate: DateTime(2022),
+                    firstDate: absenzVon,
                     lastDate: DateTime(2030),
                   );
                   if (_newDate == null) {
