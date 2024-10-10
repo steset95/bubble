@@ -111,7 +111,7 @@
     },
     {
       "name": "file",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/file-7.0.0",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/file-7.0.1",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -441,7 +441,7 @@
     },
     {
       "name": "sqflite_common",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common-2.5.4+4",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/sqflite_common-2.5.4+5",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -489,9 +489,9 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.3.0",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/url_launcher-6.3.1",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.3"
     },
     {
       "name": "url_launcher_android",
@@ -584,7 +584,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-10-07T16:38:40.206709Z",
+  "generated": "2024-10-10T07:22:04.661871Z",
   "generator": "pub",
   "generatorVersion": "3.6.0-76.0.dev",
   "flutterRoot": "file:///C:/Users/Stefan/Documents/flutter",

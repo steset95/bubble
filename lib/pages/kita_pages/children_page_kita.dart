@@ -857,13 +857,16 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                       }
                       else
                         {
-                          FirebaseFirestore.instance
-                              .collection("Kinder")
-                              .doc(document.id)
-                              .update({
-                            'absenz': "nein",
-                            'anmeldung': "Neprítomná / ý",
-                          });
+                          if (absenz == "ja")
+                          {
+                            FirebaseFirestore.instance
+                                .collection("Kinder")
+                                .doc(document.id)
+                                .update({
+                              'absenz': "nein",
+                              'anmeldung': "Neprítomná / ý",
+                            });
+                          }
                         }
 
                       bool istAngemeldet = anmeldungText == "Neprítomná / ý";
@@ -1008,15 +1011,36 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                     String shownotification = data['shownotification'];
                     String absenz = data['absenz'];
 
-                    if (absenz == "ja" && data["absenzBis"].toDate().isBefore(DateTime.now()))
+                    DateTime dateAbsenzVon = data["absenzVon"].toDate();
+                    DateTime dateAbsenzBis = data["absenzBis"].toDate();
+
+
+
+                    DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
+                    String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
+
+                    if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
                     {
                       FirebaseFirestore.instance
                           .collection("Kinder")
                           .doc(document.id)
                           .update({
-                        'absenz': "nein",
-                        'anmeldung': "Neprítomná / ý",
+                        'absenz': "ja",
+                        'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
                       });
+                    }
+                    else
+                    {
+                      if (absenz == "ja")
+                      {
+                        FirebaseFirestore.instance
+                            .collection("Kinder")
+                            .doc(document.id)
+                            .update({
+                          'absenz': "nein",
+                          'anmeldung': "Neprítomná / ý",
+                        });
+                      }
                     }
 
                     bool istAngemeldet = anmeldungText == "Neprítomná / ý";
@@ -1161,17 +1185,36 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                     String shownotification = data['shownotification'];
                     String absenz = data['absenz'];
 
+                    DateTime dateAbsenzVon = data["absenzVon"].toDate();
+                    DateTime dateAbsenzBis = data["absenzBis"].toDate();
 
 
-                    if (absenz == "ja" && data["absenzBis"].toDate().isBefore(DateTime.now()))
+
+                    DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
+                    String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
+
+                    if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
                     {
                       FirebaseFirestore.instance
                           .collection("Kinder")
                           .doc(document.id)
                           .update({
-                        'absenz': "nein",
-                        'anmeldung': "Neprítomná / ý",
+                        'absenz': "ja",
+                        'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
                       });
+                    }
+                    else
+                    {
+                      if (absenz == "ja")
+                      {
+                        FirebaseFirestore.instance
+                            .collection("Kinder")
+                            .doc(document.id)
+                            .update({
+                          'absenz': "nein",
+                          'anmeldung': "Neprítomná / ý",
+                        });
+                      }
                     }
 
                     bool istAngemeldet = anmeldungText == "Neprítomná / ý";
@@ -1180,7 +1223,6 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                     var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
                     var color2 = istAngemeldet ? Colors.black : Colors.white;
                     var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
-
                     // als List Tile wiedergeben
                     return GestureDetector(
                       onTap: () {
