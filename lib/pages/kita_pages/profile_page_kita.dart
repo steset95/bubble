@@ -12,6 +12,7 @@ import 'package:bubble/pages/impressum_page.dart';
 import 'package:bubble/pages/kita_pages/provision_page_kita.dart';
 import 'package:hugeicons/hugeicons.dart';
 
+import '../../components/my_profile_data_icon_delete.dart';
 import '../../helper/notification_controller.dart';
 
 
@@ -58,6 +59,88 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
   );
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  final TextEditingController deleteCheck = TextEditingController();
+
+  void openBoxDelete({String? docID}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.all(
+                Radius.circular(10.0))),
+        title: Text("Zmazať používateľský účet?",
+          style: TextStyle(color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        content:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("6 + 11 ="),
+            const SizedBox(width: 5,),
+            Container(
+              width: 50,
+              child: TextFormField(
+                contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                  // If supported, show the system context menu.
+                  if (SystemContextMenu.isSupported(context)) {
+                    return SystemContextMenu.editableText(
+                      editableTextState: editableTextState,
+                    );
+                  }
+                  // Otherwise, show the flutter-rendered context menu for the current
+                  // platform.
+                  return AdaptiveTextSelectionToolbar.editableText(
+                    editableTextState: editableTextState,
+                  );
+                },
+                controller: deleteCheck,
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: "?",
+                  counterText: "",
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (deleteCheck.text == "17") {
+                _firebaseAuth.currentUser?.delete();
+                deleteCheck.clear();
+                Navigator.pop(context);
+                FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(currentUser?.email)
+                    .delete();
+                _firebaseAuth.currentUser?.delete();
+                _firebaseAuth.signOut();
+              }
+              else
+              {
+                deleteCheck.clear();
+                Navigator.pop(context);
+              }
+            },
+            child: Text("Potvrdiť Vymazať"),
+          ),
+          TextButton(
+            onPressed: () {
+              deleteCheck.clear();
+              Navigator.pop(context);
+            },
+            child: Text("Zrušiť"),
+          )
+        ],
+      ),
+    );
+  }
 
 
 
@@ -302,9 +385,9 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                           onPressed: () => editField("username", "Meno", userData["username"], ),
                         ),
 
-                        ProfileDataReadOnly(
+                        MyProfileDataIconDelete(
                           text: userData["email"],
-                          sectionName: "Email",
+                          sectionName: "Email", onPressed: () => openBoxDelete(),
                         ),
                         ProfileData(
                           text: userData["adress"],
@@ -332,67 +415,6 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                         SizedBox(
                           height: 10,
                         ),
-            /*
-                        SizedBox(
-                          height: 30,
-                        ),
-                        GestureDetector(
-                          onTap:  createUserDocument,
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Provízia ",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                  color: Theme.of(context).colorScheme.primary,),
-                                  ),
-                                  HugeIcon(
-                                    icon: HugeIcons.strokeRoundedInformationCircle,
-                                    color: Theme.of(context).colorScheme.primary,
-                                    size: 15,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Container(
-                                          decoration: BoxDecoration(
-
-                                              borderRadius: BorderRadius.all(Radius.circular(100))
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text (userData["guthaben"].toString(),
-                                                      style: TextStyle(
-                                                      fontSize: 30,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-
-            */
                       ],
                     );
                   // Fehlermeldung wenn nichts vorhanden ist

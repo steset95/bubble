@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bubble/components/my_profile_data_icon_delete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,6 +69,88 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
   );
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final TextEditingController deleteCheck = TextEditingController();
+
+  void openBoxDelete({String? docID}) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius:
+            BorderRadius.all(
+                Radius.circular(10.0))),
+        title: Text("Zmazať používateľský účet?",
+          style: TextStyle(color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        content:
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("6 + 11 ="),
+            const SizedBox(width: 5,),
+            Container(
+              width: 50,
+              child: TextFormField(
+                contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+                  // If supported, show the system context menu.
+                  if (SystemContextMenu.isSupported(context)) {
+                    return SystemContextMenu.editableText(
+                      editableTextState: editableTextState,
+                    );
+                  }
+                  // Otherwise, show the flutter-rendered context menu for the current
+                  // platform.
+                  return AdaptiveTextSelectionToolbar.editableText(
+                    editableTextState: editableTextState,
+                  );
+                },
+                controller: deleteCheck,
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: "?",
+                  counterText: "",
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (deleteCheck.text == "17") {
+                _firebaseAuth.currentUser?.delete();
+                deleteCheck.clear();
+                Navigator.pop(context);
+                FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(currentUser?.email)
+                    .delete();
+                _firebaseAuth.currentUser?.delete();
+                _firebaseAuth.signOut();
+              }
+              else
+                {
+                  deleteCheck.clear();
+                  Navigator.pop(context);
+                }
+            },
+            child: Text("Potvrdiť Vymazať"),
+          ),
+          TextButton(
+            onPressed: () {
+              deleteCheck.clear();
+              Navigator.pop(context);
+            },
+            child: Text("Zrušiť"),
+          )
+        ],
+      ),
+    );
+  }
+
 
 
 
@@ -314,9 +397,9 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                           onPressed: () => editField("username", "Meno a Priezvisko", userData["username"]),
                         ),
 
-                        ProfileDataReadOnly(
+                        MyProfileDataIconDelete(
                           text: userData["email"],
-                          sectionName: "Email",
+                          sectionName: "Email", onPressed: () => openBoxDelete(),
 
                         ),
                         ProfileData(
@@ -336,10 +419,10 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                           sectionName: "Mobilné číslo",
                           onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
                         ),
-
                         SizedBox(
                           height: 30,
                         ),
+
 
 
                         /// Payment
@@ -372,6 +455,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                         SizedBox(
                           height: 10,
                         ),
+
                       ],
                     );
                   // Fehlermeldung wenn nichts vorhanden ist

@@ -8,7 +8,7 @@ Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Pred
 Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov.""";
 
 //TO DO: add the Apple API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
-const appleApiKey = 'appl_XNCazFpDSpRBFabpAJNZYhyMJBa';
+const appleApiKey = 'appl_aIJDOTsqahoyXXOuIdglkLBclEf';
 
 //TO DO: add the Google API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
 const googleApiKey = 'goog_edQbTFZXsBGixBmXyGfIVawYltB';
