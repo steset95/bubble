@@ -1,5 +1,7 @@
 
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -101,6 +103,7 @@ class PaywallElternState extends State<PaywallEltern> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          if (Platform.isIOS)
                           TextButton(
                             onPressed: () async {
                               await launchUrl(

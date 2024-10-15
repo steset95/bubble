@@ -370,7 +370,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        Text('3 Euro / mesiac'),
+                        Text('2.99 Euro / mesiac'),
                       ],
                     ),
                   ],
