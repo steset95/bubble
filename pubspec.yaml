@@ -47,6 +47,7 @@ dependencies:
   url_launcher: ^6.3.0
   purchases_flutter: ^7.0.2
   hugeicons: ^0.0.7
+  onesignal_flutter: ^5.2.6
 
 
 

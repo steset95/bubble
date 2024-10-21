@@ -5,6 +5,8 @@ import 'package:bubble/auth/login_or_register.dart';
 
 import 'package:bubble/pages/kita_pages/home_page_kita.dart';
 import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import '../helper/abo_controller.dart';
 import '../pages/eltern_pages/home_page_eltern.dart';
 
 
@@ -58,9 +60,10 @@ class _RoolSwitcherState extends State<RoolSwitcher> {
                   else if (snapshot.hasData) {
                     // Entsprechende Daten extrahieren
                     final userData = snapshot.data?.data() as Map<String, dynamic>;
-
+                    OneSignal.login(userData["email"]);
                     // Inhalt Daten
                     if (userData["rool"] == "Eltern") {
+
                       return
                         HomePageEltern();
                     }

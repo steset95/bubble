@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../../components/my_progressindicator.dart';
-import '../../helper/notification_controller.dart';
 import '../../database/firestore_images.dart';
 import '../../helper/helper_functions.dart';
 

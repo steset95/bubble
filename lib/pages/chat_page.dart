@@ -51,18 +51,16 @@ class _ChatPageState extends State<ChatPage> {
         FirebaseFirestore.instance
             .collection("Users")
             .doc(currentUser?.email)
-            .collection("notifications")
-            .doc("block")
-            .set({"block": widget.receiverID});
+            .update(
+            {'notificationBlock': widget.receiverID});
       }
 
   void blockOFF() {
     FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
-        .collection("notifications")
-        .doc("block")
-        .set({"block": ""});
+        .update(
+        {'notificationBlock': ""});
   }
 
 

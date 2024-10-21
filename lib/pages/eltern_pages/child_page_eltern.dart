@@ -14,7 +14,6 @@ import '../../database/firestore_images.dart';
 import '../../database/firestore_images_profile.dart';
 import '../../helper/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
-import '../../helper/notification_controller.dart';
 import 'package:intl/intl.dart';
 import '../../helper/helper_functions.dart';
 
@@ -48,25 +47,15 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   final firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
   final Storage storage2 = Storage();
 
-  /// Notification
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-  Timer? timer;
 
   @override
   void initState() {
     super.initState();
     configureSDK();
     Future.delayed(Duration(milliseconds: 20000), () {aboCheck();});
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
 
-  /// Notification
 
 
 

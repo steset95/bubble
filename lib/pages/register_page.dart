@@ -44,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String tel = "";
   String childcode = "";
   String childcode2 = "";
-  String iban = "";
   int guthaben = 0;
   String gruppe1 = "Skupina 1";
   String gruppe2 = "Skupina 2";
@@ -168,6 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "aboBis": aboBis,
         "aboID": aboID,
         "checkmeldung": checkMeldung,
+        'notificationBlock': "",
         'date': DateTime.now(),
       });
     }
@@ -184,17 +184,16 @@ class _RegisterPageState extends State<RegisterPage> {
         'adress': adress,
         'adress2': adress2,
         'tel': tel,
-        'iban': iban,
         'guthaben': guthaben,
         "checkmeldung": checkMeldung,
         'gruppe1': gruppe1,
         'gruppe2': gruppe2,
         'gruppe3': gruppe3,
-        "shownotification": shownotification,
         'beschreibung':  beschreibung,
         'anzahlKinder1': anzahlKinder,
         'anzahlKinder2': anzahlKinder,
         'anzahlKinder3': anzahlKinder,
+        'notificationBlock': "",
       });
       FirebaseFirestore.instance
           .collection("Users")

@@ -109,17 +109,6 @@ class ImpressumPageState extends State<ImpressumPage> {
                                 style: TextStyle(fontSize: 10),
                               ),
                             ),
-                            if (Platform.isIOS)
-                              TextButton(
-                                onPressed: () async {
-                                  await launchUrl(
-                                      Uri.parse('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/')); // Add URL which you want here
-                                  // Navigator.of(context).pushNamed(SignUpScreen.routeName);
-                                },
-                                child: Text("EULA",
-                                  style: TextStyle(fontSize: 10),
-                                ),
-                              ),
                           ],
                         ),
                       ],

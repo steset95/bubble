@@ -16,7 +16,6 @@ final currentUser = FirebaseAuth.instance.currentUser;
 
 Future<void> configureSDK() async {
 
-  Purchases.setLogLevel(LogLevel.debug);
 
   if (kIsWeb == false) {
     if (Platform.isIOS || Platform.isMacOS) {

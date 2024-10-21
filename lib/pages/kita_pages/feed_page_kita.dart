@@ -8,10 +8,7 @@ import 'package:bubble/database/firestore_feed.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import 'package:bubble/pages/kita_pages/post_page_kita.dart';
-
 import '../../helper/check_meldung.dart';
-import '../../helper/notification_controller.dart';
-import '../../helper/helper_functions.dart';
 
 
 class FeedPageKita extends StatefulWidget {
@@ -35,25 +32,13 @@ class _FeedPageKitaState extends State<FeedPageKita> {
 
 
 
-  /// Notification
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-
-  Timer? timer;
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
     CheckMeldung(context).checkMeldung();
   }
 
-
-  /// Notification
 
 
 
@@ -85,6 +70,7 @@ class _FeedPageKitaState extends State<FeedPageKita> {
   }
 
 bool externPost = false;
+
 
 
   Widget showButtons () {

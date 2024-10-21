@@ -9,11 +9,9 @@ import 'package:flutter/widgets.dart';
 import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/impressum_page.dart';
-import 'package:bubble/pages/kita_pages/provision_page_kita.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 import '../../components/my_profile_data_icon_delete.dart';
-import '../../helper/notification_controller.dart';
 
 
 
@@ -27,25 +25,6 @@ class ProfilePageKita extends StatefulWidget {
 }
 
 class _ProfilePageKitaState extends State<ProfilePageKita> {
-
-  /// Notification
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-
-  /// Notification
 
 
 
@@ -112,12 +91,11 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
           TextButton(
             onPressed: () {
               if (deleteCheck.text == "17") {
-                _firebaseAuth.currentUser?.delete();
-                deleteCheck.clear();
+                final user = currentUser?.email;
                 Navigator.pop(context);
                 FirebaseFirestore.instance
                     .collection("Users")
-                    .doc(currentUser?.email)
+                    .doc(user)
                     .delete();
                 _firebaseAuth.currentUser?.delete();
                 _firebaseAuth.signOut();

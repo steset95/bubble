@@ -7,10 +7,7 @@ import 'package:bubble/pages/chat_page.dart';
 import 'package:bubble/pages/kita_pages/raport_page.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:share_plus/share_plus.dart';
-
-import '../../components/my_profile_data_icon.dart';
 import '../../helper/helper_functions.dart';
-import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 import 'einwilligungen_kind_page_kita.dart';
 import 'images_page_kita.dart';

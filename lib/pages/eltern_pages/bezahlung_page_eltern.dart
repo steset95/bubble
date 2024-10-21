@@ -42,21 +42,6 @@ class BezahlungPageState extends State<BezahlungPage> {
 
 
 
-  Future<void> initPlatformState() async {
-    appData.appUserID = await Purchases.appUserID;
-
-    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
-      appData.appUserID = await Purchases.appUserID;
-
-      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-      EntitlementInfo? entitlement =
-      customerInfo.entitlements.all[entitlementID];
-      appData.entitlementIsActive = entitlement?.isActive ?? false;
-
-      setState(() {});
-    });
-  }
-
   bool _isLoading = false;
 
   void perfomMagic() async {

@@ -11,7 +11,6 @@ import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../components/my_profile_data_read_only.dart';
 import '../../helper/check_meldung.dart';
-import '../../helper/notification_controller.dart';
 import '../../helper/abo_controller.dart';
 import '../chat_page.dart';
 import 'addkind_page_eltern.dart';
@@ -40,16 +39,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   final FirestoreDatabaseFeed database = FirestoreDatabaseFeed();
   final currentUser = FirebaseAuth.instance.currentUser;
 
-  /// Notification
 
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-  Timer? timer;
 
   @override
   void initState() {
@@ -57,10 +47,9 @@ class _FeedPageElternState extends State<FeedPageEltern> {
     configureSDK();
     Future.delayed(Duration(milliseconds: 20000), () {aboCheck();});
     CheckMeldung(context).checkMeldung();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
 
-  /// Notification
+
 
 
 

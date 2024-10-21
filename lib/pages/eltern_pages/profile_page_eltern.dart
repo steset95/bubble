@@ -16,10 +16,6 @@ import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 import '../../helper/abo_controller.dart';
 import '../../helper/constant.dart';
-import '../../helper/helper_functions.dart';
-import '../../helper/notification_controller.dart';
-import 'package:intl/intl.dart';
-import '../../helper/store_helper.dart';
 import '../impressum_page.dart';
 
 
@@ -37,25 +33,12 @@ class ProfilePageEltern extends StatefulWidget {
 class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
-  /// Notification
 
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-
-  Timer? timer;
   @override
   void initState() {
     super.initState();
     configureSDK();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
   }
-
-
-  /// Notification
 
 
 
@@ -121,12 +104,11 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           TextButton(
             onPressed: () {
               if (deleteCheck.text == "17") {
-                _firebaseAuth.currentUser?.delete();
-                deleteCheck.clear();
+                final user = currentUser?.email;
                 Navigator.pop(context);
                 FirebaseFirestore.instance
                     .collection("Users")
-                    .doc(currentUser?.email)
+                    .doc(user)
                     .delete();
                 _firebaseAuth.currentUser?.delete();
                 _firebaseAuth.signOut();

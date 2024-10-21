@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../components/my_message.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 
 class MyChat{
@@ -9,6 +12,39 @@ class MyChat{
 final currentUser = FirebaseAuth.instance.currentUser;
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+
+
+void sendNotification(String externalUserId, String message) async {
+  const String apiKey = 'ODhiMzkzMGQtOGRhZS00YThjLWI4OWEtNjRjZWYxZDA5MWYx';
+  const String appId = '07271cf6-8465-4933-afc9-6e964380f91c';
+  try {
+    var url = Uri.parse("https://onesignal.com/api/v1/notifications");
+    var client = http.Client();
+
+    var headers = {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": "Basic $apiKey", //from one signal
+    };
+
+    var body = {
+      "app_id": appId,
+      "contents": {"en": message, "sk": message, "de": message},
+      "include_external_user_ids": [externalUserId],
+    };
+
+    var response =
+    await client.post(url, headers: headers, body: json.encode(body));
+
+    if (response.statusCode == 200) {
+      print("Notification sent successfully");
+    } else {
+      print("Error sending notification: ${response.statusCode}");
+    }
+  } catch (e) {
+    print(e);
+  }
+}
 
 
 Future<void> sendMessage(String receiverEmail, message, String childcode) async {
@@ -49,64 +85,22 @@ Future<void> sendMessage(String receiverEmail, message, String childcode) async 
   await FirebaseFirestore.instance
       .collection("Users")
       .doc(receiverEmail)
-      .collection("notifications")
-      .doc("block")
       .get()
       .then((DocumentSnapshot document) async {
 
-    if (document.exists) {
-      String block = document["block"];
+      String block = document["notificationBlock"];
 
       if (block != currentUserEmail) {
-        await FirebaseFirestore.instance
-            .collection("Users")
-            .doc(receiverEmail)
-            .collection("notifications")
-            .doc("notification")
-            .get()
-            .then((DocumentSnapshot document) {
-          if (document.exists) {
-            var notificationNumber = document["notification"];
-            int not = (notificationNumber + 1);
-
-
-            _firestore
-                .collection("Users")
-                .doc(receiverEmail)
-                .collection("notifications")
-                .doc("notification")
-                .update({"notification": not});
-          }
-          else {
-            _firestore
-                .collection("Users")
-                .doc(receiverEmail)
-                .collection("notifications")
-                .doc("notification")
-                .set({"notification": 1});
-          }
-        });
-
 
         await FirebaseFirestore.instance
             .collection("Users")
             .doc(currentUserEmail)
             .get()
-            .then((DocumentSnapshot document) {
+            .then((DocumentSnapshot document) async {
+
           String username = document["username"];
 
-
-          _firestore
-              .collection("Users")
-              .doc(receiverEmail)
-              .update({"shownotification": "1"});
-
-          _firestore
-              .collection("Users")
-              .doc(receiverEmail)
-              .collection("notifications")
-              .doc("user")
-              .set({"username": username});
+          sendNotification(receiverEmail, "Nové správy od $username");
 
           if (document["rool"] == "Eltern") {
             _firestore
@@ -114,70 +108,17 @@ Future<void> sendMessage(String receiverEmail, message, String childcode) async 
                 .doc(childcode)
                 .update({"shownotification": "1"});
           }
+          else
+            {
+              _firestore
+                  .collection("Users")
+                  .doc(receiverEmail)
+                  .update({"shownotification": "1"});
+            }
         });
       }
-    }
-    else {
-
-      await FirebaseFirestore.instance
-          .collection("Users")
-          .doc(receiverEmail)
-          .collection("notifications")
-          .doc("notification")
-          .get()
-          .then((DocumentSnapshot document) {
-        if (document.exists) {
-          var notificationNumber = document["notification"];
-          int not = (notificationNumber + 1);
-
-
-          _firestore
-              .collection("Users")
-              .doc(receiverEmail)
-              .collection("notifications")
-              .doc("notification")
-              .update({"notification": not});
-        }
-        else {
-          _firestore
-              .collection("Users")
-              .doc(receiverEmail)
-              .collection("notifications")
-              .doc("notification")
-              .set({"notification": 1});
-        }
       });
 
-
-      await FirebaseFirestore.instance
-          .collection("Users")
-          .doc(currentUserEmail)
-          .get()
-          .then((DocumentSnapshot document) {
-        String username = document["username"];
-
-
-        _firestore
-            .collection("Users")
-            .doc(receiverEmail)
-            .update({"shownotification": "1"});
-
-        _firestore
-            .collection("Users")
-            .doc(receiverEmail)
-            .collection("notifications")
-            .doc("user")
-            .set({"username": username});
-
-        if (document["rool"] == "Eltern") {
-          _firestore
-              .collection("Kinder")
-              .doc(childcode)
-              .update({"shownotification": "1"});
-        }
-      });
-    }
-  });
   }
 
 

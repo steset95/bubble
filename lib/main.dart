@@ -9,7 +9,7 @@ import 'package:intl/intl.dart' as intl;
 import 'package:bubble/auth/auth.dart';
 import 'package:bubble/theme/light_mode.dart';
 import 'firebase_options.dart';
-import 'helper/notification_controller.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 
 
@@ -17,34 +17,18 @@ import 'helper/notification_controller.dart';
 void main() async {
 
   intl.Intl.defaultLocale = 'sk';
-
-
-
-  /// AwesomeNotifications
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-      channelGroupKey: "basic_channel_group",
-      channelKey: "basic_channel",
-      channelName: "Basic Notification",
-      channelDescription: "Basic notifications channel",
-    )
-  ], channelGroups: [
-    NotificationChannelGroup(
-      channelGroupKey: "basic_channel_group",
-      channelGroupName: "Basic Group",
-    )
-  ]);
-  bool isAllowedToSendNotification =
-  await AwesomeNotifications().isNotificationAllowed();
-  if (!isAllowedToSendNotification) {
-    AwesomeNotifications().requestPermissionToSendNotifications();
-
-  }
-  /// AwesomeNotifications
-
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+//Remove this method to stop OneSignal Debugging
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+
+  OneSignal.initialize("07271cf6-8465-4933-afc9-6e964380f91c");
+
+// The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+  OneSignal.Notifications.requestPermission(true);
+
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
 
   runApp(const MyApp());
@@ -57,22 +41,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-
-
-  @override
-  void initState() {
-    initState();
-    AwesomeNotifications().setListeners(
-        onActionReceivedMethod: NotificationController.onActionReceivedMethod,
-        onNotificationCreatedMethod:
-        NotificationController.onNotificationCreatedMethod,
-        onNotificationDisplayedMethod:
-        NotificationController.onNotificationDisplayedMethod,
-        onDismissActionReceivedMethod:
-        NotificationController.onDismissActionReceivedMethod);
-  }
-
 
 
 

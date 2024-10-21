@@ -14,7 +14,6 @@ import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 import '../../components/my_image_viewer_profile.dart';
 import '../../components/my_profile_data_icon.dart';
 import '../../components/my_profile_data_switch.dart';
-import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 import '../../helper/helper_functions.dart';
 import 'addkind_page_eltern.dart';
@@ -42,24 +41,6 @@ class InfosKindPageEltern extends StatefulWidget {
 class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
 
-  /// Notification
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-
-  /// Notification
 
 
 

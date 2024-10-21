@@ -60,8 +60,8 @@ file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.4+
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/cross_file-0.3.4+2/lib/
 crypto
 3.4
-file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.5/
-file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.5/lib/
+file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.6/
+file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/crypto-3.0.6/lib/
 cupertino_icons
 3.1
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/cupertino_icons-1.0.8/
@@ -119,9 +119,9 @@ firebase_storage_web
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage_web-3.9.7/
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_storage_web-3.9.7/lib/
 fixnum
-2.19
-file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.0/
-file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.0/lib/
+3.1
+file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.1/
+file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/fixnum-1.1.1/lib/
 flutter_cache_manager
 3.0
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_cache_manager-3.4.1/
@@ -194,6 +194,10 @@ octo_image
 3.0
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/octo_image-2.1.0/
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/octo_image-2.1.0/lib/
+onesignal_flutter
+2.12
+file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/onesignal_flutter-5.2.6/
+file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/onesignal_flutter-5.2.6/lib/
 path
 3.0
 file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.9.0/

@@ -1,14 +1,9 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bubble/components/my_list_tile_feed_kita.dart';
 import 'package:bubble/database/firestore_feed.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:intl/intl.dart';
-
-import '../../helper/notification_controller.dart';
 import '../../helper/helper_functions.dart';
 
 

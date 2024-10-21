@@ -9,7 +9,6 @@ import 'package:bubble/database/firestore_child.dart';
 import 'package:bubble/pages/chat_page.dart';
 import 'package:bubble/pages/kita_pages/child_overview_page_kita.dart';
 import 'package:bubble/pages/kita_pages/raport_group_page.dart';
-import '../../helper/notification_controller.dart';
 import 'package:intl/intl.dart';
 
 
@@ -23,26 +22,6 @@ class ChildrenPageKita extends StatefulWidget {
 
 class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
-
-
-  /// Notification
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
-  }
-
-
-  Timer? timer;
-  @override
-  void initState() {
-    super.initState();
-    timer = Timer.periodic(Duration(seconds: 10), (Timer t) => NotificationController().notificationCheck());
-  }
-
-
-  /// Notification
 
 
 

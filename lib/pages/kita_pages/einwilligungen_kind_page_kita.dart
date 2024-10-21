@@ -7,13 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:pay/pay.dart';
-import 'package:bubble/components/my_profile_data.dart';
-
 import '../../components/my_profile_data_erlaubnis.dart';
-import '../../components/my_profile_data_read_only.dart';
 import '../../helper/helper_functions.dart';
-import '../../helper/notification_controller.dart';
 import '../../database/firestore_child.dart';
 
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:bubble/pages/eltern_pages/profile_page_eltern.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../../helper/abo_controller.dart';
-import '../../helper/notification_controller.dart';
 import 'child_page_eltern.dart';
 import 'feed_page_eltern.dart';
 import 'infos_kind_page_eltern.dart';

@@ -8,7 +8,6 @@ import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
 import 'package:bubble/pages/kita_pages/children_page_kita.dart';
 import 'package:hugeicons/hugeicons.dart';
 
-import '../../helper/notification_controller.dart';
 
 
 class HomePageKita extends StatefulWidget {
