@@ -396,7 +396,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Uri.parse('https://bubble-app.sk/terms_and_conditions')); // Add URL which you want here
                           // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                           },
-                      child: Text("ABG",
+                      child: Text("AGB",
                         style: TextStyle(color: Colors.lightBlue,
                           fontSize: 12,
                         ),

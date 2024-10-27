@@ -45,7 +45,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   void initState() {
     super.initState();
     configureSDK();
-    Future.delayed(Duration(milliseconds: 20000), () {aboCheck();});
+    Future.delayed(Duration(milliseconds: 10000), () {aboCheck();});
     CheckMeldung(context).checkMeldung();
   }
 

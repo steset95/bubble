@@ -53,7 +53,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
   void initState() {
     super.initState();
     configureSDK();
-    Future.delayed(Duration(milliseconds: 20000), () {aboCheck();});
+    Future.delayed(Duration(milliseconds: 10000), () {aboCheck();});
   }
 
 
