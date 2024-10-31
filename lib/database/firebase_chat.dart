@@ -31,6 +31,8 @@ void sendNotification(String externalUserId, String message) async {
       "app_id": appId,
       "contents": {"en": message, "sk": message, "de": message},
       "include_external_user_ids": [externalUserId],
+      "ios_sound": "default",
+      "android_sound": "default",
     };
 
     var response =

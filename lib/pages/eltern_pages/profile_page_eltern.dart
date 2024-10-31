@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:bubble/components/my_profile_data.dart';
@@ -265,6 +266,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
   Future logOut()  async {
+    OneSignal.logout();
     await _firebaseAuth.signOut();
   }
 

@@ -10,6 +10,7 @@ import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/impressum_page.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../../components/my_profile_data_icon_delete.dart';
 
@@ -248,6 +249,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
   }
 
   Future logOut()  async {
+    OneSignal.logout();
     await _firebaseAuth.signOut();
   }
 
