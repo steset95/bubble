@@ -1,11 +1,8 @@
 
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../../components/my_profile_data_erlaubnis.dart';
 import '../../helper/helper_functions.dart';
@@ -16,7 +13,7 @@ import '../../database/firestore_child.dart';
 class EinwilligungenKindPageKita extends StatefulWidget {
   final String docID;
 
-  EinwilligungenKindPageKita({
+  const EinwilligungenKindPageKita({
     super.key,
     required this.docID
   });
@@ -96,6 +93,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
         .then((DocumentSnapshot document) {
       if (document.exists)
       {
+        if (!mounted) return;
         displayMessageToUser("Pole už existuje", context);
       }
       else {
@@ -114,7 +112,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
             .where("kita", isEqualTo: currentUser?.email)
             .get()
             .then((snapshot) {
-          snapshot.docs.forEach((doc) {
+          for (var doc in snapshot.docs) {
             doc.reference
                 .collection("Einwilligungen_Felder")
                 .doc(titel)
@@ -122,7 +120,7 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
               'titel': titel,
               'value': "nicht erlaubt",
             });
-          });
+          }
         });
       }
     });
@@ -172,12 +170,12 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
         .where("kita", isEqualTo: currentUser?.email)
         .get()
         .then((snapshot) {
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
         doc.reference
             .collection("Einwilligungen_Felder")
             .doc(titel)
             .delete();
-      });
+      }
     });
 
   }

@@ -14,7 +14,7 @@ import 'package:intl/intl.dart';
 
 class ChildrenPageKita extends StatefulWidget {
 
-  ChildrenPageKita({super.key});
+  const ChildrenPageKita({super.key});
 
   @override
   State<ChildrenPageKita> createState() => _ChildrenPageKitaState();
@@ -136,7 +136,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
          .collection("Info_Felder")
          .get()
          .then((snapshot) {
-       snapshot.docs.forEach((doc) {
+       for (var doc in snapshot.docs) {
 
          FirebaseFirestore.instance
              .collection("Users")
@@ -160,7 +160,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
          });
 
-       });
+       }
        });
 
      FirebaseFirestore.instance
@@ -169,7 +169,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
          .collection("Einwilligungen_Felder")
          .get()
          .then((snapshot) {
-       snapshot.docs.forEach((doc) {
+       for (var doc in snapshot.docs) {
 
          FirebaseFirestore.instance
              .collection("Users")
@@ -193,7 +193,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
          });
 
-       });
+       }
      });
 
 
@@ -208,8 +208,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       });
 
 
-
-    return showDialog(
+     if (!mounted) return;
+     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(
@@ -381,7 +381,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
             BorderRadius.all(
                 Radius.circular(10.0))),
         title: Text(
-          "$titel",
+          titel,
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -492,11 +492,13 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                 .then((DocumentSnapshot document) {
               final  buttonstogroup = 'gruppe$buttons';
               final String titel = document[buttonstogroup];
-              Navigator.push(
+              if (context.mounted) {
+                Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => RaportGroupPage(group: buttons, name: titel)),
               );
+              }
 
             }),
         child: HugeIcon(
@@ -507,161 +509,158 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
       /// Anzeige 3 Gruppen
 
       body:
-      Container(
-        child:
-            StreamBuilder<DocumentSnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection("Users")
-                    .doc(currentUser?.email)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    // Entsprechende Daten extrahieren
-                    final userData = snapshot.data?.data() as Map<String, dynamic>;
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 20,),
-                      child: Column(
+      StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection("Users")
+              .doc(currentUser?.email)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              // Entsprechende Daten extrahieren
+              final userData = snapshot.data?.data() as Map<String, dynamic>;
+              return Padding(
+                padding: const EdgeInsets.only(top: 20,),
+                child: Column(
+                  children: [
+                    if (buttons == '1')
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          if (buttons == '1')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                     setState(()  {
-                                        selectedOption = optiona();
-                                    });
-                                    buttons = '1';
-                                  },
+                          GestureDetector(
+                            onTap: () {
+                               setState(()  {
+                                  selectedOption = optiona();
+                              });
+                              buttons = '1';
+                            },
 
-                                  child: optionCards(
-                                    userData["gruppe1"],
-                                    "assets/icons/recycle.png", context, "1",
-                                    Theme.of(context).colorScheme.primary, userData["anzahlKinder1"]),
-                                ),
+                            child: optionCards(
+                              userData["gruppe1"],
+                              "assets/icons/recycle.png", context, "1",
+                              Theme.of(context).colorScheme.primary, userData["anzahlKinder1"]),
+                          ),
 
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionb();
-                                      });
-                                      buttons = '2';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe2"], "assets/icons/tools.png",
-                                      context, "2", Colors.indigo.shade100, userData["anzahlKinder2"]),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionc();
-                                      });
-                                      buttons = '3';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe3"], "assets/icons/file.png",
-                                      context, "3", Colors.indigo.shade100, userData["anzahlKinder3"]),
-                                ),
-                              ],
-                            ),
-
-
-                          if (buttons == '2')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optiona();
-                                      });
-                                      buttons = '1';
-                                    },
-
-                                    child: optionCards(
-                                      userData["gruppe1"], "assets/icons/recycle.png",
-                                      context, "1", Colors.indigo.shade200, userData["anzahlKinder1"] ),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionb();
-                                      });
-                                      buttons = '2';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe2"], "assets/icons/tools.png",
-                                      context, "2", Theme.of(context).colorScheme.primary, userData["anzahlKinder2"]),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionc();
-                                      });
-                                      buttons = '3';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe3"], "assets/icons/file.png",
-                                      context, "3", Colors.indigo.shade200, userData["anzahlKinder3"]),
-                                ),
-                              ],
-                            ),
-
-
-                          if (buttons == '3')
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optiona();
-                                      });
-                                      buttons = '1';
-                                    },
-
-                                    child: optionCards(
-                                      userData["gruppe1"], "assets/icons/recycle.png",
-                                      context, "1", Colors.indigo.shade200, userData["anzahlKinder1"]),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionb();
-                                      });
-                                      buttons = '2';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe2"], "assets/icons/tools.png",
-                                      context, "2", Colors.indigo.shade200, userData["anzahlKinder2"]),
-                                ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedOption = optionc();
-                                      });
-                                      buttons = '3';
-                                    },
-                                    child: optionCards(
-                                      userData["gruppe3"], "assets/icons/file.png",
-                                      context, "3", Theme.of(context).colorScheme.primary, userData["anzahlKinder3"]),
-                                ),
-                              ],
-                            ),
-
-                          if(selectedOption != null) selectedOption!
-                          else
-                            optiona(),
-
-
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optionb();
+                                });
+                                buttons = '2';
+                              },
+                              child: optionCards(
+                                userData["gruppe2"], "assets/icons/tools.png",
+                                context, "2", Colors.indigo.shade100, userData["anzahlKinder2"]),
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optionc();
+                                });
+                                buttons = '3';
+                              },
+                              child: optionCards(
+                                userData["gruppe3"], "assets/icons/file.png",
+                                context, "3", Colors.indigo.shade100, userData["anzahlKinder3"]),
+                          ),
                         ],
                       ),
-                    );
-                  }
-                  return Text("");
-                }
-            ),
+
+
+                    if (buttons == '2')
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optiona();
+                                });
+                                buttons = '1';
+                              },
+
+                              child: optionCards(
+                                userData["gruppe1"], "assets/icons/recycle.png",
+                                context, "1", Colors.indigo.shade200, userData["anzahlKinder1"] ),
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optionb();
+                                });
+                                buttons = '2';
+                              },
+                              child: optionCards(
+                                userData["gruppe2"], "assets/icons/tools.png",
+                                context, "2", Theme.of(context).colorScheme.primary, userData["anzahlKinder2"]),
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optionc();
+                                });
+                                buttons = '3';
+                              },
+                              child: optionCards(
+                                userData["gruppe3"], "assets/icons/file.png",
+                                context, "3", Colors.indigo.shade200, userData["anzahlKinder3"]),
+                          ),
+                        ],
+                      ),
+
+
+                    if (buttons == '3')
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optiona();
+                                });
+                                buttons = '1';
+                              },
+
+                              child: optionCards(
+                                userData["gruppe1"], "assets/icons/recycle.png",
+                                context, "1", Colors.indigo.shade200, userData["anzahlKinder1"]),
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optionb();
+                                });
+                                buttons = '2';
+                              },
+                              child: optionCards(
+                                userData["gruppe2"], "assets/icons/tools.png",
+                                context, "2", Colors.indigo.shade200, userData["anzahlKinder2"]),
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  selectedOption = optionc();
+                                });
+                                buttons = '3';
+                              },
+                              child: optionCards(
+                                userData["gruppe3"], "assets/icons/file.png",
+                                context, "3", Theme.of(context).colorScheme.primary, userData["anzahlKinder3"]),
+                          ),
+                        ],
+                      ),
+
+                    if(selectedOption != null) selectedOption!
+                    else
+                      optiona(),
+
+
+                  ],
                 ),
+              );
+            }
+            return Text("");
+          }
+      ),
 
     );
 
@@ -697,7 +696,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                     children: [
                       Column(
                         children: [
-                          Container(
+                          SizedBox(
                             height: 15,
                             width: 30,
                             child: IconButton(
@@ -723,7 +722,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                           Padding(
                             padding: const EdgeInsets.only(top: 6.0),
                             child:
-                            Container(
+                            SizedBox(
                               width: 70,
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
@@ -764,7 +763,7 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('${anzahlKinder}',
+                                Text('$anzahlKinder',
                                   style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
                                       fontSize: 10
                                   ),
@@ -789,521 +788,509 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
 
   Widget optiona()  {
     return Expanded(
-        child: Container(
-          child: StreamBuilder<QuerySnapshot>(
-            // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
-              stream: firestoreDatabaseChild.getChildrenStream1(),
-              builder: (context, snapshot) {
-                // wenn Daten vorhanden _> gib alle Daten aus
-                if (snapshot.hasData)  {
-                  List childrenList1 = snapshot.data!.docs;
-                  childrenList1.sort((a, b) => a['child'].compareTo(b['child']));
-                  //als Liste wiedergeben
-                  return ListView.builder (
-                    padding: EdgeInsets.only(bottom: 55),
-                    itemCount: childrenList1.length,
-                    itemBuilder: (context, index) {
-                      // individuelle Einträge abholen
-                      DocumentSnapshot document = childrenList1[index];
-                      String docID = document.id;
+        child: StreamBuilder<QuerySnapshot>(
+          // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
+            stream: firestoreDatabaseChild.getChildrenStream1(),
+            builder: (context, snapshot) {
+              // wenn Daten vorhanden _> gib alle Daten aus
+              if (snapshot.hasData)  {
+                List childrenList1 = snapshot.data!.docs;
+                childrenList1.sort((a, b) => a['child'].compareTo(b['child']));
+                //als Liste wiedergeben
+                return ListView.builder (
+                  padding: EdgeInsets.only(bottom: 55),
+                  itemCount: childrenList1.length,
+                  itemBuilder: (context, index) {
+                    // individuelle Einträge abholen
+                    DocumentSnapshot document = childrenList1[index];
+                    String docID = document.id;
 
-                      // Eintrag von jedem Dokument abholen
-                      Map<String, dynamic> data =
-                      document.data() as Map<String, dynamic>;
-                      String childText = data['child'];
-                      String anmeldungText = data['anmeldung'];
-                      String elternmail = data['eltern'];
-                      String shownotification = data['shownotification'];
-                      String absenz = data['absenz'];
+                    // Eintrag von jedem Dokument abholen
+                    Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                    String childText = data['child'];
+                    String anmeldungText = data['anmeldung'];
+                    String elternmail = data['eltern'];
+                    String shownotification = data['shownotification'];
+                    String absenz = data['absenz'];
 
-                      DateTime dateAbsenzVon = data["absenzVon"].toDate();
-                      DateTime dateAbsenzBis = data["absenzBis"].toDate();
-
+                    DateTime dateAbsenzVon = data["absenzVon"].toDate();
+                    DateTime dateAbsenzBis = data["absenzBis"].toDate();
 
 
-                      DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
-                      String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
 
-                      if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
+                    DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
+                    String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
+
+                    if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
+                    {
+                      FirebaseFirestore.instance
+                          .collection("Kinder")
+                          .doc(document.id)
+                          .update({
+                        'absenz': "ja",
+                        'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
+                      });
+                    }
+                    else
                       {
-                        FirebaseFirestore.instance
-                            .collection("Kinder")
-                            .doc(document.id)
-                            .update({
-                          'absenz': "ja",
-                          'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
-                        });
-                      }
-                      else
+                        if (absenz == "ja")
                         {
-                          if (absenz == "ja")
-                          {
-                            FirebaseFirestore.instance
-                                .collection("Kinder")
-                                .doc(document.id)
-                                .update({
-                              'absenz': "nein",
-                              'anmeldung': "Neprítomná / ý",
-                            });
-                          }
+                          FirebaseFirestore.instance
+                              .collection("Kinder")
+                              .doc(document.id)
+                              .update({
+                            'absenz': "nein",
+                            'anmeldung': "Neprítomná / ý",
+                          });
                         }
+                      }
 
-                      bool istAngemeldet = anmeldungText == "Neprítomná / ý";
-                      bool hatAbsenz = absenz == "nein";
+                    bool istAngemeldet = anmeldungText == "Neprítomná / ý";
+                    bool hatAbsenz = absenz == "nein";
 
-                      var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
-                      var color2 = istAngemeldet ? Colors.black : Colors.white;
-                      var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
+                    var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
+                    var color2 = istAngemeldet ? Colors.black : Colors.white;
+                    var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
 
-                      // als List Tile wiedergeben
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
-                            )),
-                          );
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 3,
-                              color: color3,
-                            ),
-                            color: color,
-                            borderRadius: BorderRadius.circular(5),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 3,
-                                offset: Offset(2, 4),
-                              ),
-                            ],
-                          ),
-                          padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
-                          margin: EdgeInsets.only(left: 20, right: 20, top: 10),
-
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 45,
-                                child: Column(
-                                  children: [
-
-                                    if(shownotification == "1")
-                                      Container(
-                                        child: IconButton(
-                                          onPressed: () {
-                                            notificationNullKind(docID);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => ChatPage(
-                                                receiverID: elternmail, childcode: docID,
-                                              )),
-                                            );
-                                          },
-                                          icon: HugeIcon(
-                                            icon: HugeIcons.strokeRoundedMessage01,
-                                            color: color2,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ),
-
-                                  ],
-                                ),
-                              ),
-
-                              Column(
-                                children: [
-                                  Text(childText,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                        color: color2),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  Text(anmeldungText,
-                                    style: TextStyle(color: color2,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                width: 45,
-                                child: IconButton(
-                                  onPressed: () => openChildBoxGroup(docID, "1"),
-                                  icon: HugeIcon(
-                                    icon: HugeIcons.strokeRoundedUserMultiple02,
-                                    color: color2,
-                                    size: 20,
-                                  ),
-                                ),
-                              )
-                                ],
-                              ),
-
-
-                          ),
+                    // als List Tile wiedergeben
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "1"
+                          )),
                         );
-                    },
-                  );
-                }
-                else {
-                  return const Text("");
-                }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 3,
+                            color: color3,
+                          ),
+                          color: color,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: Offset(2, 4),
+                            ),
+                          ],
+                        ),
+                        padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
+                        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 45,
+                              child: Column(
+                                children: [
+
+                                  if(shownotification == "1")
+                                    IconButton(
+                                      onPressed: () {
+                                        notificationNullKind(docID);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => ChatPage(
+                                            receiverID: elternmail, childcode: docID,
+                                          )),
+                                        );
+                                      },
+                                      icon: HugeIcon(
+                                        icon: HugeIcons.strokeRoundedMessage01,
+                                        color: color2,
+                                        size: 20,
+                                      ),
+                                    ),
+
+                                ],
+                              ),
+                            ),
+
+                            Column(
+                              children: [
+                                Text(childText,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                      color: color2),
+                                ),
+                                const SizedBox(height: 3),
+                                Text(anmeldungText,
+                                  style: TextStyle(color: color2,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 45,
+                              child: IconButton(
+                                onPressed: () => openChildBoxGroup(docID, "1"),
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedUserMultiple02,
+                                  color: color2,
+                                  size: 20,
+                                ),
+                              ),
+                            )
+                              ],
+                            ),
+
+
+                        ),
+                      );
+                  },
+                );
               }
-          ),
+              else {
+                return const Text("");
+              }
+            }
         ),
       );
   }
 
   Widget optionb() {
     return Expanded(
-      child: Container(
-        child: StreamBuilder<QuerySnapshot>(
-          // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
-            stream: firestoreDatabaseChild.getChildrenStream2(),
-            builder: (context, snapshot){
-              // wenn Daten vorhanden _> gib alle Daten aus
-              if (snapshot.hasData) {
-                List childrenList2 = snapshot.data!.docs;
-                childrenList2.sort((a, b) => a['child'].compareTo(b['child']));
-                //als Liste wiedergeben
-                return ListView.builder(
-                  padding: EdgeInsets.only(bottom: 55),
-                  itemCount: childrenList2.length,
-                  itemBuilder: (context, index) {
-                    // individuelle Einträge abholen
-                    DocumentSnapshot document = childrenList2[index];
-                    String docID = document.id;
+      child: StreamBuilder<QuerySnapshot>(
+        // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
+          stream: firestoreDatabaseChild.getChildrenStream2(),
+          builder: (context, snapshot){
+            // wenn Daten vorhanden _> gib alle Daten aus
+            if (snapshot.hasData) {
+              List childrenList2 = snapshot.data!.docs;
+              childrenList2.sort((a, b) => a['child'].compareTo(b['child']));
+              //als Liste wiedergeben
+              return ListView.builder(
+                padding: EdgeInsets.only(bottom: 55),
+                itemCount: childrenList2.length,
+                itemBuilder: (context, index) {
+                  // individuelle Einträge abholen
+                  DocumentSnapshot document = childrenList2[index];
+                  String docID = document.id;
 
-                    // Eintrag von jedem Dokument abholen
-                    Map<String, dynamic> data =
-                    document.data() as Map<String, dynamic>;
-                    String childText = data['child'];
-                    String anmeldungText = data['anmeldung'];
-                    String elternmail = data['eltern'];
-                    String shownotification = data['shownotification'];
-                    String absenz = data['absenz'];
+                  // Eintrag von jedem Dokument abholen
+                  Map<String, dynamic> data =
+                  document.data() as Map<String, dynamic>;
+                  String childText = data['child'];
+                  String anmeldungText = data['anmeldung'];
+                  String elternmail = data['eltern'];
+                  String shownotification = data['shownotification'];
+                  String absenz = data['absenz'];
 
-                    DateTime dateAbsenzVon = data["absenzVon"].toDate();
-                    DateTime dateAbsenzBis = data["absenzBis"].toDate();
-
+                  DateTime dateAbsenzVon = data["absenzVon"].toDate();
+                  DateTime dateAbsenzBis = data["absenzBis"].toDate();
 
 
-                    DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
-                    String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
 
-                    if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
+                  DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
+                  String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
+
+                  if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
+                  {
+                    FirebaseFirestore.instance
+                        .collection("Kinder")
+                        .doc(document.id)
+                        .update({
+                      'absenz': "ja",
+                      'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
+                    });
+                  }
+                  else
+                  {
+                    if (absenz == "ja")
                     {
                       FirebaseFirestore.instance
                           .collection("Kinder")
                           .doc(document.id)
                           .update({
-                        'absenz': "ja",
-                        'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
+                        'absenz': "nein",
+                        'anmeldung': "Neprítomná / ý",
                       });
                     }
-                    else
-                    {
-                      if (absenz == "ja")
-                      {
-                        FirebaseFirestore.instance
-                            .collection("Kinder")
-                            .doc(document.id)
-                            .update({
-                          'absenz': "nein",
-                          'anmeldung': "Neprítomná / ý",
-                        });
-                      }
-                    }
+                  }
 
-                    bool istAngemeldet = anmeldungText == "Neprítomná / ý";
-                    bool hatAbsenz = absenz == "nein";
+                  bool istAngemeldet = anmeldungText == "Neprítomná / ý";
+                  bool hatAbsenz = absenz == "nein";
 
-                    var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
-                    var color2 = istAngemeldet ? Colors.black : Colors.white;
-                    var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
+                  var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
+                  var color2 = istAngemeldet ? Colors.black : Colors.white;
+                  var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
 
-                    // als List Tile wiedergeben
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "2"
-                          )),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 3,
-                            color: color3,
-                          ),
-                          color: color,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              offset: Offset(2, 4),
-                            ),
-                          ],
+                  // als List Tile wiedergeben
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "2"
+                        )),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 3,
+                          color: color3,
                         ),
-                        padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                        color: color,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(2, 4),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 10),
 
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 45,
-                              child: Column(
-                                children: [
-
-                                  if(shownotification == "1")
-                                    Container(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          notificationNullKind(docID);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => ChatPage(
-                                              receiverID: elternmail, childcode: docID,
-                                            )),
-                                          );
-                                        },
-                                        icon: HugeIcon(
-                                          icon: HugeIcons.strokeRoundedMessage01,
-                                          color: color2,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-
-                                ],
-                              ),
-                            ),
-
-                            Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 45,
+                            child: Column(
                               children: [
-                                Text(childText,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: color2),
-                                ),
-                                const SizedBox(height: 3),
-                                Text(anmeldungText,
-                                  style: TextStyle(color: color2,
-                                    fontSize: 12,
+
+                                if(shownotification == "1")
+                                  IconButton(
+                                    onPressed: () {
+                                      notificationNullKind(docID);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ChatPage(
+                                          receiverID: elternmail, childcode: docID,
+                                        )),
+                                      );
+                                    },
+                                    icon: HugeIcon(
+                                      icon: HugeIcons.strokeRoundedMessage01,
+                                      color: color2,
+                                      size: 20,
+                                    ),
                                   ),
-                                ),
+
                               ],
                             ),
-                            Container(
-                              width: 45,
-                              child: IconButton(
-                                onPressed: () => openChildBoxGroup(docID, "2"),
-                                icon: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedUserMultiple02,
-                                  color: color2,
-                                  size: 20,
+                          ),
+
+                          Column(
+                            children: [
+                              Text(childText,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: color2),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(anmeldungText,
+                                style: TextStyle(color: color2,
+                                  fontSize: 12,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-
-
+                            ],
+                          ),
+                          SizedBox(
+                            width: 45,
+                            child: IconButton(
+                              onPressed: () => openChildBoxGroup(docID, "2"),
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedUserMultiple02,
+                                color: color2,
+                                size: 20,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    );
-                  },
-                );
-              }
-              else {
-                return const Text("");
-              }
+
+
+                    ),
+                  );
+                },
+              );
             }
-        ),
+            else {
+              return const Text("");
+            }
+          }
       ),
     );
   }
 
   Widget optionc() {
     return Expanded(
-      child: Container(
-        child: StreamBuilder<QuerySnapshot>(
-          // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
-            stream: firestoreDatabaseChild.getChildrenStream3(),
-            builder: (context, snapshot){
-              // wenn Daten vorhanden _> gib alle Daten aus
-              if (snapshot.hasData) {
-                List childrenList3 = snapshot.data!.docs;
-                childrenList3.sort((a, b) => a['child'].compareTo(b['child']));
-                //als Liste wiedergeben
-                return ListView.builder(
-                  padding: EdgeInsets.only(bottom: 55),
-                  itemCount: childrenList3.length,
-                  itemBuilder: (context, index) {
-                    // individuelle Einträge abholen
-                    DocumentSnapshot document = childrenList3[index];
-                    String docID = document.id;
+      child: StreamBuilder<QuerySnapshot>(
+        // Abfrage des definierten Streams in firestoreDatabaseChild, Stream = getChildrenStream
+          stream: firestoreDatabaseChild.getChildrenStream3(),
+          builder: (context, snapshot){
+            // wenn Daten vorhanden _> gib alle Daten aus
+            if (snapshot.hasData) {
+              List childrenList3 = snapshot.data!.docs;
+              childrenList3.sort((a, b) => a['child'].compareTo(b['child']));
+              //als Liste wiedergeben
+              return ListView.builder(
+                padding: EdgeInsets.only(bottom: 55),
+                itemCount: childrenList3.length,
+                itemBuilder: (context, index) {
+                  // individuelle Einträge abholen
+                  DocumentSnapshot document = childrenList3[index];
+                  String docID = document.id;
 
-                    // Eintrag von jedem Dokument abholen
-                    Map<String, dynamic> data =
-                    document.data() as Map<String, dynamic>;
-                    String childText = data['child'];
-                    String anmeldungText = data['anmeldung'];
-                    String elternmail = data['eltern'];
-                    String shownotification = data['shownotification'];
-                    String absenz = data['absenz'];
+                  // Eintrag von jedem Dokument abholen
+                  Map<String, dynamic> data =
+                  document.data() as Map<String, dynamic>;
+                  String childText = data['child'];
+                  String anmeldungText = data['anmeldung'];
+                  String elternmail = data['eltern'];
+                  String shownotification = data['shownotification'];
+                  String absenz = data['absenz'];
 
-                    DateTime dateAbsenzVon = data["absenzVon"].toDate();
-                    DateTime dateAbsenzBis = data["absenzBis"].toDate();
-
+                  DateTime dateAbsenzVon = data["absenzVon"].toDate();
+                  DateTime dateAbsenzBis = data["absenzBis"].toDate();
 
 
-                    DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
-                    String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
 
-                    if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
+                  DateTime absenzBis = DateTime.parse(data["absenzBis"].toDate().toString());
+                  String formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(absenzBis).toString();
+
+                  if (dateAbsenzVon.isBefore(DateTime.now()) && dateAbsenzBis.isAfter(DateTime.now()))
+                  {
+                    FirebaseFirestore.instance
+                        .collection("Kinder")
+                        .doc(document.id)
+                        .update({
+                      'absenz': "ja",
+                      'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
+                    });
+                  }
+                  else
+                  {
+                    if (absenz == "ja")
                     {
                       FirebaseFirestore.instance
                           .collection("Kinder")
                           .doc(document.id)
                           .update({
-                        'absenz': "ja",
-                        'anmeldung': 'Neprítomnosť až $formattedDateAbsenzBis',
+                        'absenz': "nein",
+                        'anmeldung': "Neprítomná / ý",
                       });
                     }
-                    else
-                    {
-                      if (absenz == "ja")
-                      {
-                        FirebaseFirestore.instance
-                            .collection("Kinder")
-                            .doc(document.id)
-                            .update({
-                          'absenz': "nein",
-                          'anmeldung': "Neprítomná / ý",
-                        });
-                      }
-                    }
+                  }
 
-                    bool istAngemeldet = anmeldungText == "Neprítomná / ý";
-                    bool hatAbsenz = absenz == "nein";
+                  bool istAngemeldet = anmeldungText == "Neprítomná / ý";
+                  bool hatAbsenz = absenz == "nein";
 
-                    var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
-                    var color2 = istAngemeldet ? Colors.black : Colors.white;
-                    var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
-                    // als List Tile wiedergeben
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "3"
-                          )),
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 3,
-                            color: color3,
-                          ),
-                          color: color,
-                          borderRadius: BorderRadius.circular(5),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              offset: Offset(2, 4),
-                            ),
-                          ],
+                  var color = istAngemeldet ? Colors.white : Theme.of(context).colorScheme.primary;
+                  var color2 = istAngemeldet ? Colors.black : Colors.white;
+                  var color3 = hatAbsenz ? Colors.transparent : Theme.of(context).colorScheme.secondary;
+                  // als List Tile wiedergeben
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ChildOverviewPageKita(docID: docID, group: "3"
+                        )),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 3,
+                          color: color3,
                         ),
-                        padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
-                        margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                        color: color,
+                        borderRadius: BorderRadius.circular(5),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            spreadRadius: 1,
+                            blurRadius: 3,
+                            offset: Offset(2, 4),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.only(left: 5, bottom: 5, right: 5, top: 3),
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 10),
 
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 45,
-                              child: Column(
-                                children: [
-
-                                  if(shownotification == "1")
-                                    Container(
-                                      child: IconButton(
-                                        onPressed: () {
-                                          notificationNullKind(docID);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => ChatPage(
-                                              receiverID: elternmail, childcode: docID,
-                                            )),
-                                          );
-                                        },
-                                        icon:  HugeIcon(
-                                          icon: HugeIcons.strokeRoundedMessage01,
-                                          color: color2,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ),
-
-                                ],
-                              ),
-                            ),
-
-                            Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 45,
+                            child: Column(
                               children: [
-                                Text(childText,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                      color: color2),
-                                ),
-                                const SizedBox(height: 3),
-                                Text(anmeldungText,
-                                  style: TextStyle(color: color2,
-                                    fontSize: 12,
+
+                                if(shownotification == "1")
+                                  IconButton(
+                                    onPressed: () {
+                                      notificationNullKind(docID);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ChatPage(
+                                          receiverID: elternmail, childcode: docID,
+                                        )),
+                                      );
+                                    },
+                                    icon:  HugeIcon(
+                                      icon: HugeIcons.strokeRoundedMessage01,
+                                      color: color2,
+                                      size: 20,
+                                    ),
                                   ),
-                                ),
+
                               ],
                             ),
-                            Container(
-                              width: 45,
-                              child: IconButton(
-                                onPressed: () => openChildBoxGroup(docID, "3"),
-                                icon: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedUserMultiple02,
-                                  color: color2,
-                                  size: 20,
+                          ),
+
+                          Column(
+                            children: [
+                              Text(childText,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: color2),
+                              ),
+                              const SizedBox(height: 3),
+                              Text(anmeldungText,
+                                style: TextStyle(color: color2,
+                                  fontSize: 12,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-
-
+                            ],
+                          ),
+                          SizedBox(
+                            width: 45,
+                            child: IconButton(
+                              onPressed: () => openChildBoxGroup(docID, "3"),
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedUserMultiple02,
+                                color: color2,
+                                size: 20,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    );
-                  },
-                );
-              }
-              else {
-                return const Text("");
-              }
+
+
+                    ),
+                  );
+                },
+              );
             }
-        ),
+            else {
+              return const Text("");
+            }
+          }
       ),
     );
   }

@@ -77,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
     RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+\.[a-zA-Z]+")
         .hasMatch(emailController.text);
 
-    bool hasDigits = passwordController.text.contains(new RegExp(r'[0-9]'));
+    bool hasDigits = passwordController.text.contains(RegExp(r'[0-9]'));
     bool hasMinLength = passwordController.text.length > 8;
 
 
@@ -133,7 +133,7 @@ class _RegisterPageState extends State<RegisterPage> {
         // Ladekreis
 
 
-        if (context.mounted) Navigator.pop(context);
+        if (!mounted) return; Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         // Ladekreis
         Navigator.pop(context);
@@ -238,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
         resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
 
@@ -286,30 +286,28 @@ class _RegisterPageState extends State<RegisterPage> {
               // password textfield
 
 
-              Container(
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: TextField(
-                        style: TextStyle(color: Colors.black),
-                        controller: passwordController,
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: _toggle,
-                            icon: const Icon(Icons.remove_red_eye,
-                            ),
+              Row(
+                children: [
+                  Flexible(
+                    child: TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          onPressed: _toggle,
+                          icon: const Icon(Icons.remove_red_eye,
                           ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: "Heslo",
                         ),
-                        obscureText: _obscureText,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: "Heslo",
                       ),
+                      obscureText: _obscureText,
                     ),
+                  ),
 
-                  ],
-                ),
+                ],
               ),
 
               const SizedBox(height: 10),
@@ -317,25 +315,23 @@ class _RegisterPageState extends State<RegisterPage> {
               // password confirm
 
 
-              Container(
-                child: Row(
-                  children: [
-                    Flexible(
-                      child: TextField(
-                        style: TextStyle(color: Colors.black),
-                        controller: confirmPwController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          hintText: "Zopakujte Heslo",
+              Row(
+                children: [
+                  Flexible(
+                    child: TextField(
+                      style: TextStyle(color: Colors.black),
+                      controller: confirmPwController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        obscureText: _obscureText,
+                        hintText: "Zopakujte Heslo",
                       ),
+                      obscureText: _obscureText,
                     ),
+                  ),
 
-                  ],
-                ),
+                ],
               ),
 
 
@@ -368,8 +364,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     onChanged: (newValueSelected) {
                       setState(() {
                         _currentItemSelected = newValueSelected!;
-                        if (newValueSelected == "Škôlka")
+                        if (newValueSelected == "Škôlka") {
                           rool = "Kita";
+                        }
                       });
                     },
                     value: _currentItemSelected,

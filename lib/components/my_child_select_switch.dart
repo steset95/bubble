@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../database/firestore_child.dart';
 
 class ChildSelectSwitch extends StatefulWidget {
@@ -26,23 +23,16 @@ class ChildSelectSwitch extends StatefulWidget {
     required this.active,
   });
 
-
-
-
-
-
   @override
   State<ChildSelectSwitch> createState() => _ChildSelectSwitchState();
 }
 
 class _ChildSelectSwitchState extends State<ChildSelectSwitch> {
-
-
   bool isSwitchedfalse  = false;
+
   bool isSwitchedtrue  = true;
+
   bool isSwitched  = false;
-
-
 
   Future <void> updateSwitch (String childcode, bool isSwitched) async {
     final FirestoreDatabaseChild firestoreDatabaseChild = FirestoreDatabaseChild();
@@ -59,79 +49,66 @@ class _ChildSelectSwitchState extends State<ChildSelectSwitch> {
     }
   }
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
-    final mediaQuery = MediaQuery.of(context);
     return  StatefulBuilder
         (builder: (context, setState)
     {
-      return new Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(widget.sectionName,
-                  style: TextStyle(
-                    color: widget.color,
-                ),
-                ),
-
-
-
-                Column(
-                  children: [
-                    if (widget.active == true)
-                      Switch (
-                        value: isSwitchedtrue,
-                        onChanged: (value) async {
-                          await updateSwitch(widget.childcode, value);
-
-                          isSwitched = value;
-                          setState(()  {});
-                        },
-                        activeColor: Theme.of(context).colorScheme.primary,
-                      ),
-                    if (widget.active == false)
-                      Switch(
-                        value: isSwitchedfalse,
-                        onChanged: (value) async {
-                          await updateSwitch(widget.childcode, value);
-
-                          isSwitched = value;
-                          setState(()  {});
-                        },
-                        activeColor: Theme.of(context).colorScheme.primary,
-                      ),
-
-                  ],
-                )
-              ],
-            ),
-            /*
-            Text(widget.text,
-              style: TextStyle(color: Colors.black,
-                fontSize: 12,
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(widget.sectionName,
+                style: TextStyle(
+                  color: widget.color,
               ),
+              ),
+
+
+
+              Column(
+                children: [
+                  if (widget.active == true)
+                    Switch (
+                      value: isSwitchedtrue,
+                      onChanged: (value) async {
+                        await updateSwitch(widget.childcode, value);
+
+                        isSwitched = value;
+                        setState(()  {});
+                      },
+                      activeColor: Theme.of(context).colorScheme.primary,
+                    ),
+                  if (widget.active == false)
+                    Switch(
+                      value: isSwitchedfalse,
+                      onChanged: (value) async {
+                        await updateSwitch(widget.childcode, value);
+
+                        isSwitched = value;
+                        setState(()  {});
+                      },
+                      activeColor: Theme.of(context).colorScheme.primary,
+                    ),
+
+                ],
+              )
+            ],
+          ),
+          /*
+          Text(widget.text,
+            style: TextStyle(color: Colors.black,
+              fontSize: 12,
             ),
-            */
-          ],
-        ),
+          ),
+          */
+        ],
       );
     }
     );
   }
-
-
-
-  }
+}
 
 

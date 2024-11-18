@@ -1,21 +1,13 @@
 
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:pay/pay.dart';
 import 'package:bubble/components/my_profile_data.dart';
-import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
-
 import '../../components/my_image_viewer_profile.dart';
-import '../../components/my_profile_data_icon.dart';
 import '../../components/my_profile_data_switch.dart';
 import '../../database/firestore_child.dart';
-import '../../helper/helper_functions.dart';
 import 'addkind_page_eltern.dart';
 
 
@@ -27,7 +19,7 @@ import 'addkind_page_eltern.dart';
 class InfosKindPageEltern extends StatefulWidget {
 
 
-  InfosKindPageEltern({
+  const InfosKindPageEltern({
     super.key,
 
   });
@@ -79,7 +71,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                 BorderRadius.all(
                     Radius.circular(10.0))),
             title: Text(
-              "$title",
+              title,
               style: TextStyle(color: Colors.black,
                 fontSize: 20,
               ),
@@ -147,7 +139,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                 BorderRadius.all(
                     Radius.circular(10.0))),
             title: Text(
-              "$title",
+              title,
               style: TextStyle(color: Colors.black,
                 fontSize: 20,
               ),
@@ -245,7 +237,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
               else if (snapshot.hasData) {
                 // Entsprechende Daten extrahieren
                 final userData = snapshot.data?.data() as Map<String, dynamic>;
-                var _currentItemSelectedGeschlecht = userData["geschlecht"];
+                var currentItemSelectedGeschlecht = userData["geschlecht"];
 
                // Inhalt Daten
 
@@ -259,7 +251,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Container(
+                              SizedBox(
                                   height: 100,
                                   child: ImageViewerProfile(childcode: childcode)),
                               const SizedBox(height: 15),
@@ -340,11 +332,11 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                                         }).toList(),
                                         onChanged: (newValueSelected) {
                                           setState(() {
-                                            _currentItemSelectedGeschlecht = newValueSelected!;
+                                            currentItemSelectedGeschlecht = newValueSelected!;
                                           });
-                                          kinderCollection.doc(childcode).update({'geschlecht': _currentItemSelectedGeschlecht});
+                                          kinderCollection.doc(childcode).update({'geschlecht': currentItemSelectedGeschlecht});
                                         },
-                                        value: _currentItemSelectedGeschlecht,
+                                        value: currentItemSelectedGeschlecht,
                                       ),
                                     ),
                                   ),
@@ -519,8 +511,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
 
     }
     }
-      if (snapshot.connectionState != ConnectionState.waiting)
-
+      if (snapshot.connectionState != ConnectionState.waiting) {
         return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -553,9 +544,10 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
           ),
         ],
       );
-      else
+      } else {
         return
           Text("");
+      }
     }
 
           )
@@ -577,19 +569,17 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             ),
           );
         },
-        child: Container(
-          child: Row(
-            children: [
-              Text("Súrodenec"),
-              const SizedBox(width: 10),
-              HugeIcon(
-                  icon: HugeIcons.strokeRoundedKid,
-                  color: Colors.black,
-                  size: 22
-              ),
-              const SizedBox(width: 15),
-            ],
-          ),
+        child: Row(
+          children: [
+            Text("Súrodenec"),
+            const SizedBox(width: 10),
+            HugeIcon(
+                icon: HugeIcons.strokeRoundedKid,
+                color: Colors.black,
+                size: 22
+            ),
+            const SizedBox(width: 15),
+          ],
         ),
       );
   }

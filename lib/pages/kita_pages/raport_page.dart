@@ -1,8 +1,5 @@
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -16,7 +13,7 @@ class RaportPage extends StatefulWidget {
   final String docID;
 
 
-  RaportPage({
+  const RaportPage({
     super.key,
     required this.docID,
 
@@ -391,8 +388,6 @@ class _RaportPageState extends State<RaportPage> {
   //
   //
   void showRaportDialogAbmeldung() {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('kk:mm').format(now);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(

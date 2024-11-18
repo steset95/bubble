@@ -1,7 +1,6 @@
-import 'dart:async';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/components/my_list_tile_feed_kita.dart';
 import 'package:bubble/database/firestore_feed.dart';
@@ -12,7 +11,7 @@ import '../../helper/check_meldung.dart';
 
 
 class FeedPageKita extends StatefulWidget {
-  FeedPageKita({super.key});
+  const FeedPageKita({super.key});
 
 
   @override
@@ -82,7 +81,7 @@ bool externPost = false;
             onTap: () => setState(() => externPost = !externPost),
             child: Row(
               children: [
-                Text("Zmeniť násťenku",
+                Text("Zmeniť nástenku",
                   style: TextStyle(fontFamily: 'Goli'),
                 ),
                 const SizedBox(width: 5),
@@ -124,12 +123,13 @@ bool externPost = false;
                 PostPageKita(externPost: externPost, umgebung: "Nový externý oznam")),
           );
           }
-          else
+          else {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>
               PostPageKita(externPost: externPost, umgebung: "Nový interný oznam")),
             );
+          }
         },
         child: HugeIcon(
           icon: HugeIcons.strokeRoundedPencilEdit01,
@@ -137,63 +137,156 @@ bool externPost = false;
         ),
       ),
         body:
-        Container(
+        Stack(
+          children: [
 
-          child: Stack(
-            children: [
+            if (externPost)
+              /// Externer Feed
+            Column(
+              children: [
+                const SizedBox(height: 20,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
 
-              if (externPost)
-                /// Externer Feed
-              Column(
-                children: [
-                  const SizedBox(height: 20,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-
-                      HugeIcon(icon: HugeIcons.strokeRoundedMegaphone01, color: Colors.black),
-                      const SizedBox(height: 2,),
-                      Text(
-                        "Externá nástenka",
-                        style: TextStyle(fontSize: 25,
-                        color: Colors.black,
-                            fontFamily: 'Goli',
-                        ),
+                    HugeIcon(icon: HugeIcons.strokeRoundedMegaphone01, color: Colors.black),
+                    const SizedBox(height: 2,),
+                    Text(
+                      "Externá nástenka",
+                      style: TextStyle(fontSize: 25,
+                      color: Colors.black,
+                          fontFamily: 'Goli',
                       ),
+                    ),
 
-                    ],
-                  ),
+                  ],
+                ),
 
 
-                  const SizedBox(height: 20,),
-                  StreamBuilder(
-                      stream: database.getPostsStreamExt(),
-                      builder: (context, snapshot){
-                        // Ladekreis anzeigen
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
+                const SizedBox(height: 20,),
+                StreamBuilder(
+                    stream: database.getPostsStreamExt(),
+                    builder: (context, snapshot){
+                      // Ladekreis anzeigen
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
 
-                        // get all Posts
+                      // get all Posts
 
-                        final posts = snapshot.data!.docs;
+                      final posts = snapshot.data!.docs;
 
-                        // no Data?
-                        if (snapshot.data == null || posts.isEmpty){
-                          return const Center(
-                            child: Padding(
-                                padding: EdgeInsets.all(25),
-                                child: Text("Žiadne záznamy...")
-                            ),
-                          );
-                        }
-                        // Als Liste zurückgeben
-                        return Expanded(
-                            child: ListView.builder(
-                                itemCount: posts.length,
-                                itemBuilder: (context, index) {
+                      // no Data?
+                      if (snapshot.data == null || posts.isEmpty){
+                        return const Center(
+                          child: Padding(
+                              padding: EdgeInsets.all(25),
+                              child: Text("Žiadne záznamy...")
+                          ),
+                        );
+                      }
+                      // Als Liste zurückgeben
+                      return Expanded(
+                          child: ListView.builder(
+                              itemCount: posts.length,
+                              itemBuilder: (context, index) {
+
+                              // Individuelle Posts abholen
+                              final post = posts[index];
+
+                              // Daten von jedem Post abholen
+                              String title = post['titel'];
+                              String content = post['inhalt'];
+                              Timestamp timestamp = post['TimeStamp'];
+
+                              final timestampToDateTime = timestamp.toDate();
+                              final timestampNeu = timestampToDateTime.add(Duration(days:2));
+
+                              bool istNeu = timestampNeu.isBefore(DateTime.now()) == false;
+
+                              // Liste als Tile wiedergeben
+                              return Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      MyListTileFeedKita(
+                                          title: title,
+                                          content: content,
+                                          subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
+                                          postId: post.id,
+                                          feed: "Feed_Extern",
+                                        istNeu: istNeu,
+                                    ),
+                                    ]
+                                  ),
+                                ],
+                              );
+                            }
+                          )
+                      );
+                }
+                ),
+              ],
+            ),
+
+            /// Feed Intern
+            if (externPost != true)
+            Column(
+
+              children: [
+                const SizedBox(height: 20,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    HugeIcon(icon: HugeIcons.strokeRoundedSquareLock02, color: Colors.black),
+                    const SizedBox(height: 2,),
+                    Text(
+                      "Interná nástenka",
+                      style: TextStyle(fontSize: 25,
+                        color: Colors.black,
+                        fontFamily: 'Goli',
+                      ),
+                    ),
+                    const SizedBox(width: 5,),
+
+                  ],
+                ),
+
+
+                const SizedBox(height: 20,),
+
+
+                // Posts
+                StreamBuilder(
+                    stream: database.getPostsStreamInt(),
+                    builder: (context, snapshot){
+                      // Ladekreis anzeigen
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      // get all Posts
+
+                      final posts = snapshot.data!.docs;
+
+                      // no Data?
+                      if (snapshot.data == null || posts.isEmpty){
+                        return const Center(
+                          child: Padding(
+                              padding: EdgeInsets.all(25),
+                              child: Text("Žiadne záznamy...")
+                          ),
+                        );
+                      }
+                      // Als Liste zurückgeben
+                      return Expanded(
+                          child: ListView.builder(
+                              itemCount: posts.length,
+                              itemBuilder: (context, index) {
 
                                 // Individuelle Posts abholen
                                 final post = posts[index];
@@ -212,123 +305,27 @@ bool externPost = false;
                                 return Column(
                                   children: [
                                     Stack(
-                                      children: [
-                                        MyListTileFeedKita(
+                                        children: [
+                                          MyListTileFeedKita(
                                             title: title,
                                             content: content,
                                             subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
                                             postId: post.id,
-                                            feed: "Feed_Extern",
-                                          istNeu: istNeu,
-                                      ),
-                                      ]
+                                            feed: "Feed_Intern",
+                                            istNeu: istNeu,
+                                          ),
+                                        ]
                                     ),
                                   ],
                                 );
                               }
-                            )
-                        );
-                  }
-                  ),
-                ],
-              ),
-
-              /// Feed Intern
-              if (externPost != true)
-              Column(
-
-                children: [
-                  const SizedBox(height: 20,),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      HugeIcon(icon: HugeIcons.strokeRoundedSquareLock02, color: Colors.black),
-                      const SizedBox(height: 2,),
-                      Text(
-                        "Interná násťenka",
-                        style: TextStyle(fontSize: 25,
-                          color: Colors.black,
-                          fontFamily: 'Goli',
-                        ),
-                      ),
-                      const SizedBox(width: 5,),
-
-                    ],
-                  ),
-
-
-                  const SizedBox(height: 20,),
-
-
-                  // Posts
-                  StreamBuilder(
-                      stream: database.getPostsStreamInt(),
-                      builder: (context, snapshot){
-                        // Ladekreis anzeigen
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-
-                        // get all Posts
-
-                        final posts = snapshot.data!.docs;
-
-                        // no Data?
-                        if (snapshot.data == null || posts.isEmpty){
-                          return const Center(
-                            child: Padding(
-                                padding: EdgeInsets.all(25),
-                                child: Text("Žiadne záznamy...")
-                            ),
-                          );
-                        }
-                        // Als Liste zurückgeben
-                        return Expanded(
-                            child: ListView.builder(
-                                itemCount: posts.length,
-                                itemBuilder: (context, index) {
-
-                                  // Individuelle Posts abholen
-                                  final post = posts[index];
-
-                                  // Daten von jedem Post abholen
-                                  String title = post['titel'];
-                                  String content = post['inhalt'];
-                                  Timestamp timestamp = post['TimeStamp'];
-
-                                  final timestampToDateTime = timestamp.toDate();
-                                  final timestampNeu = timestampToDateTime.add(Duration(days:2));
-
-                                  bool istNeu = timestampNeu.isBefore(DateTime.now()) == false;
-
-                                  // Liste als Tile wiedergeben
-                                  return Column(
-                                    children: [
-                                      Stack(
-                                          children: [
-                                            MyListTileFeedKita(
-                                              title: title,
-                                              content: content,
-                                              subTitle: DateFormat('dd.MM.yyyy').format(timestamp.toDate()),
-                                              postId: post.id,
-                                              feed: "Feed_Intern",
-                                              istNeu: istNeu,
-                                            ),
-                                          ]
-                                      ),
-                                    ],
-                                  );
-                                }
-                            )
-                        );
-                      }
-                  ),
-                ],
-              ),
-            ],
-          ),
+                          )
+                      );
+                    }
+                ),
+              ],
+            ),
+          ],
         ),
     );
   }

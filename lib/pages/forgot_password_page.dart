@@ -29,7 +29,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
@@ -90,6 +90,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
   Future resetPassword() async {
     await FirebaseAuth.instance
         .sendPasswordResetEmail(email: emailController.text.trim());
+    if (!mounted) return;
     Navigator.of(context).pop();
     displayMessageToUser("Email na obnovenie hesla bol odoslaný…...", context);
   }

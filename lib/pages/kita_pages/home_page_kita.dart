@@ -1,8 +1,5 @@
-import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:bubble/pages/kita_pages/feed_page_kita.dart';
 import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
 import 'package:bubble/pages/kita_pages/children_page_kita.dart';

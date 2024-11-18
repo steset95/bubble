@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../database/firestore_child.dart';
 
 class ProfileDataSwitch extends StatefulWidget {
@@ -14,7 +11,7 @@ class ProfileDataSwitch extends StatefulWidget {
 
 
 
- ProfileDataSwitch({
+ const ProfileDataSwitch({
     super.key,
     required this.text,
     required this.sectionName,
@@ -63,7 +60,7 @@ Future <void> updateEinwilligungen (String childcode, bool isSwitched, String fi
     return  StatefulBuilder
         (builder: (context, setState)
     {
-      return new Container(
+      return Container(
         width: mediaQuery.size.width * 1,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.inversePrimary,

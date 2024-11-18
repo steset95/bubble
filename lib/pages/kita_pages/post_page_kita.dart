@@ -1,6 +1,5 @@
-import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:bubble/database/firestore_feed.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -11,7 +10,7 @@ class PostPageKita extends StatefulWidget {
   final bool externPost;
   final String umgebung;
 
-  PostPageKita({
+  const PostPageKita({
     super.key,
     required this.externPost,
     required this.umgebung,
@@ -68,7 +67,6 @@ class _PostPageKitaState extends State<PostPageKita> {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     final umgebung = widget.umgebung;
     return Scaffold(
     appBar: AppBar(

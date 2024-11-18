@@ -45,7 +45,7 @@ class MyProfileDataIcon extends StatelessWidget {
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,),
               ),
-              Container(
+              SizedBox(
                 width: 30,
                 height: 30,
                 //padding: const EdgeInsets.only(left: 15, bottom: 15, right: 10),

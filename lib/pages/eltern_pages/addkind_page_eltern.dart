@@ -1,12 +1,8 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:bubble/components/my_profile_data_icon.dart';
 import 'package:bubble/components/my_textfield.dart';
-import '../../components/my_profile_data_read_only.dart';
 import '../../helper/helper_functions.dart';
 
 
@@ -14,7 +10,7 @@ import '../../helper/helper_functions.dart';
 
 class AddKindPageEltern extends StatefulWidget {
 
-  AddKindPageEltern({
+  const AddKindPageEltern({
     super.key,
   });
 
@@ -42,7 +38,7 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
         .get()
         .then((DocumentSnapshot document) {
       if (document["registrierungen"] > 3) {
-
+        if (!mounted) return;
         return displayMessageToUser("Použité bolo príliš veľa rôznych e-mailových adries!", context);
       }
         else {
@@ -167,7 +163,8 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
                         .doc(textController.text)
                         .get()
                         .then((DocumentSnapshot document) {
-                      if (document.exists) {
+                      if (document.exists && context.mounted) {
+
                         addChildCode(textController.text);
                         addElternMail(textController.text);
                         // Textfeld leeren nach Eingabe
@@ -178,7 +175,9 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
                         displayMessageToUser("Dieťa sa pridáva...", context);
                       }
                       else {
-                        return displayMessageToUser("Aktivačný kód je neplatný!", context);
+                        if (context.mounted) {
+                          displayMessageToUser("Aktivačný kód je neplatný!", context);
+                        }
                       }
                     }
                     );

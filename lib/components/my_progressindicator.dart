@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ProgressWithIcon extends StatelessWidget {
-  const ProgressWithIcon({Key? key}) : super(key: key);
+  const ProgressWithIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class ProgressWithIcon extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          new Image.asset('assets/images/plant.gif')
+          Image.asset('assets/images/plant.gif')
         ],
       ),
     );

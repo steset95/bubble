@@ -1,19 +1,13 @@
 
 import 'dart:async';
-import 'dart:io';
 
 import 'package:bubble/components/my_profile_data_icon_delete.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:bubble/components/my_profile_data.dart';
-import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
 import '../../helper/abo_controller.dart';
 import '../../helper/constant.dart';
@@ -23,7 +17,7 @@ import '../impressum_page.dart';
 
 
 class ProfilePageEltern extends StatefulWidget {
-  ProfilePageEltern({super.key});
+  const ProfilePageEltern({super.key});
 
 
 
@@ -74,7 +68,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           children: [
             Text("6 + 11 ="),
             const SizedBox(width: 5,),
-            Container(
+            SizedBox(
               width: 50,
               child: TextFormField(
                 contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
@@ -148,7 +142,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
             BorderRadius.all(
                 Radius.circular(10.0))),
         title: Text(
-          "$title",
+          title,
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -215,6 +209,9 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
             .collection("Users")
             .doc(currentUser?.email)
             .update({"abo": "aktiv"});
+        if (!mounted) {
+          return;
+        }
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
@@ -226,6 +223,9 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
       (customerInfo.entitlements.all[entitlementID] == null &&
           document["aboBis"].toDate().isAfter(DateTime.now()))
       {
+        if (!mounted) {
+          return;
+        }
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
@@ -237,6 +237,9 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
           customerInfo.entitlements.all[entitlementID]?.isActive == false &&
           document["aboBis"].toDate().isAfter(DateTime.now()))
       {
+        if (!mounted) {
+          return;
+        }
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) =>
@@ -250,7 +253,9 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
               .collection("Users")
               .doc(currentUser?.email)
               .update({"abo": "inaktiv"});
-
+          if (!mounted) {
+            return;
+          }
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) =>
@@ -339,7 +344,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(child: Image.asset("assets/images/bubbles_login.png", width: 350, height:350)),
+                  Image.asset("assets/images/bubbles_login.png", width: 350, height:350),
                 ],
               ),
             ],

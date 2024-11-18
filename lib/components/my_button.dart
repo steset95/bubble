@@ -9,8 +9,10 @@ class MyButton extends StatelessWidget {
   final void Function()? onTap;
 
   const MyButton({
+    super.key,
     required this.text,
     required this.onTap,
+
 });
 
 

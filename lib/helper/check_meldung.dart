@@ -1,18 +1,11 @@
 
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:purchases_flutter/models/customer_info_wrapper.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'constant.dart';
-import 'store_helper.dart';
-import '../pages/eltern_pages/bezahlung_page_eltern.dart';
 
 final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -39,7 +32,7 @@ class CheckMeldung {
             .doc("meldung")
             .get()
             .then((DocumentSnapshot document2) async {
-          return
+          if (context.mounted) {
             showDialog(
               context: context,
               builder: (context) =>
@@ -55,7 +48,7 @@ class CheckMeldung {
 
                       ),
                     ),
-                    content: Container(
+                    content: SizedBox(
                       height: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -80,6 +73,7 @@ class CheckMeldung {
                     ),
                   ),
             );
+          }
         });
       }
     });

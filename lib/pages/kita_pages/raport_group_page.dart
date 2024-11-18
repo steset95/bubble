@@ -1,14 +1,11 @@
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_child_select_switch.dart';
-import '../../components/my_image_upload_button.dart';
 import '../../components/my_image_upload_button_multiple.dart';
 import '../../database/firestore_child.dart';
 
@@ -20,7 +17,7 @@ class RaportGroupPage extends StatefulWidget {
   final String name;
 
 
-  RaportGroupPage({
+  const RaportGroupPage({
     super.key,
     required this.group,
     required this.name,
@@ -54,7 +51,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
         .where("absenz", isEqualTo: "nein")
         .where("switch", isEqualTo: true)
         .get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         doc.reference.collection(formattedDate)
             .add({
           "RaportTitle" : raportTitle,
@@ -62,7 +59,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           'TimeStamp': Timestamp.now(),
           "Uhrzeit": uhrzeit,
         });
-      });
+      }
     });
     }
 
@@ -83,12 +80,12 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
         .where("switch", isEqualTo: true)
         .get()
         .then((snapshot) {
-      snapshot.docs.forEach((doc){
+      for (var doc in snapshot.docs) {
         doc.reference
           .update({
         field: value,
     });
-    });
+    }
         });
         }
 
@@ -113,7 +110,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           ),
         ),
         content: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: mediaQuery.size.width * 1,
             height: mediaQuery.size.height * 0.65,
             child: StreamBuilder<QuerySnapshot>(
@@ -232,7 +229,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
           ),
         ),
         content: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             width: mediaQuery.size.width * 1,
             height: mediaQuery.size.height * 0.65,
             child: StreamBuilder<QuerySnapshot>(
@@ -586,7 +583,6 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
 
   void showRaportDialogAbmeldung()  {
     Navigator.pop(context);
-    DateTime now = DateTime.now();
     final mediaQuery = MediaQuery.of(context);
     showDialog(
       context: context,
@@ -603,7 +599,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
         content: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 width: mediaQuery.size.width * 1,
                 height: mediaQuery.size.height * 0.65,
                 child: StreamBuilder<QuerySnapshot>(

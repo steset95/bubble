@@ -1,4 +1,4 @@
-import 'dart:async';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -13,7 +13,7 @@ import 'einwilligungen_kind_page_kita.dart';
 import 'images_page_kita.dart';
 import 'infos_eltern_page_kita.dart';
 import 'infos_kind_page_kita.dart';
-import 'package:intl/intl.dart';
+
 
 
 
@@ -103,7 +103,8 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
         .then((DocumentSnapshot document) {
       if (document.exists) {
         String documentID = document.id;
-        return showDialog(
+        if (!mounted) return;
+        showDialog(
           context: context,
           builder: (context) => AlertDialog(
             shape: RoundedRectangleBorder(
@@ -118,7 +119,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
             ),
             content: Row(
               children: [
-                Text('$documentID'),
+                Text(documentID),
                 IconButton(
                   onPressed: () async {
                     await Share.share('Na aktiváciu musíte zadať nasledujúci aktivačný kľúč do svojej aplikácie: $documentID',
@@ -142,10 +143,8 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
           ),
         );
       } else {
-        print('Error');
       }
     }).catchError((error) {
-      print('Error: $error');
     });
   }
 
@@ -227,8 +226,8 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
   Widget build(BuildContext context) {
     String currentDate = DateTime.now().toString(); // Aktuelles Datum als String
     String formattedDate = currentDate.substring(0, 10); // Nur das Datum extrahieren
-    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    var heightList = isIOS ? 0.38 : 0.42;
+    //bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+   // var heightList = isIOS ? 0.38 : 0.42;
 
 
     final mediaQuery = MediaQuery.of(context);
@@ -256,11 +255,13 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
              openChildBoxAbsenz(docID: widget.docID);
            }
            else {
-             Navigator.push(
+             if (context.mounted) {
+               Navigator.push(
                context,
                MaterialPageRoute(
                    builder: (context) => RaportPage(docID: widget.docID,)),
              );
+             }
            }
          });
         },
@@ -274,7 +275,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
       body: Column(
         children: [
           const SizedBox(height: 10),
-          Container(
+          SizedBox(
             height: mediaQuery.size.height * 0.09,
             child: Column(
               children: [
@@ -297,7 +298,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                 snapshot.data!['child']),
                           ],
                         );
-                      };
+                      }
                       return const Text("");
                     },
                   ),
@@ -356,7 +357,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                           ],
                         );
                       }
-                    };
+                    }
                     return const Text("");
                   },
                 ),
@@ -610,11 +611,11 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                 child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const HugeIcon(
+                                    HugeIcon(
                                       icon: HugeIcons.strokeRoundedChatting01,
                                       color: Colors.black
                                     ),
-                                    const SizedBox(height: 7),
+                                    SizedBox(height: 7),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -801,7 +802,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
           const SizedBox(height: 10),
           Flexible(
 
-            child: Container(
+            child: SizedBox(
 
                                 //height: mediaQuery.size.height * heightList,
                                 width: mediaQuery.size.width * 1,
@@ -884,7 +885,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
               if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
               Row(
                 children: [
-                  Container(
+                  SizedBox(
                       width: mediaQuery.size.width * 0.85,
                       child: Text(
                           textAlign: TextAlign.left,

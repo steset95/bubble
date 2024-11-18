@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'my_delete_button.dart';
+
 
 
 class MyListTileFeedKita extends StatefulWidget {
@@ -117,7 +117,7 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
+                          SizedBox(
                             width: mediaQuery.size.width * 0.82,
                             child: Text(
                               style: TextStyle(fontSize: 12,
@@ -158,7 +158,7 @@ class _MyListTileFeedKitaState extends State<MyListTileFeedKita> {
               children: [
                 Column(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 40,
                       height: 40,
                       child: Stack(

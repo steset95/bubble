@@ -50,16 +50,18 @@ class _ImageUploadState extends State<ImageUpload> {
                 //allowedExtensions: ['png', 'jpg'],
               );
               if (results == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                     content: Text("Žiadne obrázky vybrané…...")
                 ),
                 );
-                return null;
+                }
+                return;
               }
 
 
-              final List<String?> filePaths = results.paths!;
+              final List<String?> filePaths = results.paths;
               for (String? path in filePaths) {
                 final fileName = path?.split('/').last;
                 final docID = widget.docID;
@@ -67,9 +69,10 @@ class _ImageUploadState extends State<ImageUpload> {
               storage.uploadFile(path!, fileName!, docID);
 
               }
-              Navigator.pop(context);
-              displayMessageToUser("Obrázky sa nahrávajú…...", context);
-
+              if (context.mounted) {
+                Navigator.pop(context);
+                displayMessageToUser("Obrázky sa nahrávajú…...", context);
+              }
             },
 
           child: Container(

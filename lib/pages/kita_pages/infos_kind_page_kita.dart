@@ -1,13 +1,9 @@
 
-import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../components/my_profile_data_icon.dart';
 import '../../components/my_profile_data_icon_delete.dart';
 import '../../components/my_profile_data_read_only.dart';
 import '../../database/firestore_child.dart';
@@ -19,7 +15,7 @@ import '../../helper/helper_functions.dart';
 class InfosKindPageKita extends StatefulWidget {
   final String docID;
 
-  InfosKindPageKita({
+  const InfosKindPageKita({
     super.key,
     required this.docID
   });
@@ -103,6 +99,9 @@ class _InfosKindPageKitaState extends State<InfosKindPageKita> {
         .then((DocumentSnapshot document) {
 if (document.exists)
   {
+    if (!mounted) {
+      return;
+    }
     displayMessageToUser("Pole už existuje", context);
   }
 else {
@@ -121,7 +120,7 @@ else {
           .where("kita", isEqualTo: currentUser?.email)
           .get()
           .then((snapshot) {
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
       doc.reference
           .collection("Info_Felder")
           .doc(titel)
@@ -129,7 +128,7 @@ else {
       'titel': titel,
       'value': "",
       });
-      });
+      }
       });
     }
     });
@@ -179,12 +178,12 @@ else {
         .where("kita", isEqualTo: currentUser?.email)
         .get()
         .then((snapshot) {
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
         doc.reference
             .collection("Info_Felder")
             .doc(titel)
             .delete();
-      });
+      }
     });
 
   }

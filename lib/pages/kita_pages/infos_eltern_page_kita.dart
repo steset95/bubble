@@ -3,9 +3,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/my_profile_data_icon.dart';
@@ -20,7 +18,7 @@ import '../../components/my_profile_data_read_only.dart';
 class InfosElternPageKita extends StatefulWidget {
   final String docID;
 
-  InfosElternPageKita({
+  const InfosElternPageKita({
     super.key,
     required this.docID
   });
@@ -131,11 +129,9 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
               const SizedBox(height: 30,),
               HugeIcon(icon: HugeIcons.strokeRoundedNote, color: Colors.black, size: 30),
               const SizedBox(height: 10,),
-              Container(
-                child: Text(username,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+              Text(username,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 10,),
             ProfileDataReadOnly(
@@ -161,7 +157,7 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
             ],
             ),
             );
-            };
+            }
             return const Text("");
             },
             );
@@ -170,7 +166,6 @@ class _InfosElternPageKitaState extends State<InfosElternPageKita> {
               } else {
                 return const Text("No Data");
               }
-              return Text("");
             },
         )
         )

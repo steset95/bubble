@@ -2,14 +2,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:hugeicons/hugeicons.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 import '../../components/my_profile_data_icon.dart';
-import '../../components/my_profile_data.dart';
 import '../../components/my_profile_data_read_only.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -21,7 +16,7 @@ import 'package:url_launcher/url_launcher.dart';
 class InfosKitaPageEltern extends StatefulWidget {
   final String kitamail;
 
-  InfosKitaPageEltern({
+  const InfosKitaPageEltern({
     super.key,
     required this.kitamail
   });
@@ -85,11 +80,9 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                       const SizedBox(height: 30,),
                       HugeIcon(icon: HugeIcons.strokeRoundedHouse04, color: Colors.black, size: 30),
                       const SizedBox(height: 8,),
-                      Container(
-                        child: Text(username,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+                      Text(username,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 10,),
                       ProfileDataReadOnly(
@@ -122,7 +115,7 @@ class _InfosKitaPageElternState extends State<InfosKitaPageEltern> {
                     ],
                   ),
                 );
-            };
+            }
             return const Text("");
           },
 

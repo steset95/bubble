@@ -88,7 +88,7 @@ class _MyListTileFeedElternState extends State<MyListTileFeedEltern> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: mediaQuery.size.width * 0.82,
                         child: Text(
                           style: TextStyle(fontSize: 12,
@@ -124,7 +124,7 @@ class _MyListTileFeedElternState extends State<MyListTileFeedEltern> {
             children: [
               Column(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 40,
                     height: 40,
                    child: Stack(

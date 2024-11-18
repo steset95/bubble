@@ -321,9 +321,9 @@
     },
     {
       "name": "path_provider",
-      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.4",
+      "rootUri": "file:///C:/Users/Stefan/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.1.5",
       "packageUri": "lib/",
-      "languageVersion": "3.2"
+      "languageVersion": "3.4"
     },
     {
       "name": "path_provider_android",
@@ -602,7 +602,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-10-29T13:38:28.035928Z",
+  "generated": "2024-10-31T13:39:25.327525Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///C:/Users/Stefan/dev/flutter",

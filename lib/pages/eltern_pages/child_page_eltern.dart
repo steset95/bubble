@@ -5,27 +5,22 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/database/firestore_child.dart';
 import 'package:bubble/pages/eltern_pages/images_page_eltern.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../../database/firestore_images.dart';
-import '../../database/firestore_images_profile.dart';
 import '../../helper/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
 import 'package:intl/intl.dart';
 import '../../helper/helper_functions.dart';
-
 import 'addkind_page_eltern.dart';
 import 'bezahlung_page_eltern.dart';
-
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
 class ChildPageEltern extends StatefulWidget {
 
-  ChildPageEltern({super.key});
+  const ChildPageEltern({super.key});
 
   @override
   State<ChildPageEltern> createState() => _ChildPageElternState();
@@ -163,19 +158,19 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () async {
-                  DateTime? _newDate = await showDatePicker(
+                  DateTime? newDate = await showDatePicker(
                     context: context,
                     initialDate: absenzVon,
                     firstDate: DateTime.now(),
                     lastDate: DateTime(2030),
                   );
-                  if (_newDate == null) {
+                  if (newDate == null) {
                     return;
                   } else {
-                    formattedDateAbsenzVon = DateFormat('d-MMM-yy').format(_newDate);
-                    absenzVon = _newDate;
+                    formattedDateAbsenzVon = DateFormat('d-MMM-yy').format(newDate);
+                    absenzVon = newDate;
                     setState(()  {});
-                  };
+                  }
                 }
             ),
 
@@ -197,19 +192,19 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 onPressed: () async {
-                  DateTime? _newDate = await showDatePicker(
+                  DateTime? newDate0 = await showDatePicker(
                     context: context,
                     initialDate: absenzBis,
                     firstDate: absenzVon,
                     lastDate: DateTime(2030),
                   );
-                  if (_newDate == null) {
+                  if (newDate0 == null) {
                     return;
                   } else {
-                    formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(_newDate);
-                    absenzBis = _newDate;
+                    formattedDateAbsenzBis = DateFormat('d-MMM-yy').format(newDate0);
+                    absenzBis = newDate0;
                     setState(()  {});
-                  };
+                  }
                 }
             ),
 
@@ -476,46 +471,44 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                          child: Container(
+                          child: GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              //reverse: true,
+                              //scrollDirection: Axis.horizontal,
+                              //physics: const PageScrollPhysics(),
+                              itemCount: images?.length,
+                              shrinkWrap: false,
+                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 6,
+                                childAspectRatio: 1.0,
+                                mainAxisSpacing: 4.0,
+                                crossAxisSpacing: 4.0,
+                              ),
+                              itemBuilder: (context, index) {
 
-                            child: GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                //reverse: true,
-                                //scrollDirection: Axis.horizontal,
-                                //physics: const PageScrollPhysics(),
-                                itemCount: images?.length,
-                                shrinkWrap: false,
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 6,
-                                  childAspectRatio: 1.0,
-                                  mainAxisSpacing: 4.0,
-                                  crossAxisSpacing: 4.0,
-                                ),
-                                itemBuilder: (context, index) {
+                                final path = images?[index];
+                                String image = path?['path'];
 
-                                  final path = images?[index];
-                                  String image = path?['path'];
-
-                                  return FutureBuilder(future: storage2.downloadURL(image),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<String> snapshot) {
-                                         if (snapshot.data != null)
-                                           return
-                                            CachedNetworkImage(
-                                              imageUrl: snapshot.data!,
-                                              fit: BoxFit.fitHeight,
-                                              placeholder: (context, url) => ProgressWithIcon(),
-                                              errorWidget: (context, url, error) =>
-                                                  Icon(Icons.error),
-                                            );
-                                        else
-                                          return Text("");
-                                      }
-                                  );
+                                return FutureBuilder(future: storage2.downloadURL(image),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<String> snapshot) {
+                                       if (snapshot.data != null) {
+                                         return
+                                          CachedNetworkImage(
+                                            imageUrl: snapshot.data!,
+                                            fit: BoxFit.fitHeight,
+                                            placeholder: (context, url) => ProgressWithIcon(),
+                                            errorWidget: (context, url, error) =>
+                                                Icon(Icons.error),
+                                          );
+                                       } else {
+                                         return Text("");
+                                       }
+                                    }
+                                );
 
 
-                                }
-                            ),
+                              }
                           ),
                         ),
                         Row(
@@ -585,8 +578,8 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                       child: FutureBuilder(future: storage2.downloadURL(image),
                           builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) {
-                            if (snapshot.data != null)
-                            return
+                            if (snapshot.data != null) {
+                              return
                               CachedNetworkImage(
                               imageUrl: snapshot.data!,
                                 fit: BoxFit.fitHeight,
@@ -594,8 +587,9 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error),
                             );
-                            else
+                            } else {
                               return Text("");
+                            }
                           }
                       ),
                     );
@@ -604,7 +598,6 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                   }
               );
             }
-            return Text("");
           }
       );
   }
@@ -847,12 +840,12 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                                           flex: 2,
                                           child: Column(
                                             children: [
-                                              Container(child: Text(
+                                              Text(
                                                   raport['Uhrzeit'],
                                                   style: TextStyle(fontWeight: FontWeight.bold,
                                                     fontSize: 13,
                                                   )
-                                              ),),
+                                              ),
                                               const SizedBox(height: 2),
                                             ],
                                           )),
@@ -1032,8 +1025,9 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                       )
                           );
                       }
-                      else
+                      else {
                         return Container();
+                      }
                     }
                 ),
               ),
@@ -1127,9 +1121,10 @@ class _ChildPageElternState extends State<ChildPageEltern> {
           ),
         ],
       );
-      } else
-              return
+      } else {
+        return
               Text("");
+      }
             }
       ),
       );

@@ -1,6 +1,5 @@
 
 
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,7 +29,7 @@ class ImpressumPageState extends State<ImpressumPage> {
     title: Text("Impressum",
     ),
     ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
           Row(
@@ -40,8 +39,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                      child: Image.asset("assets/images/bubbles_login.png", width: 350, height:350)),
+                  Image.asset("assets/images/bubbles_login.png", width: 350, height:350),
                 ],
               ),
             ],

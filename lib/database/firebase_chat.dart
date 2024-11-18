@@ -18,7 +18,7 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 void sendNotification(String externalUserId, String message) async {
   const String apiKey = 'ODhiMzkzMGQtOGRhZS00YThjLWI4OWEtNjRjZWYxZDA5MWYx';
   const String appId = '07271cf6-8465-4933-afc9-6e964380f91c';
-  try {
+
     var url = Uri.parse("https://onesignal.com/api/v1/notifications");
     var client = http.Client();
 
@@ -38,14 +38,6 @@ void sendNotification(String externalUserId, String message) async {
     var response =
     await client.post(url, headers: headers, body: json.encode(body));
 
-    if (response.statusCode == 200) {
-      print("Notification sent successfully");
-    } else {
-      print("Error sending notification: ${response.statusCode}");
-    }
-  } catch (e) {
-    print(e);
-  }
 }
 
 

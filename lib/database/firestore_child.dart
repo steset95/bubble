@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 
 class FirestoreDatabaseChild {
@@ -81,12 +80,12 @@ class FirestoreDatabaseChild {
         .where("absenz", isEqualTo: "nein")
         .get()
         .then((snapshot) {
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
         doc.reference
             .update({
           'switch': true,
         });
-      });
+      }
     });
         }
 

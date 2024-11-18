@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:bubble/auth/login_or_register.dart';
 
 import 'package:bubble/pages/kita_pages/home_page_kita.dart';
-import 'package:bubble/pages/kita_pages/profile_page_kita.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import '../helper/abo_controller.dart';
 import '../pages/eltern_pages/home_page_eltern.dart';
 
 
 class RoolSwitcher extends StatefulWidget {
-  RoolSwitcher({super.key});
+  const RoolSwitcher({super.key});
 
   @override
   State<RoolSwitcher> createState() => _RoolSwitcherState();
@@ -83,7 +81,6 @@ class _RoolSwitcherState extends State<RoolSwitcher> {
           else {
             return const LoginOrRegister();
           }
-          return LoginOrRegister();
         },
 
       ),

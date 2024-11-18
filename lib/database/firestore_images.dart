@@ -2,8 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart';
 
 
 
@@ -31,7 +29,7 @@ String docID,
 
   String? kita = currentUser?.email;
 
-  try {
+
 
     await storage.ref('images/$kita/$formattedDate/$fileName').putFile(file);
 
@@ -45,11 +43,6 @@ String docID,
         .set({
       'path': '/$kita/$formattedDate/$fileName',
     });
-
-
-  } on firebase_core.FirebaseException catch (e) {
-    print(e);
-  }
 }
 
 
@@ -58,9 +51,8 @@ String docID,
   Future<firebase_storage.ListResult> listFiles() async {
     firebase_storage.ListResult results = await storage.ref('images').listAll();
 
-    results.items.forEach((firebase_storage.Reference ref) {
-      print('File gefunden: $ref');
-    });
+    for (var ref in results.items) {
+    }
     return results;
   }
    // Bilder anzeigen
@@ -85,9 +77,9 @@ String docID,
         .doc(formattedDate)
         .collection(docID)
         .get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         doc.reference.delete();
-      });
+      }
     });
   }
 
@@ -104,9 +96,9 @@ String docID,
         .collection(docID)
         .where("path", isEqualTo: path )
         .get().then((querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      for (var doc in querySnapshot.docs) {
         doc.reference.delete();
-      });
+      }
     });
 
   }

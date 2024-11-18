@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
-import 'package:firebase_storage/firebase_storage.dart';
 
 
 
@@ -27,11 +25,7 @@ String fileName,
 String childcode,
 ) async {
   File file = File(filePath);
-  try {
     await storage.ref('images/profile/$childcode/Profilbild').putFile(file);
-  } on firebase_core.FirebaseException catch (e) {
-    print(e);
-  }
 }
 
   // Files Anzeige Funktion (nicht als Bild, einfach Liste des Files) - not in use
@@ -39,9 +33,8 @@ String childcode,
   Future<firebase_storage.ListResult> listFiles() async {
     firebase_storage.ListResult results = await storage.ref('images').listAll();
 
-    results.items.forEach((firebase_storage.Reference ref) {
-      print('XXXXX: $results');
-    });
+    for (var ref in results.items) {
+    }
     return results;
   }
   // Bilder anzeigen

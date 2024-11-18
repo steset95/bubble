@@ -3,21 +3,16 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:bubble/components/my_profile_data.dart';
-import 'package:bubble/components/my_profile_data_read_only.dart';
 import 'package:bubble/pages/impressum_page.dart';
-import 'package:hugeicons/hugeicons.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-
 import '../../components/my_profile_data_icon_delete.dart';
 
 
 
 class ProfilePageKita extends StatefulWidget {
-  ProfilePageKita({super.key});
+  const ProfilePageKita({super.key});
 
 
 
@@ -61,7 +56,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
           children: [
             Text("6 + 11 ="),
             const SizedBox(width: 5,),
-            Container(
+            SizedBox(
               width: 50,
               child: TextFormField(
                 contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
@@ -134,7 +129,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
             BorderRadius.all(
                 Radius.circular(10.0))),
         title: Text(
-          "$titel",
+          titel,
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -196,7 +191,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
             BorderRadius.all(
                 Radius.circular(10.0))),
         title: Text(
-          "$titel",
+          titel,
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),
@@ -323,7 +318,7 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(child: Image.asset("assets/images/bubbles_login.png", width: 350, height:350)),
+                  Image.asset("assets/images/bubbles_login.png", width: 350, height:350),
                 ],
               ),
             ],

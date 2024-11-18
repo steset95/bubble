@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/components/my_button.dart';
-import 'package:bubble/components/my_textfield.dart';
 import 'package:bubble/helper/helper_functions.dart';
-
 import 'forgot_password_page.dart';
 
 
@@ -36,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
         password: password.text,
       );
       // ladekreis anzeigen
-      if (context.mounted) Navigator.pop(context);
+      if (!mounted) return; Navigator.pop(context);
     }
     // Fehlermeldung anzeigen
 
-    on FirebaseAuthException catch (e) {
+    on FirebaseAuthException {
       // ladekreis anzeigen
       Navigator.pop(context);
       displayMessageToUser("Nesprávne používateľské meno alebo heslo", context);
@@ -64,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
 
         child: ConstrainedBox(
@@ -81,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Container(child: Image.asset("assets/images/bubbles_login.png", width: 300, height:300)),
+                        Image.asset("assets/images/bubbles_login.png", width: 300, height:300),
                       ],
                     ),
                   ],
@@ -136,31 +134,28 @@ class _LoginPageState extends State<LoginPage> {
             
                       // password textfield
             
-                      Container(
-            
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: TextField(
-                                style: TextStyle(color: Colors.black),
-                                controller: password,
-                                decoration: InputDecoration(
-                                  suffixIcon: IconButton(
-                                    onPressed: _toggle,
-                                    icon: const Icon(Icons.remove_red_eye,
-                                    ),
+                      Row(
+                        children: [
+                          Flexible(
+                            child: TextField(
+                              style: TextStyle(color: Colors.black),
+                              controller: password,
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  onPressed: _toggle,
+                                  icon: const Icon(Icons.remove_red_eye,
                                   ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  hintText: "Prihlasovací kód",
                                 ),
-                                obscureText: _obscureText,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                hintText: "Prihlasovací kód",
                               ),
+                              obscureText: _obscureText,
                             ),
-            
-                          ],
-                        ),
+                          ),
+
+                        ],
                       ),
             
             

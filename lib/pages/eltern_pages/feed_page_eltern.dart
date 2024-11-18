@@ -2,18 +2,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:bubble/database/firestore_feed.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
-import '../../components/my_profile_data_read_only.dart';
 import '../../helper/check_meldung.dart';
 import '../../helper/abo_controller.dart';
 import '../chat_page.dart';
-import 'addkind_page_eltern.dart';
 import 'bezahlung_page_eltern.dart';
 import 'infos_kita_page_eltern.dart';
 
@@ -24,7 +20,7 @@ import 'infos_kita_page_eltern.dart';
 
 
 class FeedPageEltern extends StatefulWidget {
-  FeedPageEltern({super.key});
+  const FeedPageEltern({super.key});
 
 
 
@@ -216,7 +212,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-          Container(
+          SizedBox(
             width: mediaQuery.size.width * 0.6,
             child: FittedBox(
               fit: BoxFit.scaleDown,
@@ -235,7 +231,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
 
                 ],
               );
-              };
+              }
               return const Text("");
               },
               );
@@ -376,12 +372,13 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                             }
                         );
                       }
-                      else Text("Žiadne dieťa ešte nie je zaregistrované...");
+                      else {
+                        Text("Žiadne dieťa ešte nie je zaregistrované...");
+                      }
                     }
 
-                    if (snapshot.connectionState != ConnectionState.waiting)
-
-                    return Row(
+                    if (snapshot.connectionState != ConnectionState.waiting) {
+                      return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
@@ -392,9 +389,10 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                         ),
                       ],
                     );
-                    else
+                    } else {
                       return
                         Text("");
+                    }
                   }
               ),
 

@@ -4,13 +4,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-
 import 'constant.dart';
 import 'store_helper.dart';
-import '../pages/eltern_pages/bezahlung_page_eltern.dart';
 
 final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -37,14 +33,14 @@ Future<void> configureSDK() async {
         .get()
         .then((DocumentSnapshot document) async {
 
-       String aboID = await document["aboID"].toString();
+       String aboID = document["aboID"].toString();
 
       PurchasesConfiguration configuration;
-      await {
+      {
         configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
           ..appUserID = aboID
-          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
-      };
+          ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
+      }
       await Purchases.configure(configuration);
     });
   }

@@ -49,10 +49,10 @@ class PaywallElternState extends State<PaywallEltern> {
                 padding:
                 EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
                 child: SizedBox(
+                  width: double.infinity,
                   child: Text(
                     'Plná verzia',
                   ),
-                  width: double.infinity,
                 ),
               ),
               ListView.builder(
@@ -63,19 +63,16 @@ class PaywallElternState extends State<PaywallEltern> {
                     color: Colors.white,
                     child: ListTile(
                         onTap: () async {
-                          try {
+
                             CustomerInfo customerInfo =
                             await Purchases.purchasePackage(
                                 myProductList[index]);
                             EntitlementInfo? entitlement =
                             customerInfo.entitlements.all[entitlementID];
-
-                          } catch (e) {
-                            print(e);
-                          }
-
                           setState(() {});
-                          Navigator.pop(context);
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
                         },
                         title: Text(
                           myProductList[index].storeProduct.title,
@@ -95,6 +92,7 @@ class PaywallElternState extends State<PaywallEltern> {
                 padding:
                 const EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
                 child: SizedBox(
+                  width: double.infinity,
                   child: Column(
                     children: [
                       const Text(
@@ -129,7 +127,6 @@ class PaywallElternState extends State<PaywallEltern> {
                       ),
                     ],
                   ),
-                  width: double.infinity,
                 ),
               ),
             ],

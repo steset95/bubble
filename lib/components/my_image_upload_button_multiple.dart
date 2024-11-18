@@ -63,7 +63,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                     ),
                   ),
                   content: SingleChildScrollView(
-                    child: Container(
+                    child: SizedBox(
                       width: mediaQuery.size.width * 1,
                       height: mediaQuery.size.height * 0.65,
                       child: StreamBuilder<QuerySnapshot>(
@@ -146,16 +146,18 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                           // allowedExtensions: ['png', 'jpg'],
                         );
                         if (results == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Žiadne obrázky vybrané…")
                             ),
                           );
-                          return null;
+                          }
+                          return;
                         }
 
 
-                        final List<String?> filePaths = results.paths!;
+                        final List<String?> filePaths = results.paths;
                         for (String? path in filePaths) {
                           final fileName = path?.split('/').last;
 
@@ -167,7 +169,7 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                               .where("switch", isEqualTo: true)
                               .get()
                               .then((snapshot) {
-                            snapshot.docs.forEach((doc) {
+                            for (var doc in snapshot.docs) {
 
                               FirebaseFirestore.instance
                                   .collection("Kinder")
@@ -180,17 +182,16 @@ class _ImageUploadMultipleState extends State<ImageUploadMultiple> {
                                 storage.uploadFile(path!, fileName!, documentID);
 
                               });
-                            });
+                            }
                           });
 
 
                         }
-                        Navigator.pop(context);
-                        firestoreDatabaseChild.updateSwitchAllOn(widget.group);
-                        displayMessageToUser("Obrázky sa nahrávajú…...", context);
-
-
-
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          firestoreDatabaseChild.updateSwitchAllOn(widget.group);
+                          displayMessageToUser("Obrázky sa nahrávajú…...", context);
+                        }
                       },
                       child: Text("Pokračovať"),
                     ),

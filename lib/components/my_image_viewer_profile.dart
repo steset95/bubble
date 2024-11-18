@@ -2,7 +2,6 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:bubble/database/firestore_images.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../database/firestore_images_profile.dart';
 import '../helper/helper_functions.dart';
@@ -53,12 +52,14 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                             //allowedExtensions: ['png', 'jpg'],
                           );
                           if (results == null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
+                            if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text("Žiadna fotka nebola vybraná")
                               ),
                             );
-                            return null;
+                            }
+                            return;
                           }
                           final path = results.files.single.path!;
                           final fileName = results.files.single.name;
@@ -90,7 +91,7 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                     );
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Container(
+                    return SizedBox(
                       height: 100,
                       width: 100,
                       child: CircularProgressIndicator(),
@@ -105,12 +106,14 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                           //allowedExtensions: ['png', 'jpg'],
                         );
                         if (results == null) {
-                          ScaffoldMessenger.of(context).showSnackBar(
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                                 content: Text("Žiadna fotka nebola vybraná")
                             ),
                           );
-                          return null;
+                          }
+                          return;
                         }
                         final path = results.files.single.path!;
                         final fileName = results.files.single.name;
@@ -119,8 +122,9 @@ class _ImageViewerProfileState extends State<ImageViewerProfile> {
                             .uploadFileProfile(path, fileName, widget.childcode)
                             .then((value) => setState(() {}));
 
-                        return
+                        if (context.mounted) {
                           displayMessageToUser("Fotka sa nahrala...", context);
+                        }
 
                       },
 

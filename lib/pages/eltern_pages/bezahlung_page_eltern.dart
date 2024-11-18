@@ -4,15 +4,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:bubble/helper/helper_functions.dart';
 import 'package:bubble/pages/eltern_pages/paywall_eltern.dart';
-import '../../helper/abo_controller.dart';
 import '../../components/my_button.dart';
-import '../../helper/appdata.dart';
 import '../../helper/constant.dart';
-import '../../helper/store_helper.dart';
 
 
 
@@ -53,6 +49,7 @@ class BezahlungPageState extends State<BezahlungPage> {
 
     if (customerInfo.entitlements.all[entitlementID] != null &&
         customerInfo.entitlements.all[entitlementID]?.isActive == true) {
+      if (!mounted) return;
       displayMessageToUser("Error", context);
 
       setState(() {
@@ -60,20 +57,18 @@ class BezahlungPageState extends State<BezahlungPage> {
       });
     } else {
       Offerings? offerings;
-      try {
+
         offerings = await Purchases.getOfferings();
-      } on PlatformException catch (e) {
-        displayMessageToUser("Error", context);// optional error handling
-      }
 
       setState(() {
         _isLoading = false;
       });
 
-      if (offerings == null || offerings.current == null) {
+      if (offerings.current == null) {
         // offerings are empty, show a message to your user
       } else {
         // current offering is available, show paywall
+        if (!mounted) return;
         await showModalBottomSheet(
           useRootNavigator: true,
           isDismissible: true,
@@ -98,14 +93,11 @@ class BezahlungPageState extends State<BezahlungPage> {
 
 
   Future<void> fetchExpirationDate() async {
-    try {
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
       for (var entitlement in customerInfo.entitlements.active.values) {
         String? expirationDate = entitlement.expirationDate;
-        String? originalpurchasedate = entitlement.originalPurchaseDate;
         final String expirationDateOutput = expirationDate!.substring(0, 10);
-        final String originalpurchasedateOutput = originalpurchasedate!.substring(0, 10);
-        if (expirationDate != null) {
+        if (!mounted) return;
           showDialog(
             context: context,
             builder: (context) => AlertDialog(
@@ -120,7 +112,7 @@ class BezahlungPageState extends State<BezahlungPage> {
 
                 ),
               ),
-              content: Container(
+              content: SizedBox(
                 height: 50,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +120,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Aktívna do: ${expirationDateOutput}"),
+                        Text("Aktívna do: $expirationDateOutput"),
                        // Text("Abo gelöst am: ${originalpurchasedateOutput}"),
                         Text("(Automatické mesačné obnovenie)")
                       ],
@@ -149,33 +141,10 @@ class BezahlungPageState extends State<BezahlungPage> {
               ],
             ),
           );
-// Hier kannst du das Ablaufdatum in deiner UI anzeigen
-        }
       }
-    } catch (e) {
-      print("Error fetching customer info: $e");
-    }
   }
 
 
-
-
-
-
-
-  Widget showButtons () {
-    return Row(
-      children: [
-        IconButton(
-          onPressed: fetchExpirationDate,
-          icon: const Icon(Icons.info_outline,
-            color: Colors.black,
-          ),
-        ),
-        const SizedBox(width: 20),
-      ],
-    );
-  }
 
 
 
@@ -189,7 +158,7 @@ class BezahlungPageState extends State<BezahlungPage> {
     title: Text("Predplatné",
     ),
     ),
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
         children: [
           Row(
@@ -199,7 +168,7 @@ class BezahlungPageState extends State<BezahlungPage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(child: Image.asset("assets/images/bubbles.png", width: 350, height:350)),
+                  Image.asset("assets/images/bubbles.png", width: 350, height:350),
                 ],
               ),
             ],
