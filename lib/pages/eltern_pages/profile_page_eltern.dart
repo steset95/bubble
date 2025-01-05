@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:bubble/components/my_profile_data.dart';
-import 'package:bubble/pages/eltern_pages/bezahlung_page_eltern.dart';
-import '../../helper/abo_controller.dart';
 import '../../helper/constant.dart';
 import '../impressum_page.dart';
 
@@ -29,11 +27,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
 
 
 
-  @override
-  void initState() {
-    super.initState();
-    configureSDK();
-  }
 
 
 
@@ -194,82 +187,6 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
   }
 
 
-
-  void goToPage() async {
-    CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-    await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) {
-      if (customerInfo.entitlements.all[entitlementID] != null &&
-          customerInfo.entitlements.all[entitlementID]?.isActive == true
-          ) {
-        FirebaseFirestore.instance
-            .collection("Users")
-            .doc(currentUser?.email)
-            .update({"abo": "aktiv"});
-        if (!mounted) {
-          return;
-        }
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Aktívne predplatné")),
-        );
-      }
-
-      else if
-      (customerInfo.entitlements.all[entitlementID] == null &&
-          document["aboBis"].toDate().isAfter(DateTime.now()))
-      {
-        if (!mounted) {
-          return;
-        }
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Aktívne skúšobné mesiace")),
-        );
-      }
-      else if
-      (customerInfo.entitlements.all[entitlementID] != null &&
-          customerInfo.entitlements.all[entitlementID]?.isActive == false &&
-          document["aboBis"].toDate().isAfter(DateTime.now()))
-      {
-        if (!mounted) {
-          return;
-        }
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) =>
-              BezahlungPage(isActive: true, text: "Aktívne skúšobné mesiace")),
-        );
-      }
-
-      else
-        {
-          FirebaseFirestore.instance
-              .collection("Users")
-              .doc(currentUser?.email)
-              .update({"abo": "inaktiv"});
-          if (!mounted) {
-            return;
-          }
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>
-                BezahlungPage(isActive: false, text: "Na plnú verziu")),
-          );
-
-        }
-    });
-  }
-
-
-
-
-
   Future logOut()  async {
     OneSignal.logout();
     await _firebaseAuth.signOut();
@@ -408,39 +325,7 @@ class _ProfilePageElternState extends State<ProfilePageEltern> {
                           sectionName: "Mobilné číslo",
                           onPressed: () => editField("tel", "Mobilné číslo", userData["tel"]),
                         ),
-                        SizedBox(
-                          height: 30,
-                        ),
 
-
-
-                        /// Payment
-
-
-                        GestureDetector(
-                          onTap: () => goToPage(),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text("Predplatné",
-                                style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Icon(
-                                  Icons.arrow_forward,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 10
-                              ),
-                            ],
-                          ),
-                        ),
                         SizedBox(
                           height: 10,
                         ),

@@ -6,8 +6,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/pages/impressum_page.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import '../../components/my_profile_data_icon_delete.dart';
+import '../../helper/abo_controller.dart';
+import 'bezahlung_page_kita.dart';
+
 
 
 
@@ -386,6 +390,43 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                           text: userData["beschreibung"],
                           sectionName: "O nás",
                           onPressed: () => editFieldBeschreibung("beschreibung", "O nás", userData["beschreibung"],),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+
+
+
+                        /// Payment
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>
+                                  BezahlungPageKita()
+                            ));
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Predplatné",
+                                style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 2,
+                              ),
+                              HugeIcon(
+                                icon:  HugeIcons.strokeRoundedCircleArrowRight02,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 15,
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 10,

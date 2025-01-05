@@ -104,7 +104,7 @@ class _RaportGroupPageState extends State<RaportGroupPage> {
             borderRadius:
             BorderRadius.all(
                 Radius.circular(10.0))),
-        title: Text("Kinder",
+        title: Text("Prihlásenie",
           style: TextStyle(color: Colors.black,
             fontSize: 20,
           ),

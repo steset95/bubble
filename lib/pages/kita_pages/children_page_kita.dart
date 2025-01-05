@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bubble/pages/kita_pages/bezahlung_page_kita.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:bubble/pages/chat_page.dart';
 import 'package:bubble/pages/kita_pages/child_overview_page_kita.dart';
 import 'package:bubble/pages/kita_pages/raport_group_page.dart';
 import 'package:intl/intl.dart';
+
+import '../../helper/abo_controller.dart';
 
 
 class ChildrenPageKita extends StatefulWidget {
@@ -57,7 +60,63 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
   /// Kind hinzufügen Altert Dialog
 
   void openChildBoxNew({String? docID}) {
-    showDialog(
+    configureSDK();
+    aboCheck();
+
+    FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUser?.email)
+        .get()
+        .then((DocumentSnapshot document) {
+      int anzahlKinder = document['anzahlKinder1'] + document['anzahlKinder2'] + document['anzahlKinder3'];
+      final abo = document['abo'];
+
+      if (abo == "inaktiv" || (abo == "bronze" && anzahlKinder > 29) || (abo == "silver" && anzahlKinder > 59)) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.all(
+                    Radius.circular(10.0))),
+            title: HugeIcon(
+              icon: HugeIcons.strokeRoundedRocket01,
+              color: Theme.of(context).colorScheme.primary,
+              size: 50,
+            ),
+            // Text Eingabe
+            content: SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                SizedBox(
+                  height: 10,
+                ),
+                  Text("Obnovte si prosím predplatné",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                child: const Text("Predplatné",
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>
+                          BezahlungPageKita()
+                      ));
+                },
+
+              ),
+            ],
+          ),
+        );
+      } else {
+        showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(
@@ -100,6 +159,8 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
         ],
       ),
     );
+      }
+    });
   }
 
   DateTime absenzVonAddChild = DateTime.now().subtract(const Duration(days:2));

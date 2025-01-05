@@ -8,9 +8,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:intl/intl.dart';
 import '../../components/my_list_tile_feed_eltern.dart';
 import '../../helper/check_meldung.dart';
-import '../../helper/abo_controller.dart';
 import '../chat_page.dart';
-import 'bezahlung_page_eltern.dart';
 import 'infos_kita_page_eltern.dart';
 
 
@@ -40,8 +38,6 @@ class _FeedPageElternState extends State<FeedPageEltern> {
   @override
   void initState() {
     super.initState();
-    configureSDK();
-    Future.delayed(Duration(milliseconds: 10000), () {aboCheck();});
     CheckMeldung(context).checkMeldung();
   }
 
@@ -91,7 +87,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  if (shownotification == "0" && userData["abo"] != "inaktiv")
+                  if (shownotification == "0")
                   IconButton(
                     onPressed: () {
                       Navigator.push(
@@ -107,7 +103,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                       color: Colors.black,
                       ),
                   ),
-                  if (shownotification == "1" && userData["abo"] != "inaktiv")
+                  if (shownotification == "1")
                     IconButton(
                       onPressed: () {
 
@@ -265,59 +261,6 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                                   child: CircularProgressIndicator(),
                                 );
                               }
-                              /// Payment Check
-                              if (userData["abo"] == "inaktiv")
-                                {
-                                  return
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(height: 71),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            GestureDetector(
-                                              onTap:  () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(builder: (context) =>
-                                                      BezahlungPage(isActive: false, text: "Na plnú verziu"),
-                                                  ),
-                                                );
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  Text("Obnovte si prosím predplatné",
-                                                    style: TextStyle(fontSize: 20),
-                                                  ),
-                                                  const SizedBox(height: 10),
-                                                  Row(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      HugeIcon(
-                                                        icon: HugeIcons.strokeRoundedCreditCardPos,
-                                                        color: Theme.of(context).colorScheme.primary,
-                                                        size: 50,
-                                                      ),
-                                                      Icon(
-                                                          Icons.arrow_forward,
-                                                          color: Theme.of(context).colorScheme.primary,
-                                                          size: 20
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    );
-                                }
-                              /// Payment Check
-
                               // get all Posts
                               final posts = snapshot.data!.docs;
 

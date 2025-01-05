@@ -62,7 +62,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                         ),
                         const SizedBox(height: 10),
                         const Text(
-                          "Vision GmbH",
+                          "DM Vision GmbH",
                           style: TextStyle(fontSize: 12),
                         ),
                         const Text(

@@ -11,7 +11,7 @@ import 'store_helper.dart';
 final currentUser = FirebaseAuth.instance.currentUser;
 
 Future<void> configureSDK() async {
-
+  await Purchases.setLogLevel(LogLevel.debug);
 
   if (kIsWeb == false) {
     if (Platform.isIOS || Platform.isMacOS) {
@@ -56,7 +56,7 @@ void aboCheck() async {
       .doc(currentUser?.email)
       .get()
       .then((DocumentSnapshot document) async {
-    if (customerInfo.entitlements.all[entitlementID] == null
+    if ((customerInfo.entitlements.all['bronze'] == null && customerInfo.entitlements.all['silver'] == null && customerInfo.entitlements.all['gold'] == null)
         && document["aboBis"].toDate().isBefore(DateTime.now()))
     {
       FirebaseFirestore.instance
@@ -64,8 +64,8 @@ void aboCheck() async {
           .doc(currentUser?.email)
           .update({"abo": "inaktiv"});
     }
-    else if (customerInfo.entitlements.all[entitlementID] != null &&
-        customerInfo.entitlements.all[entitlementID]?.isActive == false
+    else if (
+        (customerInfo.entitlements.all['bronze']?.isActive == false && customerInfo.entitlements.all['silver']?.isActive == false && customerInfo.entitlements.all['gold']?.isActive == false)
         && document["aboBis"].toDate().isBefore(DateTime.now())
     ) {
       FirebaseFirestore.instance
@@ -73,14 +73,31 @@ void aboCheck() async {
           .doc(currentUser?.email)
           .update({"abo": "inaktiv"});
     }
-    else if (customerInfo.entitlements.all[entitlementID] != null &&
-        customerInfo.entitlements.all[entitlementID]?.isActive == true
+    else if (customerInfo.entitlements.all['gold'] != null &&
+        customerInfo.entitlements.all['gold']?.isActive == true
     ) {
       FirebaseFirestore.instance
           .collection("Users")
           .doc(currentUser?.email)
-          .update({"abo": "aktiv"});
+          .update({"abo": "gold"});
     }
+    else if (customerInfo.entitlements.all['silver'] != null &&
+        customerInfo.entitlements.all['silver']?.isActive == true
+    ) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUser?.email)
+          .update({"abo": "silver"});
+    }
+    else if (customerInfo.entitlements.all['bronze'] != null &&
+        customerInfo.entitlements.all['bronze']?.isActive == true
+    ) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUser?.email)
+          .update({"abo": "bronze"});
+    }
+
   });
 
 

@@ -10,12 +10,11 @@ import 'package:bubble/database/firestore_child.dart';
 import 'package:bubble/pages/eltern_pages/images_page_eltern.dart';
 import 'package:hugeicons/hugeicons.dart';
 import '../../database/firestore_images.dart';
-import '../../helper/abo_controller.dart';
 import '../../components/my_progressindicator.dart';
 import 'package:intl/intl.dart';
 import '../../helper/helper_functions.dart';
 import 'addkind_page_eltern.dart';
-import 'bezahlung_page_eltern.dart';
+
 
 
 class ChildPageEltern extends StatefulWidget {
@@ -41,16 +40,6 @@ class _ChildPageElternState extends State<ChildPageEltern> {
 
   final firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
   final Storage storage2 = Storage();
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    configureSDK();
-    Future.delayed(Duration(milliseconds: 10000), () {aboCheck();});
-  }
-
 
 
 
@@ -148,7 +137,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
           children: [
             Text('Od: $formattedDateAbsenzVon',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
               ),
             ),
 
@@ -156,6 +145,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 icon:  HugeIcon(
                   icon: HugeIcons.strokeRoundedCalendar03,
                 color: Theme.of(context).colorScheme.primary,
+                  size: 20,
                 ),
                 onPressed: () async {
                   DateTime? newDate = await showDatePicker(
@@ -182,7 +172,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
           children: [
             Text('Do: $formattedDateAbsenzBis',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15,
               ),
             ),
 
@@ -190,6 +180,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
                 icon:  HugeIcon(
                   icon: HugeIcons.strokeRoundedCalendar03,
                   color: Theme.of(context).colorScheme.primary,
+                  size: 20,
                 ),
                 onPressed: () async {
                   DateTime? newDate0 = await showDatePicker(
@@ -730,60 +721,7 @@ class _ChildPageElternState extends State<ChildPageEltern> {
         final childcode = userData["childcode"];
         final kitamail = userData["kitamail"];
 
-        /// PaymentCheck
 
-
-        if (userData["abo"] == "inaktiv"){
-          return
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const SizedBox(height: 71),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap:  () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) =>
-                            BezahlungPage(isActive: false, text: "Na plnú verziu"),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      children: [
-                        Text("Obnovte si prosím predplatné",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(height: 10),
-                          Row(
-                            children: [
-                              SizedBox(
-                                width: 10,
-                              ),
-                              HugeIcon(
-                                icon: HugeIcons.strokeRoundedCreditCardPos,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 50,
-                              ),
-                              Icon(
-                                  Icons.arrow_forward,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 20
-                              ),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        }
-
-        /// PaymentCheck
 
         if (snapshot.hasData && childcode != "") {
           getKitaEmail(userData["childcode"]);

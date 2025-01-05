@@ -51,9 +51,10 @@ class _RegisterPageState extends State<RegisterPage> {
   String shownotification = "0";
   String abo = "Probemonate";
   DateTime aboBis = DateTime.now().add(const Duration(days:90));
+  int aboID = DateTime.now().millisecondsSinceEpoch;
   String beschreibung = "";
   int anzahlKinder = 0;
-  int aboID = DateTime.now().millisecondsSinceEpoch;
+
 
 
   bool showProgress = false;
@@ -90,6 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
 
     }
+
     else if (checkedValue == false)
     {
       Navigator.pop(context);
@@ -163,9 +165,6 @@ class _RegisterPageState extends State<RegisterPage> {
         'childcode2': "",
         "kitamail": "",
         "shownotification": shownotification,
-        "abo": abo,
-        "aboBis": aboBis,
-        "aboID": aboID,
         "checkmeldung": checkMeldung,
         'notificationBlock': "",
         'date': DateTime.now(),
@@ -194,6 +193,9 @@ class _RegisterPageState extends State<RegisterPage> {
         'anzahlKinder2': anzahlKinder,
         'anzahlKinder3': anzahlKinder,
         'notificationBlock': "",
+        "abo": abo,
+        "aboBis": aboBis,
+        "aboID": aboID,
       });
       FirebaseFirestore.instance
           .collection("Users")
