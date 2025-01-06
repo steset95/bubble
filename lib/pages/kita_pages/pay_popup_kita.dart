@@ -98,19 +98,19 @@ class PayPopupKitaState extends State<PayPopupKita> {
                     children: [
                       if (widget.aboType == 'bronze')
                        Text(
-                           """Bubble-App Bronze (1 mesiac / 59 euro): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
+                           """Bubble-App Bronze (1 mesiac / 59 euro | 1 - 29 Deti): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
 Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Predplatné môžete kedykoľvek zrušiť vo svojom účte iTunes alebo Play Store.
 Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov."""
                       ),
                       if (widget.aboType == 'silver')
                         Text(
-                            """Bubble-App Silver (1 mesiac / 99 euro): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
+                            """Bubble-App Silver (1 mesiac / 99 euro | 30 - 59 Deti): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
 Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Predplatné môžete kedykoľvek zrušiť vo svojom účte iTunes alebo Play Store.
 Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov."""
                         ),
                       if (widget.aboType == 'gold')
                         Text(
-                            """Bubble-App Gold (1 mesiac / 139 euro): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
+                            """Bubble-App Gold (1 mesiac / 139 euro | 59+ Deti): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
 Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Predplatné môžete kedykoľvek zrušiť vo svojom účte iTunes alebo Play Store.
 Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov."""
                         ),

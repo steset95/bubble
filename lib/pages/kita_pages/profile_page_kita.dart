@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble/components/my_profile_data.dart';
 import 'package:bubble/pages/impressum_page.dart';
@@ -27,6 +28,13 @@ class ProfilePageKita extends StatefulWidget {
 class _ProfilePageKitaState extends State<ProfilePageKita> {
 
 
+  @override
+  void initState() {
+    super.initState();
+    configureSDK();
+    Future.delayed(Duration(milliseconds: 10000), () {aboCheck();});
+  }
+
 
   final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -40,6 +48,32 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   final TextEditingController deleteCheck = TextEditingController();
+
+
+  void waiting(){
+    showDialog(
+      context: context,
+      builder: (context) =>
+          AlertDialog(
+            backgroundColor: Colors.transparent,
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                BorderRadius.all(
+                    Radius.circular(10.0))), // Text Eingabe
+            content: SizedBox(
+              height: 45,
+              child: Column(
+                children: [
+                  CircularProgressIndicator(),
+                ],
+              ),
+            ),
+
+          ),
+    );
+
+  }
+
 
   void openBoxDelete({String? docID}) {
     showDialog(
@@ -398,13 +432,17 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
 
 
                         /// Payment
+                        if (kIsWeb == false)
                         GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>
-                                  BezahlungPageKita()
-                            ));
+                            waiting();
+                            Future.delayed(Duration(milliseconds: 1800), () {Navigator.pop(context);});
+                            Future.delayed(Duration(milliseconds: 2000), () {Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>
+                                    BezahlungPageKita()
+                                ));});
+
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

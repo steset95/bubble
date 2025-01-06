@@ -32,7 +32,7 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
   void initState() {
     super.initState();
     configureSDK();
-    aboCheck();
+    Future.delayed(Duration(milliseconds: 4000), () {aboCheck();});
   }
 
   final currentUser = FirebaseAuth.instance.currentUser;
@@ -199,15 +199,15 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
     String formattedDate = currentDate.substring(0, 10);
 
     bool hatBronze = abo == "bronze";
-    var iconBronze = hatBronze ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedStar;
+    var iconBronze = hatBronze ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
     var textBronze = hatBronze ? "Active" : "1 - 29 Deti";
 
     bool hatSilver = abo == "silver";
-    var iconSilver  = hatSilver ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedStar;
+    var iconSilver  = hatSilver ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
     var textSilver  = hatSilver ? "Active" : "30 - 59 Deti";
 
     bool hatGold = abo == "gold";
-    var iconGold = hatGold ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedStar;
+    var iconGold = hatGold ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
     var textGold = hatGold ? "Active" : "59+ Deti";
 
 
@@ -400,7 +400,7 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                                 width: 50,
                               ),
                               HugeIcon(
-                                icon: iconSilver,
+                                icon: HugeIcons.strokeRoundedStar,
                                 color: Theme
                                     .of(context)
                                     .colorScheme
@@ -424,7 +424,7 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               HugeIcon(
-                                icon: HugeIcons.strokeRoundedStartUp02,
+                                icon: iconSilver,
                                 color: Theme
                                     .of(context)
                                     .colorScheme
@@ -523,7 +523,7 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                                 width: 50,
                               ),
                               HugeIcon(
-                                icon: iconGold,
+                                icon: HugeIcons.strokeRoundedStar,
                                 color: Theme
                                     .of(context)
                                     .colorScheme
@@ -558,7 +558,7 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               HugeIcon(
-                                icon: HugeIcons.strokeRoundedStartUp02,
+                                icon: iconGold,
                                 color: Theme
                                     .of(context)
                                     .colorScheme

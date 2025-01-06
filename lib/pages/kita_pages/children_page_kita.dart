@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bubble/pages/kita_pages/bezahlung_page_kita.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -53,70 +54,115 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
   bool visible = false;
   final currentUser = FirebaseAuth.instance.currentUser;
 
+void aboCheck2(){
+  FirebaseFirestore.instance
+      .collection("Users")
+      .doc(currentUser?.email)
+      .get()
+      .then((DocumentSnapshot document) {
+    int anzahlKinder = document['anzahlKinder1'] +
+        document['anzahlKinder2'] + document['anzahlKinder3'];
+    final abo = document['abo'];
+
+    if (abo == "inaktiv" ||
+        (abo == "bronze" && anzahlKinder > 29) ||
+        (abo == "silver" && anzahlKinder > 59))
+    {
+      textController.clear();
+      showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                  BorderRadius.all(
+                      Radius.circular(10.0))),
+              title: HugeIcon(
+                icon: HugeIcons.strokeRoundedRocket01,
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .primary,
+                size: 50,
+              ),
+              // Text Eingabe
+              content: SizedBox(
+                height: 45,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text("Obnovte si prosím predplatné",
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                if (kIsWeb == false)
+                  TextButton(
+                    child: const Text("Predplatné",
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              BezahlungPageKita()
+                          ));
+                    },
+
+                  ),
+              ],
+            ),
+      );
+    }
+    else
+    {
+      addChild(textController.text,);
+      textController.clear();
+    }
+  });
 
 
+  // Textfeld leeren nach Eingabe
+
+  //Box Zatvoriť
+  Navigator.pop(context);
+
+}
+
+  void waiting(){
+        showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                    BorderRadius.all(
+                        Radius.circular(10.0))), // Text Eingabe
+                content: SizedBox(
+                  height: 45,
+                  child: Column(
+                    children: [
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+
+              ),
+        );
+
+  }
 
 
   /// Kind hinzufügen Altert Dialog
 
   void openChildBoxNew({String? docID}) {
     configureSDK();
-    aboCheck();
-
-    FirebaseFirestore.instance
-        .collection("Users")
-        .doc(currentUser?.email)
-        .get()
-        .then((DocumentSnapshot document) {
-      int anzahlKinder = document['anzahlKinder1'] + document['anzahlKinder2'] + document['anzahlKinder3'];
-      final abo = document['abo'];
-
-      if (abo == "inaktiv" || (abo == "bronze" && anzahlKinder > 29) || (abo == "silver" && anzahlKinder > 59)) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius:
-                BorderRadius.all(
-                    Radius.circular(10.0))),
-            title: HugeIcon(
-              icon: HugeIcons.strokeRoundedRocket01,
-              color: Theme.of(context).colorScheme.primary,
-              size: 50,
-            ),
-            // Text Eingabe
-            content: SizedBox(
-              height: 45,
-              child: Column(
-                children: [
-                SizedBox(
-                  height: 10,
-                ),
-                  Text("Obnovte si prosím predplatné",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ],
-              ),
-            ),
-            actions: [
-              TextButton(
-                child: const Text("Predplatné",
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>
-                          BezahlungPageKita()
-                      ));
-                },
-
-              ),
-            ],
-          ),
-        );
-      } else {
-        showDialog(
+    showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(
@@ -147,20 +193,17 @@ class _ChildrenPageKitaState extends State<ChildrenPageKita> {
           // Speicher Button
           TextButton(
             onPressed: () {
-              addChild(textController.text,);
-              // Textfeld leeren nach Eingabe
-              textController.clear();
-              //Box Zatvoriť
               Navigator.pop(context);
-
+              waiting();
+              Future.delayed(Duration(milliseconds: 1500), () {aboCheck();});
+              Future.delayed(Duration(milliseconds: 1600), () {aboCheck2();});
             },
             child: Text("Pridať"),
           )
         ],
       ),
     );
-      }
-    });
+
   }
 
   DateTime absenzVonAddChild = DateTime.now().subtract(const Duration(days:2));
