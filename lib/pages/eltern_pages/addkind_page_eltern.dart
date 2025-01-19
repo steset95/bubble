@@ -37,11 +37,6 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
         .doc(childcode)
         .get()
         .then((DocumentSnapshot document) {
-      if (document["registrierungen"] > 3) {
-        if (!mounted) return;
-        return displayMessageToUser("Použité bolo príliš veľa rôznych e-mailových adries!", context);
-      }
-        else {
 
         FirebaseFirestore.instance
             .collection("Users")
@@ -111,15 +106,6 @@ class _AddKindPageElternState extends State<AddKindPageEltern> {
 
 
         });
-
-        var registrierungen = document["registrierungen"];
-        int reg = (registrierungen + 1);
-        FirebaseFirestore.instance
-            .collection("Kinder")
-            .doc(childcode)
-            .update({"registrierungen": reg});
-      }
-
     });
   }
 

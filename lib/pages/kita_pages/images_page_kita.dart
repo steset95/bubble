@@ -204,17 +204,20 @@ class _ImagesPageKitaState extends State<ImagesPageKita> {
     return
       GestureDetector(
         onTap: openDeleteDialog,
-        child: Row(
-          children: [
-            Text("Vymazať fotky"),
-            const SizedBox(width: 10),
-            const HugeIcon(
-              icon: HugeIcons.strokeRoundedDelete02,
-              color: Colors.black,
-              size: 20,
-            ),
-            const SizedBox(width: 15),
-          ],
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              Text("Vymazať fotky"),
+              const SizedBox(width: 10),
+              const HugeIcon(
+                icon: HugeIcons.strokeRoundedDelete02,
+                color: Colors.black,
+                size: 20,
+              ),
+              const SizedBox(width: 15),
+            ],
+          ),
         ),
       );
   }

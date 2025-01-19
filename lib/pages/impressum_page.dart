@@ -90,7 +90,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                             TextButton(
                               onPressed: () async {
                                 await launchUrl(
-                                    Uri.parse('https://bubble-app.sk/privacy_policy')); // Add URL which you want here
+                                    Uri.parse('https://bubble-app.ch/privacy_policy')); // Add URL which you want here
                                 // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                               },
                               child: Text("Ochrana súkromia",
@@ -100,7 +100,7 @@ class ImpressumPageState extends State<ImpressumPage> {
                             TextButton(
                               onPressed: () async {
                                 await launchUrl(
-                                    Uri.parse('https://bubble-app.sk/terms_and_conditions')); // Add URL which you want here
+                                    Uri.parse('https://bubble-app.ch/terms_and_conditions')); // Add URL which you want here
                                 // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                               },
                               child: Text("AGB",

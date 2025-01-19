@@ -199,18 +199,21 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
         /// Abholzeit
         GestureDetector(
             onTap: () => openChildBoxDelete(docID: widget.docID),
-            child: Row(
-              children: [
-                Text("Odstrániť dieťa",
-                  style: TextStyle(fontFamily: 'Goli'),
-                ),
-                const SizedBox(width: 5),
-                const HugeIcon(
-                  icon: HugeIcons.strokeRoundedDelete02,
-                  color: Colors.black,
-                  size: 20,
-                ),
-              ],
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Text("Odstrániť dieťa",
+                    style: TextStyle(fontFamily: 'Goli'),
+                  ),
+                  const SizedBox(width: 5),
+                  const HugeIcon(
+                    icon: HugeIcons.strokeRoundedDelete02,
+                    color: Colors.black,
+                    size: 20,
+                  ),
+                ],
+              ),
             )
         ),
 

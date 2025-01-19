@@ -79,17 +79,20 @@ bool externPost = false;
         /// Abholzeit
         GestureDetector(
             onTap: () => setState(() => externPost = !externPost),
-            child: Row(
-              children: [
-                Text("Zmeniť nástenku",
-                  style: TextStyle(fontFamily: 'Goli'),
-                ),
-                const SizedBox(width: 5),
-                const HugeIcon(
-                    icon: HugeIcons.strokeRoundedExchange01,
-                    color: Colors.black,
-                ),
-              ],
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Text("Zmeniť nástenku",
+                    style: TextStyle(fontFamily: 'Goli'),
+                  ),
+                  const SizedBox(width: 5),
+                  const HugeIcon(
+                      icon: HugeIcons.strokeRoundedExchange01,
+                      color: Colors.black,
+                  ),
+                ],
+              ),
             )
         ),
 

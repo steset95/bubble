@@ -569,17 +569,20 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
             ),
           );
         },
-        child: Row(
-          children: [
-            Text("Súrodenec"),
-            const SizedBox(width: 10),
-            HugeIcon(
-                icon: HugeIcons.strokeRoundedKid,
-                color: Colors.black,
-                size: 22
-            ),
-            const SizedBox(width: 15),
-          ],
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              Text("Súrodenec"),
+              const SizedBox(width: 10),
+              HugeIcon(
+                  icon: HugeIcons.strokeRoundedKid,
+                  color: Colors.black,
+                  size: 22
+              ),
+              const SizedBox(width: 15),
+            ],
+          ),
         ),
       );
   }

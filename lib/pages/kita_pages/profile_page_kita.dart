@@ -299,18 +299,21 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                             ImpressumPage()),
                       );
                     },
-                    child: Row(
-                      children: [
-                        Text("O applikácii",
-                         style: TextStyle(fontFamily: 'Goli'),
-                        ),
-                        const SizedBox(width: 15),
-                        Container(
-                          color: Colors.black,
-                          height: 25.0,
-                          width: 1.0,
-                        ),
-                      ],
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [
+                          Text("O applikácii",
+                           style: TextStyle(fontFamily: 'Goli'),
+                          ),
+                          const SizedBox(width: 15),
+                          Container(
+                            color: Colors.black,
+                            height: 25.0,
+                            width: 1.0,
+                          ),
+                        ],
+                      ),
                     )
                   ),
 
@@ -444,26 +447,29 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                                 ));});
 
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text("Predplatné",
-                                style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                                  fontSize: 12,
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 5,
                                 ),
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              HugeIcon(
-                                icon:  HugeIcons.strokeRoundedCircleArrowRight02,
-                                color: Theme.of(context).colorScheme.primary,
-                                size: 15,
-                              ),
-                            ],
+                                Text("Predplatné",
+                                  style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                HugeIcon(
+                                  icon:  HugeIcons.strokeRoundedCircleArrowRight02,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 15,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

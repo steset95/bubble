@@ -229,7 +229,6 @@ void aboCheck2(){
       'personen': "",
       'eltern': "",
       'shownotification': "0",
-      'registrierungen': 0,
       'active': true,
       'switch': true,
     });
@@ -541,16 +540,19 @@ void aboCheck2(){
         /// Abholzeit
         GestureDetector(
             onTap: openChildBoxNew,
-            child: Row(
-              children: [
-                Text("Pridať dieťa",
-                  style: TextStyle(fontFamily: 'Goli'),
-                ),
-                const SizedBox(width: 5),
-                const Icon(Icons.add_reaction_outlined,
-                  color: Colors.black,
-                ),
-              ],
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Text("Pridať dieťa",
+                    style: TextStyle(fontFamily: 'Goli'),
+                  ),
+                  const SizedBox(width: 5),
+                  const Icon(Icons.add_reaction_outlined,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
             )
         ),
 

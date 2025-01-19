@@ -131,7 +131,7 @@ Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobný
                           TextButton(
                             onPressed: () async {
                               await launchUrl(
-                                  Uri.parse('https://bubble-app.sk/terms_and_conditions')); // Add URL which you want here
+                                  Uri.parse('https://bubble-app.ch/terms_and_conditions')); // Add URL which you want here
                               // Navigator.of(context).pushNamed(SignUpScreen.routeName);
                             },
                             child: Text("AGB",
