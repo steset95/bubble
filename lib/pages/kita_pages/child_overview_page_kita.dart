@@ -152,7 +152,10 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(docID)
-        .update({"shownotification": "0"});
+        .update({
+      "shownotification": "0",
+      "notificationNumber": 0,
+    });
   }
 
 
@@ -528,7 +531,7 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                           // Entsprechende Daten extrahieren
                           final userData = snapshot.data?.data() as Map<String, dynamic>;
 
-
+                          final notificationNumber = userData["notificationNumber"].toString();
                           final elternmail = userData["eltern"];
                           String shownotification = userData['shownotification'];
 
@@ -611,12 +614,15 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                   ],
                                 ),
                                 height: 100,
-                                child: const Column(
+                                child: Stack(
+                                    children: [
+
+                                  const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     HugeIcon(
-                                      icon: HugeIcons.strokeRoundedChatting01,
-                                      color: Colors.black
+                                        icon: HugeIcons.strokeRoundedChatting01,
+                                        color: Colors.black
                                     ),
                                     SizedBox(height: 7),
                                     Row(
@@ -627,6 +633,44 @@ class _ChildOverviewPageKitaState extends State<ChildOverviewPageKita> {
                                     ),
                                   ],
                                 ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          const SizedBox(width: 30),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              const SizedBox(height: 15),
+                                              Container(
+                                                  width: 16,
+                                                  height: 16,
+                                                  decoration: BoxDecoration(
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                      borderRadius: BorderRadius.all(Radius.circular(100))
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Text(notificationNumber,
+                                                            style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
+                                                                fontSize: 10
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  )
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ]
+                                ),
+
                               ),
                             );
                           }

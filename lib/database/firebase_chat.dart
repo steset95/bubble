@@ -94,20 +94,57 @@ Future<void> sendMessage(String receiverEmail, message, String childcode) async 
 
           String username = document["username"];
 
-          sendNotification(receiverEmail, "Nové správy od $username");
+
 
           if (document["rool"] == "Eltern") {
-            _firestore
+
+            await FirebaseFirestore.instance
                 .collection("Kinder")
                 .doc(childcode)
-                .update({"shownotification": "1"});
+                .get()
+                .then((DocumentSnapshot document2) async {
+              int notificationNumber = document2["notificationNumber"];
+              var notificationNumberNew = notificationNumber + 1;
+
+              _firestore
+                  .collection("Kinder")
+                  .doc(childcode)
+                  .update({
+                "shownotification": "1",
+                "notificationNumber": notificationNumberNew,
+                  });
+
+              sendNotification(receiverEmail, "Nové správy od $username ($notificationNumberNew)");
+
+            });
+
           }
+
+
+
           else
             {
-              _firestore
+
+              await FirebaseFirestore.instance
                   .collection("Users")
                   .doc(receiverEmail)
-                  .update({"shownotification": "1"});
+                  .get()
+                  .then((DocumentSnapshot document3) async {
+                int notificationNumber = document3["notificationNumber"];
+                var notificationNumberNew = notificationNumber + 1;
+
+                _firestore
+                    .collection("Users")
+                    .doc(receiverEmail)
+                    .update({
+                  "shownotification": "1",
+                  "notificationNumber": notificationNumberNew,
+                });
+
+                sendNotification(receiverEmail, "Nové správy od $username ($notificationNumberNew)");
+
+              });
+
             }
         });
       }

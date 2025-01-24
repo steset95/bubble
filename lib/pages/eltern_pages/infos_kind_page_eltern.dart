@@ -580,7 +580,7 @@ class _InfosKindPageElternState extends State<InfosKindPageEltern> {
                   color: Colors.black,
                   size: 22
               ),
-              const SizedBox(width: 15),
+              const SizedBox(width: 20),
             ],
           ),
         ),

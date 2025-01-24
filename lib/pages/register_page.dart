@@ -168,6 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "checkmeldung": checkMeldung,
         'notificationBlock': "",
         'date': DateTime.now(),
+        'notificationNumber': 0,
       });
     }
     else if (userCredential != null && userCredential.user != null && _currentItemSelected == "Škôlka") // prüfen ob Felder leer und ob Kita

@@ -229,6 +229,7 @@ void aboCheck2(){
       'personen': "",
       'eltern': "",
       'shownotification': "0",
+      'notificationNumber': 0,
       'active': true,
       'switch': true,
     });
@@ -527,7 +528,10 @@ void aboCheck2(){
     FirebaseFirestore.instance
         .collection("Kinder")
         .doc(docID)
-        .update({"shownotification": "0"});
+        .update({
+      "shownotification": "0",
+      "notificationNumber": 0,
+        });
   }
 
 

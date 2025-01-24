@@ -49,7 +49,10 @@ class _FeedPageElternState extends State<FeedPageEltern> {
     FirebaseFirestore.instance
         .collection("Users")
         .doc(currentUser?.email)
-        .update({"shownotification": "0"});
+        .update({
+      "shownotification": "0",
+      "notificationNumber": 0,
+    });
   }
 
   Widget showButtons() {
@@ -65,6 +68,7 @@ class _FeedPageElternState extends State<FeedPageEltern> {
               final kitamail = userData["kitamail"];
               final childcode = userData["childcode"];
               final shownotification = userData["shownotification"];
+              final notificationNumber = userData["notificationNumber"].toString();
               if (kitamail != "") {
                 return Row(
                   mainAxisSize: MainAxisSize.max,
@@ -104,8 +108,8 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                       ),
                   ),
                   if (shownotification == "1")
-                    IconButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
 
                         notificationNullEltern();
                         Navigator.push(
@@ -116,9 +120,64 @@ class _FeedPageElternState extends State<FeedPageEltern> {
                               )),
                         );
                       },
-                      icon:  HugeIcon(
-                        icon: HugeIcons.strokeRoundedChatting01,
-                        color: Theme.of(context).colorScheme.primary,
+                      child:
+                      Row(
+                        children: [
+                          const SizedBox(width: 11),
+                          Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      HugeIcon(
+                                        icon: HugeIcons.strokeRoundedChatting01,
+                                        color: Theme.of(context).colorScheme.primary,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 10),
+                                      Container(
+                                          width: 16,
+                                          height: 16,
+                                          decoration: BoxDecoration(
+                                              color: Theme.of(context).colorScheme.primary,
+                                              borderRadius: BorderRadius.all(Radius.circular(100))
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(notificationNumber,
+                                                    style: TextStyle(color: Theme.of(context).colorScheme.inversePrimary,
+                                                        fontSize: 10
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ]
+                          ),
+                        ],
                       ),
                     ),
                   const SizedBox(width: 15),
