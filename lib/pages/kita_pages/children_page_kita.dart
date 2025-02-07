@@ -66,7 +66,8 @@ void aboCheck2(){
 
     if (abo == "inaktiv" ||
         (abo == "bronze" && anzahlKinder > 29) ||
-        (abo == "silver" && anzahlKinder > 59))
+        (abo == "silver" && anzahlKinder > 59) ||
+        (abo == "gold" && anzahlKinder > 79))
     {
       textController.clear();
       showDialog(

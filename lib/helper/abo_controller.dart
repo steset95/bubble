@@ -56,7 +56,7 @@ void aboCheck() async {
       .doc(currentUser?.email)
       .get()
       .then((DocumentSnapshot document) async {
-    if ((customerInfo.entitlements.all['bronze'] == null && customerInfo.entitlements.all['silver'] == null && customerInfo.entitlements.all['gold'] == null)
+    if ((customerInfo.entitlements.all['bronze'] == null && customerInfo.entitlements.all['silver'] == null && customerInfo.entitlements.all['gold'] == null && customerInfo.entitlements.all['platin'] == null)
         && document["aboBis"].toDate().isBefore(DateTime.now()))
     {
       FirebaseFirestore.instance
@@ -65,13 +65,21 @@ void aboCheck() async {
           .update({"abo": "inaktiv"});
     }
     else if (
-        (customerInfo.entitlements.all['bronze']?.isActive == false && customerInfo.entitlements.all['silver']?.isActive == false && customerInfo.entitlements.all['gold']?.isActive == false)
+        (customerInfo.entitlements.all['bronze']?.isActive == false && customerInfo.entitlements.all['silver']?.isActive == false && customerInfo.entitlements.all['gold']?.isActive == false && customerInfo.entitlements.all['platin']?.isActive == false)
         && document["aboBis"].toDate().isBefore(DateTime.now())
     ) {
       FirebaseFirestore.instance
           .collection("Users")
           .doc(currentUser?.email)
           .update({"abo": "inaktiv"});
+    }
+    else if (customerInfo.entitlements.all['platin'] != null &&
+        customerInfo.entitlements.all['platin']?.isActive == true
+    ) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(currentUser?.email)
+          .update({"abo": "platin"});
     }
     else if (customerInfo.entitlements.all['gold'] != null &&
         customerInfo.entitlements.all['gold']?.isActive == true

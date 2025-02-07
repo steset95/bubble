@@ -208,7 +208,11 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
 
     bool hatGold = abo == "gold";
     var iconGold = hatGold ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
-    var textGold = hatGold ? "Active" : "59+ Deti";
+    var textGold = hatGold ? "Active" : "60 - 79 Deti";
+
+    bool hatPlatin = abo == "platin";
+    var iconPlatin = hatPlatin ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
+    var textPlatin= hatPlatin ? "Active" : "80+ Deti";
 
 
 
@@ -308,22 +312,25 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                                   .inversePrimary,
                               size: 20,
                             ),
-                            //const SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Bronze",
+                                const SizedBox(width: 10),
+                                Text("Bronzový",
                                   style: TextStyle(
                                       color: Theme
                                           .of(context)
                                           .colorScheme
                                           .inversePrimary,
-                                      fontSize: 40,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
+                                const SizedBox(width: 15),
                               ],
                             ),
+                            const SizedBox(height: 5),
                             Text(textBronze,
                               style: TextStyle(
                                 color: Theme
@@ -335,6 +342,7 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                             ),
                           ],
                         ),
+
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -427,22 +435,24 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                                   .inversePrimary,
                               size: 20,
                             ),
-                            //const SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Silver",
+                                Text("Strieborný",
                                   style: TextStyle(
                                       color: Theme
                                           .of(context)
                                           .colorScheme
                                           .inversePrimary,
-                                      fontSize: 40,
+                                      fontSize: 30,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
+                                const SizedBox(width: 5),
                               ],
                             ),
+                            const SizedBox(height: 5),
                             Text(textSilver,
                               style: TextStyle(
                                 color: Theme
@@ -558,22 +568,25 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                                   .inversePrimary,
                               size: 20,
                             ),
-                            //const SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("Gold",
+                                const SizedBox(width: 20),
+                                Text("Zlatý",
                                   style: TextStyle(
                                       color: Theme
                                           .of(context)
                                           .colorScheme
                                           .inversePrimary,
-                                      fontSize: 40,
+                                      fontSize: 35,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
+                                const SizedBox(width: 25),
                               ],
                             ),
+                            const SizedBox(height: 5),
                             Text(textGold,
                               style: TextStyle(
                                 color: Theme
@@ -592,6 +605,149 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
                               width: 50,
                               child:
                               Text("139€ / mesiac",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 40),
+              Container(
+                height: 160,
+                child:
+                GestureDetector(
+                  onTap: () => getOfferings('platin'),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.deepPurple.withOpacity(0.1),
+                          Colors.white.withOpacity(0.4),
+                          Colors.deepPurple.withOpacity(0.2),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        //stops: [0.6, 0.3,],
+                        //center: Alignment.topRight,
+                        //radius: 0.6,
+                      ),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.grey,
+                          spreadRadius: 1,
+                          blurRadius: 8,
+                          offset: Offset(2, 6),
+                        ),
+                      ],
+                    ),
+
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 50,
+                            ),
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedStar,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .inversePrimary,
+                              size: 25,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedStar,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .inversePrimary,
+                              size: 25,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedStar,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .inversePrimary,
+                              size: 25,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            HugeIcon(
+                              icon: HugeIcons.strokeRoundedStar,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .inversePrimary,
+                              size: 25,
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            HugeIcon(
+                              icon: iconPlatin,
+                              color: Theme
+                                  .of(context)
+                                  .colorScheme
+                                  .inversePrimary,
+                              size: 20,
+                            ),
+                            const SizedBox(height: 5),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Platinový",
+                                  style: TextStyle(
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .inversePrimary,
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text(textPlatin,
+                              style: TextStyle(
+                                color: Theme
+                                    .of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 50,
+                              child:
+                              Text("179€ / mesiac",
                                 style: TextStyle(
                                   fontSize: 10,
                                 ),

@@ -110,7 +110,13 @@ Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobný
                         ),
                       if (widget.aboType == 'gold')
                         Text(
-                            """Bubble-App Gold (1 mesiac / 139 euro | 59+ Deti): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
+                            """Bubble-App Gold (1 mesiac / 139 euro | 60 - 79 Deti): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
+Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Predplatné môžete kedykoľvek zrušiť vo svojom účte iTunes alebo Play Store.
+Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov."""
+                        ),
+                      if (widget.aboType == 'platin')
+                        Text(
+                            """Bubble-App Platinum (1 mesiac / 179 euro | 80+ Deti): Predplatné bude pridané do vášho účtu iTunes alebo Play Store.
 Predplatné sa mesačne automaticky predlžuje až do aktívneho zrušenia. Predplatné môžete kedykoľvek zrušiť vo svojom účte iTunes alebo Play Store.
 Pre viac informácií: Všeobecné obchodné podmienky a zásady ochrany osobných údajov."""
                         ),
