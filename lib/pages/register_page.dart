@@ -44,7 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
   String tel = "";
   String childcode = "";
   String childcode2 = "";
-  int guthaben = 0;
   String gruppe1 = "Skupina 1";
   String gruppe2 = "Skupina 2";
   String gruppe3 = "Skupina 3";
@@ -169,6 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
         'notificationBlock': "",
         'date': DateTime.now(),
         'notificationNumber': 0,
+        'registerDate': DateTime.now(),
       });
     }
     else if (userCredential != null && userCredential.user != null && _currentItemSelected == "Škôlka") // prüfen ob Felder leer und ob Kita
@@ -184,7 +184,6 @@ class _RegisterPageState extends State<RegisterPage> {
         'adress': adress,
         'adress2': adress2,
         'tel': tel,
-        'guthaben': guthaben,
         "checkmeldung": checkMeldung,
         'gruppe1': gruppe1,
         'gruppe2': gruppe2,
@@ -197,6 +196,7 @@ class _RegisterPageState extends State<RegisterPage> {
         "abo": abo,
         "aboBis": aboBis,
         "aboID": aboID,
+        'registerDate': DateTime.now(),
       });
       FirebaseFirestore.instance
           .collection("Users")
