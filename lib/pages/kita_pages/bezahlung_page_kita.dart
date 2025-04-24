@@ -164,619 +164,524 @@ class BezahlungPageKitaState extends State<BezahlungPageKita> {
     ),
     ),
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Stack(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+      body: StreamBuilder<DocumentSnapshot>(
+      stream: FirebaseFirestore.instance
+          .collection("Users")
+      .doc(currentUser?.email)
+      .snapshots(),
+          builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+          child: CircularProgressIndicator(),
+          );
+          }
+          else if (snapshot.hasData) {
+          // Entsprechende Daten extrahieren
+          final userData = snapshot.data?.data() as Map<String, dynamic>;
+
+          final abo = userData["abo"];
+          final aboBis = userData["aboBis"].toDate();
+          String currentDate = aboBis.toString();
+          String formattedDate = currentDate.substring(0, 10);
+
+          bool hatBronze = abo == "bronze";
+          var iconBronze = hatBronze ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
+          var textBronze = hatBronze ? "Active" : "1 - 29 Deti";
+
+          bool hatSilver = abo == "silver";
+          var iconSilver  = hatSilver ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
+          var textSilver  = hatSilver ? "Active" : "30 - 59 Deti";
+
+          bool hatGold = abo == "gold";
+          var iconGold = hatGold ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
+          var textGold = hatGold ? "Active" : "60 - 79 Deti";
+
+          bool hatPlatin = abo == "platin";
+          var iconPlatin = hatPlatin ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
+          var textPlatin= hatPlatin ? "Active" : "80+ Deti";
+
+
+
+
+           return SingleChildScrollView(
+             child: Padding(
+        padding: const EdgeInsets.all(40.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (aboBis.isAfter(DateTime.now()))
               Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Image.asset("assets/images/bubbles.png", width: 350, height:350),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HugeIcon(
+                        icon:  HugeIcons.strokeRoundedCheckmarkCircle02,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                      Text(" Aktívne skúšobné mesiace ",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      HugeIcon(
+                        icon:  HugeIcons.strokeRoundedCheckmarkCircle02,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+
+                    ],
+                  ),
+                  Text('(Do: $formattedDate)'),
+                  const SizedBox(height: 30),
                 ],
               ),
-            ],
-          ),
-        StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("Users")
-        .doc(currentUser?.email)
-        .snapshots(),
-    builder: (context, snapshot) {
-    if (snapshot.connectionState == ConnectionState.waiting) {
-    return const Center(
-    child: CircularProgressIndicator(),
-    );
-    }
-    else if (snapshot.hasData) {
-    // Entsprechende Daten extrahieren
-    final userData = snapshot.data?.data() as Map<String, dynamic>;
 
-    final abo = userData["abo"];
-    final aboBis = userData["aboBis"].toDate();
-    String currentDate = aboBis.toString();
-    String formattedDate = currentDate.substring(0, 10);
+            SizedBox(
+              height: 160,
+              child: GestureDetector(
+                onTap: () => getOfferings('bronze'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xedc97932).withOpacity(0.1),
+                        Colors.white.withOpacity(0.7),
+                        Color(0xedc97932).withOpacity(0.1),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      //stops: [0.6, 0.3,],
+                      //center: Alignment.topRight,
+                      //radius: 0.6,
+                    ),
 
-    bool hatBronze = abo == "bronze";
-    var iconBronze = hatBronze ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
-    var textBronze = hatBronze ? "Active" : "1 - 29 Deti";
+                  ),
 
-    bool hatSilver = abo == "silver";
-    var iconSilver  = hatSilver ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
-    var textSilver  = hatSilver ? "Active" : "30 - 59 Deti";
-
-    bool hatGold = abo == "gold";
-    var iconGold = hatGold ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
-    var textGold = hatGold ? "Active" : "60 - 79 Deti";
-
-    bool hatPlatin = abo == "platin";
-    var iconPlatin = hatPlatin ? HugeIcons.strokeRoundedCheckmarkCircle02 : HugeIcons.strokeRoundedRocket01;
-    var textPlatin= hatPlatin ? "Active" : "80+ Deti";
-
-
-
-
-     return SingleChildScrollView(
-       child: Padding(
-          padding: const EdgeInsets.all(40.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (aboBis.isAfter(DateTime.now()))
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        HugeIcon(
-                          icon:  HugeIcons.strokeRoundedCheckmarkCircle02,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-                        Text(" Aktívne skúšobné mesiace ",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
                           ),
-                        ),
-                        HugeIcon(
-                          icon:  HugeIcons.strokeRoundedCheckmarkCircle02,
-                          color: Colors.black,
-                          size: 20,
-                        ),
-       
-                      ],
-                    ),
-                    Text('(Do: $formattedDate)'),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-       
-              Container(
-                height: 160,
-                child: GestureDetector(
-                  onTap: () => getOfferings('bronze'),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xedc97932).withOpacity(0.5),
-                          Colors.white.withOpacity(0.7),
-                          Color(0xedc97932).withOpacity(0.5),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Color(0xedc97932),
+                            size: 30,
+                          ),
                         ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        //stops: [0.6, 0.3,],
-                        //center: Alignment.topRight,
-                        //radius: 0.6,
                       ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 1,
-                          blurRadius: 8,
-                          offset: Offset(2, 6),
-                        ),
-                      ],
-                    ),
-       
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 30,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            HugeIcon(
-                              icon: iconBronze,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 20,
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 10),
-                                Text("Bronzový",
-                                  style: TextStyle(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .inversePrimary,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold
-                                  ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          HugeIcon(
+                            icon: iconBronze,
+                            color: Color(0xedc97932),
+                            size: 20,
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: 10),
+                              Text("Bronzový",
+                                style: TextStyle(
+                                    color: Color(0xedc97932),
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold
                                 ),
-                                const SizedBox(width: 15),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(textBronze,
-                              style: TextStyle(
-                                color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .inversePrimary,
-                                fontSize: 15,
                               ),
+                              const SizedBox(width: 15),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Text(textBronze,
+                            style: TextStyle(
+                              color: Color(0xedc97932),
+                              fontSize: 15,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
 
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                              child:
-                              Text("59€ / mesiac",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-       
-              const SizedBox(height: 40),
-              Container(
-                height: 160,
-                child:
-                GestureDetector(
-                  onTap: () => getOfferings('silver'),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.grey,
-                          Colors.white.withOpacity(0.4),
-                          Colors.grey,
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        //stops: [0.6, 0.3,],
-                        //center: Alignment.topRight,
-                        //radius: 0.6,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 1,
-                          blurRadius: 8,
-                          offset: Offset(2, 6),
-                        ),
-                      ],
-                    ),
-       
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 30,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 30,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            HugeIcon(
-                              icon: iconSilver,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 20,
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Strieborný",
-                                  style: TextStyle(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .inversePrimary,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(textSilver,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                            child:
+                            Text("59€ / mesiac",
                               style: TextStyle(
-                                color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .inversePrimary,
-                                fontSize: 15,
+                                fontSize: 10,
                               ),
                             ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                              child:
-                              Text("99€ / mesiac",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-       
-              const SizedBox(height: 40),
-              Container(
-                height: 160,
-                child:
-                GestureDetector(
-                  onTap: () => getOfferings('gold'),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.yellowAccent.shade700,
-                          Colors.white.withOpacity(0.86),
-                          Colors.yellowAccent.shade700,
-                          Colors.yellowAccent.shade700.withOpacity(0.7),
+                          ),
                         ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        //stops: [0.6, 0.3,],
-                        //center: Alignment.topRight,
-                        //radius: 0.6,
                       ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 1,
-                          blurRadius: 8,
-                          offset: Offset(2, 6),
-                        ),
-                      ],
-                    ),
-       
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 30,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 30,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 30,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            HugeIcon(
-                              icon: iconGold,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 20,
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 20),
-                                Text("Zlatý",
-                                  style: TextStyle(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .inversePrimary,
-                                      fontSize: 35,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(width: 25),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(textGold,
-                              style: TextStyle(
-                                color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .inversePrimary,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                              child:
-                              Text("139€ / mesiac",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),
+            ),
 
-              const SizedBox(height: 40),
-              Container(
-                height: 160,
-                child:
-                GestureDetector(
-                  onTap: () => getOfferings('platin'),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.deepPurple.withOpacity(0.1),
-                          Colors.white.withOpacity(0.4),
-                          Colors.deepPurple.withOpacity(0.2),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        //stops: [0.6, 0.3,],
-                        //center: Alignment.topRight,
-                        //radius: 0.6,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.grey,
-                          spreadRadius: 1,
-                          blurRadius: 8,
-                          offset: Offset(2, 6),
-                        ),
+            const SizedBox(height: 10),
+            HugeIcon(
+              icon: HugeIcons.strokeRoundedAirplane01,
+              color: Colors.black.withOpacity(0.5),
+              size: 20,
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 160,
+              child:
+              GestureDetector(
+                onTap: () => getOfferings('silver'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.grey.withOpacity(0.2),
+                        Colors.white.withOpacity(0.4),
+                        Colors.grey.withOpacity(0.2),
                       ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      //stops: [0.6, 0.3,],
+                      //center: Alignment.topRight,
+                      //radius: 0.6,
+                    ),
+                  ),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.grey,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.grey,
+                            size: 30,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          HugeIcon(
+                            icon: iconSilver,
+                            color: Colors.grey,
+                            size: 20,
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Strieborný",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Text(textSilver,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                            child:
+                            Text("99€ / mesiac",
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+            HugeIcon(
+              icon: HugeIcons.strokeRoundedHotAirBalloon,
+              color: Colors.black.withOpacity(0.5),
+              size: 20,
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 160,
+              child:
+              GestureDetector(
+                onTap: () => getOfferings('gold'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.yellowAccent.shade700.withOpacity(0.1),
+                        Colors.white.withOpacity(0.4),
+                        Colors.yellowAccent.shade700.withOpacity(0.1),
+                        Colors.yellowAccent.shade700.withOpacity(0.2),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      //stops: [0.6, 0.3,],
+                      //center: Alignment.topRight,
+                      //radius: 0.6,
+                    ),
+                  ),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.yellowAccent.shade700,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.yellowAccent.shade700,
+                            size: 30,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.yellowAccent.shade700,
+                            size: 30,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          HugeIcon(
+                            icon: iconGold,
+                            color: Colors.yellowAccent.shade700,
+                            size: 20,
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SizedBox(width: 20),
+                              Text("Zlatý",
+                                style: TextStyle(
+                                    color: Colors.yellowAccent.shade700,
+                                    fontSize: 35,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              const SizedBox(width: 25),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Text(textGold,
+                            style: TextStyle(
+                              color: Colors.yellowAccent.shade700,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                            child:
+                            Text("139€ / mesiac",
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+            HugeIcon(
+              icon: HugeIcons.strokeRoundedFootball,
+              color: Colors.black.withOpacity(0.5),
+              size: 20,
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 160,
+              child:
+              GestureDetector(
+                onTap: () => getOfferings('platin'),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.deepPurple.withOpacity(0.1),
+                        Colors.white.withOpacity(0.4),
+                        Colors.deepPurple.withOpacity(0.1),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      //stops: [0.6, 0.3,],
+                      //center: Alignment.topRight,
+                      //radius: 0.6,
                     ),
 
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 25,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 25,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 25,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            HugeIcon(
-                              icon: HugeIcons.strokeRoundedStar,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 25,
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            HugeIcon(
-                              icon: iconPlatin,
-                              color: Theme
-                                  .of(context)
-                                  .colorScheme
-                                  .inversePrimary,
-                              size: 20,
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Platinový",
-                                  style: TextStyle(
-                                      color: Theme
-                                          .of(context)
-                                          .colorScheme
-                                          .inversePrimary,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Text(textPlatin,
-                              style: TextStyle(
-                                color: Theme
-                                    .of(context)
-                                    .colorScheme
-                                    .inversePrimary,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 50,
-                              child:
-                              Text("179€ / mesiac",
+                  ),
+
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.deepPurple,
+                            size: 25,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.deepPurple,
+                            size: 25,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.deepPurple,
+                            size: 25,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          HugeIcon(
+                            icon: HugeIcons.strokeRoundedStar,
+                            color: Colors.deepPurple,
+                            size: 25,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          HugeIcon(
+                            icon: iconPlatin,
+                            color: Colors.deepPurple,
+                            size: 20,
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Platinový",
                                 style: TextStyle(
-                                  fontSize: 10,
+                                    color: Colors.deepPurple,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold
                                 ),
                               ),
+                              const SizedBox(width: 5),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Text(textPlatin,
+                            style: TextStyle(
+                              color: Colors.deepPurple,
+                              fontSize: 15,
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 50,
+                            child:
+                            Text("179€ / mesiac",
+                              style: TextStyle(
+                                fontSize: 10,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),
-       
-              const SizedBox(height: 10),
-            ],
-          ),
+            ),
+
+            const SizedBox(height: 10),
+          ],
         ),
-     );
-
-    }
-        else
-          {
-            return Container();
-          }
-        }
-    ),
-
-        ],
       ),
+           );
+
+          }
+      else
+        {
+          return Container();
+        }
+      }
+          ),
     );
   }
 

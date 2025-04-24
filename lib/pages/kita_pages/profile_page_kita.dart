@@ -452,22 +452,27 @@ class _ProfilePageKitaState extends State<ProfilePageKita> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text("Predplatné",
-                                  style: TextStyle(color: Theme.of(context).colorScheme.primary,
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                HugeIcon(
-                                  icon:  HugeIcons.strokeRoundedCircleArrowRight02,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 15,
-                                ),
+                                Column(
+                                  children: [
+                                    HugeIcon(
+                                      icon: HugeIcons.strokeRoundedRocket01,
+                                      color: Theme
+                                          .of(context)
+                                          .colorScheme
+                                          .primary,
+                                      size: 25,
+                                    ),
+                                    SizedBox(height: 3,),
+                                    Text("Predplatné",
+                                      style: TextStyle(color: Theme.of(context).colorScheme.primary,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                )
+
+
+
                               ],
                             ),
                           ),

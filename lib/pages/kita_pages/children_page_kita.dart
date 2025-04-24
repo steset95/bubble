@@ -631,7 +631,38 @@ void aboCheck2(){
               final userData = snapshot.data?.data() as Map<String, dynamic>;
               return Padding(
                 padding: const EdgeInsets.only(top: 20,),
-                child: Column(
+                child:
+                GestureDetector(
+                  onHorizontalDragEnd: (dragDetail) {
+                    if (dragDetail.velocity.pixelsPerSecond.dx < 0 && buttons == '1') {
+                        setState(() {
+                          selectedOption = optionb();
+                        });
+                        buttons = '2';
+                    }
+                    else if (dragDetail.velocity.pixelsPerSecond.dx < 0 && buttons == '2') {
+                      print("right");
+                      setState(() {
+                        selectedOption = optionc();
+                      });
+                      buttons = '3';
+                    }
+                    else if (dragDetail.velocity.pixelsPerSecond.dx > 0 && buttons == '3') {
+                      print("right");
+                      setState(() {
+                        selectedOption = optionb();
+                      });
+                      buttons = '2';
+                    }
+                    else if (dragDetail.velocity.pixelsPerSecond.dx > 0 && buttons == '2') {
+                      print("right");
+                      setState(() {
+                        selectedOption = optiona();
+                      });
+                      buttons = '1';
+                    }
+                  },
+                  child: Column(
                   children: [
                     if (buttons == '1')
                       Row(
@@ -766,6 +797,7 @@ void aboCheck2(){
 
 
                   ],
+                ),
                 ),
               );
             }
