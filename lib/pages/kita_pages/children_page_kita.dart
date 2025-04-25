@@ -713,36 +713,36 @@ void aboCheck2(){
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  selectedOption = optiona();
-                                });
-                                buttons = '1';
-                              },
+                            onTap: () {
+                              setState(() {
+                                selectedOption = optiona();
+                              });
+                              buttons = '1';
+                            },
 
-                              child: optionCards(
+                            child: optionCards(
                                 userData["gruppe1"], "assets/icons/recycle.png",
                                 context, "1", Colors.indigo.shade200, userData["anzahlKinder1"] ),
                           ),
                           GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  selectedOption = optionb();
-                                });
-                                buttons = '2';
-                              },
-                              child: optionCards(
+                            onTap: () {
+                              setState(() {
+                                selectedOption = optionb();
+                              });
+                              buttons = '2';
+                            },
+                            child: optionCards(
                                 userData["gruppe2"], "assets/icons/tools.png",
                                 context, "2", Theme.of(context).colorScheme.primary, userData["anzahlKinder2"]),
                           ),
                           GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  selectedOption = optionc();
-                                });
-                                buttons = '3';
-                              },
-                              child: optionCards(
+                            onTap: () {
+                              setState(() {
+                                selectedOption = optionc();
+                              });
+                              buttons = '3';
+                            },
+                            child: optionCards(
                                 userData["gruppe3"], "assets/icons/file.png",
                                 context, "3", Colors.indigo.shade200, userData["anzahlKinder3"]),
                           ),

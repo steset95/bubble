@@ -180,6 +180,38 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
 
   }
 
+
+  Widget showButtons () {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        /// Abholzeit
+        GestureDetector(
+            onTap: openBoxNew,
+            child: Container(
+              color: Colors.transparent,
+              child: Row(
+                children: [
+                  Text("Pridať polia",
+                    style: TextStyle(fontFamily: 'Goli'),
+                  ),
+                  const SizedBox(width: 5),
+                  const HugeIcon(
+                    icon: HugeIcons.strokeRoundedFileAdd,
+                    color: Colors.black,
+                    size: 20,
+
+                  ),
+                ],
+              ),
+            )
+        ),
+
+        const SizedBox(width: 20),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,6 +220,9 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
           backgroundColor: Theme.of(context).colorScheme.secondary,
           title: Text("Povolenia",
           ),
+          actions: [
+            showButtons (),
+          ],
         ),
       body: SingleChildScrollView(
         child:
@@ -220,27 +255,35 @@ class _EinwilligungenKindPageKitaState extends State<EinwilligungenKindPageKita>
                                 String content = post['value'];
 
                                 // Liste als Tile wiedergeben
-                                return MyProfileDataErlaubnis(
-                                  text: content,
-                                  sectionName: title,
-                                  onPressed: () => openDeleteField(title),
+                                return Dismissible(
+                                  key: Key(title),
+                                  direction: DismissDirection.endToStart,
+                                  onDismissed: (direction) {
+                                    // Remove the item from the list when dismissed
+                                    openDeleteField(title);
+                                    setState(() {
+                                      fields.removeAt(index);
+                                    });
+                                  },
+                                  background: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      color: Colors.red.withOpacity(0.5),
+                                      alignment: Alignment.centerRight,
+                                      padding: EdgeInsets.only(right: 20), // Background color when swiping
+                                      child: HugeIcon(
+                                        icon: HugeIcons.strokeRoundedDelete02,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  child:  MyProfileDataErlaubnis(
+                                    text: content,
+                                    sectionName: title,
+                                  ),
                                 );
                               }
-                          ),
-
-                          SizedBox(
-                            height: 20,
-                          ),
-                          IconButton(
-                            onPressed: openBoxNew,
-                            icon: HugeIcon(
-                              icon: HugeIcons.strokeRoundedAddCircle,
-                              color: Theme.of(context).colorScheme.primary,
-                              size: 30,
-                            ),
-                          ),
-                          Text("Pridať polia",
-                            style: TextStyle(fontSize: 10),
                           ),
                           SizedBox(
                             height: 20,

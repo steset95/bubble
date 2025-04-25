@@ -725,303 +725,315 @@ class _ChildPageElternState extends State<ChildPageEltern> {
 
         if (snapshot.hasData && childcode != "") {
           getKitaEmail(userData["childcode"]);
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: [
+          return GestureDetector(
 
-              const SizedBox(height: 10),
-              Flexible(
-                flex: 1,
-                  child:
-              buildGallery(childcode, currentDate1, kitamail)),
+            onHorizontalDragEnd: (dragDetail) {
+              if (dragDetail.velocity.pixelsPerSecond.dx < 0) {
+                _incrementCounterPlus();
+              }
+              else if (dragDetail.velocity.pixelsPerSecond.dx > 0) {
+                _incrementCounterMinus();
+              }
+            },
 
-              const SizedBox(height: 10),
-              Flexible(
-                flex: 9,
-                child: StreamBuilder<QuerySnapshot>(
-                    stream:  FirebaseFirestore.instance
-                        .collection("Kinder")
-                        .doc(childcode)
-                        .collection(formattedDate)
-                        .orderBy('TimeStamp', descending: true)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      List<Row> raportWidgets = [];
-                      if (snapshot.hasData) {
-                        final raports = snapshot.data?.docs.reversed.toList();
-                        for (var raport in raports!) {
-                          final raportWidget = Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Container(
-                                padding: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          spreadRadius: 1,
-                                          blurRadius: 2,
-                                          offset: Offset(1, 2),
-                                        ),
-                                      ]
-                                  ),
-                                  width: mediaQuery.size.width * 0.9,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Flexible(
-                                          flex: 2,
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                  raport['Uhrzeit'],
-                                                  style: TextStyle(fontWeight: FontWeight.bold,
-                                                    fontSize: 13,
-                                                  )
-                                              ),
-                                              const SizedBox(height: 2),
-                                            ],
-                                          )),
-                                      Flexible(
-                                        flex: 8,
-                                        child: Column(
-                                          children: [
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
 
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(height: 10),
+                Flexible(
+                  flex: 1,
+                    child:
+                buildGallery(childcode, currentDate1, kitamail)),
+
+                const SizedBox(height: 10),
+                Flexible(
+                  flex: 9,
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream:  FirebaseFirestore.instance
+                          .collection("Kinder")
+                          .doc(childcode)
+                          .collection(formattedDate)
+                          .orderBy('TimeStamp', descending: true)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        List<Row> raportWidgets = [];
+                        if (snapshot.hasData) {
+                          final raports = snapshot.data?.docs.reversed.toList();
+                          for (var raport in raports!) {
+                            final raportWidget = Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Container(
+                                  padding: EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.grey,
+                                            spreadRadius: 1,
+                                            blurRadius: 2,
+                                            offset: Offset(1, 2),
+                                          ),
+                                        ]
+                                    ),
+                                    width: mediaQuery.size.width * 0.9,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                            flex: 2,
+                                            child: Column(
                                               children: [
-                                                if (raport['RaportTitle'] == "Angemeldet")
-                                                  Text(
-                                                  "Prihlásená/ý",
-                                                  style: TextStyle(fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
-                                                  ),
-                                                  )
-                                                else if (raport['RaportTitle'] == "Essen: ")
-                                                  Text(
-                                                    "Strava: ",
+                                                Text(
+                                                    raport['Uhrzeit'],
                                                     style: TextStyle(fontWeight: FontWeight.bold,
                                                       fontSize: 13,
-                                                    ),
-                                                  )
-                                                else if (raport['RaportTitle'] == "Schlaf: ")
+                                                    )
+                                                ),
+                                                const SizedBox(height: 2),
+                                              ],
+                                            )),
+                                        Flexible(
+                                          flex: 8,
+                                          child: Column(
+                                            children: [
+
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  if (raport['RaportTitle'] == "Angemeldet")
                                                     Text(
-                                                      "Spánok: ",
+                                                    "Prihlásená/ý",
+                                                    style: TextStyle(fontWeight: FontWeight.bold,
+                                                    fontSize: 13,
+                                                    ),
+                                                    )
+                                                  else if (raport['RaportTitle'] == "Essen: ")
+                                                    Text(
+                                                      "Strava: ",
                                                       style: TextStyle(fontWeight: FontWeight.bold,
                                                         fontSize: 13,
                                                       ),
                                                     )
-                                                  else if (raport['RaportTitle'] == "Aktivität: ")
+                                                  else if (raport['RaportTitle'] == "Schlaf: ")
                                                       Text(
-                                                        "Aktivity: ",
+                                                        "Spánok: ",
                                                         style: TextStyle(fontWeight: FontWeight.bold,
                                                           fontSize: 13,
                                                         ),
                                                       )
-                                                    else if (raport['RaportTitle'] == "Diverses: ")
+                                                    else if (raport['RaportTitle'] == "Aktivität: ")
                                                         Text(
-                                                          "Rôzne: ",
+                                                          "Aktivity: ",
                                                           style: TextStyle(fontWeight: FontWeight.bold,
                                                             fontSize: 13,
                                                           ),
                                                         )
-                                                      else if (raport['RaportTitle'] == "Abgemeldet")
+                                                      else if (raport['RaportTitle'] == "Diverses: ")
                                                           Text(
-                                                            "Odhlásená/ý",
+                                                            "Rôzne: ",
                                                             style: TextStyle(fontWeight: FontWeight.bold,
                                                               fontSize: 13,
                                                             ),
-                                                          ),
-                                                const SizedBox(width: 10),
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Flexible(
-                                                    //width: mediaQuery.size.width * 0.80,
-                                                      child: Text(
-                                                        textAlign: TextAlign.center,
-                                                        raport['RaportText'],
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                        ),
-                                                      )),
+                                                          )
+                                                        else if (raport['RaportTitle'] == "Abgemeldet")
+                                                            Text(
+                                                              "Odhlásená/ý",
+                                                              style: TextStyle(fontWeight: FontWeight.bold,
+                                                                fontSize: 13,
+                                                              ),
+                                                            ),
                                                   const SizedBox(width: 10),
                                                 ],
                                               ),
+                                              const SizedBox(height: 5),
+                                              if (raport['RaportTitle'] != "Angemeldet" && raport['RaportTitle'] != "Abgemeldet" )
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: [
+                                                    Flexible(
+                                                      //width: mediaQuery.size.width * 0.80,
+                                                        child: Text(
+                                                          textAlign: TextAlign.center,
+                                                          raport['RaportText'],
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                          ),
+                                                        )),
+                                                    const SizedBox(width: 10),
+                                                  ],
+                                                ),
 
 
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      Flexible(
-                                          flex: 1,
-                                          child:
-                                          Column(
-                                            children: [
-                                              if (raport['RaportTitle'] == "Angemeldet")
-                                              HugeIcon(
-                                              icon: HugeIcons.strokeRoundedSun03,
-                                              color: Colors.amber.shade600,
-                                                  size: 20
-                                              )
-                                              else if (raport['RaportTitle'] == "Essen: ")
+                                        Flexible(
+                                            flex: 1,
+                                            child:
+                                            Column(
+                                              children: [
+                                                if (raport['RaportTitle'] == "Angemeldet")
                                                 HugeIcon(
-                                                  icon: HugeIcons.strokeRoundedPizza01,
-                                                  color: Colors.orange.shade600,
+                                                icon: HugeIcons.strokeRoundedSun03,
+                                                color: Colors.amber.shade600,
                                                     size: 20
                                                 )
-                                              else if (raport['RaportTitle'] == "Schlaf: ")
-                                                HugeIcon(
-                                                icon: HugeIcons.strokeRoundedSleeping,
-                                                color: Colors.teal.shade600,
-                                                    size: 20
-                                                )
-                                              else if (raport['RaportTitle'] == "Aktivität: ")
-                                                HugeIcon(
-                                                icon: HugeIcons.strokeRoundedHockey,
-                                                color: Colors.purple.shade600,
-                                                    size: 20
-                                                )
-                                              else if (raport['RaportTitle'] == "Diverses: ")
-                                                      HugeIcon(
-                                                        icon: HugeIcons.strokeRoundedChartBubble02,
-                                                        color: Colors.lightBlue.shade600,
-                                                          size: 20
-                                                      )
-                                              else if (raport['RaportTitle'] == "Abgemeldet")
+                                                else if (raport['RaportTitle'] == "Essen: ")
+                                                  HugeIcon(
+                                                    icon: HugeIcons.strokeRoundedPizza01,
+                                                    color: Colors.orange.shade600,
+                                                      size: 20
+                                                  )
+                                                else if (raport['RaportTitle'] == "Schlaf: ")
+                                                  HugeIcon(
+                                                  icon: HugeIcons.strokeRoundedSleeping,
+                                                  color: Colors.teal.shade600,
+                                                      size: 20
+                                                  )
+                                                else if (raport['RaportTitle'] == "Aktivität: ")
+                                                  HugeIcon(
+                                                  icon: HugeIcons.strokeRoundedHockey,
+                                                  color: Colors.purple.shade600,
+                                                      size: 20
+                                                  )
+                                                else if (raport['RaportTitle'] == "Diverses: ")
                                                         HugeIcon(
-                                                          icon: HugeIcons.strokeRoundedMoon02,
-                                                          color: Colors.blueGrey,
-                                                          size: 20
-                                                        ),
-                                          ],
-                                          )
-                                      ),
-                                    ],
+                                                          icon: HugeIcons.strokeRoundedChartBubble02,
+                                                          color: Colors.lightBlue.shade600,
+                                                            size: 20
+                                                        )
+                                                else if (raport['RaportTitle'] == "Abgemeldet")
+                                                          HugeIcon(
+                                                            icon: HugeIcons.strokeRoundedMoon02,
+                                                            color: Colors.blueGrey,
+                                                            size: 20
+                                                          ),
+                                            ],
+                                            )
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
 
+                                ),
+                              ],
+                            );
+                            raportWidgets.add(raportWidget);
+                           // Text(raport['RaportText']);
+                          }
+                        }
+                        if (raportWidgets.isNotEmpty) {
+                          return
+                          ListView(
+                            children: raportWidgets,
+                          );
+                        }
+
+                        else if (snapshot.connectionState != ConnectionState.waiting)
+                        {
+                          return
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        child: Container(
+                        decoration: BoxDecoration(
+
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.grey.shade300,),
+                        ),
+                          child:
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 50,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Žiadne záznamy...",
+                                    style: TextStyle(color: Colors.grey.shade300,),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  HugeIcon(
+                                    icon: HugeIcons.strokeRoundedMoon02,
+                                    color: Colors.grey.shade300,
+                                  ),
+                                ],
                               ),
                             ],
-                          );
-                          raportWidgets.add(raportWidget);
-                         // Text(raport['RaportText']);
+                          ),
+                        )
+                            );
+                        }
+                        else {
+                          return Container();
                         }
                       }
-                      if (raportWidgets.isNotEmpty) {
-                        return
-                        ListView(
-                          children: raportWidgets,
-                        );
-                      }
-
-                      else if (snapshot.connectionState != ConnectionState.waiting)
-                      {
-                        return
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: Container(
-                      decoration: BoxDecoration(
-
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.grey.shade300,),
-                      ),
-                        child:
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 50,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Žiadne záznamy...",
-                                  style: TextStyle(color: Colors.grey.shade300,),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                HugeIcon(
-                                  icon: HugeIcons.strokeRoundedMoon02,
-                                  color: Colors.grey.shade300,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                          );
-                      }
-                      else {
-                        return Container();
-                      }
-                    }
-                ),
-              ),
-
-              Flexible(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: _incrementCounterMinus,
-                        child: Container(
-                          width: 50,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Icon(Icons.arrow_circle_left_outlined,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap:  ()  {
-                          showRaportDialogDatum(context, currentDate1);
-                        },
-                        child: Text(showDatum,
-                          textAlign: TextAlign.center,
-                          style: TextStyle( fontFamily: 'Goli',
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: _incrementCounterPlus,
-                        child: Container(
-                          width: 50,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Icon(Icons.arrow_circle_right_outlined ,
-                            color: Theme.of(context).colorScheme.primary,
-                            size: 25,
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
-              ),
-            ],
+
+                Flexible(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: _incrementCounterMinus,
+                          child: Container(
+                            width: 50,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Icon(Icons.arrow_circle_left_outlined,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 25,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap:  ()  {
+                            showRaportDialogDatum(context, currentDate1);
+                          },
+                          child: Text(showDatum,
+                            textAlign: TextAlign.center,
+                            style: TextStyle( fontFamily: 'Goli',
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: _incrementCounterPlus,
+                          child: Container(
+                            width: 50,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Icon(Icons.arrow_circle_right_outlined ,
+                              color: Theme.of(context).colorScheme.primary,
+                              size: 25,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           );
         }
       }

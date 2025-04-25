@@ -4,14 +4,14 @@ import 'package:hugeicons/hugeicons.dart';
 class MyProfileDataErlaubnis extends StatelessWidget {
   final String text;
   final String sectionName;
-  final void Function()? onPressed;
+
 
 
   const MyProfileDataErlaubnis({
     super.key,
     required this.text,
     required this.sectionName,
-    required this.onPressed,
+
   });
 
   @override
@@ -19,6 +19,7 @@ class MyProfileDataErlaubnis extends StatelessWidget {
     bool erlaubt = text == "erlaubt";
     var color = erlaubt ? Colors.green.shade600 : Colors.red.shade600;
     String erlaubtText = erlaubt ? "povolené" : "nepovolené";
+    var icon  = erlaubt ? HugeIcons.strokeRoundedSecurityCheck : HugeIcons.strokeRoundedUnavailable;
     final mediaQuery = MediaQuery.of(context);
     return  Container(
       width: mediaQuery.size.width * 1,
@@ -53,21 +54,17 @@ class MyProfileDataErlaubnis extends StatelessWidget {
                   width: 30,
                   height: 30,
                   child:
-                  IconButton(
-                    onPressed: onPressed,
-                    icon:
+
                     HugeIcon(
-                      icon: HugeIcons.strokeRoundedDelete02,
+                      icon: icon,
                       color: Colors.black,
                       size: 15,
                     ),
-                  ),
-
                 ),
             ],
           ),
           Text(erlaubtText,
-            style: TextStyle(color: Colors.white,
+            style: TextStyle(color: Colors.black,
               fontSize: 12,
             ),
           ),
